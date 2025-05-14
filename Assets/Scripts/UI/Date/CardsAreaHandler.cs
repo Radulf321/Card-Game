@@ -30,9 +30,6 @@ public class CardsAreaHandler : MonoBehaviour, IViewUpdater
             },
             (CardHandler cardHandler) => cardHandler.GetCard(),
             getChildComponent: (index) => {
-                Debug.Log(index);
-                Debug.Log(transform.GetChild(index));
-                Debug.Log(transform.GetChild(index).GetComponentInChildren<CardHandler>());
                 return transform.GetChild(index).GetComponentInChildren<CardHandler>();
             }
         );
