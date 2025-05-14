@@ -192,6 +192,12 @@
             ],
             "dialog": [
                 {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player",
+                    "right": "SingleFamilyHome"
+                },
+                {
                     "type": "text",
                     "text": {
                         "en": "You present the first draft of the visualization to Frank. He is excited.",
@@ -200,13 +206,15 @@
                 },
                 {
                     "type": "text",
+                    "speaker": "left",
                     "text": {
-                        "en": "You: Now, it can definitely be improved, but I think it's a good start. What do you think?",
-                        "de": "Du: Jetzt kann es auf jeden Fall verbessert werden, aber ich denke, es ist ein guter Anfang. Was denkst du?"
+                        "en": "You: Now, it can definitely be improved, but I'd say it's a good start. What do you think?",
+                        "de": "Du: Es kann auf jeden Fall noch verbessert werden, aber ich finde, es ist ein guter Anfang. Was denkst du?"
                     }
                 },
                 {
                     "type": "text",
+                    "speaker": "right",
                     "text": {
                         "en": "Frank: It looks great! I really like the look of those tiles. So, what happens if I tap on that light icon?",
                         "de": "Frank: Es sieht großartig aus! Mir gefällt das Aussehen dieser Kacheln wirklich gut. Was passiert, wenn ich auf dieses Lichtsymbol tippe?"
@@ -214,6 +222,7 @@
                 },
                 {
                     "type": "text",
+                    "speaker": "left",
                     "text": {
                         "en": "You: The light goes on.",
                         "de": "Du: Das Licht geht an."
@@ -221,9 +230,10 @@
                 },
                 {
                     "type": "text",
+                    "speaker": "right",
                     "text": {
                         "en": "Frank: You can do that? From an app? That's amazing! What a great world we live in!",
-                        "de": "Frank: Kannst du das? Aus einer App? Das ist erstaunlich! Was für eine großartige Welt, in der wir leben!"
+                        "de": "Frank: Das geht? Aus einer App? Das ist ja umwerfend! Was für eine großartige Welt, in der wir leben!"
                     }
                 }
             ]
