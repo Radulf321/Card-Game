@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -82,12 +86,25 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         Transform titleTransform = selectArea.Find("Title");
         titleTransform.GetComponent<TMPro.TextMeshProUGUI>().text = dialog.GetTitle();
         titleTransform.GetComponent<LayoutElement>().preferredHeight = selectRect.height * 0.1f;
+
+        Transform turnInfo = selectArea.Find("TurnInfo");
+        turnInfo.gameObject.SetActive(dialog.IsShowUI());
+        if (dialog.IsShowUI()) {
+            IntVariable amount = new IntVariable();
+            amount.Value = Game.Instance.GetRemainingTurns();
+            LocalizedString localizedString = turnInfo.GetComponent<LocalizeStringEvent>().StringReference;
+            localizedString.Add("amount", amount);
+            localizedString.RefreshString();
+        }
         // Remove all current options
         for (int i = 0; i < selectArea.childCount; i++) {
             if (selectArea.GetChild(i).name == "Title") {
                 continue;
             }
             if (selectArea.GetChild(i).name == "CardArea") {
+                continue;
+            }
+            if (selectArea.GetChild(i).name == "TurnInfo") {
                 continue;
             }
             Destroy(selectArea.GetChild(i).gameObject);

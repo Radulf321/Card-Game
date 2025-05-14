@@ -211,22 +211,12 @@ public class CombatTarget {
 
     public void EndCombat(bool win) {
         if (!win) {
+            Game.Instance.AddRemainingTurns(-1);
             DialogHandler.StartDialog(
                 Dialog.FromJson(this.loseDialogData, onFinish: () => {
                     Game.Instance.EndTurn();
                 })
             );
-            /*DialogHandler.StartDialog(
-                new DialogText(
-                    new List<string>() {
-                        "Jane: Hey, it seems you're not really into this. Maybe we should try this again some other time.",
-                        "Jane leaves you alone. You ponder what went wrong (-1 remaining turn)."
-                    },
-                    () => {
-                        Game.Instance.EndTurn();
-                    }
-                )
-            );*/
         }
         else {
             DialogHandler.dialogFinish = () => {

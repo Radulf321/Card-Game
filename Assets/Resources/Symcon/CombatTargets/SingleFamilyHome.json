@@ -62,6 +62,38 @@
                     ]
                 }
             ]
+        },
+        "lose": {
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: No, that didn't work... But how do I configure that instance?",
+                        "de": "Du: Nein, das funktioniert nicht... Wie konfiguriere ich die Instanz denn jetzt?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I guess I should watch a couple of Tutorial Videos before continuing here....",
+                        "de": "Du: I sollte wohl noch ein paar Tutorialvideos anschauen bevor ich hier weitermache..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You lose an additional <sprite name=\"Turns\">",
+                        "de": "Du verlierst einen zusätzlichen <sprite name=\"Turns\">"
+                    }
+                }
+            ]
         }
     },
     "talentBackground": "SingleFamilyHome",

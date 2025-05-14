@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+using Unity.VisualScripting;
 
 public class CardPile
 {
@@ -10,7 +9,7 @@ public class CardPile
     public List<Card> discardPile;
     
     public CardPile(List<Card> deck) {
-        this.deck = deck;
+        this.deck = new List<Card>(deck);
         this.hand = new List<Card>();
         this.discardPile = new List<Card>();
     }

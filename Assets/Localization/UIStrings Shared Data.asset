@@ -39,6 +39,10 @@ MonoBehaviour:
     m_Key: EndTurn
     m_Metadata:
       m_Items: []
+  - m_Id: 1417602409472000
+    m_Key: RemainingTurns
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -106,6 +106,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -114,7 +127,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 56
-        y: 232
+        y: 402
         width: 500
         height: 531
       alignment: 9
@@ -136,9 +149,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 691
-        y: 0
+        y: 129
         width: 1328
-        height: 1037
+        height: 1083
       alignment: 9
       pivot: {x: -0.000000045960206, y: 0.15422545}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,6 +162,28 @@ TextureImporter:
       bones: []
       spriteID: e1caec9f7b0ef714a97b431366f42546
       internalID: -727081251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Turns
+      rect:
+        serializedVersion: 2
+        x: 2028
+        y: 172
+        width: 997
+        height: 804
+      alignment: 9
+      pivot: {x: 0.00000024487525, y: -0.00000015182874}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 286f03f6e95315041a547fa912382bec
+      internalID: 2103016240
       vertices: []
       indices: 
       edges: []
@@ -169,7 +204,7 @@ TextureImporter:
     nameFileIdTable:
       Check: -727081251
       Comfort: 730683644
-      Icons_0: 1018637847
+      Turns: 1018637847
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

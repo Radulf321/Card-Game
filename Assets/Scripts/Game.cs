@@ -90,6 +90,11 @@ class Game
         return remainingTurns;
     }
 
+    public void AddRemainingTurns(int amount)
+    {
+        remainingTurns += amount;
+    }
+
     public CombatTarget GetCurrentCombatTarget()
     {
         return combatTargets[0];
