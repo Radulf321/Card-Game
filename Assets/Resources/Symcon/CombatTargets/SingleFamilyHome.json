@@ -22,6 +22,7 @@
                 "type": "goal",
                 "goal": "creativity",
                 "amount": {
+                    "type": "linear",
                     "base": 2,
                     "rate": 0.5
                 }
@@ -30,6 +31,7 @@
                 "type": "goal",
                 "goal": "knowhow",
                 "amount": {
+                    "type": "linear",
                     "base": 2,
                     "rate": 0.5
                 }
@@ -37,6 +39,7 @@
             {
                 "type": "total",
                 "amount": {
+                    "type": "linear",
                     "base": 4,
                     "rate": 1
                 }
