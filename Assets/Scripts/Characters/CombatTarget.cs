@@ -25,86 +25,11 @@ public class CombatTarget {
     public CombatTarget() {
         this.level = 1;
         this.experience = new Dictionary<string, int>();
-
-        Talent introduction = new Talent(
-            "Introduction",
-            new Dictionary<string, int>() {},
-            "Your first meeting with Jane",
-            "Placeholder",
-            new List<Reward>() {},
-            new List<Talent>(),
-            new DialogText(new List<string>() {
-                "As you walk into the bar, you see an attractive redhead sitting at the bar. You decide to approach her.",
-                "You: Hi, I'm Bob. What brings you here?",
-                "Jane: I'm just here to relax and have a drink. What about you?",
-                "You: Same here. Mind if I join you?",
-                "Jane: Not at all. I'm Jane, by the way.",
-            },
-            () => { DialogHandler.dialogFinish?.Invoke(); }),
-            this
-        );
-
-        Talent romanticKiss = new Talent(
-            "Romantic Kiss",
-            new Dictionary<string, int>() {{ "love", 1 }},
-            "After a date, you lean in for a kiss",
-            "Placeholder",
-            new List<Reward>() {
-                new CardReward(CardLibrary.getCard(CardType.Flirt)),
-            },
-            new List<Talent>() { introduction },
-            new DialogText(new List<string>() {
-                "Jane: Wow, it's already getting late. I should probably head home.",
-                "Jane: I head a great time with you, we should definitely repeat this.",
-                "You: Wow. So late already? Time flies when you're having fun.",
-                "You: I had a great time too. I hope I'll see you again soon.",
-                "As you get up to leave, you lean in and give Jane a quick kiss on the lips.",
-                "Jane seems surprised but she holds you in place and deepens the kiss.",
-                "She slips her tongue into your mouth and you can feel her warm breath on your face.",
-                "Jane: Let's do this again sometime.",
-            },
-            () => { DialogHandler.dialogFinish?.Invoke(); }),
-            this
-        );
-
-        Talent cunnilingus = new Talent(
-            "Cunnilingus",
-            new Dictionary<string, int>() {{ "love", 1 }},
-            "A wonderful date gets even better as you walk Jane home and she invites you to lick her pussy.",
-            "Placeholder",
-            new List<Reward>() {
-                new CardReward(CardLibrary.getCard(CardType.Flirt)),
-            },
-            new List<Talent>() { romanticKiss },
-            new DialogText(new List<string>() {
-                "After the date, you walk Jane home.",
-                "Jane: So, where was a guy like you hiding all this time?",
-                "You: Just waiting for the perfect moment to meet someone like you.",
-                "Jane: Aww, I bet you say that to all the women you meet.",
-                "You: Only the special ones.",
-                "As you keep walking, you arrive at Jane's place.",
-                "Jane: So, why don't you come in? I could use some company.",
-                "You: Sure, I'd love to.",
-                "You walk into her apartment and she closes the door behind you.",
-                "Right away, she pushes you against the wall and kisses you passionately.",
-                "You can feel her warm body against yours and her hands exploring your body.",
-                "As you take a short breath, you pull her top off.",
-                "She smiles and continues by unclasping her bra as her breasts pop out.",
-                "You: Wow, they're beautiful.",
-                "Jane: Thanks, but I think you should be the one to show me how much you like them.",
-                "You grab her breasts and start fondling them. Jane moans softly as you do.",
-                "You: I think it's time to take this to the next level.",
-                "TODO: Write the rest of the scene"                
-            },
-            () => { DialogHandler.dialogFinish?.Invoke(); }),
-            this
-        );
-
-        this.introductionTalent = introduction;
-        this.talents = new List<Talent>() { introduction, romanticKiss, cunnilingus };
-        this.name = "Jane";
-        this.actionTitle = "Date with Jane";
-        this.actionDescription = "Get to know Jane and increase her experience levels";
+        this.introductionTalent = null;
+        this.talents = new List<Talent>();
+        this.name = "Not initialized";
+        this.actionTitle = "Not initialized";
+        this.actionDescription = "Not initialized";
         this.actionImagePath = "Placeholder";
         this.combatBackgroundPath = "Placeholder";
         this.requirementFactories = new List<RequirementFactory>();
@@ -219,9 +144,6 @@ public class CombatTarget {
             );
         }
         else {
-            DialogHandler.dialogFinish = () => {
-                Debug.Log("Dialog finish called");
-            };
             DialogHandler.StartDialog(
                 Dialog.FromJson(this.winDialogData, actionGenerator: (id) => {
                     return () => {
