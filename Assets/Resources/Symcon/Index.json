@@ -1,0 +1,42 @@
+{
+    "goals": [
+        {
+            "id": "knowhow",
+            "name": {
+                "en": "Know How",
+                "de": "Know How"
+            }
+        },
+        {
+            "id": "creativity",
+            "name": {
+                "en": "Creativity",
+                "de": "Kreativität"
+            }
+        }
+    ],
+    "experienceTypes": [
+        {
+            "id": "comfort",
+            "name": {
+                "en": "Comfort",
+                "de": "Komfort"
+            },
+            "icon": "Comfort"
+        }
+    ],
+    "selectActionBackground": "Regular",
+    "startingCards": [
+        "optimizeObjectTree",
+        "optimizeObjectTree",
+        "energyBurst",
+        "energyBurst",
+        "createVariable",
+        "createVariable",
+        "adjustPresentation",
+        "adjustPresentation",
+        "copyPaste",
+        "betaFeatures"
+    ],
+    "checkIcon": "Check"
+}

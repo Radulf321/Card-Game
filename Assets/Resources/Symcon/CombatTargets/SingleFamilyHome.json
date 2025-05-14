@@ -1,0 +1,200 @@
+{
+    "id": "singleFamilyHome",
+    "name": {
+        "en": "Frank's Home",
+        "de": "Franks Haus"
+    },
+    "action": {
+        "title": {
+            "en": "Work at Frank's",
+            "de": "Arbeiten bei Frank"
+        },
+        "description": {
+            "en": "Continue to improve the automation in this single family home. The owner Frank is very motivated to install all kinds of smart features.",
+            "de": "Verbessere die Automatisierung in diesem Einfamilienhaus. Der Besitzer Frank ist sehr motiviert, alle Arten von intelligenten Funktionen zu installieren."
+        },
+        "image": "SingleFamilyHome"
+    },
+    "combat": {
+        "background": "SingleFamilyHome",
+        "requirements": [
+            {
+                "type": "goal",
+                "goal": "creativity"
+            },
+            {
+                "type": "goal",
+                "goal": "knowhow"
+            },
+            {
+                "type": "total"
+            }
+        ],
+        "win": {
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Looking good! So, what exactly should I focus on?",
+                        "de": "Du: Sieht gut aus! Worauf genau soll ich den Fokus legen?"
+                    }
+                },
+                {
+                    "type": "select",
+                    "title": {
+                        "en": "What should I focus on?",
+                        "de": "Worauf soll ich mich konzentrieren?"
+                    },
+                    "options": [
+                        {
+                            "id": "comfort",
+                            "title": {
+                                "en": "Let's add some nice comfort features. (+1 <sprite name=\"Comfort\">)",
+                                "de": "Zeit für ein paar schöne Komfortfunktionen. (+1 <sprite name=\"Comfort\">)"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "talentBackground": "SingleFamilyHome",
+    "talents": [
+        {
+            "id": "introduction",
+            "title": {
+                "en": "Introduction",
+                "de": "Einführung"
+            },
+            "cost": {},
+            "description": {
+                "en": "Getting to know Frank",
+                "de": "Du lernst Frank kennen"
+            },
+            "image": "SingleFamilyHome/Introduction",
+            "rewards": [],
+            "prerequisites": [],
+            "introduction": true,
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player",
+                    "right": "SingleFamilyHome"
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "Frank contacted you and asked for help with his home automation. He couldn't tell what exactly he had in mind, so you decided to meet at his place.",
+                        "de": "Frank hat dich kontaktiert und um Hilfe bei seiner Hausautomation gebeten. Er konnte nicht genau sagen, was er im Sinn hatte, also hast du beschlossen, ihn bei ihm zu treffen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: Hi, thanks for coming! I really need some help. There are so many things I want to do, but I don't know where to start.",
+                        "de": "Frank: Hi, danke, dass du gekommen bist! Ich brauche wirklich Hilfe. Es gibt so viele Dinge, die ich tun möchte, aber ich weiß nicht, wo ich anfangen soll."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: All right, let's take a look. What do you have in mind?",
+                        "de": "Du: Alles klar, lass uns mal schauen. Was schwebt dir vor?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: Oh, you know... Smart stuff. Some nice comfort features, some security stuff, and maybe some energy management.",
+                        "de": "Frank: Oh, du weißt schon... Smarte Sachen. Ein paar schöne Komfortfunktionen, ein paar Sicherheitsfunktionen und vielleicht ein bisschen Energiemanagement."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You realise that Frank has no plan. This gives you the opportunity to suggest some nice features.",
+                        "de": "Du merkst, dass Frank keinen Plan hat. Das gibt dir die Möglichkeit, einige schöne Funktionen vorzuschlagen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "After all, you can't really go wrong with Symcon, but the options are endless...",
+                        "de": "Schließlich kannst du mit Symcon nicht wirklich etwas falsch machen, aber die Möglichkeiten sind endlos..."
+                    }
+                }
+            ]
+        },
+        {
+            "id": "basicVisualisation",
+            "title": {
+                "en": "Basic Visualisation",
+                "de": "Grundlegende Visualisierung"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "First steps with the visualisation",
+                "de": "Erste Schritte mit der Visualisierung"
+            },
+            "image": "SingleFamilyHome/BasicVisualization",
+            "rewards": [
+                {
+                    "type": "card",
+                    "card": "optimizeObjectTree"
+                }
+            ],
+            "prerequisites": [
+                "introduction"
+            ],
+            "dialog": [
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You present the first draft of the visualization to Frank. He is excited.",
+                        "de": "Du präsentierst Frank den ersten Entwurf der Visualisierung. Er ist begeistert."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: Now, it can definitely be improved, but I think it's a good start. What do you think?",
+                        "de": "Du: Jetzt kann es auf jeden Fall verbessert werden, aber ich denke, es ist ein guter Anfang. Was denkst du?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "Frank: It looks great! I really like the look of those tiles. So, what happens if I tap on that light icon?",
+                        "de": "Frank: Es sieht großartig aus! Mir gefällt das Aussehen dieser Kacheln wirklich gut. Was passiert, wenn ich auf dieses Lichtsymbol tippe?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: The light goes on.",
+                        "de": "Du: Das Licht geht an."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "Frank: You can do that? From an app? That's amazing! What a great world we live in!",
+                        "de": "Frank: Kannst du das? Aus einer App? Das ist erstaunlich! Was für eine großartige Welt, in der wir leben!"
+                    }
+                }
+            ]
+        }
+    ]
+}

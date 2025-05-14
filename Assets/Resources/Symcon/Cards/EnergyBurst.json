@@ -1,0 +1,15 @@
+{
+    "id": "energyBurst",
+    "cost": 0,
+    "name": {
+        "en": "Energy Burst",
+        "de": "Energieschub"
+    },
+    "effects": [
+        {
+            "type": "energy",
+            "amount": 1
+        }
+    ],
+    "image": "EnergyBurst"
+}

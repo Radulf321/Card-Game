@@ -1,0 +1,15 @@
+{
+    "id": "planAhead",
+    "cost": 2,
+    "name": {
+        "en": "Plan Ahead",
+        "de": "Blick nach Vorn"
+    },
+    "effects": [
+        {
+            "type": "drawCards",
+            "amount": 2
+        }
+    ],
+    "image": "PlanAhead"
+}

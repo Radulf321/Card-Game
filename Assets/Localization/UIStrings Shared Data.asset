@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UIStrings Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: UIStrings
+  m_TableCollectionNameGuidString: db007a90c9df74742983ec64a3592fcd
+  m_Entries:
+  - m_Id: 52664508416
+    m_Key: "Close\t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126060634112
+    m_Key: TalentPurchase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6692008665088
+    m_Key: TalentAlreadyPurchased
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13495354302464
+    m_Key: TalentSkipPurchase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17830217818112
+    m_Key: TalentReward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1056307281698816
+    m_Key: EndTurn
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6401543859698663636
+  references:
+    version: 2
+    RefIds:
+    - rid: 6401543859698663636
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1746909441075

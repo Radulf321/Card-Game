@@ -1,0 +1,210 @@
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System.Linq;
+using System;
+
+#nullable enable
+public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
+{
+    public static readonly float defaultCardWidth = 180f;
+
+    private Card? card;
+    private Talent? talent;
+    private Sprite? sprite;
+    private Sprite? costSprite;
+    private bool active = true;
+
+    private string? title;
+    private string? description;
+    private string? cost;
+    private Color? costColor;
+    private Action? onClickAction;
+
+    public Sprite? energySprite;
+
+    private bool shouldUpdate = false;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (this.shouldUpdate)
+        {
+
+            Transform nameArea = transform.Find("Name Area");
+            nameArea.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text =
+                this.title ?? card?.GetName() ??
+                talent?.GetTitle() ?? "This should never be visible";
+            GetDescriptionText().text =
+                this.description ?? card?.GetDescription() ??
+                talent?.GetDescription() ?? "This should never be visible";
+            Transform costArea = nameArea.Find("Cost Area");
+            costArea.gameObject.SetActive(this.costSprite != null);
+            if (this.costSprite != null)
+            {
+                costArea.GetComponent<AspectRatioFitter>().aspectRatio = this.costSprite.rect.width / this.costSprite.rect.height;
+                Image costImage = costArea.GetComponent<Image>();
+                costImage.sprite = this.costSprite;
+                Color costColor = this.costColor ?? ((card != null) ? Theme.energyAvailableColor : Color.white);
+                costImage.color = costColor;
+                TMPro.TextMeshProUGUI costText = costArea.Find("Cost").GetComponent<TMPro.TextMeshProUGUI>();
+                costText.text = this.cost ?? card?.GetCost().ToString() ?? (talent!.IsPurchased() ? "" : talent!.GetCost().First().Value.ToString());
+            }
+            Image image = transform.Find("Image").GetComponent<Image>();
+            if (image.sprite != this.sprite) {
+                image.sprite = this.sprite;
+                RectTransform parentRectTransform = transform.GetComponentInParent<RectTransform>();
+                LayoutRebuilder.ForceRebuildLayoutImmediate(parentRectTransform);
+            }
+            transform.GetComponentInParent<LayoutElement>().preferredWidth = transform.GetComponentInParent<RectTransform>().rect.height * transform.GetComponentInParent<AspectRatioFitter>().aspectRatio;
+            this.shouldUpdate = false;
+        }
+        // TODO: 10 are card margins, defined by the layout group, 5 each side
+        // When needed, we can extract this value from the layout group
+        //transform.Find("Image").GetComponent<LayoutElement>().preferredHeight = (transform.GetComponent<RectTransform>().rect.width - 10) * 2 / 3;
+    }
+
+    public void SetCard(Card card)
+    {
+        this.card = card;
+        this.talent = null;
+        this.sprite = Resources.Load<Sprite>(card.GetImagePath());
+        this.costSprite = this.energySprite;
+        // TODO: Think about going for NoWrap for cards, it could look nicer for multiple effects in one line each...
+        GetDescriptionText().textWrappingMode = TMPro.TextWrappingModes.Normal;
+        updateView();
+    }
+
+    public void SetTalent(Talent talent)
+    {
+        this.talent = talent;
+        this.card = null;
+        this.sprite = Resources.Load<Sprite>(talent.GetImagePath());
+        if (talent.IsPurchased()) {
+            this.costSprite = Game.Instance.GetCheckIcon();
+        }
+        else if (talent.GetCost().Count == 0)
+        {
+            this.costSprite = null;
+        }
+        else
+        {
+            this.costSprite = Game.Instance.GetExperienceTypeIcon(talent.GetCost().Keys.First());
+        }
+        GetDescriptionText().textWrappingMode = TMPro.TextWrappingModes.Normal;
+        updateView();
+    }
+
+    public void SetSprite(Sprite? sprite)
+    {
+        this.sprite = sprite;
+        updateView();
+    }
+
+    public void SetCostSprite(Sprite? costSprite)
+    {
+        this.costSprite = costSprite;
+        updateView();
+    }
+
+    public void SetTitle(string? title)
+    {
+        this.title = title;
+        updateView();
+    }
+
+    public void SetDescription(string? description)
+    {
+        this.description = description;
+        GetDescriptionText().textWrappingMode = TMPro.TextWrappingModes.Normal;
+        updateView();
+    }
+
+    public void SetCost(string? cost)
+    {
+        this.cost = cost;
+        updateView();
+    }
+
+    public void SetActive(bool active)
+    {
+        this.active = active;
+        transform.parent.GetComponent<HoverHandler>().SetActive(active);
+    }
+
+    public void SetCostColor(Color? costColor)
+    {
+        this.costColor = costColor;
+        updateView();
+    }
+
+    public void SetOnClickAction(Action? onClickAction)
+    {
+        this.onClickAction = onClickAction;
+    }
+
+    public void updateView()
+    {
+        this.shouldUpdate = true;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (!active)
+        {
+            return;
+        }
+
+        if (onClickAction != null)
+        {
+            onClickAction.Invoke();
+            return;
+        }
+
+        if (card != null)
+        {
+            if (card.CanPlay())
+            {
+                card.Play();
+            }
+            else
+            {
+                Debug.Log("Not enough energy to play this card.");
+            }
+        }
+        if (talent != null)
+        {
+            Debug.Log(FindAnyObjectByType<TalentInfoHandler>(FindObjectsInactive.Include));
+            FindAnyObjectByType<TalentInfoHandler>(FindObjectsInactive.Include).ShowTalent(talent);
+            transform.parent.GetComponent<HoverHandler>().StopHover();
+        }
+    }
+
+    public Card GetCard()
+    {
+        if (this.card == null)
+        {
+            throw new System.Exception("Card is null, cannot get card.");
+        }
+        return this.card;
+    }
+
+    public Talent GetTalent()
+    {
+        if (this.talent == null)
+        {
+            throw new System.Exception("Talent is null, cannot get talent.");
+        }
+        return this.talent;
+    }
+
+    private TMPro.TextMeshProUGUI GetDescriptionText() {
+        return transform.Find("Description Area").Find("Description").GetComponent<TMPro.TextMeshProUGUI>();
+    }
+}

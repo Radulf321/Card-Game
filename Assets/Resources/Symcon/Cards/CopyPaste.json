@@ -1,0 +1,40 @@
+{
+    "id": "copyPaste",
+    "cost": 2,
+    "name": {
+        "en": "Copy & Paste",
+        "de": "Kopieren & Einfügen"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "knowhow",
+            "amount": {
+                "input": "previousPlays",
+                "type": "linear",
+                "base": 3,
+                "rate": -1,
+                "min": 0
+            }
+        },
+        {
+            "type": "goal",
+            "goal": "creativity",
+            "amount": {
+                "input": "previousPlays",
+                "type": "linear",
+                "base": 3,
+                "rate": -1,
+                "min": 0
+            }
+        },
+        {
+            "type": "caption",
+            "caption": {
+                "en": "-1 for each Copy & Paste played",
+                "de": "-1 für jedes gespielte Kopieren & Einfügen"
+            }
+        }
+    ],
+    "image": "CopyPaste"
+}

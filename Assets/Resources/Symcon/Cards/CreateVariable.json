@@ -1,0 +1,16 @@
+{
+    "id": "createVariable",
+    "cost": 1,
+    "name": {
+        "en": "Create Variable",
+        "de": "Variable erstellen"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "knowhow",
+            "amount": 2
+        }
+    ],
+    "image": "CreateVariable"
+}

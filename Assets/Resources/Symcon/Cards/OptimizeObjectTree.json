@@ -1,0 +1,21 @@
+{
+    "id": "optimizeObjectTree",
+    "cost": 1,
+    "name": {
+        "en": "Optimize Object Tree",
+        "de": "Objektbaum optimieren"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "knowhow",
+            "amount": 1
+        },
+        {
+            "type": "goal",
+            "goal": "creativity",
+            "amount": 1
+        }
+    ],
+    "image": "OptimizeObjectTree"
+}

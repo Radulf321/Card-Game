@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: CardStrings_de
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de
+  m_SharedData: {fileID: 11400000, guid: fb0b690c1291c7343b39bcda78715870, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6401543877616205826
+  m_TableData:
+  - m_Id: 33303601152
+    m_Localized: "F\xFCge {amount} {goal} hinzu"
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 1160824791040
+    m_Localized: "Erh\xF6he {maxEnergy:choose(True|False): maximale|}Energie{maxEnergy:choose(True|False):|
+      f\xFCr diesen Zug} um {amount}"
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 84083125035008
+    m_Localized: Ziehe {amount:choose(1):eine Karte|{amount} Karten}
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 442092946759680
+    m_Localized: "Wirf {amount:choose(1):eine zuf\xE4llige Karte|{amount} zuf\xE4llige
+      Karten} ab"
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  references:
+    version: 2
+    RefIds:
+    - rid: 6401543877616205826
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 33303601152
+        - id: 1160824791040
+        - id: 84083125035008
+        - id: 442092946759680

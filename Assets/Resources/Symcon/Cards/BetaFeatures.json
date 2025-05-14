@@ -1,0 +1,20 @@
+{
+    "id": "betaFeatures",
+    "cost": 2,
+    "name": {
+        "en": "Beta Features",
+        "de": "Beta-Funktionen"
+    },
+    "effects": [
+        {
+            "type": "discardCards",
+            "amount": 1
+        },
+        {
+            "type": "goal",
+            "goal": "knowhow",
+            "amount": 4
+        }
+    ],
+    "image": "BetaFeatures"
+}

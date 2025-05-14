@@ -1,0 +1,20 @@
+{
+    "id": "adjustPresentation",
+    "cost": 2,
+    "name": {
+        "en": "Adjust Presentation",
+        "de": "Darstellung anpassen"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "creativity",
+            "amount": 2
+        },
+        {
+            "type": "drawCards",
+            "amount": 1
+        }
+    ],
+    "image": "AdjustPresentation"
+}

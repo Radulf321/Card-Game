@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: CardStrings_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: fb0b690c1291c7343b39bcda78715870, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6401543877616205825
+  m_TableData:
+  - m_Id: 33303601152
+    m_Localized: Add {amount} {goal}
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 1160824791040
+    m_Localized: 'Gain {amount} {maxEnergy:choose(True|False): maximum|} energy{maxEnergy:choose(True|False):|
+      for this turn}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 84083125035008
+    m_Localized: Draw {amount:choose(1):a card|{amount} cards}
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 442092946759680
+    m_Localized: Discard {amount:choose(1):a random card|{amount} random cards}
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  references:
+    version: 2
+    RefIds:
+    - rid: 6401543877616205825
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 33303601152
+        - id: 1160824791040
+        - id: 84083125035008
+        - id: 442092946759680
