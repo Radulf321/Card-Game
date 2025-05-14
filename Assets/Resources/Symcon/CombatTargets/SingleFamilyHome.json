@@ -20,14 +20,26 @@
         "requirements": [
             {
                 "type": "goal",
-                "goal": "creativity"
+                "goal": "creativity",
+                "amount": {
+                    "base": 2,
+                    "rate": 0.5
+                }
             },
             {
                 "type": "goal",
-                "goal": "knowhow"
+                "goal": "knowhow",
+                "amount": {
+                    "base": 2,
+                    "rate": 0.5
+                }
             },
             {
-                "type": "total"
+                "type": "total",
+                "amount": {
+                    "base": 4,
+                    "rate": 1
+                }
             }
         ],
         "win": {
