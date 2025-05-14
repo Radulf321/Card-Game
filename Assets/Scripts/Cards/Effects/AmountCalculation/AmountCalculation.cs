@@ -1,8 +1,12 @@
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
+#nullable enable
 public abstract class AmountCalculation {
-    public static AmountCalculation FromJson(JToken json) {
+    public static AmountCalculation? FromJson(JToken? json) {
+        if (json == null) {
+            return null;
+        }
         switch (json.Type) {
             case JTokenType.Integer:
                 return new ConstantAmountCalculation(json.ToObject<int>());
@@ -25,4 +29,5 @@ public abstract class AmountCalculation {
     }
 
     abstract public int GetValue(Card card);
+    abstract public int GetValue(int number);
 }

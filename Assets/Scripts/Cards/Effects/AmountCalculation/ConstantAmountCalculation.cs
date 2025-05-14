@@ -13,4 +13,9 @@ public class ConstantAmountCalculation : AmountCalculation {
     public override int GetValue(Card card) {
         return this.value;
     }
+
+    public override int GetValue(int number)
+    {
+        return this.value;
+    }
 }
