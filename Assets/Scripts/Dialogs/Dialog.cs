@@ -1,15 +1,17 @@
 using System;
 using Newtonsoft.Json.Linq;
+using Unity.VisualScripting;
 
 #nullable enable
 abstract public class Dialog {
-    public static Dialog FromJson(JArray dialogData, Action? onFinish = null, Func<string?, Action>? actionGenerator = null) {
+    public static Dialog FromJson(JArray? dialogData, Action? onFinish = null, Func<string?, Action>? actionGenerator = null) {
         if (dialogData == null || dialogData.Count == 0) {
             throw new System.Exception("Dialog JSON is null or empty.");
         }
         if (dialogData.Count == 1) {
             return FromJson(dialogData[0] as JObject ?? new JObject(), onFinish, actionGenerator);
         }
+        dialogData = new JArray(dialogData);
         JObject singleDialogData = dialogData[dialogData.Count - 1] as JObject ?? new JObject();
         dialogData.RemoveAt(dialogData.Count - 1);
         return FromJson(dialogData, () => {
