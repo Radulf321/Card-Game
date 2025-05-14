@@ -51,7 +51,7 @@ public class TalentInfoHandler : MonoBehaviour
         Transform descriptionArea = rightArea.Find("DescriptionScroll").Find("Mask").Find("DescriptionArea");
         float titleSize = myHeight * 0.06f;
         float descriptionSize = myHeight * 0.04f;
-        Debug.Log(titleSize);
+        descriptionArea.GetComponent<VerticalLayoutGroup>().spacing = titleSize;
         TMPro.TextMeshProUGUI titleText = descriptionArea.Find("Title").GetComponent<TMPro.TextMeshProUGUI>();
         titleText.text = talent.GetTitle();
         titleText.fontSize = titleSize;
@@ -74,8 +74,7 @@ public class TalentInfoHandler : MonoBehaviour
                 GameObject cardObject = Instantiate(cardPrefab!);
                 cardObject.GetComponentInChildren<CardHandler>().SetCard(cardReward.GetCard());
                 cardObject.GetComponentInChildren<CardHandler>().SetActive(false);
-                RectTransform cardRect = cardObject.GetComponent<RectTransform>();
-                float cardHeight = Mathf.Max(240, 0.3f * myHeight);
+                float cardHeight = Mathf.Max(240, 0.38f * myHeight);
                 cardObject.GetComponent<RectTransform>().sizeDelta = new UnityEngine.Vector2(cardHeight * cardObject.GetComponent<AspectRatioFitter>().aspectRatio, cardHeight);
                 cardObject.transform.SetParent(rewardsArea, false);
             }
