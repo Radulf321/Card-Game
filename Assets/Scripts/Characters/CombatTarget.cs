@@ -234,21 +234,6 @@ public class CombatTarget {
                     };
                 })
             );
-            /*
-            DialogHandler.StartDialog(
-                new DialogText(
-                    "Jane: I really enjoy spending time with you.",
-                    new DialogSelect(
-                        "Jane: I really enjoy spending time with you.",
-                        new List<DialogOption>() {
-                            new DialogOption("So did I, you are special (+ 1 Love)", () => {
-                                this.IncreaseExperience("love", 1);
-                                SceneManager.LoadScene("TalentTreeScene");
-                            }),
-                        }
-                    )
-                )
-            );*/
         }
     }
 
