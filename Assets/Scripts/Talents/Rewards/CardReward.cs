@@ -15,7 +15,7 @@ public class CardReward : Reward {
         return card;
     }
     public override void Collect() {
-        // TODO: Implement the logic to add the card to the player's collection
+        Game.Instance.GetPlayer().AddCardToDeck(this.GetCard());
     }
     public override string ToNiceString() {
         if (LocalizationHelper.GetLocalization() == "de") {
