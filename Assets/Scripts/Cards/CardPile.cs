@@ -7,11 +7,13 @@ public class CardPile
     public List<Card> deck;
     public List<Card> hand;
     public List<Card> discardPile;
+    public List<Card> inPlay;
     
     public CardPile(List<Card> deck) {
         this.deck = new List<Card>(deck);
         this.hand = new List<Card>();
         this.discardPile = new List<Card>();
+        this.inPlay = new List<Card>();
     }
 
     public void DrawCard(bool updateView = true) {
@@ -71,8 +73,9 @@ public class CardPile
     }
 
     public void DiscardCard(Card card, bool updateView = true) {
-        if (hand.Contains(card)) {
+        if (hand.Contains(card) || inPlay.Contains(card)) {
             hand.Remove(card);
+            inPlay.Remove(card);
             discardPile.Add(card);
             if (updateView) {
                 CombatHandler.instance.updateView();
@@ -80,5 +83,18 @@ public class CardPile
         } else {
             throw new Exception("Card not in hand.");
         }
+    }
+
+    public void AddCardToPlay(Card card) {
+        hand.Remove(card);
+        inPlay.Add(card);
+        CombatHandler.instance.updateView();
+    }
+
+    public void RemoveCard(Card card) {
+        hand.Remove(card);
+        inPlay.Remove(card);
+        discardPile.Remove(card);
+        deck.Remove(card);
     }
 }

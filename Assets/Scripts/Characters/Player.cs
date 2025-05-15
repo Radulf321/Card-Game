@@ -35,4 +35,12 @@ public class Player
     {
         return deck;
     }
+
+    public void AddCardToDeck(Card card) {
+        this.deck.Add(card);
+    }
+
+    public void RemoveCardFromDeck(Card card) {
+        this.deck.Remove(card);
+    }
 }

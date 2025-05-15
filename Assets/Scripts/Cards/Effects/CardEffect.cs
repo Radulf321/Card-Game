@@ -4,20 +4,16 @@ using Newtonsoft.Json.Linq;
 abstract public class CardEffect {
     public static CardEffect FromJson(JObject json, Card owner) {
         string? type = json["type"]?.ToString();
-        switch (type) {
-            case "goal":
-                return new GoalCardEffect(json, owner);
-            case "energy":
-                return new EnergyEffect(json);
-            case "drawCards":
-                return new DrawCardsEffect(json);
-            case "discardCards":
-                return new DiscardCardsEffect(json);
-            case "caption":
-                return new CaptionEffect(json);
-            default:
-                throw new System.Exception("Invalid card effect type: " + type);
-        }
+        return type switch
+        {
+            "goal" => new GoalCardEffect(json, owner),
+            "energy" => new EnergyEffect(json),
+            "drawCards" => new DrawCardsEffect(json),
+            "discardCards" => new DiscardCardsEffect(json),
+            "caption" => new CaptionEffect(json),
+            "afterPlay" => new AfterPlayEffect(json, owner),
+            _ => throw new System.Exception("Invalid card effect type: " + type),
+        };
     }
     abstract public void applyEffect();
 
