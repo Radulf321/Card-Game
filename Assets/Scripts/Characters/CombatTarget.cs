@@ -147,7 +147,6 @@ public class CombatTarget {
             DialogHandler.StartDialog(
                 Dialog.FromJson(this.winDialogData, actionGenerator: (id) => {
                     return () => {
-                        Debug.Log("Combat finished, id: " + id);
                         if (id != null) {
                             this.IncreaseExperience(id, 1);
                         }
