@@ -17,8 +17,6 @@ public class DialogOption {
     }
 
     public DialogOption(JObject dialogData, Action action) {
-        Debug.Log("DialogOption: " + dialogData.ToString());
-        Debug.Log("Action: " + action.ToString());
         this.title = LocalizationHelper.GetLocalizedString(dialogData["title"] as JObject);
         this.description = (dialogData["description"] != null) ? LocalizationHelper.GetLocalizedString(dialogData["description"] as JObject) : null;
         this.action = action;
