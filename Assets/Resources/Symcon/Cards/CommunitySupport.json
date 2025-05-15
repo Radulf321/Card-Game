@@ -1,0 +1,24 @@
+{
+    "id": "communitySupport",
+    "cost": 0,
+    "name": {
+        "en": "Community Support",
+        "de": "Helfende Community"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "creativity",
+            "amount": 3
+        },
+        {
+            "type": "drawCards",
+            "amount": 1
+        },
+        {
+            "type": "afterPlay",
+            "afterPlay": "RemovePermanent"
+        }
+    ],
+    "image": "CommunitySupport"
+}
