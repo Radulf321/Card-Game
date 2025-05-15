@@ -22,7 +22,6 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
     private Action? onClickAction;
 
     public GameObject? dialogOptionPrefab;
-    public GameObject? dialogCardPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -124,18 +123,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
             case SelectType.Cards:
                 // Remove all current cards
-                Transform cardArea = selectArea.Find("CardArea");
-                for (int i = 0; i < cardArea.childCount; i++) {
-                    Destroy(cardArea.GetChild(i).gameObject);
-                }
-                foreach (DialogOption option in dialog.GetOptions()) {
-                    GameObject newCard = Instantiate(this.dialogCardPrefab!, cardArea);
-                    newCard.GetComponentInChildren<CardHandler>().SetTitle(option.GetTitle());
-                    newCard.GetComponentInChildren<CardHandler>().SetDescription(option.GetDescription());
-                    newCard.GetComponentInChildren<CardHandler>().SetSprite(Resources.Load<Sprite>(option.GetImagePath()));
-                    newCard.GetComponentInChildren<CardHandler>().SetCostSprite(null);
-                    newCard.GetComponentInChildren<CardHandler>().SetOnClickAction(option.GetAction());
-                }
+                selectArea.Find("CardArea").GetComponent<DialogCardActionAreaHandler>().SetDialogOptions(dialog.GetOptions());
                 break;
         }
 

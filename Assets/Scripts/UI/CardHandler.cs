@@ -70,6 +70,11 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
         //transform.Find("Image").GetComponent<LayoutElement>().preferredHeight = (transform.GetComponent<RectTransform>().rect.width - 10) * 2 / 3;
     }
 
+    protected virtual void OnRectTransformDimensionsChange()
+    {
+        this.shouldUpdate = true;
+    }
+
     public void SetCard(Card card)
     {
         this.card = card;
@@ -204,7 +209,13 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
         return this.talent;
     }
 
-    private TMPro.TextMeshProUGUI GetDescriptionText() {
+    public string GetTitle()
+    {
+        return this.title ?? card?.GetName() ?? talent?.GetTitle() ?? "This should never be visible";
+    }
+
+    private TMPro.TextMeshProUGUI GetDescriptionText()
+    {
         return transform.Find("Description Area").Find("Description").GetComponent<TMPro.TextMeshProUGUI>();
     }
 }

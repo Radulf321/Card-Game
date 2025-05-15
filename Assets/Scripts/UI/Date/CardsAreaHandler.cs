@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
-public class CardsAreaHandler : MonoBehaviour, IViewUpdater
+public class CardsAreaHandler : CardsContainerHandler<Card>
 {
-    public GameObject cardPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,39 +13,18 @@ public class CardsAreaHandler : MonoBehaviour, IViewUpdater
     {
 
     }
-
-    public void updateView()
+    protected override List<Card> GetCardData()
     {
-        List<Card> cards = CombatHandler.instance.getCardPile().GetHand();
-        this.updateChildrenViews<CardsAreaHandler, CardHandler, Card>(
-            cards,
-            (Card card) =>
-            {
-                GameObject cardObject = Instantiate(cardPrefab);
-                cardObject.GetComponentInChildren<CardHandler>().SetCard(card);
-                return cardObject;
-            },
-            (CardHandler cardHandler) => cardHandler.GetCard(),
-            getChildComponent: (index) => {
-                return transform.GetChild(index).GetComponentInChildren<CardHandler>();
-            }
-        );
+        return CombatHandler.instance.getCardPile().GetHand();
+    }
 
-        if (cards.Count > 1)
-        {
-            float cardWidth = GetComponent<RectTransform>().rect.height * 0.75f;
-            float myWidth = GetComponent<RectTransform>().rect.width;
+    protected override Card GetHandlerData(CardHandler cardHandler)
+    {
+        return cardHandler.GetCard();
+    }
 
-            float totalCardWidth = cardWidth * cards.Count;
-            float totalSpacing = myWidth - totalCardWidth;
-            float spacingPerCard = totalSpacing / (cards.Count - 1);
-            if (spacingPerCard > 20)
-            {
-                spacingPerCard = 20;
-            }
-
-            transform.GetComponent<HorizontalLayoutGroup>().spacing = spacingPerCard;
-        }
-
+    protected override void SetHandlerData(CardHandler cardHandler, Card cardData)
+    {
+        cardHandler.SetCard(cardData);
     }
 }
