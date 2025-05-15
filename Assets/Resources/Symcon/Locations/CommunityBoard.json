@@ -1,0 +1,34 @@
+{
+    "id": "communityBoard",
+    "action": {
+        "title": {
+            "en": "Community Board",
+            "de": "Community Forum"
+        },
+        "description": {
+            "en": "Spend some time in the community board and talk with other users, profiting from their creativity.",
+            "de": "Verbringt Zeit im Community Forum um mit anderen Benutzern zu reden und von deren Kreativität zu profitieren."
+        },
+        "image": "CommunityBoard"
+    },
+    "dialog": [
+        {
+            "type": "image",
+            "background": "CommunityBoard"
+        },
+        {
+            "type": "text",
+            "text": {
+                "en": "You: I wonder if there's a better way to configure the Energy Manager...",
+                "de": "Du: Ich frage mich, ob es nicht einen besseren Weg gibt den Energy Manager zu konfigurieren..."
+            }
+        },
+        {
+            "type": "text",
+            "text": {
+                "en": "You: Ah, there's an extra thread for that module. Let's take a look.",
+                "de": "Du: Ah, da ist ein Extra Thread zu dem Modul. Schauen wir mal."
+            }
+        }
+    ]
+}

@@ -10,6 +10,7 @@ class Game
     private Player player;
     private int remainingTurns;
     private List<CombatTarget> combatTargets;
+    private List<Location> locations;
 
     private Dictionary<string, string> goalNames;
     
@@ -28,6 +29,7 @@ class Game
         this.player = new Player(new List<string>());
         this.remainingTurns = 0;
         this.combatTargets = new List<CombatTarget>();
+        this.locations = new List<Location>();
         this.goalNames = new Dictionary<string, string>();
         this.experienceTypes = new Dictionary<string, ExperienceTypeData>();
         this.icons = new Dictionary<string, Sprite>();
@@ -67,13 +69,21 @@ class Game
         this.cardLibrary = new CardLibrary(ResourcePath + "/Cards/");
         this.player = new Player(index["startingCards"]!.ToObject<List<string>>());
         List<CombatTarget> combatTargets = new List<CombatTarget>();
-        TextAsset[] jsonFiles = Resources.LoadAll<TextAsset>(ResourcePath + "/CombatTargets/");
-        foreach (TextAsset jsonFile in jsonFiles) {
+        TextAsset[] jsonFilesCombatTarget = Resources.LoadAll<TextAsset>(ResourcePath + "/CombatTargets/");
+        foreach (TextAsset jsonFile in jsonFilesCombatTarget) {
             JObject jsonObject = JObject.Parse(jsonFile.text);
             CombatTarget combatTarget = new CombatTarget(jsonObject);
             combatTargets.Add(combatTarget);
         }
         this.combatTargets = combatTargets;
+        List<Location> locations = new List<Location>();
+        TextAsset[] jsonFilesLocations = Resources.LoadAll<TextAsset>(ResourcePath + "/Locations/");
+        foreach (TextAsset jsonFile in jsonFilesLocations) {
+            JObject jsonObject = JObject.Parse(jsonFile.text);
+            Location location = new Location(jsonObject);
+            locations.Add(location);
+        }
+        this.locations = locations;
         this.remainingTurns = 4;
 
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
@@ -110,6 +120,7 @@ class Game
         }
         DialogHandler.firstDialog = new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
             this.combatTargets[0].GetDialogOption(),
+            this.locations[0].GetDialogOption(),
         }, SelectType.Cards, true), this.selectActionBackground);
         UnityEngine.SceneManagement.SceneManager.LoadScene("DialogScene");
     }

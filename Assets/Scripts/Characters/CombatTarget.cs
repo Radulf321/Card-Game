@@ -1,20 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 #nullable enable
-public class CombatTarget {
+public class CombatTarget : ActionCharacter {
     private int level;
     private Dictionary<string, int> experience;
 
     private List<Talent> talents;
     private Talent? introductionTalent;
     private string name;
-    private string actionTitle;
-    private string actionDescription;
-    private string actionImagePath;
 
     private string combatBackgroundPath;
     private string talentBackgroundPath;
@@ -22,15 +18,12 @@ public class CombatTarget {
     private JArray winDialogData;
     private JArray loseDialogData;
 
-    public CombatTarget() {
+    public CombatTarget() : base() {
         this.level = 1;
         this.experience = new Dictionary<string, int>();
         this.introductionTalent = null;
         this.talents = new List<Talent>();
         this.name = "Not initialized";
-        this.actionTitle = "Not initialized";
-        this.actionDescription = "Not initialized";
-        this.actionImagePath = "Placeholder";
         this.combatBackgroundPath = "Placeholder";
         this.requirementFactories = new List<RequirementFactory>();
         this.winDialogData = new JArray();
@@ -38,15 +31,11 @@ public class CombatTarget {
         this.talentBackgroundPath = "Placeholder";
     }
 
-    public CombatTarget(JObject jsonObject) {
+    public CombatTarget(JObject jsonObject) : base(jsonObject) {
         this.level = 1;
         this.experience = new Dictionary<string, int>();
 
         this.name = LocalizationHelper.GetLocalizedString(jsonObject["name"] as JObject);
-        JObject? action = jsonObject["action"] as JObject;
-        this.actionTitle = LocalizationHelper.GetLocalizedString(action?["title"] as JObject) ?? "Unknown Title";
-        this.actionDescription = LocalizationHelper.GetLocalizedString(action?["description"] as JObject) ?? "Undefined Description";
-        this.actionImagePath = action?["image"]?.ToString() ?? "Placeholder";
 
         List<Talent> talents = new List<Talent>();
         foreach (JObject talentData in jsonObject["talents"] ?? new JArray()) {
@@ -120,7 +109,7 @@ public class CombatTarget {
         return null;
     }
 
-    public void StartCombat() {
+    protected override void ExecuteAction() {
         Action start = () => {
             SceneManager.LoadScene("CombatScene");
         };
@@ -173,17 +162,6 @@ public class CombatTarget {
         }
 
         return requirements;
-    }
-
-    public DialogOption GetDialogOption() {
-        return new DialogOption(
-            this.actionTitle,
-            () => {
-                this.StartCombat();
-            },
-            this.actionDescription,
-            this.actionImagePath
-        );
     }
 
     public string GetCombatBackgroundPath() {
