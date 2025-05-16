@@ -18,6 +18,11 @@ public class DrawCardsEffect : CardEffect {
         CombatHandler.instance.getCardPile().DrawCards(this.amount);
     }
 
+    public override CardEffect Clone(Card newOwner)
+    {
+        return new DrawCardsEffect(this.amount);
+    }
+
     public override string getDescription() {
         return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "DrawCards",
             arguments: new Dictionary<string, object> {

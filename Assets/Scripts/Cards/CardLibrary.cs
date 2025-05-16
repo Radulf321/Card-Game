@@ -122,7 +122,7 @@ public class CardLibrary {
 
     public Card GetCard(string cardID) {
         if (cards.ContainsKey(cardID)) {
-            return cards[cardID];
+            return cards[cardID].Clone();
         } else {
             throw new System.Exception("Card not found in library.");
         }

@@ -17,6 +17,11 @@ public class CaptionEffect : CardEffect {
         // The caption effect does not have any gameplay effect
     }
 
+    public override CardEffect Clone(Card newOwner)
+    {
+        return new CaptionEffect(this.caption);
+    }
+
     public override string getDescription() {
         return this.caption;
     }

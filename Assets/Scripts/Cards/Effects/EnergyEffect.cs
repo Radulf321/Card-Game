@@ -29,4 +29,9 @@ public class EnergyEffect : CardEffect {
             }
         );
     }
+
+    public override CardEffect Clone(Card newOwner)
+    {
+        return new EnergyEffect(this.amount, this.maxEnergy);
+    }
 }

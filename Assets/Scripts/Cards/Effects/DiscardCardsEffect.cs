@@ -24,6 +24,11 @@ public class DiscardCardsEffect : CardEffect {
         return CombatHandler.instance.getCardPile().GetHand().Count >= (amount + 1);
     }
 
+    public override CardEffect Clone(Card newOwner)
+    {
+        return new DiscardCardsEffect(this.amount);
+    }
+
     public override string getDescription() {
         return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "DiscardCards",
             arguments: new Dictionary<string, object> {

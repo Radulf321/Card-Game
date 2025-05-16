@@ -19,7 +19,10 @@ abstract public class CardEffect {
 
     abstract public string getDescription();
 
-    virtual public bool canPlay() {
+    abstract public CardEffect Clone(Card? newOwner);
+
+    virtual public bool canPlay()
+    {
         return true;
     }
 }
