@@ -7,18 +7,7 @@ public class Player
 
     public Player()
     {
-        this.deck = deck = new List<Card>() {
-            CardLibrary.getCard(CardType.Flirt),
-            CardLibrary.getCard(CardType.Flirt),
-            CardLibrary.getCard(CardType.Flirt),
-            CardLibrary.getCard(CardType.Chat),
-            CardLibrary.getCard(CardType.Chat),
-            CardLibrary.getCard(CardType.SweetTalk),
-            CardLibrary.getCard(CardType.SweetTalk),
-            CardLibrary.getCard(CardType.Compliment),
-            CardLibrary.getCard(CardType.EnergyBurst),
-            CardLibrary.getCard(CardType.RiskyPlay),
-        };
+        this.deck = deck = new List<Card>();
     }
 
     public Player(List<string> startingCards)
@@ -36,11 +25,13 @@ public class Player
         return deck;
     }
 
-    public void AddCardToDeck(Card card) {
+    public void AddCardToDeck(Card card)
+    {
         this.deck.Add(card);
     }
 
-    public void RemoveCardFromDeck(Card card) {
+    public void RemoveCardFromDeck(Card card)
+    {
         this.deck.Remove(card);
     }
 }
