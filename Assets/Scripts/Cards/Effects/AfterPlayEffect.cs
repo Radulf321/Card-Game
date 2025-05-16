@@ -1,4 +1,6 @@
+using System;
 using Newtonsoft.Json.Linq;
+using UnityEngine.Localization.Settings;
 
 #nullable enable
 public class AfterPlayEffect : CardEffect {
@@ -27,6 +29,13 @@ public class AfterPlayEffect : CardEffect {
     }
 
     public override string getDescription() {
-        return "TODO";
+        switch (this.afterPlay)
+        {
+            case CardAfterPlay.RemovePermanent:
+                return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "RemovePermanent");
+
+            default:
+                throw new NotImplementedException();
+        }
     }
 }

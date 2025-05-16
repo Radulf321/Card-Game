@@ -40,6 +40,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
+  - m_Id: 1914435304988672
+    m_Localized: Remove this card from your deck permanently
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

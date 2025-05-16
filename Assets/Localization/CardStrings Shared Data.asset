@@ -31,6 +31,10 @@ MonoBehaviour:
     m_Key: DiscardCards
     m_Metadata:
       m_Items: []
+  - m_Id: 1914435304988672
+    m_Key: RemovePermanent
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
