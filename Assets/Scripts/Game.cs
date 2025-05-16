@@ -37,6 +37,7 @@ class Game
         this.resourcePath = "";
         this.selectActionBackground = "";
         this.checkIcon = "";
+        this.gameOverDialog = new DialogText("Dummy", () => { });
     }
 
     public Game(string ResourcePath)
@@ -88,6 +89,8 @@ class Game
 
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
         this.checkIcon = index["checkIcon"]!.ToString();
+
+        this.gameOverDialog = Dialog.FromJson(index["gameOverDialog"] as JArray ?? new JArray(), () => { UnityEngine.SceneManagement.SceneManager.LoadScene("DebugScene"); });
     }
 
     public Player GetPlayer()
@@ -130,8 +133,7 @@ class Game
         remainingTurns--;
         if (remainingTurns <= 0)
         {
-            // Game over logic here
-            throw new System.Exception("Game Over: No remaining turns.");
+            DialogHandler.StartDialog(this.gameOverDialog);
         }
         else {
             // Start a new turn

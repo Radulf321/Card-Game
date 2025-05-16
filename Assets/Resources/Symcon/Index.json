@@ -38,5 +38,43 @@
         "copyPaste",
         "betaFeatures"
     ],
-    "checkIcon": "Check"
+    "checkIcon": "Check",
+    "gameOverDialog": [
+        {
+            "type": "image",
+            "background": "Bar",
+            "left": "Player"
+        },
+        {
+            "type": "text",
+            "speaker": "left",
+            "text": {
+                "en": "You: Well, it was nice while it lasted...",
+                "de": "Du: Ahh, es war gut solange es noch geklappt hat..."
+            }
+        },
+        {
+            "type": "text",
+            "speaker": "left",
+            "text": {
+                "en": "You: But in the end it didn't really work out.",
+                "de": "Du: Aber letztendlich hat es einfach nicht sein sollen."
+            }
+        },
+        {
+            "type": "text",
+            "speaker": "left",
+            "text": {
+                "en": "You: Maybe I should try again someplace else? But not today.",
+                "de": "Du: Vielleicht sollte ich es woanders noch einmal versuchen? Aber nicht heute."
+            }
+        },
+        {
+            "type": "text",
+            "text": {
+                "en": "You've used up all your turns and finished your current run. Feel free to try again!",
+                "de": "Du hast all deine Züge verbraucht und den aktuellen Durchlauf abgeschlossen. Probier es aber gerne noch mal!"
+            }
+        }
+    ]
 }
