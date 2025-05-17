@@ -18,7 +18,8 @@ jobs:
           lfs: true
 
       # Cache
-      - uses: actions/cache@v3
+      - name: Use Cache
+        uses: actions/cache@v3
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
