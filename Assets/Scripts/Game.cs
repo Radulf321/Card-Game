@@ -13,7 +13,7 @@ class Game
     private List<Location> locations;
 
     private Dictionary<string, string> goalNames;
-    
+
     private Dictionary<string, ExperienceTypeData> experienceTypes;
 
     private Dictionary<string, Sprite> icons;
@@ -24,8 +24,10 @@ class Game
 
     private string selectActionBackground;
     private string checkIcon;
+    private Dialog gameOverDialog;
 
-    public Game() {
+    public Game()
+    {
         this.player = new Player(new List<string>());
         this.remainingTurns = 0;
         this.combatTargets = new List<CombatTarget>();
@@ -47,7 +49,8 @@ class Game
         TMPro.TMP_Settings.defaultSpriteAsset = Resources.Load<TMPro.TMP_SpriteAsset>(ResourcePath + "/Graphics/Icons");
         JObject index = JObject.Parse(Resources.Load<TextAsset>(ResourcePath + "/Index").text);
         Dictionary<string, string> goalNames = new Dictionary<string, string>();
-        foreach (JObject goal in index["goals"]!) {
+        foreach (JObject goal in index["goals"]!)
+        {
             string id = goal["id"]!.ToString();
             string name = LocalizationHelper.GetLocalizedString(goal["name"] as JObject);
             goalNames.Add(id, name);
@@ -55,14 +58,16 @@ class Game
         this.goalNames = goalNames;
 
         Dictionary<string, ExperienceTypeData> experienceTypes = new Dictionary<string, ExperienceTypeData>();
-        foreach (JObject experienceType in index["experienceTypes"]!) {
+        foreach (JObject experienceType in index["experienceTypes"]!)
+        {
             string id = experienceType["id"]!.ToString();
             experienceTypes.Add(id, new ExperienceTypeData(experienceType));
         }
         this.experienceTypes = experienceTypes;
 
         Dictionary<string, Sprite> icons = new Dictionary<string, Sprite>();
-        foreach (Sprite sprite in Resources.LoadAll<Sprite>(ResourcePath + "/Graphics/Icons")) {
+        foreach (Sprite sprite in Resources.LoadAll<Sprite>(ResourcePath + "/Graphics/Icons"))
+        {
             icons.Add(sprite.name, sprite);
         }
         this.icons = icons;
@@ -71,7 +76,8 @@ class Game
         this.player = new Player(index["startingCards"]!.ToObject<List<string>>());
         List<CombatTarget> combatTargets = new List<CombatTarget>();
         TextAsset[] jsonFilesCombatTarget = Resources.LoadAll<TextAsset>(ResourcePath + "/CombatTargets/");
-        foreach (TextAsset jsonFile in jsonFilesCombatTarget) {
+        foreach (TextAsset jsonFile in jsonFilesCombatTarget)
+        {
             JObject jsonObject = JObject.Parse(jsonFile.text);
             CombatTarget combatTarget = new CombatTarget(jsonObject);
             combatTargets.Add(combatTarget);
@@ -79,7 +85,8 @@ class Game
         this.combatTargets = combatTargets;
         List<Location> locations = new List<Location>();
         TextAsset[] jsonFilesLocations = Resources.LoadAll<TextAsset>(ResourcePath + "/Locations/");
-        foreach (TextAsset jsonFile in jsonFilesLocations) {
+        foreach (TextAsset jsonFile in jsonFilesLocations)
+        {
             JObject jsonObject = JObject.Parse(jsonFile.text);
             Location location = new Location(jsonObject);
             locations.Add(location);
@@ -116,9 +123,12 @@ class Game
     public void StartTurn()
     {
         string selectActionText;
-        if (LocalizationHelper.GetLocalization() == "de") {
+        if (LocalizationHelper.GetLocalization() == "de")
+        {
             selectActionText = "Wähle eine Aktion";
-        } else  {
+        }
+        else
+        {
             selectActionText = "Select an action";
         }
         DialogHandler.firstDialog = new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
@@ -135,7 +145,8 @@ class Game
         {
             DialogHandler.StartDialog(this.gameOverDialog);
         }
-        else {
+        else
+        {
             // Start a new turn
             StartTurn();
         }
@@ -143,27 +154,36 @@ class Game
 
     public string GetGoalName(string id)
     {
-        if (goalNames.ContainsKey(id)) {
+        if (goalNames.ContainsKey(id))
+        {
             return goalNames[id];
-        } else {
+        }
+        else
+        {
             return "Unknown Goal";
         }
     }
 
     public string GetExperienceTypeName(string id)
     {
-        if (experienceTypes.ContainsKey(id)) {
+        if (experienceTypes.ContainsKey(id))
+        {
             return experienceTypes[id].GetName();
-        } else {
+        }
+        else
+        {
             return "Unknown Experience Type";
         }
     }
 
     public string GetExperienceTypeInlineIcon(string id)
     {
-        if (experienceTypes.ContainsKey(id)) {
+        if (experienceTypes.ContainsKey(id))
+        {
             return experienceTypes[id].GetInlineIcon();
-        } else {
+        }
+        else
+        {
             return "Unknown Experience Type";
         }
     }
@@ -175,9 +195,12 @@ class Game
 
     public Sprite? GetIcon(string id)
     {
-        if (icons.ContainsKey(id)) {
+        if (icons.ContainsKey(id))
+        {
             return icons[id];
-        } else {
+        }
+        else
+        {
             return null;
         }
     }

@@ -22,6 +22,7 @@ public class DialogCardActionAreaHandler : CardsContainerHandler<DialogOption>
         this.dialogOptions = dialogOptions;
         updateView();
     }
+
     protected override List<DialogOption> GetCardData()
     {
         return this.dialogOptions;
@@ -29,7 +30,6 @@ public class DialogCardActionAreaHandler : CardsContainerHandler<DialogOption>
 
     protected override DialogOption GetHandlerData(CardHandler cardHandler)
     {
-        // Assuming cardHandler has a property or method to get the title
         string title = cardHandler.GetTitle();
         return dialogOptions.Find(option => option.GetTitle() == title);
     }
