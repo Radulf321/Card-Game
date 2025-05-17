@@ -1,4 +1,4 @@
-name: Build + Deploy
+name: Build Web
 
 on: [workflow_dispatch]
 
@@ -36,7 +36,7 @@ jobs:
           targetPlatform: WebGL
 
       # Output
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Build
           path: build
