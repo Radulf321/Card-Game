@@ -37,6 +37,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
     public void ShowText(DialogText dialog) {
         transform.Find("SelectArea").gameObject.SetActive(false);
+        transform.Find("RewardArea").gameObject.SetActive(false);
 
         Transform textArea = transform.Find("TextArea");
         textArea.gameObject.SetActive(true);
@@ -69,6 +70,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
     public void ShowSelect(DialogSelect dialog) {
         transform.Find("TextArea").gameObject.SetActive(false);
+        transform.Find("RewardArea").gameObject.SetActive(false);
         this.onClickAction = null;
 
         Transform selectArea = transform.Find("SelectArea");
@@ -127,6 +129,26 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
                 break;
         }
 
+    }
+
+    public void ShowReward(DialogReward dialog)
+    {
+        transform.Find("SelectArea").gameObject.SetActive(false);
+        transform.Find("TextArea").gameObject.SetActive(false);
+
+        Transform rewardArea = transform.Find("RewardArea");
+        rewardArea.gameObject.SetActive(true);
+        rewardArea.Find("RewardCardsArea").GetComponent<DialogCardRewardAreaHandler>().SetRewards(dialog.GetRewards());
+        VerticalLayoutGroup rewardLayoutGroup = rewardArea.GetComponent<VerticalLayoutGroup>();
+        Rect rewardRect = rewardArea.GetComponent<RectTransform>().rect;
+        rewardLayoutGroup.spacing = rewardRect.height * 0.01f;
+        rewardLayoutGroup.padding = new RectOffset(
+            Mathf.FloorToInt(rewardRect.width * 0.02f),
+            Mathf.FloorToInt(rewardRect.width * 0.02f),
+            Mathf.FloorToInt(rewardRect.height * 0.02f),
+            Mathf.FloorToInt(rewardRect.height * 0.02f)
+        );
+        this.onClickAction = dialog.GetOnFinish();
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -26,6 +26,8 @@ abstract public class Dialog {
                 return new DialogText(dialogData, onFinish ?? DialogHandler.dialogFinish ?? (() => { }));
             case "image":
                 return new DialogImage(dialogData, onFinish ?? DialogHandler.dialogFinish ?? (() => { }));
+            case "reward":
+                return new DialogReward(dialogData, onFinish ?? DialogHandler.dialogFinish ?? (() => { }));
             case "select":
                 return new DialogSelect(dialogData, actionGenerator ?? (id => () => { DialogHandler.dialogFinish?.Invoke(); }));
             default:

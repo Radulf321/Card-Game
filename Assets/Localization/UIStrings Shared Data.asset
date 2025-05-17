@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Key: RemainingTurns
     m_Metadata:
       m_Items: []
+  - m_Id: 2513672342380544
+    m_Key: DialogRewardTitle
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
