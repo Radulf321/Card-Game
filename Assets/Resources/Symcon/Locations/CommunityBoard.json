@@ -29,6 +29,15 @@
                 "en": "You: Ah, there's an extra thread for that module. Let's take a look.",
                 "de": "Du: Ah, da ist ein Extra Thread zu dem Modul. Schauen wir mal."
             }
+        },
+        {
+            "type": "reward",
+            "rewards": [
+                {
+                    "type": "card",
+                    "card": "communitySupport"
+                }
+            ]
         }
     ]
 }
