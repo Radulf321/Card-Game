@@ -2,7 +2,7 @@ name: Update License
 
 on: [workflow_dispatch]
 
-jobs:jobs:
+jobs:
   acquire_ulf:
     name: Acquire .ulf file 🔑
     runs-on: ubuntu-latest
