@@ -34,7 +34,8 @@ public class CombatHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.requireUpdate) {
+        if (this.requireUpdate)
+        {
             this.requireUpdate = false;
             transform.GetComponentInChildren<TurnsAreaHandler>().updateView();
             transform.GetComponentInChildren<EnergyAreaHandler>().updateView();
@@ -42,45 +43,56 @@ public class CombatHandler : MonoBehaviour
         }
     }
 
-    public int getCurrentEnergy() {
+    public int getCurrentEnergy()
+    {
         return currentEnergy;
     }
 
-    public int getMaxEnergy() {
+    public int getMaxEnergy()
+    {
         return maxEnergy;
     }
 
-    public void gainEnergy(int amount, bool maxEnergy = false) {
-        if (maxEnergy) {
+    public void gainEnergy(int amount, bool maxEnergy = false)
+    {
+        if (maxEnergy)
+        {
             this.maxEnergy += amount;
         }
         this.currentEnergy += amount;
         updateView();
     }
 
-    public void looseEnergy(int amount) {
+    public void looseEnergy(int amount)
+    {
         this.currentEnergy -= amount;
         updateView();
     }
 
-    public int getSubjectAmount(string goal) {
-        if (goals.ContainsKey(goal)) {
+    public int getSubjectAmount(string goal)
+    {
+        if (goals.ContainsKey(goal))
+        {
             return goals[goal];
         }
         return 0;
     }
 
-    public List<Turn> getTurns() {
+    public List<Turn> getTurns()
+    {
         return turns;
     }
 
-    public int getCurrentTurn() {
+    public int getCurrentTurn()
+    {
         return currentTurn;
     }
 
-    public int getTotal() {
+    public int getTotal()
+    {
         int total = 0;
-        foreach (KeyValuePair<string, int> goal in goals) {
+        foreach (KeyValuePair<string, int> goal in goals)
+        {
             total += goal.Value;
         }
         return total;
@@ -103,17 +115,21 @@ public class CombatHandler : MonoBehaviour
         updateView();
     }
 
-    public void endTurn() {
+    public void endTurn()
+    {
         // Conditions not fulfilled -> Lost
-        if (!turns[currentTurn].areRequirementsFulfilled()) {
+        if (!turns[currentTurn].areRequirementsFulfilled())
+        {
             loose();
         }
         // It was the last turn -> Win
-        else if (currentTurn >= (turns.Count - 1)) {
+        else if (currentTurn >= (turns.Count - 1))
+        {
             win();
         }
         // Otherwise: Next turn
-        else {
+        else
+        {
             // TODO: Some start of turn effect, e.g., increase max energy, draw cards, add complication, ...
             currentTurn++;
             cardPile.DrawCard();
@@ -121,29 +137,38 @@ public class CombatHandler : MonoBehaviour
         }
     }
 
-    public CardPile getCardPile() {
+    public CardPile getCardPile()
+    {
         return this.cardPile;
     }
 
-    public void playCard(string cardID) {
+    public void playCard(string cardID)
+    {
         // Card cares about most things by itself, just add it to the played cards
-        if (cardsPlayed.ContainsKey(cardID)) {
+        if (cardsPlayed.ContainsKey(cardID))
+        {
             cardsPlayed[cardID]++;
-        } else {
+        }
+        else
+        {
             cardsPlayed.Add(cardID, 1);
         }
     }
 
-    public int getCardsPlayed(string cardID) {
-        if (cardsPlayed.ContainsKey(cardID)) {
+    public int getCardsPlayed(string cardID)
+    {
+        if (cardsPlayed.ContainsKey(cardID))
+        {
             return cardsPlayed[cardID];
         }
-        else {
+        else
+        {
             return 0;
         }
     }
 
-    public void updateView() {
+    public void updateView()
+    {
         this.requireUpdate = true;
     }
 
@@ -158,11 +183,13 @@ public class CombatHandler : MonoBehaviour
         updateView();
     }
 
-    private void loose() {
+    private void loose()
+    {
         Game.Instance.GetCurrentCombatTarget().EndCombat(false);
     }
 
-    private void win() {
+    private void win()
+    {
         Game.Instance.GetCurrentCombatTarget().EndCombat(true);
     }
 
