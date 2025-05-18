@@ -35,6 +35,14 @@ MonoBehaviour:
     m_Key: RemovePermanent
     m_Metadata:
       m_Items: []
+  - m_Id: 2632551630675968
+    m_Key: Triggerable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2633323739127808
+    m_Key: ConditionAddGoal
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

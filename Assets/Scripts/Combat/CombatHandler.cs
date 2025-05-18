@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ public class CombatHandler : MonoBehaviour
 
     private CardPile cardPile;
     private bool requireUpdate = false;
+    private List<Action<TriggerMessage>> triggerMessageSubscribers = new List<Action<TriggerMessage>>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -84,11 +86,19 @@ public class CombatHandler : MonoBehaviour
         return total;
     }
 
-    public void addGoal(string subject, int amount) {
-        if (goals.ContainsKey(subject)) {
-            goals[subject] += amount;
-        } else {
-            goals.Add(subject, amount);
+    public void addGoal(string goal, int amount, CardEffectTrigger? trigger = null)
+    {
+        if (goals.ContainsKey(goal))
+        {
+            goals[goal] += amount;
+        }
+        else
+        {
+            goals.Add(goal, amount);
+        }
+        if (trigger == CardEffectTrigger.PlayCard)
+        {
+            this.SendTriggerMessage(new TriggerMessage(TriggerType.AddGoal, new TriggerMessageData(amount: amount, goal: goal)));
         }
         updateView();
     }
@@ -137,7 +147,13 @@ public class CombatHandler : MonoBehaviour
         this.requireUpdate = true;
     }
 
-    private void startTurn() {
+    public void SubscribeToTriggerMessages(Action<TriggerMessage> subscriber)
+    {
+        this.triggerMessageSubscribers.Add(subscriber);
+    }
+
+    private void startTurn()
+    {
         currentEnergy = maxEnergy;
         updateView();
     }
@@ -148,5 +164,13 @@ public class CombatHandler : MonoBehaviour
 
     private void win() {
         Game.Instance.GetCurrentCombatTarget().EndCombat(true);
+    }
+
+    private void SendTriggerMessage(TriggerMessage message)
+    {
+        foreach (Action<TriggerMessage> subscriber in this.triggerMessageSubscribers)
+        {
+            subscriber(message);
+        }
     }
 }

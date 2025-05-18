@@ -45,6 +45,16 @@ MonoBehaviour:
     m_Localized: Entferne diese Karte permanent aus deinem Deck
     m_Metadata:
       m_Items: []
+  - m_Id: 2632551630675968
+    m_Localized: Immer wenn du {condition}, {effect}.
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 2633323739127808
+    m_Localized: "{min:choose(1):|{} oder mehr }{goal} hinzuf\xFCgst"
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
   references:
     version: 2
     RefIds:
@@ -57,3 +67,5 @@ MonoBehaviour:
         - id: 1160824791040
         - id: 84083125035008
         - id: 442092946759680
+        - id: 2632551630675968
+        - id: 2633323739127808

@@ -44,6 +44,16 @@ MonoBehaviour:
     m_Localized: Remove this card from your deck permanently
     m_Metadata:
       m_Items: []
+  - m_Id: 2632551630675968
+    m_Localized: Whenever you {condition}, {effect}.
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 2633323739127808
+    m_Localized: 'add {min:choose(1): |{} or more }{goal}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
   references:
     version: 2
     RefIds:
@@ -56,3 +66,5 @@ MonoBehaviour:
         - id: 1160824791040
         - id: 84083125035008
         - id: 442092946759680
+        - id: 2632551630675968
+        - id: 2633323739127808
