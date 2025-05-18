@@ -1,0 +1,24 @@
+{
+    "id": "workHard",
+    "cost": 2,
+    "name": {
+        "en": "Work Hard",
+        "de": "Hart am Arbeiten"
+    },
+    "effects": [
+        {
+            "type": "triggerable",
+            "condition": {
+                "type": "addgoal",
+                "goal": "knowhow",
+                "min": 2
+            },
+            "effect": {
+                "type": "goal",
+                "goal": "knowhow",
+                "amount": 1
+            }
+        }
+    ],
+    "image": "WorkHard"
+}
