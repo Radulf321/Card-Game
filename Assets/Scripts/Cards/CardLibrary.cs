@@ -26,7 +26,7 @@ public class CardLibrary {
         if (cards.ContainsKey(cardID)) {
             return cards[cardID].Clone();
         } else {
-            throw new System.Exception("Card not found in library.");
+            throw new System.Exception("Card not found in library: " + cardID);
         }
     }
 }
