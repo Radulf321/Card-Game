@@ -1,0 +1,39 @@
+{
+    "id": "flexibility",
+    "cost": 2,
+    "name": {
+        "en": "Flexibility",
+        "de": "Flexibilität"
+    },
+    "effects": [
+        {
+            "type": "triggerable",
+            "limitType": "PerTurn",
+            "limit": 1,
+            "condition": {
+                "type": "addgoal",
+                "goal": "knowhow"
+            },
+            "effect": {
+                "type": "goal",
+                "goal": "creativity",
+                "amount": 1
+            }
+        },
+        {
+            "type": "triggerable",
+            "limitType": "PerTurn",
+            "limit": 1,
+            "condition": {
+                "type": "addgoal",
+                "goal": "creativity"
+            },
+            "effect": {
+                "type": "goal",
+                "goal": "knowhow",
+                "amount": 1
+            }
+        }
+    ],
+    "image": "Flexibility"
+}
