@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 using UnityEngine.Localization.Settings;
 
 public class GoalCardEffect : CardEffect
@@ -15,6 +16,7 @@ public class GoalCardEffect : CardEffect
         this.goal = goal;
         this.amountCalculation = amountCalculation;
         this.owner = owner;
+        this.trigger = trigger;
     }
 
     public GoalCardEffect(string goal, int amount, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(goal, new ConstantAmountCalculation(amount), owner, trigger)
@@ -33,7 +35,7 @@ public class GoalCardEffect : CardEffect
 
     public override CardEffect Clone(Card newOwner)
     {
-        return new GoalCardEffect(this.goal, this.amountCalculation, newOwner);
+        return new GoalCardEffect(this.goal, this.amountCalculation, newOwner, this.trigger);
     }
 
     private string GetDescription(string tableEntry)
