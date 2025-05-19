@@ -177,6 +177,11 @@ public class CombatHandler : MonoBehaviour
         this.triggerMessageSubscribers.Add(subscriber);
     }
 
+    public void UnsubscribeFromTriggerMessages(Action<TriggerMessage> subscriber)
+    {
+        this.triggerMessageSubscribers.Remove(subscriber);
+    }
+
     private void startTurn()
     {
         currentEnergy = maxEnergy;
