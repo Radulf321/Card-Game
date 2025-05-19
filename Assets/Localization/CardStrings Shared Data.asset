@@ -19,6 +19,10 @@ MonoBehaviour:
     m_Key: Goal
     m_Metadata:
       m_Items: []
+  - m_Id: 2635793177550848
+    m_Key: GoalTrigger
+    m_Metadata:
+      m_Items: []
   - m_Id: 1160824791040
     m_Key: Energy
     m_Metadata:

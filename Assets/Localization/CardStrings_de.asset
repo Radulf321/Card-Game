@@ -46,12 +46,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2632551630675968
-    m_Localized: Immer wenn du {condition}, {effect}.
+    m_Localized: "{limitType:choose(PerTurn|Total):{limit:plural:Einmal|{} mal} pro
+      Zug|{limit:plural:Das n\xE4chste mal|Die n\xE4chsten {} male} when|Immer} wenn
+      du {condition}, {effect}"
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
   - m_Id: 2633323739127808
     m_Localized: "{min:choose(1):|{} oder mehr }{goal} hinzuf\xFCgst"
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 2635793177550848
+    m_Localized: "f\xFCge {amount} {goal} hinzu"
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
@@ -69,3 +76,4 @@ MonoBehaviour:
         - id: 442092946759680
         - id: 2632551630675968
         - id: 2633323739127808
+        - id: 2635793177550848

@@ -45,12 +45,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2632551630675968
-    m_Localized: Whenever you {condition}, {effect}.
+    m_Localized: '{limitType:choose(PerTurn|Total):{limit:plural:Once|{} times} per
+      turn, when|{limit:plural:The next time|The next {} times} when|Whenever} you
+      {condition}, {effect}'
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
   - m_Id: 2633323739127808
     m_Localized: 'add {min:choose(1): |{} or more }{goal}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 2635793177550848
+    m_Localized: add {amount} {goal}
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
@@ -68,3 +75,4 @@ MonoBehaviour:
         - id: 442092946759680
         - id: 2632551630675968
         - id: 2633323739127808
+        - id: 2635793177550848
