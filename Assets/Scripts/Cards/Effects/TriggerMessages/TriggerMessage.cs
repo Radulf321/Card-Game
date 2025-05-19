@@ -3,6 +3,7 @@
 public enum TriggerType
 {
     AddGoal,
+    StartTurn,
 }
 
 public class TriggerMessage

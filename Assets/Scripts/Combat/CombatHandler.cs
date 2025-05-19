@@ -185,6 +185,7 @@ public class CombatHandler : MonoBehaviour
     private void startTurn()
     {
         currentEnergy = maxEnergy;
+        SendTriggerMessage(new TriggerMessage(TriggerType.StartTurn));
         updateView();
     }
 
