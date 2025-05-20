@@ -7,7 +7,7 @@ abstract public class CardEffect {
         string? type = json["type"]?.ToString();
         return type switch
         {
-            "goal" => new GoalCardEffect(json, owner, trigger),
+            "goal" => new GoalEffect(json, owner, trigger),
             "energy" => new EnergyEffect(json),
             "drawCards" => new DrawCardsEffect(json),
             "discardCards" => new DiscardCardsEffect(json),

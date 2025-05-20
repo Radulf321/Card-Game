@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-public class GoalCardEffect : CardEffect
+public class GoalEffect : CardEffect
 {
 
     private Card owner;
@@ -11,7 +10,7 @@ public class GoalCardEffect : CardEffect
     private string goal;
     private CardEffectTrigger trigger;
 
-    public GoalCardEffect(string goal, AmountCalculation amountCalculation, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard)
+    public GoalEffect(string goal, AmountCalculation amountCalculation, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard)
     {
         this.goal = goal;
         this.amountCalculation = amountCalculation;
@@ -19,11 +18,11 @@ public class GoalCardEffect : CardEffect
         this.trigger = trigger;
     }
 
-    public GoalCardEffect(string goal, int amount, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(goal, new ConstantAmountCalculation(amount), owner, trigger)
+    public GoalEffect(string goal, int amount, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(goal, new ConstantAmountCalculation(amount), owner, trigger)
     {
     }
 
-    public GoalCardEffect(JObject json, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(json["goal"]?.ToString() ?? "unknown", AmountCalculation.FromJson(json["amount"]), owner, trigger)
+    public GoalEffect(JObject json, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(json["goal"]?.ToString() ?? "unknown", AmountCalculation.FromJson(json["amount"]), owner, trigger)
     {
     }
 
@@ -35,7 +34,7 @@ public class GoalCardEffect : CardEffect
 
     public override CardEffect Clone(Card newOwner)
     {
-        return new GoalCardEffect(this.goal, this.amountCalculation, newOwner, this.trigger);
+        return new GoalEffect(this.goal, this.amountCalculation, newOwner, this.trigger);
     }
 
     private string GetDescription(string tableEntry)
