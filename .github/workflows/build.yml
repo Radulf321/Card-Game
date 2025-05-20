@@ -26,6 +26,11 @@ jobs:
           restore-keys: |
             Library-
 
+      - name: Clean Docker cache
+        run: |
+          docker system prune -a -f --volumes
+          df -h # Optional: Check available storage
+
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v4
@@ -64,6 +69,11 @@ jobs:
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
             Library-
+
+      - name: Clean Docker cache
+        run: |
+          docker system prune -a -f --volumes
+          df -h # Optional: Check available storage
 
       # Build
       - name: Build project
