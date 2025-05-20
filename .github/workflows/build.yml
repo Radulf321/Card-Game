@@ -47,71 +47,20 @@ jobs:
           name: Build
           path: build
 
-  build-android:
-    environment: prod
-
-    runs-on: ubuntu-22.04
-
-    timeout-minutes: 30
-
-    steps:
-      # Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # Deploy auf GitHub Pages (Ziel: radulf321.github.io)
+      - name: Deploy to GitHub Pages (User Page)
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          lfs: true
+          # Dieses Token muss Schreibrechte für das ZIEL-Repository haben (radulf321.github.io)
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          # Das ZIEL-Repository, auf das gepusht werden soll
+          external_repository: radulf321/radulf321.github.io
+          # Der Branch im ZIEL-Repository, auf den gepusht werden soll (normalerweise 'main' oder 'master' für User Pages)
+          publish_branch: main
+          # Der Ordner, der den Build-Output enthält (aus deinem Unity-Projekt-Repo)
+          publish_dir: ./build/WebGL # game-ci/unity-builder legt WebGL in 'build/WebGL' ab
 
-      # Cache
-      - name: Use Cache
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
-
-      - name: Clean Docker cache
-        run: |
-          echo "Before docker prune:"
-          df -h
-          docker system prune -a -f --volumes
-          echo "After docker prune:"
-          df -h
-
-      - name: Check disk space before Unity Build
-        run: |
-          echo "--- Disk space before Unity build ---"
-          df -h
-          echo "--- Sizes of common Unity/Docker paths before build ---"
-          # Diese Pfade sind typisch für game-ci/unity-builder auf Ubuntu-Runnern
-          du -sh /opt/unity || echo "/opt/unity not found or empty"
-          du -sh /var/lib/docker || echo "/var/lib/docker not found or empty"
-          du -sh /github/workspace || echo "/github/workspace not found or empty"
-          du -sh /tmp || echo "/tmp not found or empty" # Temporäre Dateien
-        continue-on-error: true # Führe den Rest des Jobs auch bei Fehlern hier aus
-
-      # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: Android
-          # Sehr wichtig: Füge diesen CacheKey hinzu!
-          cacheKey: "Unity-Editor-Android-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}"
-          # Optional: Wenn du eine spezifische, als kleiner bekannte Version verwenden möchtest
-          # unityVersion: "2022.3.10f1"
-
-      - name: Check disk space after Unity Build attempt
-        if: always() # Wichtig: Auch bei Fehlern ausführen
-        run: |
-          echo "--- Disk space after Unity build attempt ---"
-          df -h
-          echo "--- Sizes of common Unity/Docker paths after build attempt ---"
-          du -sh /opt/unity || echo "/opt/unity not found or empty"
-          du -sh /var/lib/docker || echo "/var/lib/docker not found or empty"
-          du -sh /github/workspace || echo "/github/workspace not found or empty"
-          du -sh /tmp || echo "/tmp not found or empty"
-        continue-on-error: true
+          # Optional: Benutzername und E-Mail für den Git-Commit im ZIEL-Repo
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: "Deploy Unity WebGL build from ${{ github.repository }}" # Angabe, woher der Build kommt
