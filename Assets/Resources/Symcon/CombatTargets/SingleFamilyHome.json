@@ -199,7 +199,7 @@
             "rewards": [
                 {
                     "type": "card",
-                    "card": "optimizeObjectTree"
+                    "card": "flexibility"
                 }
             ],
             "prerequisites": [
@@ -250,6 +250,15 @@
                         "en": "Frank: You can do that? From an app? That's amazing! What a great world we live in!",
                         "de": "Frank: Das geht? Aus einer App? Das ist ja umwerfend! Was für eine großartige Welt, in der wir leben!"
                     }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "flexibility"
+                        }
+                    ]
                 }
             ]
         }

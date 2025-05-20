@@ -129,10 +129,6 @@ public class Talent {
             owner.IncreaseExperience(type, -GetCost()[type]);
         }
 
-        foreach (Reward reward in GetRewards()) {
-            reward.Collect();
-        }
-
         DialogHandler.firstDialog = GetDialog();
         this.purchased = true;
         SceneManager.LoadScene("DialogScene");
