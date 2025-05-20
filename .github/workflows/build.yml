@@ -72,8 +72,23 @@ jobs:
 
       - name: Clean Docker cache
         run: |
+          echo "Before docker prune:"
+          df -h
           docker system prune -a -f --volumes
-          df -h # Optional: Check available storage
+          echo "After docker prune:"
+          df -h
+
+      - name: Check disk space before Unity Build
+        run: |
+          echo "--- Disk space before Unity build ---"
+          df -h
+          echo "--- Sizes of common Unity/Docker paths before build ---"
+          # Diese Pfade sind typisch für game-ci/unity-builder auf Ubuntu-Runnern
+          du -sh /opt/unity || echo "/opt/unity not found or empty"
+          du -sh /var/lib/docker || echo "/var/lib/docker not found or empty"
+          du -sh /github/workspace || echo "/github/workspace not found or empty"
+          du -sh /tmp || echo "/tmp not found or empty" # Temporäre Dateien
+        continue-on-error: true # Führe den Rest des Jobs auch bei Fehlern hier aus
 
       # Build
       - name: Build project
@@ -84,9 +99,19 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Android
+          # Sehr wichtig: Füge diesen CacheKey hinzu!
+          cacheKey: "Unity-Editor-Android-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}"
+          # Optional: Wenn du eine spezifische, als kleiner bekannte Version verwenden möchtest
+          # unityVersion: "2022.3.10f1"
 
-      # Output
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Build
-          path: build
+      - name: Check disk space after Unity Build attempt
+        if: always() # Wichtig: Auch bei Fehlern ausführen
+        run: |
+          echo "--- Disk space after Unity build attempt ---"
+          df -h
+          echo "--- Sizes of common Unity/Docker paths after build attempt ---"
+          du -sh /opt/unity || echo "/opt/unity not found or empty"
+          du -sh /var/lib/docker || echo "/var/lib/docker not found or empty"
+          du -sh /github/workspace || echo "/github/workspace not found or empty"
+          du -sh /tmp || echo "/tmp not found or empty"
+        continue-on-error: true
