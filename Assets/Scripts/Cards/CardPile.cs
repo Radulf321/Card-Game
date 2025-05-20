@@ -61,7 +61,13 @@ public class CardPile
         return this.hand;
     }
 
-    public void ShuffleDeck() {
+    public List<Card> GetInPlay()
+    {
+        return this.inPlay;
+    }
+
+    public void ShuffleDeck()
+    {
         System.Random rand = new System.Random();
         List<Card> newDeck = new List<Card>();
         while (deck.Count > 0) {

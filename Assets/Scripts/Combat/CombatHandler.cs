@@ -40,6 +40,7 @@ public class CombatHandler : MonoBehaviour
             transform.GetComponentInChildren<TurnsAreaHandler>().updateView();
             transform.GetComponentInChildren<EnergyAreaHandler>().updateView();
             transform.GetComponentInChildren<CardsAreaHandler>().updateView();
+            transform.GetComponentInChildren<CardsInPlayAreaHandler>().updateView();
         }
     }
 
