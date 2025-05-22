@@ -7,8 +7,6 @@ using System;
 #nullable enable
 public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
 {
-    public static readonly float defaultCardWidth = 180f;
-
     private Card? card;
     private Talent? talent;
     private Sprite? sprite;
@@ -18,7 +16,6 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
     private string? title;
     private string? description;
     private string? cost;
-    private Color? costColor;
     private Action? onClickAction;
 
     private bool shouldUpdate = false;
@@ -61,9 +58,6 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
             transform.GetComponentInParent<LayoutElement>().preferredWidth = transform.GetComponentInParent<RectTransform>().rect.height * transform.GetComponentInParent<AspectRatioFitter>().aspectRatio;
             this.shouldUpdate = false;
         }
-        // TODO: 10 are card margins, defined by the layout group, 5 each side
-        // When needed, we can extract this value from the layout group
-        //transform.Find("Image").GetComponent<LayoutElement>().preferredHeight = (transform.GetComponent<RectTransform>().rect.width - 10) * 2 / 3;
     }
 
     protected virtual void OnRectTransformDimensionsChange()
@@ -137,12 +131,6 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
     {
         this.active = active;
         transform.parent.GetComponent<HoverHandler>().SetActive(active);
-    }
-
-    public void SetCostColor(Color? costColor)
-    {
-        this.costColor = costColor;
-        updateView();
     }
 
     public void SetOnClickAction(Action? onClickAction)
