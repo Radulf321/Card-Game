@@ -25,7 +25,7 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205826
   - m_Id: 1160824791040
-    m_Localized: "Erh\xF6he {maxEnergy:choose(True|False): maximale|}Energie{maxEnergy:choose(True|False):|
+    m_Localized: "Erh\xF6he {maxEnergy:choose(True|False): maximale|} <sprite name=\"Energy\">{maxEnergy:choose(True|False):|
       f\xFCr diesen Zug} um {amount}"
     m_Metadata:
       m_Items:

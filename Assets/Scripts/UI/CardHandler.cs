@@ -21,8 +21,6 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
     private Color? costColor;
     private Action? onClickAction;
 
-    public Sprite? energySprite;
-
     private bool shouldUpdate = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,22 +35,20 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
         if (this.shouldUpdate)
         {
 
-            Transform nameArea = transform.Find("Name Area");
+            Transform nameArea = transform.Find("NameArea");
             nameArea.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text =
                 this.title ?? card?.GetName() ??
                 talent?.GetTitle() ?? "This should never be visible";
             GetDescriptionText().text =
                 this.description ?? card?.GetDescription() ??
                 talent?.GetDescription() ?? "This should never be visible";
-            Transform costArea = nameArea.Find("Cost Area");
+            Transform costArea = nameArea.Find("CostArea");
             costArea.gameObject.SetActive(this.costSprite != null);
             if (this.costSprite != null)
             {
-                costArea.GetComponent<AspectRatioFitter>().aspectRatio = this.costSprite.rect.width / this.costSprite.rect.height;
-                Image costImage = costArea.GetComponent<Image>();
+                costArea.GetComponent<AspectRatioFitter>().aspectRatio = Math.Max(1.0f, this.costSprite.rect.width / this.costSprite.rect.height);
+                Image costImage = costArea.Find("CostImage").GetComponent<Image>();
                 costImage.sprite = this.costSprite;
-                Color costColor = this.costColor ?? ((card != null) ? Theme.energyAvailableColor : Color.white);
-                costImage.color = costColor;
                 TMPro.TextMeshProUGUI costText = costArea.Find("Cost").GetComponent<TMPro.TextMeshProUGUI>();
                 costText.text = this.cost ?? card?.GetCost().ToString() ?? (talent!.IsPurchased() ? "" : talent!.GetCost().First().Value.ToString());
             }
@@ -80,7 +76,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
         this.card = card;
         this.talent = null;
         this.sprite = Resources.Load<Sprite>(card.GetImagePath());
-        this.costSprite = this.energySprite;
+        this.costSprite = Game.Instance.GetIcon("Energy");
         // TODO: Think about going for NoWrap for cards, it could look nicer for multiple effects in one line each...
         GetDescriptionText().textWrappingMode = TMPro.TextWrappingModes.Normal;
         updateView();
@@ -216,6 +212,6 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
 
     private TMPro.TextMeshProUGUI GetDescriptionText()
     {
-        return transform.Find("Description Area").Find("Description").GetComponent<TMPro.TextMeshProUGUI>();
+        return transform.Find("DescriptionArea").Find("Description").GetComponent<TMPro.TextMeshProUGUI>();
     }
 }

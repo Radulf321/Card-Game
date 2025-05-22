@@ -25,8 +25,8 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205825
   - m_Id: 1160824791040
-    m_Localized: 'Gain {amount} {maxEnergy:choose(True|False): maximum|} energy{maxEnergy:choose(True|False):|
-      for this turn}'
+    m_Localized: 'Gain {amount} {maxEnergy:choose(True|False): maximum|} <sprite
+      name="Energy">{maxEnergy:choose(True|False):| for this turn}'
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825

@@ -127,7 +127,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 56
-        y: 402
+        y: 367
         width: 500
         height: 531
       alignment: 9
@@ -149,7 +149,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 691
-        y: 129
+        y: 110
         width: 1328
         height: 1083
       alignment: 9
@@ -171,7 +171,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2028
-        y: 172
+        y: 137
         width: 997
         height: 804
       alignment: 9
@@ -184,6 +184,28 @@ TextureImporter:
       bones: []
       spriteID: 286f03f6e95315041a547fa912382bec
       internalID: 2103016240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Energy
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 1186
+        width: 781
+        height: 1317
+      alignment: 9
+      pivot: {x: -0.0011863757, y: 0.23775524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6dc6d88c7bd35148ae4ccb57518f223
+      internalID: 1049207144
       vertices: []
       indices: 
       edges: []
@@ -204,6 +226,7 @@ TextureImporter:
     nameFileIdTable:
       Check: -727081251
       Comfort: 730683644
+      Energy: 1049207144
       Turns: 1018637847
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
