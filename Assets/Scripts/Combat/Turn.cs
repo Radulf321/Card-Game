@@ -12,16 +12,20 @@ public class Turn
         this.effects = effects ?? new List<CardEffect>();
     }
 
-    public bool areRequirementsFulfilled() {
-        foreach (Requirement requirement in requirements) {
-            if (!requirement.isFulfilled()) {
+    public bool areRequirementsFulfilled()
+    {
+        foreach (Requirement requirement in requirements)
+        {
+            if (!requirement.isFulfilled())
+            {
                 return false;
             }
         }
         return true;
     }
 
-    public List<Requirement> getRequirements() {
+    public List<Requirement> getRequirements()
+    {
         return requirements;
     }
 
