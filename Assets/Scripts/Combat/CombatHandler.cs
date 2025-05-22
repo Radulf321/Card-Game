@@ -125,7 +125,7 @@ public class CombatHandler : MonoBehaviour
     public void endTurn()
     {
         // Conditions not fulfilled -> Lost
-        if (!turns[currentTurn].areRequirementsFulfilled())
+        if (!getCurrentTurn().areRequirementsFulfilled())
         {
             loose();
         }
