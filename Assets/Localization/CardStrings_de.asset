@@ -62,6 +62,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
+  - m_Id: 3926566040805376
+    m_Localized: +{amount} <sprite name="Energy">
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
   references:
     version: 2
     RefIds:
@@ -77,3 +82,4 @@ MonoBehaviour:
         - id: 2632551630675968
         - id: 2633323739127808
         - id: 2635793177550848
+        - id: 3926566040805376

@@ -23,7 +23,7 @@ public class TalentAreaHandler : MonoBehaviour
 
     public void SkipPurchase()
     {
-        Game.Instance.EndTurn();
+        Game.Instance.EndRound();
     }
 
     private void renderTalents()

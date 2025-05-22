@@ -92,7 +92,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         turnInfo.gameObject.SetActive(dialog.IsShowUI());
         if (dialog.IsShowUI()) {
             IntVariable amount = new IntVariable();
-            amount.Value = Game.Instance.GetRemainingTurns();
+            amount.Value = Game.Instance.GetRemainingRounds();
             LocalizedString localizedString = turnInfo.GetComponent<LocalizeStringEvent>().StringReference;
             localizedString.Add("amount", amount);
             localizedString.RefreshString();

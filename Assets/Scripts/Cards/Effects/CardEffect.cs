@@ -32,4 +32,9 @@ abstract public class CardEffect {
     {
         return this.getDescription();
     }
+
+    virtual public string getTurnEffectDescription()
+    {
+        return this.getDescription();
+    }
 }

@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 
+#nullable enable
 public class Turn
 {
     private List<Requirement> requirements;
+    private List<CardEffect> effects;
 
-    public Turn() {
-        requirements = new List<Requirement>();
-    }
-
-    public Turn(List<Requirement> requirements) {
-        this.requirements = requirements;
+    public Turn(List<Requirement>? requirements = null, List<CardEffect>? effects = null)
+    {
+        this.requirements = requirements ?? new List<Requirement>();
+        this.effects = effects ?? new List<CardEffect>();
     }
 
     public bool areRequirementsFulfilled() {
@@ -23,5 +23,10 @@ public class Turn
 
     public List<Requirement> getRequirements() {
         return requirements;
+    }
+
+    public List<CardEffect> getEffects()
+    {
+        return this.effects;
     }
 }

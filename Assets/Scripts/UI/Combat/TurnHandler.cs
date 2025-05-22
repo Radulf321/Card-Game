@@ -52,7 +52,7 @@ public class TurnHandler : MonoBehaviour, IViewUpdater
     public void updateView() {
         Transform centerTransform = transform.Find("Center");
         List<Turn> allTurns = CombatHandler.instance.getTurns();
-        int currentTurn = CombatHandler.instance.getCurrentTurn();
+        int currentTurn = CombatHandler.instance.getCurrentTurnIndex();
         int turnIndex = allTurns.IndexOf(turn);
         Color color;
 
@@ -87,7 +87,9 @@ public class TurnHandler : MonoBehaviour, IViewUpdater
         height -= 2 * padding;
         TextMeshProUGUI text =  centerTransform.GetComponentInChildren<TextMeshProUGUI>();
         text.fontSizeMax = height / 3;
-        text.text =  string.Join("\n", turn.getRequirements().Select(req => req.toString()));
+        List<string> texts = turn.getRequirements().Select(req => req.toString()).ToList();
+        texts.AddRange(turn.getEffects().Select(effect => effect.getTurnEffectDescription()));
+        text.text = string.Join("\n", texts);
         foreach (Image child in GetComponentsInChildren<Image>()) {
             child.color = color;
         }

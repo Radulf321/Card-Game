@@ -4,13 +4,15 @@ public class Player
 {
 
     private List<Card> deck;
+    private Dictionary<int, int> energy;
 
     public Player()
     {
-        this.deck = deck = new List<Card>();
+        this.deck = new List<Card>();
+        this.energy = new Dictionary<int, int>();
     }
 
-    public Player(List<string> startingCards)
+    public Player(List<string> startingCards, Dictionary<int, int> energy)
     {
         List<Card> deck = new List<Card>();
         foreach (string cardId in startingCards)
@@ -18,6 +20,7 @@ public class Player
             deck.Add(Game.Instance.GetCard(cardId));
         }
         this.deck = deck;
+        this.energy = energy;
     }
 
     public List<Card> GetDeck()
@@ -33,5 +36,15 @@ public class Player
     public void RemoveCardFromDeck(Card card)
     {
         this.deck.Remove(card);
+    }
+
+    public int GetStartingEnergy()
+    {
+        return GetEnergyForTurn(0);
+    }
+
+    public int GetEnergyForTurn(int turn)
+    {
+        return energy.TryGetValue(turn, out int value) ? value : 0;
     }
 }

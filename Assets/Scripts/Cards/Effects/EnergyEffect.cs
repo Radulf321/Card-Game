@@ -30,6 +30,16 @@ public class EnergyEffect : CardEffect {
         );
     }
 
+    public override string getTurnEffectDescription()
+    {
+        return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "EnergyTurnEffect",
+            arguments: new Dictionary<string, object> {
+                { "amount", this.amount },
+                { "maxEnergy", this.maxEnergy }
+            }
+        );
+    }
+
     public override CardEffect Clone(Card newOwner)
     {
         return new EnergyEffect(this.amount, this.maxEnergy);

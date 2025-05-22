@@ -27,6 +27,10 @@ MonoBehaviour:
     m_Key: Energy
     m_Metadata:
       m_Items: []
+  - m_Id: 3926566040805376
+    m_Key: EnergyTurnEffect
+    m_Metadata:
+      m_Items: []
   - m_Id: 84083125035008
     m_Key: DrawCards
     m_Metadata:

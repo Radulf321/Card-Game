@@ -60,9 +60,15 @@ public class CombatTarget : ActionCharacter {
 
     public List<Turn> GenerateTurns() {
         List<Turn> turns = new List<Turn>();
-        for (int i = 0; i <= this.level; i++) {
-            turns.Add(new Turn());
-            turns.Add(new Turn(GetRandomRequirements(i)));
+        for (int turnIndex = 0; turnIndex < Math.Min((this.level + 1) * 2, 8); turnIndex++) {
+            List<Requirement> requirements = GetRandomRequirements(turnIndex);
+            // turnIndex starts at zero while index for GetEnergyForTurn starts at 1
+            int energy = Game.Instance.GetPlayer().GetEnergyForTurn(turnIndex + 1);
+            List<CardEffect> effects = new List<CardEffect>();
+            if (energy > 0) {
+                effects.Add(new EnergyEffect(energy, maxEnergy: true));
+            }
+            turns.Add(new Turn(requirements: requirements, effects: effects));
         }
 
         return turns;
@@ -125,10 +131,10 @@ public class CombatTarget : ActionCharacter {
 
     public void EndCombat(bool win) {
         if (!win) {
-            Game.Instance.AddRemainingTurns(-1);
+            Game.Instance.AddRemainingRounds(-1);
             DialogHandler.StartDialog(
                 Dialog.FromJson(this.loseDialogData, onFinish: () => {
-                    Game.Instance.EndTurn();
+                    Game.Instance.EndRound();
                 })
             );
         }
@@ -147,9 +153,8 @@ public class CombatTarget : ActionCharacter {
         }
     }
 
-    private List<Requirement> GetRandomRequirements(int goalNumber) {
-        // No Lust requirement for goal 0
-        int numberOfRequirements = ((goalNumber + 1) / 2) + 1;
+    private List<Requirement> GetRandomRequirements(int turn) {
+        int numberOfRequirements = ((turn % 2) == 0) ? 0 : (int)Math.Ceiling((turn - 2) * 0.25) + 1;
         List<int> requirementIndexes = new List<int>();
         List<Requirement> requirements = new List<Requirement>();
         for (int i = 0; i < numberOfRequirements; i++) {
@@ -158,7 +163,7 @@ public class CombatTarget : ActionCharacter {
                 random = UnityEngine.Random.Range(0, this.requirementFactories.Count);
             } while (requirementIndexes.Contains(random));
             requirementIndexes.Add(random);
-            requirements.Add(this.requirementFactories[random].CreateRequirement(goalNumber * 2));
+            requirements.Add(this.requirementFactories[random].CreateRequirement(turn));
         }
 
         return requirements;

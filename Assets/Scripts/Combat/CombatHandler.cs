@@ -12,7 +12,7 @@ public class CombatHandler : MonoBehaviour
 
     private Dictionary<string, int> cardsPlayed = new Dictionary<string, int>();
 
-    private int maxEnergy = 2;
+    private int maxEnergy;
     private int currentEnergy = 0;
 
     private CardPile cardPile;
@@ -24,6 +24,7 @@ public class CombatHandler : MonoBehaviour
     {
         CombatHandler.instance = this;
         transform.Find("BackgroundImage").GetComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>(Game.Instance.GetCurrentCombatTarget().GetCombatBackgroundPath());
+        this.maxEnergy = Game.Instance.GetPlayer().GetStartingEnergy();
         this.cardPile = new CardPile(Game.Instance.GetPlayer().GetDeck());
         this.turns = Game.Instance.GetCurrentCombatTarget().GenerateTurns();
         cardPile.ShuffleDeck();
@@ -84,9 +85,14 @@ public class CombatHandler : MonoBehaviour
         return turns;
     }
 
-    public int getCurrentTurn()
+    public int getCurrentTurnIndex()
     {
         return currentTurn;
+    }
+
+    public Turn getCurrentTurn()
+    {
+        return getTurns()[getCurrentTurnIndex()];
     }
 
     public int getTotal()
@@ -186,6 +192,10 @@ public class CombatHandler : MonoBehaviour
     private void startTurn()
     {
         currentEnergy = maxEnergy;
+        Turn currentTurn = getCurrentTurn();
+        foreach (CardEffect effect in currentTurn.getEffects()) {
+            effect.applyEffect();
+        }
         SendTriggerMessage(new TriggerMessage(TriggerType.StartTurn));
         updateView();
     }

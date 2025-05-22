@@ -8,7 +8,7 @@ class Game
     public static Game Instance { get; private set; } = new Game();
 
     private Player player;
-    private int remainingTurns;
+    private int remainingRounds;
     private List<CombatTarget> combatTargets;
     private List<Location> locations;
 
@@ -28,8 +28,8 @@ class Game
 
     public Game()
     {
-        this.player = new Player(new List<string>());
-        this.remainingTurns = 0;
+        this.player = new Player();
+        this.remainingRounds = 0;
         this.combatTargets = new List<CombatTarget>();
         this.locations = new List<Location>();
         this.goalNames = new Dictionary<string, string>();
@@ -73,7 +73,13 @@ class Game
         this.icons = icons;
 
         this.cardLibrary = new CardLibrary(ResourcePath + "/Cards/");
-        this.player = new Player(index["startingCards"]!.ToObject<List<string>>());
+        Dictionary<int, int> energy = new Dictionary<int, int>();
+        JObject energyObject = (index["startingEnergy"] as JObject)!;
+        foreach (JProperty property in energyObject.Properties())
+        {
+            energy.Add(int.Parse(property.Name), property.Value.ToObject<int>());
+        }
+        this.player = new Player(index["startingCards"]!.ToObject<List<string>>(), energy);
         List<CombatTarget> combatTargets = new List<CombatTarget>();
         TextAsset[] jsonFilesCombatTarget = Resources.LoadAll<TextAsset>(ResourcePath + "/CombatTargets/");
         foreach (TextAsset jsonFile in jsonFilesCombatTarget)
@@ -92,7 +98,7 @@ class Game
             locations.Add(location);
         }
         this.locations = locations;
-        this.remainingTurns = 4;
+        this.remainingRounds = 4;
 
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
         this.checkIcon = index["checkIcon"]!.ToString();
@@ -105,14 +111,14 @@ class Game
         return player;
     }
 
-    public int GetRemainingTurns()
+    public int GetRemainingRounds()
     {
-        return remainingTurns;
+        return remainingRounds;
     }
 
-    public void AddRemainingTurns(int amount)
+    public void AddRemainingRounds(int amount)
     {
-        remainingTurns += amount;
+        remainingRounds += amount;
     }
 
     public CombatTarget GetCurrentCombatTarget()
@@ -120,7 +126,7 @@ class Game
         return combatTargets[0];
     }
 
-    public void StartTurn()
+    public void StartRound()
     {
         string selectActionText;
         if (LocalizationHelper.GetLocalization() == "de")
@@ -138,17 +144,17 @@ class Game
         UnityEngine.SceneManagement.SceneManager.LoadScene("DialogScene");
     }
 
-    public void EndTurn()
+    public void EndRound()
     {
-        remainingTurns--;
-        if (remainingTurns <= 0)
+        remainingRounds--;
+        if (remainingRounds <= 0)
         {
             DialogHandler.StartDialog(this.gameOverDialog);
         }
         else
         {
-            // Start a new turn
-            StartTurn();
+            // Start a new round
+            StartRound();
         }
     }
 

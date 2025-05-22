@@ -27,7 +27,7 @@ public class DebugHandler : MonoBehaviour
 
     public void startGame() {
         Game game = new Game("Symcon");
-        game.StartTurn();
+        game.StartRound();
     }
 
     public void startDialog() {

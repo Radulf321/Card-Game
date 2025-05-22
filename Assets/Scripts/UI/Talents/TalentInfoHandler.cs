@@ -97,7 +97,7 @@ public class TalentInfoHandler : MonoBehaviour
         try
         {
             DialogHandler.dialogFinish = () => {
-                Game.Instance.EndTurn();
+                Game.Instance.EndRound();
             };
             talent?.Purchase();
         }
