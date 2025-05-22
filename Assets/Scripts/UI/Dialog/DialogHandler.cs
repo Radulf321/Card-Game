@@ -138,7 +138,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
         Transform rewardArea = transform.Find("RewardArea");
         rewardArea.gameObject.SetActive(true);
-        rewardArea.Find("RewardCardsArea").GetComponent<DialogCardRewardAreaHandler>().SetRewards(dialog.GetRewards());
+        rewardArea.Find("RewardDisplayArea").GetComponent<RewardAreaHandler>().SetRewards(dialog.GetRewards());
         VerticalLayoutGroup rewardLayoutGroup = rewardArea.GetComponent<VerticalLayoutGroup>();
         Rect rewardRect = rewardArea.GetComponent<RectTransform>().rect;
         rewardLayoutGroup.spacing = rewardRect.height * 0.01f;
