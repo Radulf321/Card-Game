@@ -45,7 +45,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1417602409472000
-    m_Localized: '{amount} <sprite name="Turns"> remaining'
+    m_Localized: '{amount} <sprite name="Rounds"> remaining'
     m_Metadata:
       m_Items:
       - rid: 6401543859698663637

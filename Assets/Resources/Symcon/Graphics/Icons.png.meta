@@ -167,7 +167,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turns
+      name: Rounds
       rect:
         serializedVersion: 2
         x: 2028
@@ -227,7 +227,7 @@ TextureImporter:
       Check: -727081251
       Comfort: 730683644
       Energy: 1049207144
-      Turns: 1018637847
+      Rounds: 2103016240
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

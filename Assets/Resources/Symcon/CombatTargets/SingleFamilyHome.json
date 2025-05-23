@@ -104,8 +104,8 @@
                 {
                     "type": "text",
                     "text": {
-                        "en": "You lose an additional <sprite name=\"Turns\">",
-                        "de": "Du verlierst einen zusätzlichen <sprite name=\"Turns\">"
+                        "en": "You lose an additional <sprite name=\"Rounds\">",
+                        "de": "Du verlierst einen zusätzlichen <sprite name=\"Rounds\">"
                     }
                 }
             ]
