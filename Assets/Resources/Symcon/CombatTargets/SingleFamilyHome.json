@@ -261,6 +261,164 @@
                     ]
                 }
             ]
+        },
+        {
+            "id": "livingRoomSmartTV",
+            "title": {
+                "en": "Living Room: Smart TV",
+                "de": "Wohnzimmer: Smart TV"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Integrate the Smart TV into Symcon and get ready for smart movie nights",
+                "de": "Integriere den Smart TV in Symcon und starte mit smarten Filmabenden durch"
+            },
+            "image": "SingleFamilyHome/BasicVisualization",
+            "rewards": [
+                {
+                    "type": "energy"
+                }
+            ],
+            "prerequisites": [
+                "basicVisualisation"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player",
+                    "right": "SingleFamilyHome"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: All right, your TV is now connected to Symcon. Now, you can adjust any parameters from your visualisation.",
+                        "de": "Du: Alles klar, dein Fernseher ist mit Symcon verbunden. Du kannst jetzt alle Parameter aus deiner Visualisierung anpassen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: Parameters? Like the screen size?",
+                        "de": "Frank: Parameter? Sowas wie die Bildschirmgröße?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: You can't adjust the screen size. But anything you can control via remote, you can now update via Symcon.",
+                        "de": "Du: Du kannst die Bildschirmgröße nicht ändern. Aber alles was du per Fernbedienung machen kannst, kannst du jetzt aus Symcon machen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: That means channels, volume, on/off, starting apps, ...",
+                        "de": "Du: Also Sender, Lautstärke, An/Aus, Apps aufrufen, ..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: Sweet, no more problems when loosing the remote once again!",
+                        "de": "Frank: Klasse, also kein Ärger mehr wenn ich die Fernbedienung mal wieder verliere!"
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "energy"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "livingRoomShutters",
+            "title": {
+                "en": "Living Room: Shutters",
+                "de": "Wohnzimmer: Rollläden"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Control the shutters and block out the sun whenever it disturbs you",
+                "de": "Kontrolliere die Rollläden und halte die Sonne fern wenn sie dich stört"
+            },
+            "image": "SingleFamilyHome/BasicVisualization",
+            "rewards": [
+                {
+                    "type": "energy"
+                }
+            ],
+            "prerequisites": [
+                "basicVisualisation"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player",
+                    "right": "SingleFamilyHome"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: And the shutters are connected now. Should I open them automatically every morning?",
+                        "de": "Du: Und die Rollläden sind jetzt auch verbunden. Soll ich die jeden Morgen automatisch öffnen lassen?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: No, please don't. On weekends I like to keep them shut a bit longer while I slowly start my day...",
+                        "de": "Frank: Nein, bitte nicht. Am Wochenende lass ich es gerne ruhiger angehen und lass sie ein bisschen länger geschlossen..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: No problem, so only on week days?",
+                        "de": "Du: Kein Problem, also nur an Wochentagen?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: Only on week days? That's possible? Next thing you're telling me that you can adjust the opening time depending on the sun rise!",
+                        "de": "Frank: Nur an Wochentagen? Sowas geht? Als nächstes erzählst du mir noch, ich kann die Zeit vom Sonnenaufgang abhängig machen oder sowas!"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You grin to yourself, knowing that's easily possible. But you don't want to overwhelm Frank, so you say nothing.",
+                        "de": "Du grinst innerlich, wohl wissend dass das einfach umsetzbar ist. Aber du willst Frank nicht überfordern und sagst daher lieber nichts."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "rounds",
+                            "amount": 4
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
