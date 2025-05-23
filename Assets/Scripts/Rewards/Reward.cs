@@ -18,6 +18,10 @@ public abstract class Reward
         {
             case "card":
                 return new CardReward(json);
+            case "energy":
+                return new EnergyReward(json);
+            case "rounds":
+                return new RoundsReward(json);
             default:
                 throw new System.Exception("Reward type not recognized: " + type);
         }
