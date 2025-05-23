@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
@@ -23,4 +24,14 @@ public abstract class Reward
     }
     abstract public void Collect();
     abstract public string ToNiceString();
+
+    virtual public string GetCaption()
+    {
+        throw new NotImplementedException();
+    }
+
+    virtual public Sprite GetSprite()
+    {
+        throw new NotImplementedException();
+    }
 }

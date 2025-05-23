@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using UnityEngine.Localization.Settings;
 
 public class CardReward : Reward {
     private Card card;
@@ -18,11 +19,6 @@ public class CardReward : Reward {
         Game.Instance.GetPlayer().AddCardToDeck(this.GetCard());
     }
     public override string ToNiceString() {
-        if (LocalizationHelper.GetLocalization() == "de") {
-            return "Karte";
-        }
-        else {
-            return "Card";
-        }
+        return LocalizationSettings.StringDatabase.GetLocalizedString("RewardStrings", "CardShort");
     }
 }

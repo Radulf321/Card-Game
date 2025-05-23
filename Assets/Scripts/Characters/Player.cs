@@ -47,4 +47,16 @@ public class Player
     {
         return energy.TryGetValue(turn, out int value) ? value : 0;
     }
+
+    public void AddEnergy(int amount, int turn)
+    {
+        if (this.energy.ContainsKey(turn))
+        {
+            energy[turn] += amount;
+        }
+        else
+        {
+            energy[turn] = amount;
+        }
+    }
 }

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: RewardStrings_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 669e2510b0607d741bd9dc651b7481fc, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6401544152646156354
+  m_TableData:
+  - m_Id: 47769755648
+    m_Localized: Card
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112768884736
+    m_Localized: Energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169450708992
+    m_Localized: Rounds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 274664824832
+    m_Localized: + {amount} energy{turn:plural:| in turn {}}
+    m_Metadata:
+      m_Items:
+      - rid: 6401544152646156354
+  - m_Id: 700374097920
+    m_Localized: + {amount} rounds
+    m_Metadata:
+      m_Items:
+      - rid: 6401544152646156354
+  references:
+    version: 2
+    RefIds:
+    - rid: 6401544152646156354
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 274664824832
+        - id: 700374097920

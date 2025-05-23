@@ -10,51 +10,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: UIStrings Shared Data
+  m_Name: RewardStrings Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: UIStrings
-  m_TableCollectionNameGuidString: db007a90c9df74742983ec64a3592fcd
+  m_TableCollectionName: RewardStrings
+  m_TableCollectionNameGuidString: 669e2510b0607d741bd9dc651b7481fc
   m_Entries:
-  - m_Id: 52664508416
-    m_Key: "Close\t"
+  - m_Id: 47769755648
+    m_Key: CardShort
     m_Metadata:
       m_Items: []
-  - m_Id: 126060634112
-    m_Key: TalentPurchase
+  - m_Id: 112768884736
+    m_Key: EnergyShort
     m_Metadata:
       m_Items: []
-  - m_Id: 6692008665088
-    m_Key: TalentAlreadyPurchased
+  - m_Id: 274664824832
+    m_Key: EnergyCaption
     m_Metadata:
       m_Items: []
-  - m_Id: 13495354302464
-    m_Key: TalentSkipPurchase
+  - m_Id: 169450708992
+    m_Key: RoundsShort
     m_Metadata:
       m_Items: []
-  - m_Id: 17830217818112
-    m_Key: TalentReward
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1056307281698816
-    m_Key: EndTurn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1417602409472000
-    m_Key: RemainingRounds
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2513672342380544
-    m_Key: DialogRewardTitle
+  - m_Id: 700374097920
+    m_Key: RoundsCaption
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 6401543859698663636
+    rid: 6401544152646156353
   references:
     version: 2
     RefIds:
-    - rid: 6401543859698663636
+    - rid: 6401544152646156353
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1746909441075
+        m_CustomEpoch: 1748026560898
