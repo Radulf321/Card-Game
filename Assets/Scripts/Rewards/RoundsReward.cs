@@ -3,16 +3,16 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-public class RoundReward : Reward
+public class RoundsReward : Reward
 {
     private int amount;
 
-    public RoundReward(int amount = 1)
+    public RoundsReward(int amount = 1)
     {
         this.amount = amount;
     }
 
-    public RoundReward(JObject rewardData) : this(
+    public RoundsReward(JObject rewardData) : this(
         amount: rewardData["amount"]?.ToObject<int>() ?? 1
     )
     {
