@@ -8,11 +8,13 @@ using UnityEngine.UI;
 public class TalentAreaHandler : MonoBehaviour
 {
     public GameObject talentPrefab;
+    private Transform parent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        transform.parent.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(Game.Instance.GetCurrentCombatTarget().GetTalentBackgroundPath());
+        this.parent = GameObject.Find("Canvas").transform;
+        parent.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(Game.Instance.GetCurrentCombatTarget().GetTalentBackgroundPath());
         renderTalents();
     }
 
@@ -30,9 +32,11 @@ public class TalentAreaHandler : MonoBehaviour
     {
         List<Talent> talents = Game.Instance.GetCurrentCombatTarget().GetTalents();
         Dictionary<string, GameObject> talentObjects = new Dictionary<string, GameObject>();
-        Rect mySize = GetComponent<RectTransform>().rect;
-        float talentHeight = Mathf.Max(240f, mySize.height * 0.4f);
+        Rect parentSize = parent.GetComponent<RectTransform>().rect;
+        float talentHeight = Mathf.Max(240f, parentSize.height * 0.4f);
         float talentWidth = talentHeight * talentPrefab.GetComponent<AspectRatioFitter>().aspectRatio;
+        float heightOffset = 2f / 3f * talentHeight;
+        float maxY = 0;
 
         float currentX = talentWidth;
 
@@ -68,6 +72,9 @@ public class TalentAreaHandler : MonoBehaviour
                 throw new System.Exception("Cannot add talents, no prerequisites met.");
             }
 
+            float currentY = (talentsToAdd.Count - 1) * heightOffset;
+            maxY = Mathf.Max(maxY, currentY);
+
             foreach (Talent talent in talentsToAdd)
             {
                 GameObject cardObject = Instantiate(talentPrefab);
@@ -77,24 +84,26 @@ public class TalentAreaHandler : MonoBehaviour
                 cardRect.anchorMin = new Vector2(0, 0.5f);
                 cardRect.anchorMax = new Vector2(0, 0.5f);
                 cardRect.pivot = new Vector2(0, 0.5f);
-                cardRect.anchoredPosition = new Vector2(currentX, 0);
+                cardRect.anchoredPosition = new Vector2(currentX, currentY);
                 cardRect.sizeDelta = new Vector2(talentWidth, talentHeight);
                 talentObjects.Add(talent.GetID(), cardObject);
                 foreach (string prerequisite in talent.GetPrerequisites())
                 {
-                    DrawUILine(cardRect, talentObjects[prerequisite].GetComponent<RectTransform>());
+                    DrawUILine(talentObjects[prerequisite].GetComponent<RectTransform>(), cardRect);
                 }
+                currentY -= 2 * heightOffset;
             }
             currentX += 3 * talentWidth;
         }
 
-        transform.parent.Find("AvailableExperienceInfo").GetComponent<TMPro.TextMeshProUGUI>().text = string.Join("\n", Game.Instance.GetCurrentCombatTarget().GetExperience().Select((KeyValuePair<string, int> kvp) => Game.Instance.GetExperienceTypeInlineIcon(kvp.Key) + ": " + kvp.Value.ToString()));
+        parent.Find("AvailableExperienceInfo").GetComponent<TMPro.TextMeshProUGUI>().text = string.Join("\n", Game.Instance.GetCurrentCombatTarget().GetExperience().Select((KeyValuePair<string, int> kvp) => Game.Instance.GetExperienceTypeInlineIcon(kvp.Key) + ": " + kvp.Value.ToString()));
+        GetComponent<RectTransform>().sizeDelta = new Vector2(Mathf.Max(parentSize.width, currentX - talentWidth), Mathf.Max(parentSize.height, 2 * (maxY + talentHeight)));
     }
 
     private void DrawUILine(RectTransform startRect, RectTransform endRect)
     {
-        Vector2 start = startRect.TransformPoint(startRect.rect.center);
-        Vector2 end = endRect.TransformPoint(endRect.rect.center);
+        Vector2 start = startRect.anchoredPosition + startRect.rect.center;
+        Vector2 end = endRect.anchoredPosition + endRect.rect.center;
         GameObject line = new GameObject("UILine");
         line.transform.SetParent(transform, false);
         line.transform.SetSiblingIndex(0); // Set the line to be behind other UI elements
@@ -105,9 +114,12 @@ public class TalentAreaHandler : MonoBehaviour
 
         // Set the size and position
         Vector2 direction = end - start;
+        // Assure same anchoring as talents
+        rectTransform.anchorMin = startRect.anchorMin;
+        rectTransform.anchorMax = startRect.anchorMax;
         rectTransform.sizeDelta = new Vector2(direction.magnitude, 2f); // Line width is 2
         rectTransform.pivot = new Vector2(0, 0.5f); // Pivot at the start of the line
-        rectTransform.position = start;
+        rectTransform.anchoredPosition = start;
 
         // Rotate the line to match the direction
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
