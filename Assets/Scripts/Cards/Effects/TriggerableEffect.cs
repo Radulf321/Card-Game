@@ -55,8 +55,6 @@ public class TriggerableEffect : CardEffect
 
     public override string getDescription()
     {
-        Debug.Log(this.limitType);
-        Debug.Log(this.limit);
         return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "Triggerable",
             arguments: new Dictionary<string, object?> {
                 { "condition", this.condition.GetDescription() },
