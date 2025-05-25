@@ -357,7 +357,7 @@
             "image": "SingleFamilyHome/BasicVisualization",
             "rewards": [
                 {
-                    "type": "energy"
+                    "type": "rounds"
                 }
             ],
             "prerequisites": [
@@ -415,6 +415,112 @@
                         {
                             "type": "rounds",
                             "amount": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "livingRoomSoundSystem",
+            "title": {
+                "en": "Living Room: Sound System",
+                "de": "Wohnzimmer: Soundsystem"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Calm ambient sounds or heavy music at its finest. Control the audio just the way you want",
+                "de": "Ruhige Ambientklänge oder harte Musik aus allen Rohren. Kontrolliere den Sound genau so wie du es möchtest"
+            },
+            "image": "SingleFamilyHome/BasicVisualization",
+            "rewards": [
+                {
+                    "type": "card",
+                    "card": "perfectBalance"
+                }
+            ],
+            "prerequisites": [
+                "basicVisualisation"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player"
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "After integrating the sound sytem into Symcon, you test it and play your favorite band: Die Kelterer des Wahren Mets",
+                        "de": "Nachdem du das Soundsystem in Symcon integriert hast, testest du es und spielst deine Lieblingsband ab: Die Kelterer des Wahren Mets"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You (singing along): Through trials and strife, they stand hand in hand, with teamwork they conquer, across the land",
+                        "de": "Du (am mitsingen): Wo erklingen Hörner jedes Jahr? Auf dem Hörnerfest! Wo gibt's vom guten Met? Auf dem Hörnerfest!"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You (singing along): Mead-fueled camaraderie, their spirits ignite, in the face of danger, they shine so bright",
+                        "de": "Du (am mitsingen): Wo sind die Lauten niemals still? Auf dem Hörnerfest! Da tanzt das Volk im wilden Kreis, leere dein Horn und feier mit!"
+                    }
+                },
+                {
+                    "type": "image",
+                    "right": "SingleFamilyHome"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: What's going on here?",
+                        "de": "Frank: Was ist denn hier los?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You lower the volume with your tablet so you can show Frank the new integration",
+                        "de": "Du senkst die Lautstärke mit deinem Tablet um Frank die neue Integration zu zeigen"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I was just testing the sound system. And it looks like everything works great. Now, you can control it from your visualization.",
+                        "de": "Du: Ich habe gerade das Soundsystem getestet. Und es sieht alles gut aus. Du kannst es jetzt aus der Visualisierung steuern."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: Did you just control the volume via tablet? I don't need to get up and use the slider every time my favorite song plays? Great!",
+                        "de": "Frank: Hast du die Lautstärke gerade vom Tablet aus gesteuert? Ich muss nicht mehr jedes mal aufstehen und den Regler benutzen wenn mein Lieblingslied spielt? Großartig!"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: And what band did you just play? It was really good",
+                        "de": "Frank: Und was für eine Band hast du da gerade gehört? Die klangen richtig gut"
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "perfectBalance"
                         }
                     ]
                 }
