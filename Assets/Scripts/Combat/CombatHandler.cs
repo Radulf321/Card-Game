@@ -72,7 +72,7 @@ public class CombatHandler : MonoBehaviour
         updateView();
     }
 
-    public int getSubjectAmount(string goal)
+    public int getGoalAmount(string goal)
     {
         if (goals.ContainsKey(goal))
         {
