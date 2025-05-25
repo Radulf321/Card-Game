@@ -1,0 +1,56 @@
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using UnityEngine.Localization.Settings;
+
+public class RequirementGoalEffect : CardEffect {
+    private Dictionary<string, int> requirements;
+
+    public RequirementGoalEffect(Dictionary<string, int> requirements)
+    {
+        this.requirements = requirements;
+    }
+
+    public RequirementGoalEffect(JObject json) {
+        Dictionary<string, int> requirements = new Dictionary<string, int>();
+        foreach (JProperty requirement in (json["requirements"] as JObject).Properties())
+        {
+            requirements.Add(requirement.Name, requirement.Value.ToObject<int>());
+        }
+        this.requirements = requirements;
+    }
+
+    public override void applyEffect() {
+        // It's only a requirement to play, so no effects
+    }
+
+    public override bool canPlay()
+    {
+        CombatHandler combatHandler = CombatHandler.instance;
+        foreach (KeyValuePair<string, int> requirement in this.requirements)
+        {
+            if (combatHandler.getGoalAmountThisTurn(requirement.Key) < requirement.Value) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public override CardEffect Clone(Card newOwner)
+    {
+        return new RequirementGoalEffect(this.requirements);
+    }
+
+    public override string getDescription() {
+        List<string> requirementStrings = new List<string>();
+        foreach (KeyValuePair<string, int> requirement in this.requirements)
+        {
+            requirementStrings.Add(requirement.Value.ToString() + " " + Game.Instance.GetGoalName(requirement.Key));
+        }
+        return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "RequirementGoal",
+            arguments: new Dictionary<string, object> {
+                { "requirements", requirementStrings },
+                { "length", requirementStrings.Count },
+            }
+        );
+    }
+}

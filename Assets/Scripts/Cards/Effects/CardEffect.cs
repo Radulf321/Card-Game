@@ -14,6 +14,7 @@ abstract public class CardEffect {
             "caption" => new CaptionEffect(json),
             "afterPlay" => new AfterPlayEffect(json, owner),
             "triggerable" => new TriggerableEffect(json, owner),
+            "requirementGoal" => new RequirementGoalEffect(json),
             _ => throw new System.Exception("Invalid card effect type: " + type),
         };
     }

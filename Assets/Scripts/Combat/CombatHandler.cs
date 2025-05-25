@@ -9,6 +9,7 @@ public class CombatHandler : MonoBehaviour
     private int currentTurn = 0;
     private List<Turn> turns;
     private Dictionary<string, int> goals = new Dictionary<string, int>();
+    private Dictionary<string, int> goalsThisTurn = new Dictionary<string, int>();
 
     private Dictionary<string, int> cardsPlayed = new Dictionary<string, int>();
 
@@ -80,6 +81,15 @@ public class CombatHandler : MonoBehaviour
         return 0;
     }
 
+    public int getGoalAmountThisTurn(string goal)
+    {
+        if (goalsThisTurn.ContainsKey(goal))
+        {
+            return goalsThisTurn[goal];
+        }
+        return 0;
+    }
+
     public List<Turn> getTurns()
     {
         return turns;
@@ -114,6 +124,14 @@ public class CombatHandler : MonoBehaviour
         else
         {
             goals.Add(goal, amount);
+        }
+        if (goalsThisTurn.ContainsKey(goal))
+        {
+            goalsThisTurn[goal] += amount;
+        }
+        else
+        {
+            goalsThisTurn.Add(goal, amount);
         }
         if (trigger == CardEffectTrigger.PlayCard)
         {
@@ -192,6 +210,7 @@ public class CombatHandler : MonoBehaviour
     private void startTurn()
     {
         currentEnergy = maxEnergy;
+        goalsThisTurn.Clear();
         Turn currentTurn = getCurrentTurn();
         foreach (CardEffect effect in currentTurn.getEffects()) {
             effect.applyEffect();
