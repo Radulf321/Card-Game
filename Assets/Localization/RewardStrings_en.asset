@@ -32,7 +32,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 274664824832
-    m_Localized: + {amount} energy{turn:plural:| in turn {}}
+    m_Localized: + {amount} energy{turn:choose(0):| in turn {}}
     m_Metadata:
       m_Items:
       - rid: 6401544152646156354
