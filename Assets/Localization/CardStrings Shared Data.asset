@@ -51,6 +51,10 @@ MonoBehaviour:
     m_Key: ConditionAddGoal
     m_Metadata:
       m_Items: []
+  - m_Id: 5164853212520448
+    m_Key: RequirementGoal
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
