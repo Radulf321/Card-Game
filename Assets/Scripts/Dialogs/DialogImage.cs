@@ -35,6 +35,10 @@ public class DialogImage : Dialog
 
     public string? GetBackgroundImagePath()
     {
+        if (backgroundImagePath == null)
+        {
+            return null;
+        }
         return Game.Instance.GetResourcePath() + "/Graphics/Backgrounds/" + backgroundImagePath;
     }
 
