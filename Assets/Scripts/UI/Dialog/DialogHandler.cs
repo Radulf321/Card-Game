@@ -138,16 +138,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
         Transform rewardArea = transform.Find("RewardArea");
         rewardArea.gameObject.SetActive(true);
-        rewardArea.Find("RewardDisplayArea").GetComponent<RewardAreaHandler>().SetRewards(dialog.GetRewards());
-        VerticalLayoutGroup rewardLayoutGroup = rewardArea.GetComponent<VerticalLayoutGroup>();
-        Rect rewardRect = rewardArea.GetComponent<RectTransform>().rect;
-        rewardLayoutGroup.spacing = rewardRect.height * 0.01f;
-        rewardLayoutGroup.padding = new RectOffset(
-            Mathf.FloorToInt(rewardRect.width * 0.02f),
-            Mathf.FloorToInt(rewardRect.width * 0.02f),
-            Mathf.FloorToInt(rewardRect.height * 0.02f),
-            Mathf.FloorToInt(rewardRect.height * 0.02f)
-        );
+        rewardArea.Find("RewardContainer").Find("RewardDisplayArea").GetComponent<RewardAreaHandler>().SetRewards(dialog.GetRewards());
         this.onClickAction = dialog.GetOnFinish();
     }
 
