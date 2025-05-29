@@ -1,5 +1,6 @@
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Threading.Tasks;
+using TMPro;
 
 public static class AsyncHelper
 {
@@ -12,5 +13,10 @@ public static class AsyncHelper
             };
 
         return result.Task;
+    }
+
+    public static async void UpdateTextFromTask(TextMeshProUGUI textField, Task<string> textSource)
+    {
+        textField.text = await textSource;
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System;
+using TMPro;
 
 #nullable enable
 public class RewardDisplayHandler : MonoBehaviour, IViewUpdater
@@ -29,9 +29,14 @@ public class RewardDisplayHandler : MonoBehaviour, IViewUpdater
                 cardHandler.SetCard(cardReward.GetCard());
                 cardHandler.SetActive(false);
             }
-            else
+            else if (reward != null)
             {
-                throw new Exception("Unknown Reward Type: " + reward?.ToString());
+                transform.Find("CardReward").gameObject.SetActive(false);
+                Transform spriteTransform = transform.Find("SpriteReward");
+                spriteTransform.Find("Image").GetComponent<Image>().sprite = reward.GetSprite();
+                AsyncHelper.UpdateTextFromTask(spriteTransform.Find("Text").GetComponent<TextMeshProUGUI>(), reward.GetCaption());
+                spriteTransform.gameObject.SetActive(true);
+
             }
             transform.GetComponentInParent<LayoutElement>().preferredWidth = transform.GetComponentInParent<RectTransform>().rect.height * transform.GetComponentInParent<AspectRatioFitter>().aspectRatio;
             this.shouldUpdate = false;
