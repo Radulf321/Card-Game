@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -36,19 +37,19 @@ public class EnergyReward : Reward
         Game.Instance.GetPlayer().AddEnergy(GetAmount(), GetTurn());
     }
 
-    public override string ToNiceString()
+    public override Task<string> ToNiceString()
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("RewardStrings", "EnergyShort");
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("RewardStrings", "EnergyShort"));
     }
 
-    public override string GetCaption()
+    public override Task<string> GetCaption()
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("RewardStrings", "EnergyCaption",
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("RewardStrings", "EnergyCaption",
             arguments: new Dictionary<string, object> {
                 { "amount", GetAmount() },
                 { "turn", GetTurn() }
             }
-        );
+        ));
     }
 
     public override Sprite GetSprite()

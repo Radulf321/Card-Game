@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
@@ -25,24 +26,24 @@ public class EnergyEffect : CardEffect
         CombatHandler.instance.gainEnergy(this.amount, this.maxEnergy);
     }
 
-    public override string getDescription()
+    public override Task<string> getDescription()
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "Energy",
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "Energy",
             arguments: new Dictionary<string, object> {
                 { "amount", this.amount },
                 { "maxEnergy", this.maxEnergy }
             }
-        );
+        ));
     }
 
-    public override string getTurnEffectDescription()
+    public override Task<string> getTurnEffectDescription()
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "EnergyTurnEffect",
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "EnergyTurnEffect",
             arguments: new Dictionary<string, object> {
                 { "amount", this.amount },
                 { "maxEnergy", this.maxEnergy }
             }
-        );
+        ));
     }
 
     public override CardEffect Clone(Card newOwner)

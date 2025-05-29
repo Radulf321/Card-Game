@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 #nullable enable
@@ -81,9 +81,12 @@ public class TalentInfoHandler : MonoBehaviour
         }
 
         Transform confirmButton = rightArea.Find("ButtonArea").Find("ConfirmButton");
-        confirmButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = talent.IsPurchased() ?
-                LocalizationSettings.StringDatabase.GetLocalizedString("UIStrings", "TalentAlreadyPurchased") :
-                LocalizationSettings.StringDatabase.GetLocalizedString("UIStrings", "TalentPurchase", arguments: new Dictionary<string, object> { { "cost", GetCostString(talent.GetCost()) } });
+        AsyncOperationHandle<string> confirmButtonLocalization = talent.IsPurchased() ?
+                LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "TalentAlreadyPurchased") :
+                LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "TalentPurchase", arguments: new Dictionary<string, object> { { "cost", GetCostString(talent.GetCost()) } });
+        confirmButtonLocalization.Completed += op => {
+            confirmButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = op.Result;
+        };
         confirmButton.GetComponent<Button>().interactable = !talent.IsPurchased();
     }
 

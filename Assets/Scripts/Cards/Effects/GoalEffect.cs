@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
@@ -37,22 +38,22 @@ public class GoalEffect : CardEffect
         return new GoalEffect(this.goal, this.amountCalculation, newOwner, this.trigger);
     }
 
-    private string GetDescription(string tableEntry)
+    private Task<string> GetDescription(string tableEntry)
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", tableEntry,
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
             arguments: new Dictionary<string, object> {
                 { "amount", this.amountCalculation.GetValue(this.owner) },
                 { "goal", Game.Instance.GetGoalName(this.goal) }
             }
-        );
+        ));
     }
 
-    public override string getDescription()
+    public override Task<string> getDescription()
     {
         return GetDescription("Goal");
     }
 
-    public override string getTriggerDescription()
+    public override Task<string> getTriggerDescription()
     {
         return GetDescription("GoalTrigger");
     }

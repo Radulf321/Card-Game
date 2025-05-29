@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class RequirementGoalEffect : CardEffect {
     private Dictionary<string, int> requirements;
@@ -40,17 +42,17 @@ public class RequirementGoalEffect : CardEffect {
         return new RequirementGoalEffect(this.requirements);
     }
 
-    public override string getDescription() {
+    public override Task<string> getDescription() {
         List<string> requirementStrings = new List<string>();
         foreach (KeyValuePair<string, int> requirement in this.requirements)
         {
             requirementStrings.Add(requirement.Value.ToString() + " " + Game.Instance.GetGoalName(requirement.Key));
         }
-        return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "RequirementGoal",
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "RequirementGoal",
             arguments: new Dictionary<string, object> {
                 { "requirements", requirementStrings },
                 { "length", requirementStrings.Count },
             }
-        );
+        ));
     }
 }

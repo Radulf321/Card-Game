@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Unity.Properties;
 using UnityEngine.SceneManagement;
 
 #nullable enable
@@ -75,7 +75,7 @@ public class Talent {
         return this.cost;
     }
 
-    public string GetDescription() {
+    public async Task<string> GetDescription() {
         if (this.rewards.Count == 0) {
             return this.description;
         }
@@ -86,7 +86,12 @@ public class Talent {
             } else {
                 rewardName = "Reward";
             }
-            return this.description + "\n\n" + rewardName + ": " + string.Join(",", this.rewards.ConvertAll(reward => reward.ToNiceString()));
+            List<string> rewardStrings = new List<string>();
+            foreach (Reward reward in this.rewards)
+            {
+                rewardStrings.Add(await reward.ToNiceString());
+            }
+            return this.description + "\n\n" + rewardName + ": " + string.Join(",", rewardStrings);
         }
     }
 

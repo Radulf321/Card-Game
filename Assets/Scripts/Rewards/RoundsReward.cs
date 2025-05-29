@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -28,18 +29,18 @@ public class RoundsReward : Reward
         Game.Instance.AddRemainingRounds(GetAmount());
     }
 
-    public override string ToNiceString()
+    public override Task<string> ToNiceString()
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("RewardStrings", "RoundsShort");
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("RewardStrings", "RoundsShort"));
     }
 
-    public override string GetCaption()
+    public override Task<string> GetCaption()
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("RewardStrings", "RoundsCaption",
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("RewardStrings", "RoundsCaption",
             arguments: new Dictionary<string, object> {
                 { "amount", GetAmount() }
             }
-        );
+        ));
     }
 
     public override Sprite GetSprite()

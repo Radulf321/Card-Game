@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
@@ -28,11 +29,11 @@ public class AfterPlayEffect : CardEffect {
         return new AfterPlayEffect(this.afterPlay, newOwner ?? this.owner);
     }
 
-    public override string getDescription() {
+    public override Task<string> getDescription() {
         switch (this.afterPlay)
         {
             case CardAfterPlay.RemovePermanent:
-                return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "RemovePermanent");
+                return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "RemovePermanent"));
 
             default:
                 throw new NotImplementedException();

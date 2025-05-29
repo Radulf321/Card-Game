@@ -36,9 +36,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
             nameArea.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text =
                 this.title ?? card?.GetName() ??
                 talent?.GetTitle() ?? "This should never be visible";
-            GetDescriptionText().text =
-                this.description ?? card?.GetDescription() ??
-                talent?.GetDescription() ?? "This should never be visible";
+            updateDescription();
             Transform costArea = nameArea.Find("CostArea");
             costArea.gameObject.SetActive(this.costSprite != null);
             if (this.costSprite != null)
@@ -50,7 +48,8 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
                 costText.text = this.cost ?? card?.GetCost().ToString() ?? (talent!.IsPurchased() ? "" : talent!.GetCost().First().Value.ToString());
             }
             Image image = transform.Find("Image").GetComponent<Image>();
-            if (image.sprite != this.sprite) {
+            if (image.sprite != this.sprite)
+            {
                 image.sprite = this.sprite;
                 RectTransform parentRectTransform = transform.GetComponentInParent<RectTransform>();
                 LayoutRebuilder.ForceRebuildLayoutImmediate(parentRectTransform);
@@ -81,7 +80,8 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
         this.talent = talent;
         this.card = null;
         this.sprite = Resources.Load<Sprite>(talent.GetImagePath());
-        if (talent.IsPurchased()) {
+        if (talent.IsPurchased())
+        {
             this.costSprite = Game.Instance.GetCheckIcon();
         }
         else if (talent.GetCost().Count == 0)
@@ -169,7 +169,6 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
         }
         if (talent != null)
         {
-            Debug.Log(FindAnyObjectByType<TalentInfoHandler>(FindObjectsInactive.Include));
             FindAnyObjectByType<TalentInfoHandler>(FindObjectsInactive.Include).ShowTalent(talent);
             transform.parent.GetComponent<HoverHandler>().StopHover();
         }
@@ -196,6 +195,26 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
     public string GetTitle()
     {
         return this.title ?? card?.GetName() ?? talent?.GetTitle() ?? "This should never be visible";
+    }
+
+    private async void updateDescription()
+    {
+        if (this.description != null)
+        {
+            GetDescriptionText().text = this.description;
+        }
+        else if (card != null)
+        {
+            GetDescriptionText().text = await card!.GetDescription();
+        }
+        else if (talent != null)
+        {
+            GetDescriptionText().text = await talent!.GetDescription();
+        }
+        else
+        {
+            GetDescriptionText().text = "This should never be visible";
+        }
     }
 
     private TMPro.TextMeshProUGUI GetDescriptionText()

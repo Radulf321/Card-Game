@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 public class CaptionEffect : CardEffect {
@@ -22,7 +23,7 @@ public class CaptionEffect : CardEffect {
         return new CaptionEffect(this.caption);
     }
 
-    public override string getDescription() {
-        return this.caption;
+    public override Task<string> getDescription() {
+        return Task.FromResult(this.caption);
     }
 }

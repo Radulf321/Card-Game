@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 #nullable enable
 
@@ -120,9 +121,13 @@ public class Card
         return this.name;
     }
 
-    public string GetDescription()
+    public async Task<string> GetDescription()
     {
-        return string.Join("\n", effects.Select(effect => effect.getDescription()));
+        List<string> descriptions = new List<string>();
+        foreach (CardEffect effect in this.effects) {
+            descriptions.Add(await effect.getDescription());
+        }
+        return string.Join("\n", descriptions);
     }
 
     public string GetImagePath()

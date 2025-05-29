@@ -1,5 +1,5 @@
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 
 #nullable enable
 abstract public class CardEffect {
@@ -20,7 +20,7 @@ abstract public class CardEffect {
     }
     abstract public void applyEffect();
 
-    abstract public string getDescription();
+    abstract public Task<string> getDescription();
 
     abstract public CardEffect Clone(Card? newOwner);
 
@@ -29,12 +29,12 @@ abstract public class CardEffect {
         return true;
     }
 
-    virtual public string getTriggerDescription()
+    virtual public Task<string> getTriggerDescription()
     {
         return this.getDescription();
     }
 
-    virtual public string getTurnEffectDescription()
+    virtual public Task<string> getTurnEffectDescription()
     {
         return this.getDescription();
     }

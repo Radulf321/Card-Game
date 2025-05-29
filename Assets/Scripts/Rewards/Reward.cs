@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -27,9 +28,9 @@ public abstract class Reward
         }
     }
     abstract public void Collect();
-    abstract public string ToNiceString();
+    abstract public Task<string> ToNiceString();
 
-    virtual public string GetCaption()
+    virtual public Task<string> GetCaption()
     {
         throw new NotImplementedException();
     }

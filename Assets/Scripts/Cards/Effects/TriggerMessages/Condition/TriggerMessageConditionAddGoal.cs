@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
@@ -8,6 +9,12 @@ public class TriggerMessageConditionAddGoal : TriggerMessageCondition
 {
     string? goal;
     int min;
+
+    public TriggerMessageConditionAddGoal(string? goal = null, int min = 1)
+    {
+        this.goal = goal;
+        this.min = min;
+    }
 
     public TriggerMessageConditionAddGoal(JObject json)
     {
@@ -26,13 +33,13 @@ public class TriggerMessageConditionAddGoal : TriggerMessageCondition
         return ((this.goal == null) || (this.goal == data.GetGoal())) && (data.GetAmount() >= this.min);
     }
 
-    public override string GetDescription()
+    public override Task<string> GetDescription()
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "ConditionAddGoal",
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "ConditionAddGoal",
             arguments: new Dictionary<string, object> {
                 { "min", this.min },
                 { "goal", Game.Instance.GetGoalName(this.goal ?? "unknown")}
             }
-        );
+        ));
     }
 }

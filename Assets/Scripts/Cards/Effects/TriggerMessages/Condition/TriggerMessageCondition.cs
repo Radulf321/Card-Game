@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 public abstract class TriggerMessageCondition
@@ -14,5 +15,5 @@ public abstract class TriggerMessageCondition
     }
 
     public abstract bool FulfillsCondition(TriggerMessage message);
-    public abstract string GetDescription();
+    public abstract Task<string> GetDescription();
 }

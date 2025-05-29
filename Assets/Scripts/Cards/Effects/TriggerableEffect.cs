@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 using UnityEngine.Localization.Settings;
 
 #nullable enable
@@ -53,16 +53,18 @@ public class TriggerableEffect : CardEffect
         return new TriggerableEffect(this.condition, this.triggerEffect.Clone(newOwner), newOwner ?? this.owner, limitType: this.limitType, limit: this.limit);
     }
 
-    public override string getDescription()
+    public override async Task<string> getDescription()
     {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "Triggerable",
+        string conditionDescription = await this.condition.GetDescription();
+        string effectDescription = await this.triggerEffect.getTriggerDescription();
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "Triggerable",
             arguments: new Dictionary<string, object?> {
-                { "condition", this.condition.GetDescription() },
-                { "effect", this.triggerEffect.getTriggerDescription() },
+                { "condition", conditionDescription },
+                { "effect", effectDescription },
                 { "limitType", this.limitType },
                 { "limit", this.limit }
             }
-        );
+        ));
     }
 
     private void HandleMessage(TriggerMessage triggerMessage)

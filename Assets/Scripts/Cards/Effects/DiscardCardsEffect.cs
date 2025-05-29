@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
@@ -29,11 +30,11 @@ public class DiscardCardsEffect : CardEffect {
         return new DiscardCardsEffect(this.amount);
     }
 
-    public override string getDescription() {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("CardStrings", "DiscardCards",
+    public override Task<string> getDescription() {
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "DiscardCards",
             arguments: new Dictionary<string, object> {
                 { "amount", this.amount },
             }
-        );
+        ));
     }
 }

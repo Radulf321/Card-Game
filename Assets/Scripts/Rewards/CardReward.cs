@@ -1,24 +1,31 @@
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
-public class CardReward : Reward {
+public class CardReward : Reward
+{
     private Card card;
 
-    public CardReward(Card card) {
+    public CardReward(Card card)
+    {
         this.card = card;
     }
 
-    public CardReward(JObject rewardData) {
+    public CardReward(JObject rewardData)
+    {
         this.card = Game.Instance.GetCard(rewardData["card"]?.ToString() ?? "Undefined");
     }
 
-    public Card GetCard() {
+    public Card GetCard()
+    {
         return card;
     }
-    public override void Collect() {
+    public override void Collect()
+    {
         Game.Instance.GetPlayer().AddCardToDeck(this.GetCard());
     }
-    public override string ToNiceString() {
-        return LocalizationSettings.StringDatabase.GetLocalizedString("RewardStrings", "CardShort");
+    public override Task<string> ToNiceString()
+    {
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("RewardStrings", "CardShort"));
     }
 }
