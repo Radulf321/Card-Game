@@ -49,18 +49,13 @@ jobs:
 
       # Deploy auf GitHub Pages (Ziel: radulf321.github.io)
       - name: Deploy to GitHub Pages (User Page)
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           # Dieses Token muss Schreibrechte für das ZIEL-Repository haben (radulf321.github.io)
-          github_token: ${{ secrets.ACCESS_TOKEN }}
+          personal_token: ${{ secrets.ACCESS_TOKEN }}
           # Das ZIEL-Repository, auf das gepusht werden soll
           external_repository: radulf321/radulf321.github.io
           # Der Branch im ZIEL-Repository, auf den gepusht werden soll (normalerweise 'main' oder 'master' für User Pages)
           publish_branch: main
           # Der Ordner, der den Build-Output enthält (aus deinem Unity-Projekt-Repo)
           publish_dir: ./build/WebGL # game-ci/unity-builder legt WebGL in 'build/WebGL' ab
-
-          # Optional: Benutzername und E-Mail für den Git-Commit im ZIEL-Repo
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: "Deploy Unity WebGL build from ${{ github.repository }}" # Angabe, woher der Build kommt
