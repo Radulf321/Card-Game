@@ -58,4 +58,4 @@ jobs:
           # Der Branch im ZIEL-Repository, auf den gepusht werden soll (normalerweise 'main' oder 'master' für User Pages)
           publish_branch: main
           # Der Ordner, der den Build-Output enthält (aus deinem Unity-Projekt-Repo)
-          publish_dir: ./build/WebGL # game-ci/unity-builder legt WebGL in 'build/WebGL' ab
+          publish_dir: ./build/WebGL/WebGL # game-ci/unity-builder legt WebGL in 'build/WebGL/WebGL' ab
