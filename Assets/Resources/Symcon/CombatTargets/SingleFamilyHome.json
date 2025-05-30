@@ -275,7 +275,7 @@
                 "en": "Integrate the Smart TV into Symcon and get ready for smart movie nights",
                 "de": "Integriere den Smart TV in Symcon und starte mit smarten Filmabenden durch"
             },
-            "image": "SingleFamilyHome/BasicVisualization",
+            "image": "SingleFamilyHome/LivingRoomSmartTV",
             "rewards": [
                 {
                     "type": "energy"
@@ -354,7 +354,7 @@
                 "en": "Control the shutters and block out the sun whenever it disturbs you",
                 "de": "Kontrolliere die Rollläden und halte die Sonne fern wenn sie dich stört"
             },
-            "image": "SingleFamilyHome/BasicVisualization",
+            "image": "SingleFamilyHome/LivingRoomShutters",
             "rewards": [
                 {
                     "type": "rounds"
@@ -433,7 +433,7 @@
                 "en": "Calm ambient sounds or heavy music at its finest. Control the audio just the way you want",
                 "de": "Ruhige Ambientklänge oder harte Musik aus allen Rohren. Kontrolliere den Sound genau so wie du es möchtest"
             },
-            "image": "SingleFamilyHome/BasicVisualization",
+            "image": "SingleFamilyHome/LivingRoomSoundSystem",
             "rewards": [
                 {
                     "type": "card",
@@ -521,6 +521,73 @@
                         {
                             "type": "card",
                             "card": "perfectBalance"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "livingRoomSceneControl",
+            "title": {
+                "en": "Living Room: Scene Control",
+                "de": "Wohnzimmer: Szenensteuerung"
+            },
+            "cost": {
+                "comfort": 2
+            },
+            "description": {
+                "en": "Preparing scenes and restoring them with a single tap allows comfortable switching to common configurations",
+                "de": "Szenen vorbereiten und mit einer einfachen Berührung wieder aufzurufen ermöglicht ein komfortables Schalten auf übliche Konfigurationen"
+            },
+            "image": "SingleFamilyHome/LivingRoomSceneControl",
+            "rewards": [
+                {
+                    "type": "card",
+                    "card": "inTheFlow"
+                }
+            ],
+            "prerequisites": [
+                "livingRoomSmartTV",
+                "livingRoomShutters",
+                "livingRoomSoundSystem"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player",
+                    "right": "SingleFamilyHome"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: All right, one scene for watching movies, one scene for starting the day, and another one for cleaning. Any other wishes?",
+                        "de": "Du: Also, eine Szene für Filme gucken, eine Szene für den Start in den Tag und noch eine zum Putzen. Sonst noch Wünsche?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: Maybe something for a nice evening when drinking a wine with my wife? Soft light, some calm music, something like that?",
+                        "de": "Frank: Vielleicht etwas für einen netten Abend wenn ich mit meiner Frau einen Wein trinke? Sanftes Licht, ein bisschen ruhige Musik, irgendwie sowas?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Of course! I see you're starting to get the hang of what we can do here. Let's prepare the scene for romantic evenings.",
+                        "de": "Du: Natürlich! Ich sehe, du verstehst langsam was wir so machen können. Lass uns eine Szene für romantische Abende vorbereiten."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "inTheFlow"
                         }
                     ]
                 }
