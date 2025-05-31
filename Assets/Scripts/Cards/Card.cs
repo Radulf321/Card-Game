@@ -66,6 +66,13 @@ public class Card
 
     public bool CanPlay()
     {
+        foreach (CardEffect effect in effects)
+        {
+            if (!effect.canPlay())
+            {
+                return false;
+            }
+        }
         return this.cost <= CombatHandler.instance.getCurrentEnergy();
     }
 
