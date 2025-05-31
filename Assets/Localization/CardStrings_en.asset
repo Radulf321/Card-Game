@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205825
   - m_Id: 5164853212520448
-    m_Localized: Only playable if you caused at least {requirements|list:{}|, |{length|plural|
+    m_Localized: Only playable if you caused at least {requirements:list:{}|, |{length|plural|
       and | and | and |, and}} this turn
     m_Metadata:
       m_Items:

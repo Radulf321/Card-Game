@@ -68,7 +68,7 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205826
   - m_Id: 5164853212520448
-    m_Localized: Nur spielbar, wenn du in diesem Zug mindestens {requirements|list:{}|,
+    m_Localized: Nur spielbar, wenn du in diesem Zug mindestens {requirements:list:{}|,
       | und } verursacht hast
     m_Metadata:
       m_Items:
