@@ -136,6 +136,6 @@ public class Talent {
 
         DialogHandler.firstDialog = GetDialog();
         this.purchased = true;
-        SceneManager.LoadScene("DialogScene");
+        FadeHandler.Instance!.LoadScene("DialogScene");
     }
 }

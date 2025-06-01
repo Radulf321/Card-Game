@@ -115,9 +115,11 @@ public class CombatTarget : ActionCharacter {
         return null;
     }
 
-    protected override void ExecuteAction() {
-        Action start = () => {
-            SceneManager.LoadScene("CombatScene");
+    protected override void ExecuteAction()
+    {
+        Action start = () =>
+        {
+            FadeHandler.Instance!.LoadScene("CombatScene");
         };
         // == false as introductionTalent could be null
         if (this.introductionTalent?.IsPurchased() == false) {
@@ -146,7 +148,7 @@ public class CombatTarget : ActionCharacter {
                             this.IncreaseExperience(id, 1);
                         }
                         this.IncreaseLevel();
-                        SceneManager.LoadScene("TalentTreeScene");
+                        FadeHandler.Instance!.LoadScene("TalentTreeScene");
                     };
                 })
             );

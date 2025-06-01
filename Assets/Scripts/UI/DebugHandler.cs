@@ -22,7 +22,7 @@ public class DebugHandler : MonoBehaviour
         for (int i = 1; i < difficulty; i++) {
             game.GetCurrentCombatTarget().IncreaseLevel();
         }
-        SceneManager.LoadScene("CombatScene");
+        FadeHandler.Instance!.LoadScene("CombatScene");
     }
 
     public void startGame() {
@@ -33,33 +33,34 @@ public class DebugHandler : MonoBehaviour
     public void startDialog() {
         DialogHandler.firstDialog = new DialogText("Initial", new DialogSelect("Test", new List<DialogOption>() {
             new DialogOption("Blabla", () => {
-                new DialogText("Blabla", () => { SceneManager.LoadScene("DebugScene"); }).ShowDialog(); 
+                new DialogText("Blabla", () => {
+        FadeHandler.Instance!.LoadScene("DebugScene"); }).ShowDialog();
             }),
             new DialogOption("Show me cards", () => {
                 new DialogSelect("Select one", new List<DialogOption>() {
                     new DialogOption("First", () => {
                         new DialogText("First Card", () => {
-                            SceneManager.LoadScene("DebugScene");
-                        }).ShowDialog(); 
+                            FadeHandler.Instance!.LoadScene("DebugScene");
+                        }).ShowDialog();
                     }, "Select the first card", "Placeholder"),
                     new DialogOption("Second", () => {
                         new DialogText("Second Card", () => {
-                            SceneManager.LoadScene("DebugScene");
-                        }).ShowDialog(); 
+                            FadeHandler.Instance!.LoadScene("DebugScene");
+                        }).ShowDialog();
                     }, "Select the second card", "Placeholder")
                 }, SelectType.Cards).ShowDialog(); 
             }),
             new DialogOption("Walk away", () => {
-                SceneManager.LoadScene("DebugScene");
+                FadeHandler.Instance!.LoadScene("DebugScene");
             }),
         }));
-        SceneManager.LoadScene("DialogScene");
+        FadeHandler.Instance!.LoadScene("DialogScene");
     }
 
     public void startTalent() {
         Game game = new Game("Symcon");
         game.GetCurrentCombatTarget().IncreaseExperience("comfort", 10);
         game.GetCurrentCombatTarget().GetTalent("introduction").Purchase();
-        SceneManager.LoadScene("TalentTreeScene");
+        FadeHandler.Instance!.LoadScene("TalentTreeScene");
     }
 }

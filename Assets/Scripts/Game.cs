@@ -103,7 +103,10 @@ class Game
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
         this.checkIcon = index["checkIcon"]!.ToString();
 
-        this.gameOverDialog = Dialog.FromJson(index["gameOverDialog"] as JArray ?? new JArray(), () => { UnityEngine.SceneManagement.SceneManager.LoadScene("DebugScene"); });
+        this.gameOverDialog = Dialog.FromJson(index["gameOverDialog"] as JArray ?? new JArray(), () =>
+        {
+            FadeHandler.Instance!.LoadScene("DebugScene");
+        });
     }
 
     public Player GetPlayer()
@@ -141,7 +144,7 @@ class Game
             this.combatTargets[0].GetDialogOption(),
             this.locations[0].GetDialogOption(),
         }, SelectType.Cards, true), this.selectActionBackground);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("DialogScene");
+        FadeHandler.Instance!.LoadScene("DialogScene");
     }
 
     public void EndRound()

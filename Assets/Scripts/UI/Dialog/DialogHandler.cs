@@ -16,7 +16,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
     public static void StartDialog(Dialog dialog) {
         firstDialog = dialog;
-        SceneManager.LoadScene("DialogScene");
+        FadeHandler.Instance!.LoadScene("DialogScene");
     }
 
     private Action? onClickAction;
