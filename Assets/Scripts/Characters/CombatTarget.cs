@@ -59,9 +59,9 @@ public class CombatTarget : ActionCharacter
             requirementFactories.Add(RequirementFactory.FromJson(requirementData, this));
         }
         this.requirementFactories = requirementFactories;
-        this.numberOfTurnsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfTurns"] as JObject) ?? new LinearAmountCalculation(2, rate: 2);
-        this.turnsWithRequirementCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["turnsWithRequirement"] as JObject) ?? new LinearAmountCalculation(2, rate: 2);
-        this.numberOfRequirementsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfRequirements"] as JObject) ?? new ConstantAmountCalculation(1);
+        this.numberOfTurnsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfTurns"]) ?? new LinearAmountCalculation(2, rate: 2);
+        this.turnsWithRequirementCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["turnsWithRequirement"]) ?? new ConstantAmountCalculation(-1);
+        this.numberOfRequirementsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfRequirements"]) ?? new ConstantAmountCalculation(0);
         this.combatBackgroundPath = jsonObject["combat"]?["background"]?.ToString() ?? "Placeholder";
         this.talentBackgroundPath = jsonObject["talentBackground"]?.ToString() ?? "Placeholder";
         this.winDialogData = jsonObject["combat"]?["win"]?["dialog"] as JArray ?? new JArray();
