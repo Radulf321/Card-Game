@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using UnityEngine.SceneManagement;
 
 #nullable enable
 public class CombatTarget : ActionCharacter
@@ -15,6 +14,9 @@ public class CombatTarget : ActionCharacter
     private string combatBackgroundPath;
     private string talentBackgroundPath;
     private List<RequirementFactory> requirementFactories;
+    private AmountCalculation numberOfTurnsCalculation;
+    private AmountCalculation turnsWithRequirementCalculation;
+    private AmountCalculation numberOfRequirementsCalculation;
     private JArray winDialogData;
     private JArray loseDialogData;
 
@@ -29,6 +31,9 @@ public class CombatTarget : ActionCharacter
         this.winDialogData = new JArray();
         this.loseDialogData = new JArray();
         this.talentBackgroundPath = "Placeholder";
+        this.numberOfTurnsCalculation = new LinearAmountCalculation(2, rate: 2);
+        this.turnsWithRequirementCalculation = new LinearAmountCalculation(2, rate: 2);
+        this.numberOfRequirementsCalculation = new ConstantAmountCalculation(1);
     }
 
     public CombatTarget(JObject jsonObject) : base(jsonObject)
@@ -54,6 +59,9 @@ public class CombatTarget : ActionCharacter
             requirementFactories.Add(RequirementFactory.FromJson(requirementData, this));
         }
         this.requirementFactories = requirementFactories;
+        this.numberOfTurnsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfTurns"] as JObject) ?? new LinearAmountCalculation(2, rate: 2);
+        this.turnsWithRequirementCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["turnsWithRequirement"] as JObject) ?? new LinearAmountCalculation(2, rate: 2);
+        this.numberOfRequirementsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfRequirements"] as JObject) ?? new ConstantAmountCalculation(1);
         this.combatBackgroundPath = jsonObject["combat"]?["background"]?.ToString() ?? "Placeholder";
         this.talentBackgroundPath = jsonObject["talentBackground"]?.ToString() ?? "Placeholder";
         this.winDialogData = jsonObject["combat"]?["win"]?["dialog"] as JArray ?? new JArray();
@@ -63,9 +71,22 @@ public class CombatTarget : ActionCharacter
     public List<Turn> GenerateTurns()
     {
         List<Turn> turns = new List<Turn>();
-        for (int turnIndex = 0; turnIndex < Math.Min((this.level + 1) * 2, 8); turnIndex++)
+        int numberOfTurns = this.numberOfTurnsCalculation.GetValue(this.level);
+        int requirementIndex = 0;
+        int nextTurnWithRequirement = this.turnsWithRequirementCalculation.GetValue(requirementIndex);
+        for (int turnIndex = 0; turnIndex < numberOfTurns; turnIndex++)
         {
-            List<Requirement> requirements = GetRandomRequirements(turnIndex);
+            List<Requirement> requirements;
+            if (turnIndex == nextTurnWithRequirement)
+            {
+                requirementIndex++;
+                nextTurnWithRequirement = this.turnsWithRequirementCalculation.GetValue(requirementIndex);
+                requirements = GetRandomRequirements(turnIndex);
+            }
+            else
+            {
+                requirements = new List<Requirement>();
+            }
             // turnIndex starts at zero while index for GetEnergyForTurn starts at 1
             int energy = Game.Instance.GetPlayer().GetEnergyForTurn(turnIndex + 1);
             List<CardEffect> effects = new List<CardEffect>();
@@ -186,7 +207,7 @@ public class CombatTarget : ActionCharacter
 
     private List<Requirement> GetRandomRequirements(int turn)
     {
-        int numberOfRequirements = ((turn % 2) == 0) ? 0 : (int)Math.Ceiling((turn - 2) * 0.25) + 1;
+        int numberOfRequirements = this.numberOfRequirementsCalculation.GetValue(turn);
         List<int> requirementIndexes = new List<int>();
         List<Requirement> requirements = new List<Requirement>();
         for (int i = 0; i < numberOfRequirements; i++)

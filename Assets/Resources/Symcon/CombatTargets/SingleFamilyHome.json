@@ -1,9 +1,5 @@
 {
     "id": "singleFamilyHome",
-    "name": {
-        "en": "Frank's Home",
-        "de": "Franks Haus"
-    },
     "action": {
         "title": {
             "en": "Work at Frank's",
@@ -17,6 +13,23 @@
     },
     "combat": {
         "background": "SingleFamilyHome",
+        "numberOfTurns": {
+            "type": "linear",
+            "base": 2,
+            "rate": 2,
+            "max": 8
+        },
+        "turnsWithRequirement": {
+            "type": "linear",
+            "base": 1,
+            "rate": 2
+        },
+        "numberOfRequirements": {
+            "type": "linear",
+            "base": 1,
+            "rate": 0.2,
+            "max": 2
+        },
         "requirements": [
             {
                 "type": "goal",
