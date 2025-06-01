@@ -7,13 +7,16 @@ public class LinearAmountCalculation : AmountCalculation {
     private int baseValue;
     private float rate;
     private int? min;
+    private int? max;
     private string? input;
 
-    public LinearAmountCalculation(int baseValue, float rate, string? input = null, int? min = null) {
+    public LinearAmountCalculation(int baseValue, float rate, string? input = null, int? min = null, int? max = null)
+    {
         this.baseValue = baseValue;
         this.rate = rate;
         this.input = input;
         this.min = min;
+        this.max = max;
     }
 
     public LinearAmountCalculation(JObject json) {
@@ -21,6 +24,7 @@ public class LinearAmountCalculation : AmountCalculation {
         this.rate = json["rate"]?.ToObject<float>() ?? 0;
         this.input = json["input"]?.ToString() ?? "";
         this.min = json["min"]?.ToObject<int>();
+        this.max = json["min"]?.ToObject<int>();
     }
 
     public override int GetValue(Card card) {
@@ -41,6 +45,9 @@ public class LinearAmountCalculation : AmountCalculation {
         int value = Mathf.FloorToInt(baseValue + rate * number);
         if (min.HasValue && value < min.Value) {
             return min.Value;
+        }
+        if (max.HasValue && value < max.Value) {
+            return max.Value;
         }
         return value;
     }
