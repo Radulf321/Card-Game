@@ -11,7 +11,6 @@ public class CombatTarget : ActionCharacter
 
     private List<Talent> talents;
     private Talent? introductionTalent;
-    private string name;
 
     private string combatBackgroundPath;
     private string talentBackgroundPath;
@@ -25,7 +24,6 @@ public class CombatTarget : ActionCharacter
         this.experience = new Dictionary<string, int>();
         this.introductionTalent = null;
         this.talents = new List<Talent>();
-        this.name = "Not initialized";
         this.combatBackgroundPath = "Placeholder";
         this.requirementFactories = new List<RequirementFactory>();
         this.winDialogData = new JArray();
@@ -37,8 +35,6 @@ public class CombatTarget : ActionCharacter
     {
         this.level = 1;
         this.experience = new Dictionary<string, int>();
-
-        this.name = LocalizationHelper.GetLocalizedString(jsonObject["name"] as JObject);
 
         List<Talent> talents = new List<Talent>();
         foreach (JObject talentData in jsonObject["talents"] ?? new JArray())
