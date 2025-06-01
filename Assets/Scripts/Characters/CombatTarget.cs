@@ -14,6 +14,7 @@ public class CombatTarget : ActionCharacter
     private string combatBackgroundPath;
     private string talentBackgroundPath;
     private List<RequirementFactory> requirementFactories;
+    private List<List<RequirementFactory>> fixedRequirements;
     private AmountCalculation numberOfTurnsCalculation;
     private AmountCalculation turnsWithRequirementCalculation;
     private AmountCalculation numberOfRequirementsCalculation;
@@ -34,6 +35,7 @@ public class CombatTarget : ActionCharacter
         this.numberOfTurnsCalculation = new LinearAmountCalculation(2, rate: 2);
         this.turnsWithRequirementCalculation = new LinearAmountCalculation(2, rate: 2);
         this.numberOfRequirementsCalculation = new ConstantAmountCalculation(1);
+        this.fixedRequirements = new List<List<RequirementFactory>>();
     }
 
     public CombatTarget(JObject jsonObject) : base(jsonObject)
@@ -62,6 +64,18 @@ public class CombatTarget : ActionCharacter
         this.numberOfTurnsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfTurns"]) ?? new LinearAmountCalculation(2, rate: 2);
         this.turnsWithRequirementCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["turnsWithRequirement"]) ?? new ConstantAmountCalculation(-1);
         this.numberOfRequirementsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfRequirements"]) ?? new ConstantAmountCalculation(0);
+
+        List<List<RequirementFactory>> fixedRequirements = new List<List<RequirementFactory>>();
+        foreach (JArray requirementDataForTurn in jsonObject["combat"]?["fixedRequirements"] ?? new JArray())
+        {
+            List<RequirementFactory> requirementFactoriesForTurn = new List<RequirementFactory>();
+            foreach (JObject requirement in requirementDataForTurn)
+            {
+                requirementFactoriesForTurn.Add(RequirementFactory.FromJson(requirement, this));
+            }
+            fixedRequirements.Add(requirementFactoriesForTurn);
+        }
+        this.fixedRequirements = fixedRequirements;
         this.combatBackgroundPath = jsonObject["combat"]?["background"]?.ToString() ?? "Placeholder";
         this.talentBackgroundPath = jsonObject["talentBackground"]?.ToString() ?? "Placeholder";
         this.winDialogData = jsonObject["combat"]?["win"]?["dialog"] as JArray ?? new JArray();
@@ -86,6 +100,10 @@ public class CombatTarget : ActionCharacter
             else
             {
                 requirements = new List<Requirement>();
+            }
+            if (this.fixedRequirements.Count > turnIndex)
+            {
+                requirements.AddRange(this.fixedRequirements[turnIndex].ConvertAll((RequirementFactory requirementFactory) => requirementFactory.CreateRequirement(turnIndex)));
             }
             // turnIndex starts at zero while index for GetEnergyForTurn starts at 1
             int energy = Game.Instance.GetPlayer().GetEnergyForTurn(turnIndex + 1);
