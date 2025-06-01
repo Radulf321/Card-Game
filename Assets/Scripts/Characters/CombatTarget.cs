@@ -4,7 +4,8 @@ using Newtonsoft.Json.Linq;
 using UnityEngine.SceneManagement;
 
 #nullable enable
-public class CombatTarget : ActionCharacter {
+public class CombatTarget : ActionCharacter
+{
     private int level;
     private Dictionary<string, int> experience;
 
@@ -18,7 +19,8 @@ public class CombatTarget : ActionCharacter {
     private JArray winDialogData;
     private JArray loseDialogData;
 
-    public CombatTarget() : base() {
+    public CombatTarget() : base()
+    {
         this.level = 1;
         this.experience = new Dictionary<string, int>();
         this.introductionTalent = null;
@@ -31,16 +33,19 @@ public class CombatTarget : ActionCharacter {
         this.talentBackgroundPath = "Placeholder";
     }
 
-    public CombatTarget(JObject jsonObject) : base(jsonObject) {
+    public CombatTarget(JObject jsonObject) : base(jsonObject)
+    {
         this.level = 1;
         this.experience = new Dictionary<string, int>();
 
         this.name = LocalizationHelper.GetLocalizedString(jsonObject["name"] as JObject);
 
         List<Talent> talents = new List<Talent>();
-        foreach (JObject talentData in jsonObject["talents"] ?? new JArray()) {
+        foreach (JObject talentData in jsonObject["talents"] ?? new JArray())
+        {
             Talent talent = new Talent(talentData, this);
-            if (talentData["introduction"]?.ToObject<bool>() == true) {
+            if (talentData["introduction"]?.ToObject<bool>() == true)
+            {
                 this.introductionTalent = talent;
             }
             talents.Add(talent);
@@ -48,7 +53,8 @@ public class CombatTarget : ActionCharacter {
         this.talents = talents;
 
         List<RequirementFactory> requirementFactories = new List<RequirementFactory>();
-        foreach (JObject requirementData in jsonObject["combat"]?["requirements"] ?? new JArray()) {
+        foreach (JObject requirementData in jsonObject["combat"]?["requirements"] ?? new JArray())
+        {
             requirementFactories.Add(RequirementFactory.FromJson(requirementData, this));
         }
         this.requirementFactories = requirementFactories;
@@ -58,14 +64,17 @@ public class CombatTarget : ActionCharacter {
         this.loseDialogData = jsonObject["combat"]?["lose"]?["dialog"] as JArray ?? new JArray();
     }
 
-    public List<Turn> GenerateTurns() {
+    public List<Turn> GenerateTurns()
+    {
         List<Turn> turns = new List<Turn>();
-        for (int turnIndex = 0; turnIndex < Math.Min((this.level + 1) * 2, 8); turnIndex++) {
+        for (int turnIndex = 0; turnIndex < Math.Min((this.level + 1) * 2, 8); turnIndex++)
+        {
             List<Requirement> requirements = GetRandomRequirements(turnIndex);
             // turnIndex starts at zero while index for GetEnergyForTurn starts at 1
             int energy = Game.Instance.GetPlayer().GetEnergyForTurn(turnIndex + 1);
             List<CardEffect> effects = new List<CardEffect>();
-            if (energy > 0) {
+            if (energy > 0)
+            {
                 effects.Add(new EnergyEffect(energy, maxEnergy: true));
             }
             turns.Add(new Turn(requirements: requirements, effects: effects));
@@ -74,41 +83,56 @@ public class CombatTarget : ActionCharacter {
         return turns;
     }
 
-    public int GetLevel() {
+    public int GetLevel()
+    {
         return this.level;
     }
 
-    public void IncreaseLevel() {
+    public void IncreaseLevel()
+    {
         this.level++;
     }
 
-    public Dictionary<string, int> GetExperience() {
+    public Dictionary<string, int> GetExperience()
+    {
         return this.experience;
     }
 
-    public int GetExperience(string type) {
-        if (this.experience.ContainsKey(type)) {
+    public int GetExperience(string type)
+    {
+        if (this.experience.ContainsKey(type))
+        {
             return this.experience[type];
-        } else {
+        }
+        else
+        {
             return 0;
         }
     }
 
-    public void IncreaseExperience(string type, int amount) {
-        if (this.experience.ContainsKey(type)) {
+    public void IncreaseExperience(string type, int amount)
+    {
+        if (this.experience.ContainsKey(type))
+        {
             this.experience[type] += amount;
-        } else {
+        }
+        else
+        {
             this.experience.Add(type, amount);
         }
     }
 
-    public List<Talent> GetTalents() {
+    public List<Talent> GetTalents()
+    {
         return this.talents;
     }
 
-    public Talent? GetTalent(string id) {
-        foreach (Talent talent in this.talents) {
-            if (talent.GetID() == id) {
+    public Talent? GetTalent(string id)
+    {
+        foreach (Talent talent in this.talents)
+        {
+            if (talent.GetID() == id)
+            {
                 return talent;
             }
         }
@@ -122,29 +146,38 @@ public class CombatTarget : ActionCharacter {
             FadeHandler.Instance!.LoadScene("CombatScene");
         };
         // == false as introductionTalent could be null
-        if (this.introductionTalent?.IsPurchased() == false) {
+        if (this.introductionTalent?.IsPurchased() == false)
+        {
             DialogHandler.dialogFinish = start;
             this.introductionTalent?.Purchase();
         }
-        else {
+        else
+        {
             start.Invoke();
         }
     }
 
-    public void EndCombat(bool win) {
-        if (!win) {
+    public void EndCombat(bool win)
+    {
+        if (!win)
+        {
             Game.Instance.AddRemainingRounds(-1);
             DialogHandler.StartDialog(
-                Dialog.FromJson(this.loseDialogData, onFinish: () => {
+                Dialog.FromJson(this.loseDialogData, onFinish: () =>
+                {
                     Game.Instance.EndRound();
                 })
             );
         }
-        else {
+        else
+        {
             DialogHandler.StartDialog(
-                Dialog.FromJson(this.winDialogData, actionGenerator: (id) => {
-                    return () => {
-                        if (id != null) {
+                Dialog.FromJson(this.winDialogData, actionGenerator: (id) =>
+                {
+                    return () =>
+                    {
+                        if (id != null)
+                        {
                             this.IncreaseExperience(id, 1);
                         }
                         this.IncreaseLevel();
@@ -155,13 +188,16 @@ public class CombatTarget : ActionCharacter {
         }
     }
 
-    private List<Requirement> GetRandomRequirements(int turn) {
+    private List<Requirement> GetRandomRequirements(int turn)
+    {
         int numberOfRequirements = ((turn % 2) == 0) ? 0 : (int)Math.Ceiling((turn - 2) * 0.25) + 1;
         List<int> requirementIndexes = new List<int>();
         List<Requirement> requirements = new List<Requirement>();
-        for (int i = 0; i < numberOfRequirements; i++) {
+        for (int i = 0; i < numberOfRequirements; i++)
+        {
             int random;
-            do {
+            do
+            {
                 random = UnityEngine.Random.Range(0, this.requirementFactories.Count);
             } while (requirementIndexes.Contains(random));
             requirementIndexes.Add(random);
@@ -171,11 +207,13 @@ public class CombatTarget : ActionCharacter {
         return requirements;
     }
 
-    public string GetCombatBackgroundPath() {
+    public string GetCombatBackgroundPath()
+    {
         return Game.Instance!.GetResourcePath() + "/Graphics/Backgrounds/" + this.combatBackgroundPath;
     }
 
-    public string GetTalentBackgroundPath() {
+    public string GetTalentBackgroundPath()
+    {
         return Game.Instance!.GetResourcePath() + "/Graphics/Backgrounds/" + this.talentBackgroundPath;
     }
 }
