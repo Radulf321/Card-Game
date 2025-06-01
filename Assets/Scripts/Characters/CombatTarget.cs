@@ -160,6 +160,7 @@ public class CombatTarget : ActionCharacter
     {
         Action start = () =>
         {
+            Game.Instance!.SetCurrentCombatTarget(this);
             FadeHandler.Instance!.LoadScene("CombatScene");
         };
         // == false as introductionTalent could be null

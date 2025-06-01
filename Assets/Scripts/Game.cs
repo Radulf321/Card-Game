@@ -25,6 +25,7 @@ class Game
     private string selectActionBackground;
     private string checkIcon;
     private Dialog gameOverDialog;
+    private CombatTarget? currentCombatTarget;
 
     public Game()
     {
@@ -126,7 +127,16 @@ class Game
 
     public CombatTarget GetCurrentCombatTarget()
     {
-        return combatTargets[0];
+        if (this.currentCombatTarget == null)
+        {
+            throw new System.Exception("Current combat target is not set. Please set it before accessing.");
+        }
+        return this.currentCombatTarget;
+    }
+
+    public void SetCurrentCombatTarget(CombatTarget combatTarget)
+    {
+        this.currentCombatTarget = combatTarget;
     }
 
     public void StartRound()
