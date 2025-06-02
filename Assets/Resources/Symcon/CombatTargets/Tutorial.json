@@ -1,0 +1,205 @@
+{
+    "id": "tutorial",
+    "action": {
+        "title": {
+            "en": "Tutorial",
+            "de": "Tutorial"
+        },
+        "description": {
+            "en": "Continue to improve the automation in this single family home. The owner Frank is very motivated to install all kinds of smart features.",
+            "de": "Verbessere die Automatisierung in diesem Einfamilienhaus. Der Besitzer Frank ist sehr motiviert, alle Arten von intelligenten Funktionen zu installieren."
+        },
+        "image": "SingleFamilyHome"
+    },
+    "combat": {
+        "background": "SingleFamilyHome",
+        "numberOfTurns": 3,
+        "override": {
+            "energy": {
+                "0": 1,
+                "2": 1
+            },
+            "cardPile": {
+                "type": "replace",
+                "cards": [
+                    "createVariable",
+                    "optimizeObjectTree",
+                    "createVariable",
+                    "optimizeObjectTree"
+                ],
+                "shuffle": false,
+                "startingHandSize": 1
+            },
+            "startingHandSize": 1
+        },
+        "fixedRequirements": [
+            [
+                {
+                    "type": "goal",
+                    "goal": "knowhow",
+                    "amount": 2,
+                    "variance": 0
+                }
+            ],
+            [],
+            [
+                {
+                    "type": "goal",
+                    "goal": "creativity",
+                    "amount": 2,
+                    "variance": 0
+                },
+                {
+                    "type": "total",
+                    "amount": 5,
+                    "variance": 0
+                }
+            ]
+        ],
+        "win": {
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Looking good! So, what exactly should I focus on?",
+                        "de": "Du: Sieht gut aus! Worauf genau soll ich den Fokus legen?"
+                    }
+                },
+                {
+                    "type": "select",
+                    "title": {
+                        "en": "What should I focus on?",
+                        "de": "Worauf soll ich mich konzentrieren?"
+                    },
+                    "options": [
+                        {
+                            "id": "comfort",
+                            "title": {
+                                "en": "Let's add some nice comfort features. (+1 <sprite name=\"Comfort\">)",
+                                "de": "Zeit für ein paar schöne Komfortfunktionen. (+1 <sprite name=\"Comfort\">)"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "lose": {
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: No, that didn't work... But how do I configure that instance?",
+                        "de": "Du: Nein, das funktioniert nicht... Wie konfiguriere ich die Instanz denn jetzt?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I guess I should watch a couple of Tutorial Videos before continuing here....",
+                        "de": "Du: Ich sollte wohl noch ein paar Tutorialvideos anschauen bevor ich hier weitermache..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You lose an additional <sprite name=\"Rounds\">",
+                        "de": "Du verlierst einen zusätzlichen <sprite name=\"Rounds\">"
+                    }
+                }
+            ]
+        }
+    },
+    "talentBackground": "SingleFamilyHome",
+    "talents": [
+        {
+            "id": "basicVisualisation",
+            "title": {
+                "en": "Basic Visualisation",
+                "de": "Grundlegende Visualisierung"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "First steps with the visualisation",
+                "de": "Erste Schritte mit der Visualisierung"
+            },
+            "image": "SingleFamilyHome/BasicVisualization",
+            "rewards": [
+                {
+                    "type": "card",
+                    "card": "flexibility"
+                }
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "SingleFamilyHome",
+                    "left": "Player",
+                    "right": "SingleFamilyHome"
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You present the first draft of the visualization to Frank. He is excited.",
+                        "de": "Du präsentierst Frank den ersten Entwurf der Visualisierung. Er ist begeistert."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Now, it can definitely be improved, but I'd say it's a good start. What do you think?",
+                        "de": "Du: Es kann auf jeden Fall noch verbessert werden, aber ich finde, es ist ein guter Anfang. Was denkst du?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: It looks great! I really like the look of those tiles. So, what happens if I tap on that light icon?",
+                        "de": "Frank: Es sieht großartig aus! Mir gefällt das Aussehen dieser Kacheln wirklich gut. Was passiert, wenn ich auf dieses Lichtsymbol tippe?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: The light goes on.",
+                        "de": "Du: Das Licht geht an."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Frank: You can do that? From an app? That's amazing! What a great world we live in!",
+                        "de": "Frank: Das geht? Aus einer App? Das ist ja umwerfend! Was für eine großartige Welt, in der wir leben!"
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "flexibility"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
