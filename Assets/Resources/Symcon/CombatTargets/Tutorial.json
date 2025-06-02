@@ -24,7 +24,6 @@
                 "cards": [
                     "createVariable",
                     "optimizeObjectTree",
-                    "createVariable",
                     "optimizeObjectTree"
                 ],
                 "shuffle": false,
