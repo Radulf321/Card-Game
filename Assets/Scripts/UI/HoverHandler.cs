@@ -1,9 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System.Linq;
-using System;
 
 #nullable enable
 public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler

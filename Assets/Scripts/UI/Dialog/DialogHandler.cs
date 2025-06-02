@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
@@ -50,10 +49,11 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void ShowText(DialogText dialog) {
+    public void ShowText(DialogText dialog)
+    {
         transform.Find("SelectArea").gameObject.SetActive(false);
         transform.Find("RewardArea").gameObject.SetActive(false);
 
@@ -65,28 +65,35 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         this.onClickAction = dialog.GetOnFinish();
     }
 
-    public void ShowImage(DialogImage dialog) {
-        if (dialog.GetBackgroundImagePath() != null) {
+    public void ShowImage(DialogImage dialog)
+    {
+        if (dialog.GetBackgroundImagePath() != null)
+        {
             transform.Find("BackgroundImage").GetComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>(dialog.GetBackgroundImagePath());
         }
-        if (dialog.GetLeftCharacterImagePath() != null) {
+        if (dialog.GetLeftCharacterImagePath() != null)
+        {
             Transform leftCharacter = transform.Find("LeftCharacterImage");
             leftCharacter.gameObject.SetActive(dialog.GetLeftCharacterImagePath() != "");
-            if (dialog.GetLeftCharacterImagePath() != "") {
+            if (dialog.GetLeftCharacterImagePath() != "")
+            {
                 leftCharacter.GetComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>(dialog.GetLeftCharacterImagePath());
             }
         }
-        if (dialog.GetRightCharacterImagePath() != null) {
+        if (dialog.GetRightCharacterImagePath() != null)
+        {
             Transform rightCharacter = transform.Find("RightCharacterImage");
             rightCharacter.gameObject.SetActive(dialog.GetRightCharacterImagePath() != "");
-            if (dialog.GetRightCharacterImagePath() != "") {
+            if (dialog.GetRightCharacterImagePath() != "")
+            {
                 rightCharacter.GetComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>(dialog.GetRightCharacterImagePath());
             }
         }
         dialog.GetOnFinish()();
     }
 
-    public void ShowSelect(DialogSelect dialog) {
+    public void ShowSelect(DialogSelect dialog)
+    {
         transform.Find("TextArea").gameObject.SetActive(false);
         transform.Find("RewardArea").gameObject.SetActive(false);
         this.onClickAction = null;
@@ -108,7 +115,8 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
         Transform turnInfo = selectArea.Find("TurnInfo");
         turnInfo.gameObject.SetActive(dialog.IsShowUI());
-        if (dialog.IsShowUI()) {
+        if (dialog.IsShowUI())
+        {
             IntVariable amount = new IntVariable();
             amount.Value = Game.Instance.GetRemainingRounds();
             LocalizedString localizedString = turnInfo.GetComponent<LocalizeStringEvent>().StringReference;
@@ -116,24 +124,30 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
             localizedString.RefreshString();
         }
         // Remove all current options
-        for (int i = 0; i < selectArea.childCount; i++) {
-            if (selectArea.GetChild(i).name == "Title") {
+        for (int i = 0; i < selectArea.childCount; i++)
+        {
+            if (selectArea.GetChild(i).name == "Title")
+            {
                 continue;
             }
-            if (selectArea.GetChild(i).name == "CardArea") {
+            if (selectArea.GetChild(i).name == "CardArea")
+            {
                 continue;
             }
-            if (selectArea.GetChild(i).name == "TurnInfo") {
+            if (selectArea.GetChild(i).name == "TurnInfo")
+            {
                 continue;
             }
             Destroy(selectArea.GetChild(i).gameObject);
         }
 
         selectArea.Find("CardArea").gameObject.SetActive(dialog.GetSelectType() == SelectType.Cards);
-        switch (dialog.GetSelectType()) {
+        switch (dialog.GetSelectType())
+        {
             case SelectType.Buttons:
                 // Add new options
-                foreach (DialogOption option in dialog.GetOptions()) {
+                foreach (DialogOption option in dialog.GetOptions())
+                {
                     GameObject newOption = Instantiate(this.dialogOptionPrefab!, selectArea);
                     newOption.GetComponent<DialogOptionHandler>().SetText(option.GetTitle());
                     newOption.GetComponent<DialogOptionHandler>().SetAction(option.GetAction());
