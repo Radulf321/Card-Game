@@ -1,18 +1,19 @@
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 public class Player
 {
 
     private List<Card> deck;
-    private Dictionary<int, int> energy;
+    private EnergyInfo energyInfo;
 
     public Player()
     {
         this.deck = new List<Card>();
-        this.energy = new Dictionary<int, int>();
+        this.energyInfo = new EnergyInfo();
     }
 
-    public Player(List<string> startingCards, Dictionary<int, int> energy)
+    public Player(List<string> startingCards, JObject energyInfo)
     {
         List<Card> deck = new List<Card>();
         foreach (string cardId in startingCards)
@@ -20,7 +21,7 @@ public class Player
             deck.Add(Game.Instance.GetCard(cardId));
         }
         this.deck = deck;
-        this.energy = energy;
+        this.energyInfo = new EnergyInfo(energyInfo);
     }
 
     public List<Card> GetDeck()
@@ -40,23 +41,16 @@ public class Player
 
     public int GetStartingEnergy()
     {
-        return GetEnergyForTurn(0);
+        return this.energyInfo.GetStartingEnergy();
     }
 
     public int GetEnergyForTurn(int turn)
     {
-        return energy.TryGetValue(turn, out int value) ? value : 0;
+        return this.energyInfo.GetEnergyForTurn(turn);
     }
 
     public void AddEnergy(int amount, int turn)
     {
-        if (this.energy.ContainsKey(turn))
-        {
-            energy[turn] += amount;
-        }
-        else
-        {
-            energy[turn] = amount;
-        }
+        this.energyInfo.AddEnergy(amount, turn);
     }
 }

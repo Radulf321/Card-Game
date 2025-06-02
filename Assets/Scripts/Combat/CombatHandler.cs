@@ -25,11 +25,10 @@ public class CombatHandler : MonoBehaviour
     {
         CombatHandler.instance = this;
         transform.Find("BackgroundImage").GetComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>(Game.Instance.GetCurrentCombatTarget().GetCombatBackgroundPath());
-        this.maxEnergy = Game.Instance.GetPlayer().GetStartingEnergy();
-        this.cardPile = new CardPile(Game.Instance.GetPlayer().GetDeck());
-        this.turns = Game.Instance.GetCurrentCombatTarget().GenerateTurns();
-        cardPile.ShuffleDeck();
-        cardPile.DrawCards(5);
+        CombatTarget combatTarget = Game.Instance.GetCurrentCombatTarget();
+        this.maxEnergy = combatTarget.GetStartingEnergy();
+        this.cardPile = combatTarget.CreateCardPile();
+        this.turns = combatTarget.GenerateTurns();
         startTurn();
     }
 

@@ -20,10 +20,12 @@ public class CombatTarget : ActionCharacter
     private AmountCalculation numberOfRequirementsCalculation;
     private JArray winDialogData;
     private JArray loseDialogData;
+    private CardPileFactory cardPileFactory;
+    private EnergyInfo? energyOverride;
 
     public CombatTarget() : base()
     {
-        this.level = 1;
+        this.level = 0;
         this.experience = new Dictionary<string, int>();
         this.introductionTalent = null;
         this.talents = new List<Talent>();
@@ -36,11 +38,13 @@ public class CombatTarget : ActionCharacter
         this.turnsWithRequirementCalculation = new LinearAmountCalculation(2, rate: 2);
         this.numberOfRequirementsCalculation = new ConstantAmountCalculation(1);
         this.fixedRequirements = new List<List<RequirementFactory>>();
+        this.cardPileFactory = new CardPileFactory();
+        this.energyOverride = null;
     }
 
     public CombatTarget(JObject jsonObject) : base(jsonObject)
     {
-        this.level = 1;
+        this.level = 0;
         this.experience = new Dictionary<string, int>();
 
         List<Talent> talents = new List<Talent>();
@@ -80,6 +84,17 @@ public class CombatTarget : ActionCharacter
         this.talentBackgroundPath = jsonObject["talentBackground"]?.ToString() ?? "Placeholder";
         this.winDialogData = jsonObject["combat"]?["win"]?["dialog"] as JArray ?? new JArray();
         this.loseDialogData = jsonObject["combat"]?["lose"]?["dialog"] as JArray ?? new JArray();
+        this.cardPileFactory = new CardPileFactory(jsonObject["combat"]?["override"]?["cardPile"] as JObject);
+
+        JObject? energyObject = jsonObject["combat"]?["override"]?["energy"] as JObject;
+        if (energyObject != null)
+        {
+            this.energyOverride = new EnergyInfo(energyObject);
+        }
+        else
+        {
+            this.energyOverride = null;
+        }
     }
 
     public List<Turn> GenerateTurns()
@@ -106,7 +121,7 @@ public class CombatTarget : ActionCharacter
                 requirements.AddRange(this.fixedRequirements[turnIndex].ConvertAll((RequirementFactory requirementFactory) => requirementFactory.CreateRequirement(turnIndex)));
             }
             // turnIndex starts at zero while index for GetEnergyForTurn starts at 1
-            int energy = Game.Instance.GetPlayer().GetEnergyForTurn(turnIndex + 1);
+            int energy = this.GetEnergyForTurn(turnIndex + 1);
             List<CardEffect> effects = new List<CardEffect>();
             if (energy > 0)
             {
@@ -116,6 +131,11 @@ public class CombatTarget : ActionCharacter
         }
 
         return turns;
+    }
+
+    public CardPile CreateCardPile()
+    {
+        return this.cardPileFactory.CreateCardPile();
     }
 
     public int GetLevel()
@@ -251,5 +271,15 @@ public class CombatTarget : ActionCharacter
     public string GetTalentBackgroundPath()
     {
         return Game.Instance!.GetResourcePath() + "/Graphics/Backgrounds/" + this.talentBackgroundPath;
+    }
+
+    public int GetStartingEnergy()
+    {
+        return this.energyOverride?.GetStartingEnergy() ?? Game.Instance!.GetPlayer().GetStartingEnergy();
+    }
+
+    public int GetEnergyForTurn(int turn)
+    {
+        return this.energyOverride?.GetEnergyForTurn(turn) ?? Game.Instance!.GetPlayer().GetEnergyForTurn(turn);
     }
 }

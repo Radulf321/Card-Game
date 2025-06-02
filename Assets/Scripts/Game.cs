@@ -74,13 +74,7 @@ class Game
         this.icons = icons;
 
         this.cardLibrary = new CardLibrary(ResourcePath + "/Cards/");
-        Dictionary<int, int> energy = new Dictionary<int, int>();
-        JObject energyObject = (index["startingEnergy"] as JObject)!;
-        foreach (JProperty property in energyObject.Properties())
-        {
-            energy.Add(int.Parse(property.Name), property.Value.ToObject<int>());
-        }
-        this.player = new Player(index["startingCards"]!.ToObject<List<string>>(), energy);
+        this.player = new Player(index["startingCards"]!.ToObject<List<string>>(), (index["startingEnergy"] as JObject)!);
         List<CombatTarget> combatTargets = new List<CombatTarget>();
         TextAsset[] jsonFilesCombatTarget = Resources.LoadAll<TextAsset>(ResourcePath + "/CombatTargets/");
         foreach (TextAsset jsonFile in jsonFilesCombatTarget)
@@ -152,6 +146,7 @@ class Game
         }
         DialogHandler.firstDialog = new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
             this.combatTargets[0].GetDialogOption(),
+            this.combatTargets[1].GetDialogOption(),
             this.locations[0].GetDialogOption(),
         }, SelectType.Cards, true), this.selectActionBackground);
         FadeHandler.Instance!.LoadScene("DialogScene");
