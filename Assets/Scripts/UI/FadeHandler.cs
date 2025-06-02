@@ -16,6 +16,7 @@ public class FadeHandler : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(transform.parent.gameObject);
+            transform.parent.Find("DialogArea").GetComponent<DialogHandler>()?.Initialize();
         }
         else
         {

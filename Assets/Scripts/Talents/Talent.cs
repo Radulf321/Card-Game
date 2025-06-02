@@ -134,8 +134,7 @@ public class Talent {
             owner.IncreaseExperience(type, -GetCost()[type]);
         }
 
-        DialogHandler.firstDialog = GetDialog();
         this.purchased = true;
-        FadeHandler.Instance!.LoadScene("DialogScene");
+        DialogHandler.StartDialog(GetDialog());
     }
 }

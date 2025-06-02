@@ -36,7 +36,7 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
         Canvas canvas = GetComponent<Canvas>();
         canvas.overrideSorting = true; // Enable sorting order override
-        canvas.sortingOrder = 10; // Bring the card to the top
+        canvas.sortingOrder = 100; // Bring the card to the top
     }
 
     public void OnPointerExit(PointerEventData eventData)

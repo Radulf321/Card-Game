@@ -11,11 +11,13 @@ using UnityEngine.UI;
 #nullable enable
 public class DialogHandler : MonoBehaviour, IPointerDownHandler
 {
-    public static Dialog? firstDialog;
+    public static DialogHandler? Instance;
     public static Action? dialogFinish;
+    public Dialog? firstDialog;
 
-    public static void StartDialog(Dialog dialog) {
-        firstDialog = dialog;
+    public static void StartDialog(Dialog dialog)
+    {
+        DialogHandler.Instance!.firstDialog = dialog;
         FadeHandler.Instance!.LoadScene("DialogScene");
     }
 
@@ -23,10 +25,26 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
     public GameObject? dialogOptionPrefab;
 
+    public void Initialize()
+    {
+        UnityEngine.Debug.Log("DialogHandler Awake called");
+        DialogHandler.Instance = this;
+        SceneManager.activeSceneChanged += (Scene scene, Scene previousScene) =>
+        {
+            transform.gameObject.SetActive(this.firstDialog != null);
+            this.firstDialog?.ShowDialog();
+            this.firstDialog = null;
+        };
+        // Ensure the dialogOptionPrefab is assigned
+        if (dialogOptionPrefab == null)
+        {
+            Debug.LogError("DialogOptionPrefab is not assigned in DialogHandler.");
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        firstDialog!.ShowDialog();    
     }
 
     // Update is called once per frame

@@ -144,12 +144,11 @@ class Game
         {
             selectActionText = "Select an action";
         }
-        DialogHandler.firstDialog = new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
+        DialogHandler.StartDialog(new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
             this.combatTargets[0].GetDialogOption(),
             this.combatTargets[1].GetDialogOption(),
             this.locations[0].GetDialogOption(),
-        }, SelectType.Cards, true), this.selectActionBackground);
-        FadeHandler.Instance!.LoadScene("DialogScene");
+        }, SelectType.Cards, true), this.selectActionBackground));
     }
 
     public void EndRound()

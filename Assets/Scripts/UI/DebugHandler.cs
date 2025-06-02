@@ -35,7 +35,7 @@ public class DebugHandler : MonoBehaviour
 
     public void startDialog()
     {
-        DialogHandler.firstDialog = new DialogText("Initial", new DialogSelect("Test", new List<DialogOption>() {
+        DialogHandler.StartDialog(new DialogText("Initial", new DialogSelect("Test", new List<DialogOption>() {
             new DialogOption("Blabla", () => {
                 new DialogText("Blabla", () => {
         FadeHandler.Instance!.LoadScene("DebugScene"); }).ShowDialog();
@@ -57,8 +57,7 @@ public class DebugHandler : MonoBehaviour
             new DialogOption("Walk away", () => {
                 FadeHandler.Instance!.LoadScene("DebugScene");
             }),
-        }));
-        FadeHandler.Instance!.LoadScene("DialogScene");
+        })));
     }
 
     public void startTalent()
