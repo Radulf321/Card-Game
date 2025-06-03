@@ -15,7 +15,7 @@
         "background": "SingleFamilyHome",
         "numberOfTurns": {
             "type": "linear",
-            "base": 2,
+            "base": 4,
             "rate": 2,
             "max": 8
         },
