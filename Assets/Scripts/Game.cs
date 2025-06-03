@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -26,6 +27,7 @@ class Game
     private string checkIcon;
     private Dialog gameOverDialog;
     private CombatTarget? currentCombatTarget;
+    private List<Action<TriggerMessage>> triggerMessageSubscribers = new List<Action<TriggerMessage>>();
 
     public Game()
     {
@@ -153,6 +155,7 @@ class Game
 
     public void EndRound()
     {
+        this.triggerMessageSubscribers.Clear();
         remainingRounds--;
         if (remainingRounds <= 0)
         {
@@ -236,5 +239,23 @@ class Game
     public string GetResourcePath()
     {
         return resourcePath;
+    }
+
+    public void SubscribeToTriggerMessages(Action<TriggerMessage> subscriber)
+    {
+        this.triggerMessageSubscribers.Add(subscriber);
+    }
+
+    public void UnsubscribeFromTriggerMessages(Action<TriggerMessage> subscriber)
+    {
+        this.triggerMessageSubscribers.Remove(subscriber);
+    }
+
+    public void SendTriggerMessage(TriggerMessage message)
+    {
+        foreach (Action<TriggerMessage> subscriber in this.triggerMessageSubscribers)
+        {
+            subscriber(message);
+        }
     }
 }

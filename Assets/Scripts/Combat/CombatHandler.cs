@@ -18,7 +18,6 @@ public class CombatHandler : MonoBehaviour
 
     private CardPile cardPile;
     private bool requireUpdate = false;
-    private List<Action<TriggerMessage>> triggerMessageSubscribers = new List<Action<TriggerMessage>>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -196,16 +195,6 @@ public class CombatHandler : MonoBehaviour
         this.requireUpdate = true;
     }
 
-    public void SubscribeToTriggerMessages(Action<TriggerMessage> subscriber)
-    {
-        this.triggerMessageSubscribers.Add(subscriber);
-    }
-
-    public void UnsubscribeFromTriggerMessages(Action<TriggerMessage> subscriber)
-    {
-        this.triggerMessageSubscribers.Remove(subscriber);
-    }
-
     private void startTurn()
     {
         currentEnergy = maxEnergy;
@@ -230,9 +219,6 @@ public class CombatHandler : MonoBehaviour
 
     private void SendTriggerMessage(TriggerMessage message)
     {
-        foreach (Action<TriggerMessage> subscriber in this.triggerMessageSubscribers)
-        {
-            subscriber(message);
-        }
+        Game.Instance.SendTriggerMessage(message);
     }
 }

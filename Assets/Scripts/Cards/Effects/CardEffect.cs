@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 #nullable enable
 abstract public class CardEffect {
-    public static CardEffect FromJson(JObject json, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) {
+    public static CardEffect FromJson(JObject json, Card? owner = null, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) {
         string? type = json["type"]?.ToString();
         return type switch
         {
@@ -12,8 +12,8 @@ abstract public class CardEffect {
             "drawCards" => new DrawCardsEffect(json),
             "discardCards" => new DiscardCardsEffect(json),
             "caption" => new CaptionEffect(json),
-            "afterPlay" => new AfterPlayEffect(json, owner),
-            "triggerable" => new TriggerableEffect(json, owner),
+            "afterPlay" => new AfterPlayEffect(json, owner!),
+            "triggerable" => new TriggerableEffect(json, owner!),
             "requirementGoal" => new RequirementGoalEffect(json),
             _ => throw new System.Exception("Invalid card effect type: " + type),
         };
