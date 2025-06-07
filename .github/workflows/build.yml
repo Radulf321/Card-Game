@@ -59,3 +59,56 @@ jobs:
           publish_branch: main
           # Der Ordner, der den Build-Output enthält (aus deinem Unity-Projekt-Repo)
           publish_dir: ./build/WebGL/WebGL # game-ci/unity-builder legt WebGL in 'build/WebGL/WebGL' ab
+          
+  build-android:
+    environment: prod
+
+    runs-on: ubuntu-22.04
+
+    timeout-minutes: 30
+
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # Cache
+      - name: Use Cache
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: Clean Docker cache
+        run: |
+          docker system prune -a -f --volumes
+
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: Android
+
+      # Output
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Build
+          path: build
