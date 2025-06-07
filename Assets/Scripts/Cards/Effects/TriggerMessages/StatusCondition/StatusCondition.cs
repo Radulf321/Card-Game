@@ -7,6 +7,8 @@ public abstract class StatusCondition
     {
         switch (json["type"].ToString())
         {
+            case "turn":
+                return new TurnStatusCondition(json);
             default:
                 throw new System.Exception("Invalid condition type: " + json["type"].ToString());
         }

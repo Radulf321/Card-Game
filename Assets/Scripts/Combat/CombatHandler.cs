@@ -203,7 +203,7 @@ public class CombatHandler : MonoBehaviour
         foreach (CardEffect effect in currentTurn.getEffects()) {
             effect.applyEffect();
         }
-        SendTriggerMessage(new TriggerMessage(TriggerType.StartTurn));
+        SendTriggerMessage(new TriggerMessage(TriggerType.StartTurn, new TriggerMessageData(amount: getCurrentTurnIndex())));
         updateView();
     }
 

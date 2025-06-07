@@ -9,6 +9,10 @@ public abstract class TriggerMessageCondition
         {
             case "addgoal":
                 return new TriggerMessageConditionAddGoal(json);
+            case "startturn":
+                return new TriggerMessageConditionStartTurn(json);
+            case "talenttree":
+                return new TriggerMessageConditionTalentTree(json);
             default:
                 throw new System.Exception("Invalid condition type: " + json["type"].ToString());
         }

@@ -16,6 +16,7 @@ public class TalentAreaHandler : MonoBehaviour
         this.parent = GameObject.Find("Canvas").transform;
         parent.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(Game.Instance.GetCurrentCombatTarget().GetTalentBackgroundPath());
         renderTalents();
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.TalentTree));
     }
 
     // Update is called once per frame

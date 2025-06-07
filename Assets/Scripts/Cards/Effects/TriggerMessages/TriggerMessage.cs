@@ -4,6 +4,7 @@ public enum TriggerType
 {
     AddGoal,
     StartTurn,
+    TalentTree,
 }
 
 public class TriggerMessage

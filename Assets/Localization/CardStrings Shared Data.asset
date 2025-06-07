@@ -48,7 +48,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2633323739127808
-    m_Key: ConditionAddGoal
+    m_Key: TriggerAddGoal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8390389678252032
+    m_Key: TriggerStartTurn
     m_Metadata:
       m_Items: []
   - m_Id: 5164853212520448

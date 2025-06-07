@@ -72,6 +72,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
+  - m_Id: 8390389678252032
+    m_Localized: the {number:choose(null|1|2|3):|1st |2nd |3rd |{}th }turn starts
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
   references:
     version: 2
     RefIds:
@@ -89,3 +94,4 @@ MonoBehaviour:
         - id: 2635793177550848
         - id: 3926566040805376
         - id: 5164853212520448
+        - id: 8390389678252032

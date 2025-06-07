@@ -35,7 +35,7 @@ public class TriggerMessageConditionAddGoal : TriggerMessageCondition
 
     public override Task<string> GetDescription()
     {
-        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "ConditionAddGoal",
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerAddGoal",
             arguments: new Dictionary<string, object> {
                 { "min", this.min },
                 { "goal", Game.Instance.GetGoalName(this.goal ?? "unknown")}
