@@ -21,8 +21,8 @@ on:
 jobs:
   create-version-tag:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # Needed to create and push tags
+    outputs:
+      new_version: ${{ steps.get_version.outputs.new_version }} # Expose the new version as a job output
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -75,17 +75,6 @@ jobs:
           echo "Calculated new version: $NEW_VERSION"
           echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Create Git tag
-        run: |
-          TAG_NAME="${{ steps.get_version.outputs.new_version }}"
-          echo "Creating tag: $TAG_NAME"
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
-          git tag "$TAG_NAME" -m "Automated release tag for $TAG_NAME"
-          git push origin "$TAG_NAME"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Automatically provided token with write access
-
   build-web:
     needs: create-version-tag
     environment: prod
@@ -124,7 +113,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
-          versioning: Tag
+          versioning: Custom
+          version: ${{ needs.create-version-tag.outputs.new_version }} # Use the new version from the previous job
 
       # Output
       - uses: actions/upload-artifact@v4
@@ -192,7 +182,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Android
-          versioning: Tag
+          versioning: Custom
+          version: ${{ needs.create-version-tag.outputs.new_version }} # Use the new version from the previous job
 
       # Output
       - uses: actions/upload-artifact@v4
