@@ -15,6 +15,7 @@ abstract public class CardEffect {
             "afterPlay" => new AfterPlayEffect(json, owner!),
             "triggerable" => new TriggerableEffect(json, owner!),
             "requirementGoal" => new RequirementGoalEffect(json),
+            "dialog" => new DialogEffect(json),
             _ => throw new System.Exception("Invalid card effect type: " + type),
         };
     }

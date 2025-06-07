@@ -233,6 +233,11 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         this.onClickAction = dialog.GetOnFinish();
     }
 
+    public void EndDialog()
+    {
+        transform.gameObject.SetActive(false);
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         this.onClickAction?.Invoke();
