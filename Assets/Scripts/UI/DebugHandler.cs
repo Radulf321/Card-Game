@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DebugHandler : MonoBehaviour
 {
@@ -70,8 +69,8 @@ public class DebugHandler : MonoBehaviour
     public void startTalent()
     {
         Game game = new Game("Symcon");
+        game.SetCurrentCombatTarget(game.GetCombatTarget("tutorial"));
         game.GetCurrentCombatTarget().IncreaseExperience("comfort", 10);
-        game.GetCurrentCombatTarget().GetTalent("introduction").Purchase();
         FadeHandler.Instance!.LoadScene("TalentTreeScene");
     }
 }

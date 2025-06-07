@@ -8,6 +8,8 @@ class Game
 {
     public static Game Instance { get; private set; } = new Game();
 
+    private static readonly string tutorialFlag = "tutorialDone";
+
     private Player player;
     private int remainingRounds;
     private List<CombatTarget> combatTargets;
@@ -28,6 +30,7 @@ class Game
     private Dialog gameOverDialog;
     private CombatTarget? currentCombatTarget;
     private List<Action<TriggerMessage>> triggerMessageSubscribers = new List<Action<TriggerMessage>>();
+    private Dictionary<string, bool> boolFlags;
 
     public Game()
     {
@@ -43,6 +46,7 @@ class Game
         this.selectActionBackground = "";
         this.checkIcon = "";
         this.gameOverDialog = new DialogText("Dummy", () => { });
+        this.boolFlags = new Dictionary<string, bool>();
     }
 
     public Game(string ResourcePath)
@@ -104,6 +108,7 @@ class Game
         {
             FadeHandler.Instance!.LoadScene("DebugScene");
         });
+        this.boolFlags = new Dictionary<string, bool>();
     }
 
     public Player GetPlayer()
@@ -137,6 +142,16 @@ class Game
 
     public void StartRound()
     {
+        if (!(this.boolFlags.TryGetValue(tutorialFlag, out bool isTutorialDone) && isTutorialDone))
+        {
+            this.boolFlags[tutorialFlag] = true;
+            CombatTarget? tutorialTarget = combatTargets.Find(target => target.GetTargetType() == TargetType.Tutorial);
+            if (tutorialTarget != null)
+            {
+                tutorialTarget.ExecuteAction();
+                return;
+            }
+        }
         string selectActionText;
         if (LocalizationHelper.GetLocalization() == "de")
         {
@@ -146,10 +161,9 @@ class Game
         {
             selectActionText = "Select an action";
         }
-        DialogHandler.StartDialog(new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
-            this.combatTargets[0].GetDialogOption(),
-            this.combatTargets[1].GetDialogOption(),
-            this.locations[0].GetDialogOption(),
+        DialogHandler.Instance!.StartDialog(new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
+            this.combatTargets[0].GetDialogOption()!,
+            this.locations[0].GetDialogOption()!,
         }, SelectType.Cards, true), this.selectActionBackground));
     }
 
@@ -257,5 +271,17 @@ class Game
         {
             subscriber(message);
         }
+    }
+
+    public CombatTarget GetCombatTarget(string id)
+    {
+        foreach (CombatTarget target in combatTargets)
+        {
+            if (target.GetID() == id)
+            {
+                return target;
+            }
+        }
+        throw new System.Exception("Combat target with ID " + id + " not found.");
     }
 }

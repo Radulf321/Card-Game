@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
+
+public enum TargetType
+{
+    Regular,
+    Tutorial,
+}
+
 public class CombatTarget : ActionCharacter
 {
+    private string id;
     private int level;
     private Dictionary<string, int> experience;
 
@@ -22,9 +30,12 @@ public class CombatTarget : ActionCharacter
     private JArray loseDialogData;
     private CardPileFactory cardPileFactory;
     private EnergyInfo? energyOverride;
+    private List<TriggerAction> triggerActions;
+    private TargetType targetType;
 
     public CombatTarget() : base()
     {
+        this.id = "Default";
         this.level = 0;
         this.experience = new Dictionary<string, int>();
         this.introductionTalent = null;
@@ -40,12 +51,16 @@ public class CombatTarget : ActionCharacter
         this.fixedRequirements = new List<List<RequirementFactory>>();
         this.cardPileFactory = new CardPileFactory();
         this.energyOverride = null;
+        this.triggerActions = new List<TriggerAction>();
+        this.targetType = TargetType.Regular;
     }
 
     public CombatTarget(JObject jsonObject) : base(jsonObject)
     {
         this.level = 0;
         this.experience = new Dictionary<string, int>();
+
+        this.id = jsonObject["id"]!.ToString();
 
         List<Talent> talents = new List<Talent>();
         foreach (JObject talentData in jsonObject["talents"] ?? new JArray())
@@ -95,6 +110,14 @@ public class CombatTarget : ActionCharacter
         {
             this.energyOverride = null;
         }
+
+        List<TriggerAction> triggerActions = new List<TriggerAction>();
+        foreach (JObject triggerActionData in jsonObject["triggerActions"] ?? new JArray())
+        {
+            triggerActions.Add(new TriggerAction(triggerActionData));
+        }
+        this.triggerActions = triggerActions;
+        this.targetType = EnumHelper.ParseEnum<TargetType>(jsonObject["type"]?.ToString()) ?? TargetType.Regular;
     }
 
     public List<Turn> GenerateTurns()
@@ -136,6 +159,11 @@ public class CombatTarget : ActionCharacter
     public CardPile CreateCardPile()
     {
         return this.cardPileFactory.CreateCardPile();
+    }
+
+    public string GetID()
+    {
+        return this.id;
     }
 
     public int GetLevel()
@@ -194,11 +222,15 @@ public class CombatTarget : ActionCharacter
         return null;
     }
 
-    protected override void ExecuteAction()
+    public override void ExecuteAction()
     {
         Action start = () =>
         {
             Game.Instance!.SetCurrentCombatTarget(this);
+            foreach (TriggerAction triggerAction in this.triggerActions)
+            {
+                triggerAction.Subscribe();
+            }
             FadeHandler.Instance!.LoadScene("CombatScene");
         };
         // == false as introductionTalent could be null
@@ -281,5 +313,10 @@ public class CombatTarget : ActionCharacter
     public int GetEnergyForTurn(int turn)
     {
         return this.energyOverride?.GetEnergyForTurn(turn) ?? Game.Instance!.GetPlayer().GetEnergyForTurn(turn);
+    }
+
+    public TargetType GetTargetType()
+    {
+        return this.targetType;
     }
 }

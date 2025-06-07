@@ -1,18 +1,8 @@
 {
     "id": "tutorial",
-    "action": {
-        "title": {
-            "en": "Tutorial",
-            "de": "Tutorial"
-        },
-        "description": {
-            "en": "Continue to improve the automation in this single family home. The owner Frank is very motivated to install all kinds of smart features.",
-            "de": "Verbessere die Automatisierung in diesem Einfamilienhaus. Der Besitzer Frank ist sehr motiviert, alle Arten von intelligenten Funktionen zu installieren."
-        },
-        "image": "SingleFamilyHome"
-    },
+    "type": "tutorial",
     "combat": {
-        "background": "SingleFamilyHome",
+        "background": "Regular",
         "numberOfTurns": 3,
         "override": {
             "energy": {
@@ -23,6 +13,7 @@
                 "type": "replace",
                 "cards": [
                     "createVariable",
+                    "adjustPresentation",
                     "optimizeObjectTree",
                     "optimizeObjectTree"
                 ],
@@ -59,15 +50,44 @@
             "dialog": [
                 {
                     "type": "image",
-                    "background": "SingleFamilyHome",
-                    "left": "Player"
+                    "background": "Regular",
+                    "left": "Player",
+                    "right": {
+                        "image": "PioTutorial",
+                        "alignment": "center",
+                        "mirror": true
+                    }
                 },
                 {
                     "type": "text",
                     "speaker": "left",
                     "text": {
-                        "en": "You: Looking good! So, what exactly should I focus on?",
-                        "de": "Du: Sieht gut aus! Worauf genau soll ich den Fokus legen?"
+                        "en": "You: I think that's it. Job's sucessfuly done.",
+                        "de": "Du: So, ich glaube das ist es. Auftrag erfolgreich erfüllt."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Pio: Good job. Now, at the end of each work day, you can choose a focus. You will get a corresponding point that you can use to buy talents.",
+                        "de": "Pio: Gut gemacht. Am Ende jedes Arbeitstags kannst du einen Fokus wählen. Du bekommst dann einen entsprechenden Punkt, den du für Talente ausgeben kannst."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Pio: Talents progress the project at that customer and will reward you with new cards or other benefits in turn.",
+                        "de": "Pio: Talente treiben das Projekt bei dem Kunden voran und belohnen dich im Gegenzug mit neuen Karten oder anderen Vorteilen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Pio: For the beginning, your focus is limited to Comfort (<sprite name=\"Comfort\">). But other options will become available later.",
+                        "de": "Pio: Für den Moment ist dein Fokus auf Komfort (<sprite name=\"Comfort\">) beschränkt. Aber später werden weitere Optionen verfügbar sein."
                     }
                 },
                 {
@@ -92,111 +112,407 @@
             "dialog": [
                 {
                     "type": "image",
-                    "background": "SingleFamilyHome",
-                    "left": "Player"
-                },
-                {
-                    "type": "text",
-                    "speaker": "left",
-                    "text": {
-                        "en": "You: No, that didn't work... But how do I configure that instance?",
-                        "de": "Du: Nein, das funktioniert nicht... Wie konfiguriere ich die Instanz denn jetzt?"
+                    "background": "Regular",
+                    "left": "Player",
+                    "right": {
+                        "image": "PioTutorial",
+                        "alignment": "center",
+                        "mirror": true
                     }
                 },
                 {
                     "type": "text",
                     "speaker": "left",
                     "text": {
-                        "en": "You: I guess I should watch a couple of Tutorial Videos before continuing here....",
-                        "de": "Du: Ich sollte wohl noch ein paar Tutorialvideos anschauen bevor ich hier weitermache..."
+                        "en": "You: Wait, that didn't work. What am I supposed to do now?",
+                        "de": "Du: Moment, das hat nicht geklappt. Was soll ich jetzt tun?"
                     }
                 },
                 {
                     "type": "text",
+                    "speaker": "right",
                     "text": {
-                        "en": "You lose an additional <sprite name=\"Rounds\">",
-                        "de": "Du verlierst einen zusätzlichen <sprite name=\"Rounds\">"
+                        "en": "Pio: It's okay. Symcon offers a lot of options and it can be overwhelming at first. Let's take a break and try again tomorrow.",
+                        "de": "Pio: Alles gut. Symcon bietet eine ganze Menge Möglichkeiten und das kann am Anfang schon mal überwältigen. Lass uns eine Pause machen und es morgen nochmal versuchen."
                     }
                 }
             ]
         }
     },
-    "talentBackground": "SingleFamilyHome",
+    "triggerActions": [
+        {
+            "trigger": {
+                "type": "startturn",
+                "number": 0
+            },
+            "effect": {
+                "type": "dialog",
+                "dialog": [
+                    {
+                        "type": "image",
+                        "left": {
+                            "image": "PioTutorial",
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Cheers! Thank you for choosing Symcon as your home automation system. I promise you won't regret it. Now, you wrote that you want to get listed as integrator on our homepage.",
+                            "de": "Pio: Moin! Danke, dass du Symcon als dein Heimautomatisierungssystem gewählt hast. Ich verspreche dir, du wirst es nicht bereuen. Du hast geschrieben, dass du als Integrator auf unserer Homepage gelistet werden möchtest."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: That shouldn't be a problem. I just want to make sure that you know the basics. Let's go through the fundamentals together.",
+                            "de": "Pio: Das ist auch kein Problem. Ich möchte nur einmal sicherstellen, dass du die Grundlagen beherrschst. Am besten schauen wir uns die einmal gemeinsam an."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Now, on this screen, you see your typical work day at a customer. Sure, every customer is different, but the base ideas apply to all of them.",
+                            "de": "Pio: So, auf diesem Bildschirm siehst du deinen üblichen Arbeitstag beim Kunden. Klar, jeder Kunde ist irgendwie anders, aber die Grundideen sind doch bei allen anwendbar."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: The work day is divided into a number of turns, which you can see above. Some turns have goals. If you don't meet them at the end of the turn, it simply doesn't work that day and you'll have to try again another day.",
+                            "de": "Pio: Der Arbeitstag ist in eine Anzahl von Zügen unterteilt, die siehst du oben. Manche Züge haben Ziele. Hast du die am Ende des Zuges nicht erfüllt, dann klappt es an dem Tag einfach nicht und du musst es an einem anderen Tag nochmal versuchen."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Check out the first turn. It has a goal of 2 Knowhow. You can see that in the top left corner. You can also see that it's shown in orange, meaning you haven't fulfilled the goal yet.",
+                            "de": "Pio: Schau dir den ersten Zug an. Er hat ein Ziel von 2 Knowhow. Das siehst du in der linken oberen Ecke. Du siehst auch, dass der Zug in Orange angezeigt wird, was bedeutet, dass du das Ziel noch nicht erfüllt hast."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: You currently have 0 Knowhow, so you somehow need to gain 2 in this turn to turn this work day into a success.",
+                            "de": "Pio: Du hast aktuell 0 Knowhow, also musst du in diesem Zug irgendwo her 2 Knowhow bekommen um den Arbeitstag erfolgreich abzuschließen."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: But don't worry. At the bottom you see your hand of cards. You currently have one card 'Create Variable' which adds 2 Knowhow. Go ahead and play it by clicking or tapping it.",
+                            "de": "Pio: Mach dir keine Sorgen. Unten siehst du deine Handkarten. Du hast aktuell eine Karte 'Variable erstellen', die 2 Knowhow hinzufügt. Spiel sie einfach, indem du sie anklickst oder antippst."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "trigger": {
+                "type": "addgoal"
+            },
+            "conditions": [
+                {
+                    "type": "turn",
+                    "turn": 0
+                }
+            ],
+            "effect": {
+                "type": "dialog",
+                "dialog": [
+                    {
+                        "type": "image",
+                        "left": {
+                            "image": "PioTutorial",
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Great! Now, you can see that you have 2/2 Knowhow and the turn is now green. That means you have fulfilled the goal and can continue to the next turn.",
+                            "de": "Pio: Super! Du kannst jetzt sehen, dass du 2/2 Knowhow hast und der Zug jetzt grün ist. Das bedeutet, du hast das Ziel erfüllt und kannst zum nächsten Zug übergehen."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: But before we do that, let's talk about energy. Playing a card costs a certain amount of energy. You can see your available energy at the right.",
+                            "de": "Pio: Aber bevor wir das tun, lass uns über Energie sprechen. Das Spielen einer Karte kostet eine bestimmte Menge Energie. Deine verfügbare Energie siehst du rechts."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Above the ligtning symbol, you can see one gray bar, which shows that you have 1 depleted energy that you used to play 'Create Variable'.",
+                            "de": "Pio: Über dem Blitzsymbol siehst du einen grauen Balken, der anzeigt, dass du 1 verbrauchte Energie hast, die du zum Spielen von 'Variable erstellen' verwendet hast."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: At the beginning of each turn, all depleted energy is restored and you can use it again. And even better, take a look at the second turn at the top.",
+                            "de": "Pio: Am Anfang von jedem Zug wird alle verbrauchte Energie wieder hergestellt und du kannst sie erneut verwenden. Und noch besser, schau dir den zweiten Zug oben an."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: In the second turn you'll get an additional energy, so from that turn on, you'll have 2 energy available, meaning you can play more or better cards.",
+                            "de": "Pio: Im zweiten Zug bekommst du eine zusätzliche Energie, also hast du ab diesem Zug 2 Energie zur Verfügung, was bedeutet, dass du mehr oder bessere Karten spielen kannst."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Now, end the turn by using the button at the bottom right.",
+                            "de": "Pio: So, jetzt beende den Zug indem du auf den Button unten rechts benutzt."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "trigger": {
+                "type": "startturn",
+                "number": 1
+            },
+            "effect": {
+                "type": "dialog",
+                "dialog": [
+                    {
+                        "type": "image",
+                        "left": {
+                            "image": "PioTutorial",
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: So, the second turn does not have any goals. But you shouldn't lean back but look ahead instead. See, the third turn has two goals: You need 2 Creativity and 5 Total.",
+                            "de": "Pio: So, der zweite Zug hat keine Ziele. Aber du solltest dich nicht ausruhen sondern stattdessen nach vorne schauen. Schau mal, der dritte Zug hat zwei Ziele: Du brauchst 2 Kreativität und 5 Gesamt."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Most goals require Creativity or Knowhow, which you can gain by playing cards. Total combines those two, meaning both Knowhow and Creativity progress it.",
+                            "de": "Pio: Die meisten Ziele erfordern Kreativität oder Knowhow, die du durch das Spielen von Karten erhalten kannst. Gesamt kombiniert diese beiden, was bedeutet, dass sowohl Knowhow als auch Kreativität es voranbringen."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: That's also why you already have 2 total because you played 'Create Variable' in the first turn.",
+                            "de": "Pio: Darum hast du auch schon 2 Gesamt. Du hast ja 'Variable erstellen' im ersten Zug gespielt."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: At the beginning of the turn you've also drawn a new card: 'Adjust Presentation'. Play it to get some Creativity.",
+                            "de": "Pio: Am Anfang des Zuges hast du auch eine neue Karte gezogen: 'Darstellung anpassen'. Spiele sie, um etwas Kreativität zu bekommen."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "trigger": {
+                "type": "addgoal"
+            },
+            "conditions": [
+                {
+                    "type": "turn",
+                    "turn": 1
+                }
+            ],
+            "effect": {
+                "type": "dialog",
+                "dialog": [
+                    {
+                        "type": "image",
+                        "left": {
+                            "image": "PioTutorial",
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Looking good. Now, you've drawn a new card but you don't have any energy left to play it. But that's okay, there's still the next turn.",
+                            "de": "Pio: Das sieht doch gut aus. Du hast auch noch eine neue Karte gezogen, aber du hast keine Energie mehr, um sie zu spielen. Aber das ist okay, es gibt ja noch den nächsten Zug."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: You should end your turn now.",
+                            "de": "Pio: Du solltest deinen Zug jetzt beenden."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "trigger": {
+                "type": "talenttree"
+            },
+            "effect": {
+                "type": "dialog",
+                "dialog": [
+                    {
+                        "type": "image",
+                        "left": {
+                            "image": "PioTutorial",
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: That's the talent tree. There's only one talent available for our examplary project, so go ahead and buy it.",
+                            "de": "Pio: Das ist der Talentbaum. Es gibt nur ein Talent für unser Beispielprojekt, also kauf es einfach."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Just select the card and confirm the purchase.",
+                            "de": "Pio: Wähle einfach die Karte aus und bestätige den Kauf."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "trigger": {
+                "type": "startturn",
+                "number": 2
+            },
+            "effect": {
+                "type": "dialog",
+                "dialog": [
+                    {
+                        "type": "image",
+                        "left": {
+                            "image": "PioTutorial",
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: All right, last turn. I think I've talked enough for now. You can handle the rest on your own.",
+                            "de": "Pio: Alles klar, letzter Zug. Ich glaube ich habe erstmal genug gelabert. Den Rest schaffst du alleine."
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "talentBackground": "Regular",
     "talents": [
         {
-            "id": "basicVisualisation",
+            "id": "tutorial",
             "title": {
-                "en": "Basic Visualisation",
-                "de": "Grundlegende Visualisierung"
+                "en": "List as Integrator",
+                "de": "Als Integrator listen"
             },
             "cost": {
                 "comfort": 1
             },
             "description": {
-                "en": "First steps with the visualisation",
-                "de": "Erste Schritte mit der Visualisierung"
+                "en": "After having completed the tutorial, you can now by listed as an integrator on the Symcon homepage.",
+                "de": "Nachdem du das Tutorial abgeschlossen hast, kannst du dich jetzt als Integrator auf der Symcon-Homepage listen lassen."
             },
-            "image": "SingleFamilyHome/BasicVisualization",
+            "image": "Tutorial/Tutorial",
             "rewards": [
                 {
-                    "type": "card",
-                    "card": "flexibility"
+                    "type": "rounds"
                 }
             ],
             "dialog": [
                 {
                     "type": "image",
-                    "background": "SingleFamilyHome",
+                    "background": "Regular",
                     "left": "Player",
-                    "right": "SingleFamilyHome"
-                },
-                {
-                    "type": "text",
-                    "text": {
-                        "en": "You present the first draft of the visualization to Frank. He is excited.",
-                        "de": "Du präsentierst Frank den ersten Entwurf der Visualisierung. Er ist begeistert."
-                    }
-                },
-                {
-                    "type": "text",
-                    "speaker": "left",
-                    "text": {
-                        "en": "You: Now, it can definitely be improved, but I'd say it's a good start. What do you think?",
-                        "de": "Du: Es kann auf jeden Fall noch verbessert werden, aber ich finde, es ist ein guter Anfang. Was denkst du?"
+                    "right": {
+                        "image": "PioTutorial",
+                        "alignment": "center",
+                        "mirror": true
                     }
                 },
                 {
                     "type": "text",
                     "speaker": "right",
                     "text": {
-                        "en": "Frank: It looks great! I really like the look of those tiles. So, what happens if I tap on that light icon?",
-                        "de": "Frank: Es sieht großartig aus! Mir gefällt das Aussehen dieser Kacheln wirklich gut. Was passiert, wenn ich auf dieses Lichtsymbol tippe?"
-                    }
-                },
-                {
-                    "type": "text",
-                    "speaker": "left",
-                    "text": {
-                        "en": "You: The light goes on.",
-                        "de": "Du: Das Licht geht an."
+                        "en": "Pio: All right, we've gone through a typical work day at a customer and you have handled everything well.",
+                        "de": "Pio: Alles klar, wir haben einen typischen Arbeitstag bei einem Kunden durchgespielt und du hast alles gut gemeistert."
                     }
                 },
                 {
                     "type": "text",
                     "speaker": "right",
                     "text": {
-                        "en": "Frank: You can do that? From an app? That's amazing! What a great world we live in!",
-                        "de": "Frank: Das geht? Aus einer App? Das ist ja umwerfend! Was für eine großartige Welt, in der wir leben!"
+                        "en": "Pio: So, I will list you as an integrator on our homepage.",
+                        "de": "Pio: Dann liste ich dich mal als Integrator auf unserer Homepage."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Pio: One final thing, your career has a certain number of rounds. Each round is a work day at a customer or you can visit some other locations to improve yourself.",
+                        "de": "Pio: Eine letzte Sache noch, deine Karriere hat eine bestimmte Anzahl von Runden. Jede Runde ist ein Arbeitstag bei einem Kunden oder du kannst andere Orte besuchen, um dich zu verbessern."
                     }
                 },
                 {
                     "type": "reward",
                     "rewards": [
                         {
-                            "type": "card",
-                            "card": "flexibility"
+                            "type": "rounds"
                         }
                     ]
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Pio: Once all rounds are over, your career is over, but you can start a new one. Also, you can earn additional rounds. For example, this talent will return the round you used for the tutorial.",
+                        "de": "Pio: Sobald alle Runden vorbei sind, ist deine Karriere vorbei, aber du kannst eine neue starten. Außerdem kannst du zusätzliche Runden verdienen. Zum Beispiel wird dir dieses Talent die Runde zurückgeben, die du für das Tutorial verwendet hast."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Pio: If you ever have any questions, don't hesitate to call. We're always happy to help.",
+                        "de": "Pio: Wenn du jemals Fragen hast, zögere nicht anzurufen. Wir helfen dir immer gerne."
+                    }
                 }
             ]
         }

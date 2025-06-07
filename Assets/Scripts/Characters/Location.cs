@@ -9,7 +9,7 @@ public class Location : ActionCharacter {
         this.dialog = Dialog.FromJson(json["dialog"] as JArray, onFinish: Game.Instance.EndRound);
     }
 
-    protected override void ExecuteAction() {
+    public override void ExecuteAction() {
         DialogHandler.Instance!.StartDialog(this.dialog);
     }
 }

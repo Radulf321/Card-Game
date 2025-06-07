@@ -20,7 +20,6 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
     public void Initialize()
     {
-        UnityEngine.Debug.Log("DialogHandler Awake called");
         DialogHandler.Instance = this;
         SceneManager.activeSceneChanged += (Scene scene, Scene previousScene) =>
         {

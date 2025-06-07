@@ -1,31 +1,43 @@
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using UnityEngine.SceneManagement;
 
 #nullable enable
 public abstract class ActionCharacter {
-    private string actionTitle;
+    private string? actionTitle;
     private string actionDescription;
     private string actionImagePath;
 
     public ActionCharacter() {
-        this.actionTitle = "Not initialized";
+        this.actionTitle = null;
         this.actionDescription = "Not initialized";
         this.actionImagePath = "Placeholder";
     }
 
-    public ActionCharacter(JObject jsonObject) {
+    public ActionCharacter(JObject jsonObject)
+    {
         JObject? action = jsonObject["action"] as JObject;
-        this.actionTitle = LocalizationHelper.GetLocalizedString(action?["title"] as JObject) ?? "Unknown Title";
-        this.actionDescription = LocalizationHelper.GetLocalizedString(action?["description"] as JObject) ?? "Undefined Description";
-        this.actionImagePath = action?["image"]?.ToString() ?? "Placeholder";
+        if (action != null)
+        {
+            this.actionTitle = LocalizationHelper.GetLocalizedString(action!["title"] as JObject);
+            this.actionDescription = LocalizationHelper.GetLocalizedString(action!["description"] as JObject);
+            this.actionImagePath = action!["image"]!.ToString();
+        }
+        else
+        {
+            this.actionTitle = null;
+            this.actionDescription = "Not initialized";
+            this.actionImagePath = "Placeholder";
+        }
     }
 
-    public DialogOption GetDialogOption() {
+    public DialogOption? GetDialogOption() {
+        if (this.actionTitle == null)
+        {
+            return null;
+        }
         return new DialogOption(
             this.actionTitle,
-            () => {
+            () =>
+            {
                 ExecuteAction();
             },
             this.actionDescription,
@@ -33,5 +45,5 @@ public abstract class ActionCharacter {
         );
     }
 
-    abstract protected void ExecuteAction();
+    abstract public void ExecuteAction();
 }
