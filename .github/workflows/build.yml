@@ -44,7 +44,7 @@ jobs:
       # Output
       - uses: actions/upload-artifact@v4
         with:
-          name: Build
+          name: Web_Build
           path: build
 
       # Deploy auf GitHub Pages (Ziel: radulf321.github.io)
@@ -110,5 +110,5 @@ jobs:
       # Output
       - uses: actions/upload-artifact@v4
         with:
-          name: Build
+          name: Android_Build
           path: build
