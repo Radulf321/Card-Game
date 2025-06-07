@@ -159,7 +159,7 @@ class Game
         remainingRounds--;
         if (remainingRounds <= 0)
         {
-            DialogHandler.StartDialog(this.gameOverDialog);
+            DialogHandler.Instance!.StartDialog(this.gameOverDialog);
         }
         else
         {

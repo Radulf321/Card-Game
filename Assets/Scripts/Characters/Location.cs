@@ -10,6 +10,6 @@ public class Location : ActionCharacter {
     }
 
     protected override void ExecuteAction() {
-        DialogHandler.StartDialog(this.dialog);
+        DialogHandler.Instance!.StartDialog(this.dialog);
     }
 }

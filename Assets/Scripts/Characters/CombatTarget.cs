@@ -218,7 +218,7 @@ public class CombatTarget : ActionCharacter
         if (!win)
         {
             Game.Instance.AddRemainingRounds(-1);
-            DialogHandler.StartDialog(
+            DialogHandler.Instance!.StartDialog(
                 Dialog.FromJson(this.loseDialogData, onFinish: () =>
                 {
                     Game.Instance.EndRound();
@@ -227,7 +227,7 @@ public class CombatTarget : ActionCharacter
         }
         else
         {
-            DialogHandler.StartDialog(
+            DialogHandler.Instance!.StartDialog(
                 Dialog.FromJson(this.winDialogData, actionGenerator: (id) =>
                 {
                     return () =>

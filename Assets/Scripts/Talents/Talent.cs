@@ -135,6 +135,6 @@ public class Talent {
         }
 
         this.purchased = true;
-        DialogHandler.StartDialog(GetDialog());
+        DialogHandler.Instance!.StartDialog(GetDialog());
     }
 }

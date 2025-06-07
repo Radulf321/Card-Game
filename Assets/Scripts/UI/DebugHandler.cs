@@ -35,7 +35,14 @@ public class DebugHandler : MonoBehaviour
 
     public void startDialog()
     {
-        DialogHandler.StartDialog(new DialogText("Initial", new DialogSelect("Test", new List<DialogOption>() {
+        Game game = new Game("Symcon");
+        JObject json = new JObject();
+        json["left"] = "Player";
+        DialogImage dialogImage = new DialogImage(
+            json,
+            onFinish: () => { }
+        );
+        DialogHandler.Instance.StartDialog(new DialogText("Initial", new DialogSelect("Test", new List<DialogOption>() {
             new DialogOption("Blabla", () => {
                 new DialogText("Blabla", () => {
         FadeHandler.Instance!.LoadScene("DebugScene"); }).ShowDialog();

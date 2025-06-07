@@ -14,12 +14,6 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
     public static Action? dialogFinish;
     public Dialog? firstDialog;
 
-    public static void StartDialog(Dialog dialog)
-    {
-        DialogHandler.Instance!.firstDialog = dialog;
-        FadeHandler.Instance!.LoadScene("DialogScene");
-    }
-
     private Action? onClickAction;
 
     public GameObject? dialogOptionPrefab;
@@ -50,6 +44,26 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
     void Update()
     {
 
+    }
+
+    public void StartDialog(Dialog dialog, bool changeScene = true)
+    {
+        new DialogImage(
+            backgroundImagePath: "",
+            leftCharacterImagePath: "",
+            rightCharacterImagePath: "",
+            onFinish: () => { }
+        ).ShowDialog();
+        if (changeScene)
+        {
+            this.firstDialog = dialog;
+            FadeHandler.Instance!.LoadScene("DialogScene");
+        }
+        else
+        {
+            transform.gameObject.SetActive(true);
+            dialog.ShowDialog();
+        }
     }
 
     public void ShowText(DialogText dialog)
