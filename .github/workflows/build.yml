@@ -45,7 +45,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Web_Build
-          path: build
+          path: build/WebGL
 
       # Deploy auf GitHub Pages (Ziel: radulf321.github.io)
       - name: Deploy to GitHub Pages (User Page)
@@ -111,4 +111,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Android_Build
-          path: build
+          path: build/Android/Android.apk
