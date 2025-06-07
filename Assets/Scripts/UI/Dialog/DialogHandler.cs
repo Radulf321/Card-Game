@@ -83,26 +83,71 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
     {
         if (dialog.GetBackgroundImagePath() != null)
         {
-            transform.Find("BackgroundImage").GetComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>(dialog.GetBackgroundImagePath());
-        }
-        if (dialog.GetLeftCharacterImagePath() != null)
-        {
-            Transform leftCharacter = transform.Find("LeftCharacterImage");
-            leftCharacter.gameObject.SetActive(dialog.GetLeftCharacterImagePath() != "");
-            if (dialog.GetLeftCharacterImagePath() != "")
+            Image backgroundImage = transform.Find("BackgroundImage").GetComponent<Image>();
+            if (dialog.GetBackgroundImagePath() != "")
             {
-                leftCharacter.GetComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>(dialog.GetLeftCharacterImagePath());
+                backgroundImage.sprite = Resources.Load<Sprite>(dialog.GetBackgroundImagePath());
+                backgroundImage.color = Color.white;
+            }
+            else
+            {
+                backgroundImage.sprite = null;
+                backgroundImage.color = Color.clear;
             }
         }
-        if (dialog.GetRightCharacterImagePath() != null)
+
+        Action<CharacterImageData, string> handleCharacterImage = (CharacterImageData imageData, string imageID) =>
         {
-            Transform rightCharacter = transform.Find("RightCharacterImage");
-            rightCharacter.gameObject.SetActive(dialog.GetRightCharacterImagePath() != "");
-            if (dialog.GetRightCharacterImagePath() != "")
+            string? imagePath = imageData.GetImagePath();
+            if (imagePath == null)
             {
-                rightCharacter.GetComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>(dialog.GetRightCharacterImagePath());
+                return;
             }
-        }
+            Transform characterImageTransform = transform.Find(imageID);
+            characterImageTransform.gameObject.SetActive(imagePath != "");
+            if (imagePath != "")
+            {
+                characterImageTransform.GetComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>(imagePath);
+                RectTransform rectTransform = characterImageTransform.GetComponent<RectTransform>();
+                switch (imageData.GetAlignment())
+                {
+                    case VerticalAlignment.Top:
+                        rectTransform.anchorMin = new Vector2(rectTransform.anchorMin.x, 0.2f);
+                        rectTransform.anchorMax = new Vector2(rectTransform.anchorMax.x, 1f);
+                        break;
+
+                    case VerticalAlignment.Bottom:
+                        rectTransform.anchorMin = new Vector2(rectTransform.anchorMin.x, 0f);
+                        rectTransform.anchorMax = new Vector2(rectTransform.anchorMax.x, 0.8f);
+                        break;
+
+                    case VerticalAlignment.Center:
+                        rectTransform.anchorMin = new Vector2(rectTransform.anchorMin.x, 0.1f);
+                        rectTransform.anchorMax = new Vector2(rectTransform.anchorMax.x, 0.9f);
+                        break;
+                }
+                if (imageData.GetMirror())
+                {
+                    if (rectTransform.localScale.x != -1f)
+                    {
+                        rectTransform.localScale = new Vector3(-1f, 1f, 1f);
+                        rectTransform.pivot = new Vector2(1 - rectTransform.pivot.x, rectTransform.pivot.y);
+                    }
+                }
+                else
+                {
+                    if (rectTransform.localScale.x != 1f)
+                    {
+                        rectTransform.localScale = new Vector3(1f, 1f, 1f);
+                        rectTransform.pivot = new Vector2(1 - rectTransform.pivot.x, rectTransform.pivot.y);
+                    }
+                }
+            }
+        };
+
+        handleCharacterImage(dialog.GetLeftCharacterImageData(), "LeftCharacterImage");
+        handleCharacterImage(dialog.GetRightCharacterImageData(), "RightCharacterImage");
+
         dialog.GetOnFinish()();
     }
 
