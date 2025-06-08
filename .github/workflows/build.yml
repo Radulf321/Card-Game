@@ -241,7 +241,7 @@ jobs:
 
             ${{ github.event.inputs.version_info }}
 
-            ***Web Build:** [Play Here](https://radulf321.github.io)
+            **Web Build:** [Play Here](https://radulf321.github.io)
             **Android Download:** [Download APK Here](https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_VERSION }}/Android.apk)
           draft: false
           prerelease: false
