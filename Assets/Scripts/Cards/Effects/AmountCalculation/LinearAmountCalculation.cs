@@ -24,7 +24,7 @@ public class LinearAmountCalculation : AmountCalculation {
         this.rate = json["rate"]?.ToObject<float>() ?? 0;
         this.input = json["input"]?.ToString() ?? "";
         this.min = json["min"]?.ToObject<int>();
-        this.max = json["min"]?.ToObject<int>();
+        this.max = json["max"]?.ToObject<int>();
     }
 
     public override int GetValue(Card card) {
