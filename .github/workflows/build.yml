@@ -17,9 +17,14 @@ on:
         description: 'Enter custom version (e.g., v1.2.3) if "version_type" is "custom"'
         required: false
         type: string
+      version_info:
+        description: 'Info for Changelog'
+        required: false
+        type: string,
+        default: ''
 
 jobs:
-  create-version-tag:
+  create-version:
     runs-on: ubuntu-latest
     outputs:
       new_version: ${{ steps.get_version.outputs.new_version }} # Expose the new version as a job output
@@ -76,7 +81,7 @@ jobs:
           echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
   build-web:
-    needs: create-version-tag
+    needs: create-version
     environment: prod
 
     runs-on: ubuntu-22.04
@@ -114,7 +119,7 @@ jobs:
         with:
           targetPlatform: WebGL
           versioning: Custom
-          version: ${{ needs.create-version-tag.outputs.new_version }} # Use the new version from the previous job
+          version: ${{ needs.create-version.outputs.new_version }} # Use the new version from the previous job
 
       # Output
       - uses: actions/upload-artifact@v4
@@ -136,7 +141,7 @@ jobs:
           publish_dir: ./build/WebGL/WebGL # game-ci/unity-builder legt WebGL in 'build/WebGL/WebGL' ab
           
   build-android:
-    needs: create-version-tag
+    needs: create-version
     environment: prod
 
     runs-on: ubuntu-22.04
@@ -183,10 +188,64 @@ jobs:
         with:
           targetPlatform: Android
           versioning: Custom
-          version: ${{ needs.create-version-tag.outputs.new_version }} # Use the new version from the previous job
+          version: ${{ needs.create-version.outputs.new_version }} # Use the new version from the previous job
 
       # Output
       - uses: actions/upload-artifact@v4
         with:
           name: Android_Build
           path: build/Android/Android.apk
+
+  create-github-release:
+    needs: [create-version, build-web, build-android] # Depends on all preceding jobs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Necessary for creating a release and its tag
+    steps:
+      - name: Checkout code (for release context, optional but good practice)
+        uses: actions/checkout@v4
+        # We don't need fetch-depth: 0 here unless generating changelog or similar
+        # Fetching the specific commit might be good for release context
+
+      - name: Download Android Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Android_Build # Must match the name used in build-android's upload-artifact step
+          path: ./android-build/ # Local directory where the artifact will be downloaded
+
+      - name: Get Version for Release
+        run: |
+          RELEASE_VERSION="${{ needs.create-version.outputs.new_version }}"
+          echo "Release version: $RELEASE_VERSION"
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_ENV" # Make available as env var
+
+      - name: Create Git Tag (for the release)
+        run: |
+          TAG_NAME="${{ env.RELEASE_VERSION }}"
+          echo "Creating Git tag locally: $TAG_NAME"
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git tag "$TAG_NAME" -m "Release $TAG_NAME"
+          git push origin "$TAG_NAME"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Use the automatically provided GitHub token
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }} # Use the same tag name as created above
+          name: Release ${{ env.RELEASE_VERSION }}
+          body: |
+            ## Release Notes - ${{ env.RELEASE_VERSION }}
+
+            ${{ github.event.inputs.version_info }}
+
+            ***Web Build:** [Play Here](https://radulf321.github.io)
+            **Android Download:** [Download APK Here](https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_VERSION }}/Android.apk)
+          draft: false
+          prerelease: false
+          files: |
+            ./android-build/Android.apk # Path to the downloaded artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Automatically provided token for release creation
