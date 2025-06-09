@@ -3,12 +3,12 @@
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public class ExperienceTypeData {
+public class NamedIconData {
     private string id;
     private string name;
     private string? iconName;
 
-    public ExperienceTypeData(JObject experienceTypeData) {
+    public NamedIconData(JObject experienceTypeData) {
         this.id = experienceTypeData["id"]?.ToString() ?? "Undefined";
         this.name = LocalizationHelper.GetLocalizedString(experienceTypeData["name"] as JObject);
         this.iconName = experienceTypeData["icon"]?.ToString();

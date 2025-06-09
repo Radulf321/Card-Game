@@ -171,15 +171,22 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         titleTransform.GetComponent<TMPro.TextMeshProUGUI>().text = dialog.GetTitle();
         titleTransform.GetComponent<LayoutElement>().preferredHeight = selectRect.height * 0.1f;
 
-        Transform turnInfo = selectArea.Find("TurnInfo");
-        turnInfo.gameObject.SetActive(dialog.IsShowUI());
+        Transform infoArea = selectArea.Find("Info");
+        infoArea.gameObject.SetActive(dialog.IsShowUI());
         if (dialog.IsShowUI())
         {
             IntVariable amount = new IntVariable();
             amount.Value = Game.Instance.GetRemainingRounds();
-            LocalizedString localizedString = turnInfo.GetComponent<LocalizeStringEvent>().StringReference;
+            LocalizedString localizedString = infoArea.Find("Turn").GetComponent<LocalizeStringEvent>().StringReference;
             localizedString.Add("amount", amount);
             localizedString.RefreshString();
+            String currencyString = "";
+            foreach (String currencyID in Game.Instance.GetCurrencies())
+            {
+                int currencyAmount = Game.Instance.GetPlayer().GetCurrency(currencyID);
+                currencyString += "   " + Game.Instance.GetCurrencyInlineIcon(currencyID) + " " + currencyAmount;
+            }
+            infoArea.Find("Currency").GetComponent<TMPro.TextMeshProUGUI>().text = currencyString;
         }
         // Remove all current options
         for (int i = 0; i < selectArea.childCount; i++)
@@ -192,7 +199,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
             {
                 continue;
             }
-            if (selectArea.GetChild(i).name == "TurnInfo")
+            if (selectArea.GetChild(i).name == "Info")
             {
                 continue;
             }

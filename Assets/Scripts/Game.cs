@@ -18,7 +18,8 @@ class Game
 
     private Dictionary<string, string> goalNames;
 
-    private Dictionary<string, ExperienceTypeData> experienceTypes;
+    private Dictionary<string, NamedIconData> experienceTypes;
+    private Dictionary<string, NamedIconData> currencies;
 
     private Dictionary<string, Sprite> icons;
 
@@ -40,7 +41,8 @@ class Game
         this.combatTargets = new List<CombatTarget>();
         this.locations = new List<Location>();
         this.goalNames = new Dictionary<string, string>();
-        this.experienceTypes = new Dictionary<string, ExperienceTypeData>();
+        this.experienceTypes = new Dictionary<string, NamedIconData>();
+        this.currencies = new Dictionary<string, NamedIconData>();
         this.icons = new Dictionary<string, Sprite>();
         this.cardLibrary = new CardLibrary();
         this.resourcePath = "";
@@ -65,13 +67,21 @@ class Game
         }
         this.goalNames = goalNames;
 
-        Dictionary<string, ExperienceTypeData> experienceTypes = new Dictionary<string, ExperienceTypeData>();
+        Dictionary<string, NamedIconData> experienceTypes = new Dictionary<string, NamedIconData>();
         foreach (JObject experienceType in index["experienceTypes"]!)
         {
             string id = experienceType["id"]!.ToString();
-            experienceTypes.Add(id, new ExperienceTypeData(experienceType));
+            experienceTypes.Add(id, new NamedIconData(experienceType));
         }
         this.experienceTypes = experienceTypes;
+
+        Dictionary<string, NamedIconData> currencies = new Dictionary<string, NamedIconData>();
+        foreach (JObject currency in index["currencies"]!)
+        {
+            string id = currency["id"]!.ToString();
+            currencies.Add(id, new NamedIconData(currency));
+        }
+        this.currencies = currencies;
 
         Dictionary<string, Sprite> icons = new Dictionary<string, Sprite>();
         foreach (Sprite sprite in Resources.LoadAll<Sprite>(ResourcePath + "/Graphics/Icons"))
@@ -224,6 +234,40 @@ class Game
     public Sprite? GetExperienceTypeIcon(string id)
     {
         return experienceTypes[id]?.GetIcon();
+    }
+
+    public List<string> GetCurrencies()
+    {
+        return this.currencies.Keys.ToList();
+    }
+
+    public string GetCurrencyName(string id)
+    {
+        if (currencies.ContainsKey(id))
+        {
+            return currencies[id].GetName();
+        }
+        else
+        {
+            return "Unknown Experience Type";
+        }
+    }
+
+    public string GetCurrencyInlineIcon(string id)
+    {
+        if (currencies.ContainsKey(id))
+        {
+            return currencies[id].GetInlineIcon();
+        }
+        else
+        {
+            return "Unknown Experience Type";
+        }
+    }
+
+    public Sprite? GetCurrencyIcon(string id)
+    {
+        return currencies[id]?.GetIcon();
     }
 
     public Sprite? GetIcon(string id)

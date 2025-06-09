@@ -210,6 +210,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Cash
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 1327
+        width: 810
+        height: 564
+      alignment: 9
+      pivot: {x: -0.0021933473, y: -0.010307582}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cadef3dcd697404bb4a75903e0dabcd
+      internalID: -1295072578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -224,6 +246,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      Cash: -1295072578
       Check: -727081251
       Comfort: 730683644
       Energy: 1049207144

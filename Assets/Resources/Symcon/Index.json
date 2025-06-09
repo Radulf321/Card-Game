@@ -25,6 +25,16 @@
             "icon": "Comfort"
         }
     ],
+    "currencies": [
+        {
+            "id": "cash",
+            "name": {
+                "en": "Symoleon",
+                "de": "Symoleon"
+            },
+            "icon": "Cash"
+        }
+    ],
     "selectActionBackground": "Regular",
     "startingCards": [
         "optimizeObjectTree",

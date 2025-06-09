@@ -3,14 +3,15 @@ using Newtonsoft.Json.Linq;
 
 public class Player
 {
-
     private List<Card> deck;
     private EnergyInfo energyInfo;
+    private Dictionary<string, int> currencies;
 
     public Player()
     {
         this.deck = new List<Card>();
         this.energyInfo = new EnergyInfo();
+        this.currencies = new Dictionary<string, int>();
     }
 
     public Player(List<string> startingCards, JObject energyInfo)
@@ -22,6 +23,7 @@ public class Player
         }
         this.deck = deck;
         this.energyInfo = new EnergyInfo(energyInfo);
+        this.currencies = new Dictionary<string, int>();
     }
 
     public List<Card> GetDeck()
@@ -52,5 +54,14 @@ public class Player
     public void AddEnergy(int amount, int turn)
     {
         this.energyInfo.AddEnergy(amount, turn);
+    }
+
+    public int GetCurrency(string currencyName)
+    {
+        if (this.currencies.ContainsKey(currencyName))
+        {
+            return this.currencies[currencyName];
+        }
+        return 0;
     }
 }
