@@ -60,7 +60,7 @@ public class TalentInfoHandler : MonoBehaviour
         descriptionText.fontSize = descriptionSize;
         descriptionArea.Find("RewardsTitle").GetComponent<TMPro.TextMeshProUGUI>().fontSize = titleSize;
         Transform rewardsArea = descriptionArea.Find("RewardsArea");
-        rightArea.Find("DescriptionScroll").GetComponentInChildren<Scrollbar>().value = 1;
+        rightArea.Find("DescriptionScroll").GetComponentInChildren<Scrollbar>(includeInactive: true).value = 1;
 
         for (int i = 0; i < rewardsArea.childCount; i++)
         {
