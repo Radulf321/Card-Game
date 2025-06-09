@@ -69,8 +69,10 @@ public class DebugHandler : MonoBehaviour
     public void startTalent()
     {
         Game game = new Game("Symcon");
-        game.SetCurrentCombatTarget(game.GetCombatTarget("tutorial"));
-        game.GetCurrentCombatTarget().IncreaseExperience("comfort", 10);
+        CombatTarget combatTarget = game.GetCombatTarget("singleFamilyHome");
+        game.SetCurrentCombatTarget(combatTarget);
+        combatTarget.GetTalent("introduction")?.Purchase();
+        combatTarget.IncreaseExperience("comfort", 10);
         FadeHandler.Instance!.LoadScene("TalentTreeScene");
     }
 }
