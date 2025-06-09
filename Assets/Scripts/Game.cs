@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ class Game
 {
     public static Game Instance { get; private set; } = new Game();
 
-    private static readonly string tutorialFlag = "tutorialDone";
+    private static readonly String tutorialDoneKey = "TutorialDone";
 
     private Player player;
     private int remainingRounds;
@@ -30,7 +31,7 @@ class Game
     private Dialog gameOverDialog;
     private CombatTarget? currentCombatTarget;
     private List<Action<TriggerMessage>> triggerMessageSubscribers = new List<Action<TriggerMessage>>();
-    private Dictionary<string, bool> boolFlags;
+    private bool tutorialDone;
 
     public Game()
     {
@@ -46,7 +47,7 @@ class Game
         this.selectActionBackground = "";
         this.checkIcon = "";
         this.gameOverDialog = new DialogText("Dummy", () => { });
-        this.boolFlags = new Dictionary<string, bool>();
+        this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
     }
 
     public Game(string ResourcePath)
@@ -108,7 +109,7 @@ class Game
         {
             FadeHandler.Instance!.LoadScene("DebugScene");
         });
-        this.boolFlags = new Dictionary<string, bool>();
+        this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
     }
 
     public Player GetPlayer()
@@ -142,9 +143,11 @@ class Game
 
     public void StartRound()
     {
-        if (!(this.boolFlags.TryGetValue(tutorialFlag, out bool isTutorialDone) && isTutorialDone))
+        if (!this.tutorialDone)
         {
-            this.boolFlags[tutorialFlag] = true;
+            this.tutorialDone = true;
+            PlayerPrefs.SetInt(Game.tutorialDoneKey, 1);
+            PlayerPrefs.Save();
             CombatTarget? tutorialTarget = combatTargets.Find(target => target.GetTargetType() == TargetType.Tutorial);
             if (tutorialTarget != null)
             {
