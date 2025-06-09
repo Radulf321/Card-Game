@@ -1,20 +1,25 @@
-using System.Linq;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
-public abstract class AmountCalculation {
-    public static AmountCalculation? FromJson(JToken? json) {
-        if (json == null) {
+
+public abstract class AmountCalculation
+{
+    public static AmountCalculation? FromJson(JToken? json)
+    {
+        if (json == null)
+        {
             return null;
         }
-        switch (json.Type) {
+        switch (json.Type)
+        {
             case JTokenType.Integer:
                 return new ConstantAmountCalculation(json.ToObject<int>());
 
             case JTokenType.Object:
                 JObject jsonObject = (JObject)json;
                 string type = jsonObject["type"]?.ToString() ?? "";
-                switch (type) {
+                switch (type)
+                {
                     case "linear":
                         return new LinearAmountCalculation(jsonObject);
                     case "constant":
@@ -28,6 +33,6 @@ public abstract class AmountCalculation {
         }
     }
 
-    abstract public int GetValue(Card card);
+    abstract public int GetValue(Card? card = null);
     abstract public int GetValue(int number);
 }

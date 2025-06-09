@@ -1,7 +1,7 @@
+#nullable enable
+
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-
-#nullable enable
 
 public class LinearAmountCalculation : AmountCalculation {
     private int baseValue;
@@ -27,11 +27,15 @@ public class LinearAmountCalculation : AmountCalculation {
         this.max = json["max"]?.ToObject<int>();
     }
 
-    public override int GetValue(Card card) {
+    public override int GetValue(Card? card = null) {
         int inputValue;
         switch (input) {
             case "previousPlays":
-                inputValue = CombatHandler.instance.getCardsPlayed(card.GetID());
+                inputValue = CombatHandler.instance.getCardsPlayed(card!.GetID());
+                break;
+
+            case "targetLevel":
+                inputValue = Game.Instance.GetCurrentCombatTarget().GetLevel();
                 break;
 
             default:
@@ -46,7 +50,7 @@ public class LinearAmountCalculation : AmountCalculation {
         if (min.HasValue && value < min.Value) {
             return min.Value;
         }
-        if (max.HasValue && value < max.Value) {
+        if (max.HasValue && value > max.Value) {
             return max.Value;
         }
         return value;

@@ -56,12 +56,24 @@ public class Player
         this.energyInfo.AddEnergy(amount, turn);
     }
 
-    public int GetCurrency(string currencyName)
+    public int GetCurrency(string currencyID)
     {
-        if (this.currencies.ContainsKey(currencyName))
+        if (this.currencies.ContainsKey(currencyID))
         {
-            return this.currencies[currencyName];
+            return this.currencies[currencyID];
         }
         return 0;
+    }
+
+    public void AddCurrency(string currencyID, int amount)
+    {
+        if (this.currencies.ContainsKey(currencyID))
+        {
+            this.currencies[currencyID] += amount;
+        }
+        else
+        {
+            this.currencies[currencyID] = amount;
+        }
     }
 }
