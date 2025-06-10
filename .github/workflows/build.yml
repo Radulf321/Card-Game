@@ -219,14 +219,6 @@ jobs:
           echo "Contents of ./android-build/ after download:"
           ls -la ./android-build/
 
-
-      - name: Unzip Android APK
-        id: unzip_apk
-        run: |
-          # The downloaded artifact 'Android_Build.zip' will be directly in ./android-build/
-          # We know the zip is called Android_Build.zip and contains Android.apk at its root.
-          unzip -o ./android-build/Android_Build.zip -d ./android-build/
-
       - name: Get Version for Release
         run: |
           RELEASE_VERSION="${{ needs.create-version.outputs.new_version }}"
@@ -259,7 +251,6 @@ jobs:
             **Android Download:** [Download APK Here](https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_VERSION }}/Android.apk)
           draft: false
           prerelease: false
-          files: |
-            ./android-build/Android.apk # Path to the downloaded artifact
+          files: ./android-build/Android.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Automatically provided token for release creation
