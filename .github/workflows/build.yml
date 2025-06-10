@@ -213,6 +213,13 @@ jobs:
           name: Android_Build # Must match the name used in build-android's upload-artifact step
           path: ./android-build/ # Local directory where the artifact will be downloaded
 
+      # Debugging step: Check contents of the directory after download
+      - name: Debug - List Downloaded Contents
+        run: |
+          echo "Contents of ./android-build/ after download:"
+          ls -la ./android-build/
+
+
       - name: Unzip Android APK
         id: unzip_apk
         run: |
