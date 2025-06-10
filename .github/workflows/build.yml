@@ -20,7 +20,7 @@ on:
       version_info:
         description: 'Info for Changelog'
         required: false
-        type: string,
+        type: string
         default: ''
 
 jobs:
@@ -212,6 +212,13 @@ jobs:
         with:
           name: Android_Build # Must match the name used in build-android's upload-artifact step
           path: ./android-build/ # Local directory where the artifact will be downloaded
+
+      - name: Unzip Android APK
+        id: unzip_apk
+        run: |
+          # The downloaded artifact 'Android_Build.zip' will be directly in ./android-build/
+          # We know the zip is called Android_Build.zip and contains Android.apk at its root.
+          unzip -o ./android-build/Android_Build.zip -d ./android-build/
 
       - name: Get Version for Release
         run: |
