@@ -33,6 +33,7 @@ class Game
     private CombatTarget? currentCombatTarget;
     private List<Action<TriggerMessage>> triggerMessageSubscribers = new List<Action<TriggerMessage>>();
     private bool tutorialDone;
+    private Dictionary<FlagValidity, FlagDictionary> flagDictionaries;
 
     public Game()
     {
@@ -48,8 +49,9 @@ class Game
         this.resourcePath = "";
         this.selectActionBackground = "";
         this.checkIcon = "";
-        this.gameOverDialog = new DialogText("Dummy", () => { });
+        this.gameOverDialog = new DialogText("Dummy");
         this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
+        this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
     }
 
     public Game(string ResourcePath)
@@ -115,11 +117,9 @@ class Game
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
         this.checkIcon = index["checkIcon"]!.ToString();
 
-        this.gameOverDialog = Dialog.FromJson(index["gameOverDialog"] as JArray ?? new JArray(), () =>
-        {
-            FadeHandler.Instance!.LoadScene("DebugScene");
-        });
+        this.gameOverDialog = Dialog.FromJson(index["gameOverDialog"] as JArray ?? new JArray());
         this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
+        this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
     }
 
     public Player GetPlayer()
@@ -174,10 +174,14 @@ class Game
         {
             selectActionText = "Select an action";
         }
-        DialogHandler.Instance!.StartDialog(new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
+        _ = DialogHandler.Instance!.StartDialog(new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
             this.combatTargets[0].GetDialogOption()!,
             this.locations[0].GetDialogOption()!,
-        }, SelectType.Cards, true), this.selectActionBackground));
+        }, SelectType.Cards, true), this.selectActionBackground), onFinish: () =>
+        {
+            string targetID = GetFlag<string>(FlagValidity.Dialog, CombatTarget.CurrentTargetKey)!;
+            GetActionCharacter(targetID)?.ExecuteAction();
+        });
     }
 
     public void EndRound()
@@ -186,7 +190,10 @@ class Game
         remainingRounds--;
         if (remainingRounds <= 0)
         {
-            DialogHandler.Instance!.StartDialog(this.gameOverDialog);
+            _ = DialogHandler.Instance!.StartDialog(this.gameOverDialog, onFinish: () =>
+        {
+            FadeHandler.Instance!.LoadScene("DebugScene");
+        });
         }
         else
         {
@@ -320,7 +327,7 @@ class Game
         }
     }
 
-    public CombatTarget GetCombatTarget(string id)
+    public CombatTarget? GetCombatTarget(string id)
     {
         foreach (CombatTarget target in combatTargets)
         {
@@ -329,6 +336,48 @@ class Game
                 return target;
             }
         }
-        throw new System.Exception("Combat target with ID " + id + " not found.");
+        return null;
+    }
+
+    public Location? GetLocation(string id)
+    {
+        foreach (Location location in locations)
+        {
+            if (location.GetID() == id)
+            {
+                return location;
+            }
+        }
+        return null;
+    }
+
+    public ActionCharacter? GetActionCharacter(string id)
+    {
+        CombatTarget? combatTarget = GetCombatTarget(id);
+        if (combatTarget != null)
+        {
+            return combatTarget;
+        }
+        else {
+            return GetLocation(id);
+        }
+    }
+
+    public void SetFlag<T>(FlagValidity validity, string key, T value)
+    {
+        if (!flagDictionaries.ContainsKey(validity))
+        {
+            flagDictionaries[validity] = new FlagDictionary();
+        }
+        flagDictionaries[validity].SetValue<T>(key, value);
+    }
+
+    public T? GetFlag<T>(FlagValidity validity, string key)
+    {
+        if (!flagDictionaries.ContainsKey(validity))
+        {
+            return default(T);
+        }
+        return flagDictionaries[validity].GetValue<T>(key);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -59,7 +60,7 @@ public class Talent {
             this.rewards.Add(Reward.FromJson(rewardData));
         }
         this.prerequisites = talentData["prerequisites"]?.ToObject<List<string>>() ?? new List<string>();
-        this.dialog = Dialog.FromJson(talentData["dialog"] as JArray ?? new JArray(), () => { DialogHandler.dialogFinish?.Invoke(); });
+        this.dialog = Dialog.FromJson(talentData["dialog"] as JArray ?? new JArray());
         this.owner = owner;
     }
 
@@ -119,7 +120,7 @@ public class Talent {
         return this.purchased;
     }
 
-    public void Purchase() {
+    public async Task Purchase(Action? afterDialog = null) {
         if (this.purchased) {
             throw new System.Exception("Talent already purchased.");
         }
@@ -135,6 +136,8 @@ public class Talent {
         }
 
         this.purchased = true;
-        DialogHandler.Instance!.StartDialog(GetDialog());
+        await DialogHandler.Instance!.StartDialog(GetDialog(), onFinish: afterDialog ?? (() => {
+            Game.Instance!.EndRound();
+        }));
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
@@ -15,26 +16,33 @@ public class DialogSelect : Dialog {
     private bool showUI;
 
 
-    public DialogSelect(string title, List<DialogOption> options, SelectType selectType = SelectType.Buttons, bool showUI = false) {
+    public DialogSelect(string title, List<DialogOption> options, SelectType selectType = SelectType.Buttons, bool showUI = false, Dialog? nextDialog = null) : base(nextDialog) {
         this.showUI = showUI;
         this.title = title;
         this.options = options;
         this.selectType = selectType;
     }
 
-    public DialogSelect(JObject dialogData, Func<string?, Action> actionGenerator) {
+    public DialogSelect(JObject dialogData, Dialog? nextDialog = null) : base(nextDialog){
         this.title = LocalizationHelper.GetLocalizedString(dialogData["title"] as JObject);
         this.showUI = dialogData["showUI"]?.ToObject<bool>() ?? false;
         this.selectType = (SelectType)Enum.Parse(typeof(SelectType), dialogData["selectType"]?.ToString() ?? "Buttons");
         List<DialogOption> options = new List<DialogOption>();
         foreach (JObject optionData in dialogData["options"] ?? new JArray()) {
-            options.Add(new DialogOption(optionData, actionGenerator(optionData["id"]?.ToString())));
+            options.Add(new DialogOption(optionData));
         }
         this.options = options;
     }
 
-    public override void ShowDialog() {
-        UnityEngine.Object.FindAnyObjectByType<DialogHandler>().ShowSelect(this);
+    public override async Task ShowDialog()
+    {
+        DialogOption selectedOption = await DialogHandler.Instance!.ShowSelect(this);
+        Dialog? optionDialog = selectedOption.GetDialog();
+        if (optionDialog != null)
+        {
+            await optionDialog.ShowDialog();
+        }
+        await base.ShowDialog();
     }
 
     public string GetTitle() {

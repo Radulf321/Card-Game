@@ -209,12 +209,12 @@ public class CombatHandler : MonoBehaviour
 
     private void loose()
     {
-        Game.Instance.GetCurrentCombatTarget().EndCombat(false);
+        _ = Game.Instance.GetCurrentCombatTarget().EndCombat(false);
     }
 
     private void win()
     {
-        Game.Instance.GetCurrentCombatTarget().EndCombat(true);
+        _ = Game.Instance.GetCurrentCombatTarget().EndCombat(true);
     }
 
     private void SendTriggerMessage(TriggerMessage message)

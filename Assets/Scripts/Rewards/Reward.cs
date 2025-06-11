@@ -25,6 +25,8 @@ public abstract class Reward
                 return new RoundsReward(json);
             case "currency":
                 return new CurrencyReward(json);
+            case "experience":
+                return new ExperienceReward(json);
             default:
                 throw new System.Exception("Reward type not recognized: " + type);
         }

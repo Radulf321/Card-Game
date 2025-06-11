@@ -1,9 +1,13 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+
+#nullable enable
 
 public class DialogCardActionAreaHandler : CardsContainerHandler<DialogOption>
 {
-    private List<DialogOption> dialogOptions;
+    private List<DialogOption>? dialogOptions;
+    private TaskCompletionSource<DialogOption>? selectedTask;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,22 +20,26 @@ public class DialogCardActionAreaHandler : CardsContainerHandler<DialogOption>
 
     }
 
-
     public void SetDialogOptions(List<DialogOption> dialogOptions)
     {
         this.dialogOptions = dialogOptions;
         updateView();
     }
 
+    public void SetSelectedTask(TaskCompletionSource<DialogOption> selectedTask)
+    {
+        this.selectedTask = selectedTask;
+    }
+
     protected override List<DialogOption> GetCardData()
     {
-        return this.dialogOptions;
+        return this.dialogOptions!;
     }
 
     protected override DialogOption GetHandlerData(CardHandler cardHandler)
     {
         string title = cardHandler.GetTitle();
-        return dialogOptions.Find(option => option.GetTitle() == title);
+        return dialogOptions!.Find(option => option.GetTitle() == title);
     }
 
     protected override void SetHandlerData(CardHandler cardHandler, DialogOption cardData)
@@ -40,6 +48,9 @@ public class DialogCardActionAreaHandler : CardsContainerHandler<DialogOption>
         cardHandler.SetDescription(cardData.GetDescription());
         cardHandler.SetSprite(Resources.Load<Sprite>(cardData.GetImagePath()));
         cardHandler.SetCostSprite(null);
-        cardHandler.SetOnClickAction(cardData.GetAction());
+        cardHandler.SetOnClickAction(() =>
+        {
+            this.selectedTask?.SetResult(cardData);
+        });
     }
 }

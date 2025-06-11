@@ -1,38 +1,51 @@
 using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Unity.VisualScripting;
 
 #nullable enable
 abstract public class Dialog {
-    public static Dialog FromJson(JArray? dialogData, Action? onFinish = null, Func<string?, Action>? actionGenerator = null) {
-        if (dialogData == null || dialogData.Count == 0) {
+    public static Dialog FromJson(JArray? dialogData, Dialog? nextDialog = null) {
+        if (dialogData == null || dialogData.Count == 0)
+        {
+            UnityEngine.Debug.Log("Throwing exception");
             throw new System.Exception("Dialog JSON is null or empty.");
         }
         if (dialogData.Count == 1) {
-            return FromJson(dialogData[0] as JObject ?? new JObject(), onFinish, actionGenerator);
+            return FromJson(dialogData[0] as JObject ?? new JObject(), nextDialog);
         }
         dialogData = new JArray(dialogData);
         JObject singleDialogData = dialogData[dialogData.Count - 1] as JObject ?? new JObject();
         dialogData.RemoveAt(dialogData.Count - 1);
-        return FromJson(dialogData, () => {
-            FromJson(singleDialogData, onFinish, actionGenerator).ShowDialog();
-        }, actionGenerator);
+        return FromJson(dialogData, FromJson(singleDialogData, nextDialog));
     }
 
-    public static Dialog FromJson(JObject dialogData, Action? onFinish = null, Func<string?, Action>? actionGenerator = null) {
+    public static Dialog FromJson(JObject dialogData, Dialog? nextDialog = null) {
         string type = dialogData["type"]?.ToString() ?? "Undefined";
         switch (type) {
             case "text":
-                return new DialogText(dialogData, onFinish ?? DialogHandler.dialogFinish ?? (() => { }));
+                return new DialogText(dialogData, nextDialog);
             case "image":
-                return new DialogImage(dialogData, onFinish ?? DialogHandler.dialogFinish ?? (() => { }));
+                return new DialogImage(dialogData, nextDialog);
             case "reward":
-                return new DialogReward(dialogData, onFinish ?? DialogHandler.dialogFinish ?? (() => { }));
+                return new DialogReward(dialogData, nextDialog);
             case "select":
-                return new DialogSelect(dialogData, actionGenerator ?? (id => () => { DialogHandler.dialogFinish?.Invoke(); }));
+                return new DialogSelect(dialogData, nextDialog);
             default:
+                UnityEngine.Debug.Log("Dialog type not recognized: " + type);
                 throw new System.Exception("Dialog type not recognized: " + type);
         }
     }
-    abstract public void ShowDialog();
+
+    protected Dialog? nextDialog;
+
+    protected Dialog(Dialog? nextDialog = null) {
+        this.nextDialog = nextDialog;
+    }
+
+    virtual public Task ShowDialog() {
+        if (nextDialog != null) {
+            return nextDialog.ShowDialog();
+        }
+        return Task.CompletedTask;
+    }
 }

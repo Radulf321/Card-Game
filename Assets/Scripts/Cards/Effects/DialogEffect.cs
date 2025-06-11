@@ -10,16 +10,13 @@ public class DialogEffect : CardEffect
         this.dialog = dialog;
     }
 
-    public DialogEffect(JObject json) : this(Dialog.FromJson(json["dialog"] as JArray, onFinish: () =>
-    {
-        DialogHandler.Instance!.EndDialog();
-    }))
+    public DialogEffect(JObject json) : this(Dialog.FromJson(json["dialog"] as JArray))
     {
     }
 
     public override void applyEffect()
     {
-        DialogHandler.Instance.StartDialog(this.dialog, changeScene: false);
+        _ = DialogHandler.Instance.StartDialog(this.dialog, changeScene: false);
     }
 
     public override CardEffect Clone(Card newOwner)

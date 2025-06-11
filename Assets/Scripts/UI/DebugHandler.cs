@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -32,38 +33,31 @@ public class DebugHandler : MonoBehaviour
         game.StartRound();
     }
 
-    public void startDialog()
+    public async Task startDialog()
     {
         Game game = new Game("Symcon");
         JObject json = new JObject();
         json["left"] = "Player";
         DialogImage dialogImage = new DialogImage(
-            json,
-            onFinish: () => { }
+            json
         );
-        DialogHandler.Instance.StartDialog(new DialogText("Initial", new DialogSelect("Test", new List<DialogOption>() {
-            new DialogOption("Blabla", () => {
-                new DialogText("Blabla", () => {
-        FadeHandler.Instance!.LoadScene("DebugScene"); }).ShowDialog();
-            }),
-            new DialogOption("Show me cards", () => {
+        await DialogHandler.Instance.StartDialog(new DialogText("Initial", nextDialog: new DialogSelect("Test", new List<DialogOption>() {
+            new DialogOption("Blabla",
+                new DialogText("Blabla")
+            ),
+            new DialogOption("Show me cards",
                 new DialogSelect("Select one", new List<DialogOption>() {
-                    new DialogOption("First", () => {
-                        new DialogText("First Card", () => {
-                            FadeHandler.Instance!.LoadScene("DebugScene");
-                        }).ShowDialog();
-                    }, "Select the first card", "Placeholder"),
-                    new DialogOption("Second", () => {
-                        new DialogText("Second Card", () => {
-                            FadeHandler.Instance!.LoadScene("DebugScene");
-                        }).ShowDialog();
-                    }, "Select the second card", "Placeholder")
-                }, SelectType.Cards).ShowDialog();
-            }),
-            new DialogOption("Walk away", () => {
-                FadeHandler.Instance!.LoadScene("DebugScene");
-            }),
-        })));
+                    new DialogOption("First",
+                        new DialogText("First Card"), "Select the first card", "Placeholder"),
+                    new DialogOption("Second",
+                        new DialogText("Second Card"), "Select the second card", "Placeholder")
+                }, SelectType.Cards)
+            ),
+            new DialogOption("Walk away")
+        }
+        )), onFinish: () => {
+            FadeHandler.Instance!.LoadScene("DebugScene");
+        });
     }
 
     public void startTalent()
@@ -71,7 +65,7 @@ public class DebugHandler : MonoBehaviour
         Game game = new Game("Symcon");
         CombatTarget combatTarget = game.GetCombatTarget("singleFamilyHome");
         game.SetCurrentCombatTarget(combatTarget);
-        combatTarget.GetTalent("introduction")?.Purchase();
+        combatTarget.GetTalent("introduction")?.Purchase(() => { });
         combatTarget.IncreaseExperience("comfort", 10);
         FadeHandler.Instance!.LoadScene("TalentTreeScene");
     }

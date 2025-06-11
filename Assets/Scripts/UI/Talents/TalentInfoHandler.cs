@@ -99,9 +99,6 @@ public class TalentInfoHandler : MonoBehaviour
     {
         try
         {
-            DialogHandler.dialogFinish = () => {
-                Game.Instance.EndRound();
-            };
             talent?.Purchase();
         }
         catch (Exception e)

@@ -1,44 +1,64 @@
 #nullable enable
-using System;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 
-public class DialogOption {
+public class DialogOption
+{
     private string title;
     private string? imagePath;
     private string? description;
-    private Action action;
+    private Dialog? dialog;
 
-    public DialogOption(string title, Action action, string? description = null, string? imagePath = null, string? id = null) {
+    public DialogOption(string title, Dialog? dialog = null, string? description = null, string? imagePath = null, string? id = null)
+    {
         this.title = title;
         this.description = description;
-        this.action = action;
+        this.dialog = dialog;
         this.imagePath = imagePath;
     }
 
-    public DialogOption(JObject dialogData, Action action) {
-        this.title = LocalizationHelper.GetLocalizedString(dialogData["title"] as JObject);
-        this.description = (dialogData["description"] != null) ? LocalizationHelper.GetLocalizedString(dialogData["description"] as JObject) : null;
-        this.action = action;
-        this.imagePath = dialogData["image"]?.ToString();
+    public DialogOption(JObject optionData)
+    {
+        this.title = LocalizationHelper.GetLocalizedString(optionData["title"] as JObject);
+        this.description = (optionData["description"] != null) ? LocalizationHelper.GetLocalizedString(optionData["description"] as JObject) : null;
+        switch (optionData?["dialog"]?.Type)
+        {
+            case JTokenType.Array:
+                this.dialog = Dialog.FromJson(optionData["dialog"] as JArray);
+                break;
+
+            case JTokenType.Object:
+                this.dialog = Dialog.FromJson((optionData["dialog"] as JObject)!);
+                break;
+
+            default:
+                this.dialog = null;
+                break;
+
+        }
+        this.imagePath = optionData?["image"]?.ToString();
     }
 
-    public string? GetDescription() {
+    public string? GetDescription()
+    {
         return this.description;
     }
 
-    public Action GetAction() {
-        return this.action;
-    }
-
-    public string GetTitle() {
+    public string GetTitle()
+    {
         return this.title;
     }
 
-    public string? GetImagePath() {
-        if (this.imagePath == null) {
+    public string? GetImagePath()
+    {
+        if (this.imagePath == null)
+        {
             return null;
         }
-        return Game.Instance.GetResourcePath() +  "/Graphics/Dialog/" + this.imagePath;
+        return Game.Instance.GetResourcePath() + "/Graphics/Dialog/" + this.imagePath;
+    }
+    
+    public Dialog? GetDialog()
+    {
+        return this.dialog;
     }
 }

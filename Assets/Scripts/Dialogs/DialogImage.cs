@@ -1,5 +1,7 @@
 using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using Unity.VisualScripting;
 
 #nullable enable
 
@@ -16,36 +18,19 @@ public class DialogImage : Dialog
     private CharacterImageData leftCharacterImageData;
     private CharacterImageData rightCharacterImageData;
 
-    private Action onFinish;
-
-    public DialogImage(Action onFinish, string? backgroundImagePath = null, CharacterImageData? leftCharacterImageData = null, CharacterImageData? rightCharacterImageData = null)
+    public DialogImage(Dialog? nextDialog = null, string? backgroundImagePath = null, CharacterImageData? leftCharacterImageData = null, CharacterImageData? rightCharacterImageData = null) : base(nextDialog)
     {
         this.backgroundImagePath = backgroundImagePath;
         this.leftCharacterImageData = leftCharacterImageData ?? new CharacterImageData();
         this.rightCharacterImageData = rightCharacterImageData ?? new CharacterImageData();
-        this.onFinish = onFinish;
     }
 
-    public DialogImage(Action onFinish, string? backgroundImagePath = null, string? leftCharacterImagePath = null, string? rightCharacterImagePath = null)
-    {
-        this.backgroundImagePath = backgroundImagePath;
-        this.leftCharacterImageData = new CharacterImageData(leftCharacterImagePath);
-        this.rightCharacterImageData = new CharacterImageData(rightCharacterImagePath);
-        this.onFinish = onFinish;
-    }
+    public DialogImage(JObject dialogData, Dialog? nextDialog = null) : this(nextDialog, dialogData["background"]?.ToString(), new CharacterImageData(dialogData["left"]), new CharacterImageData(dialogData["right"])) { }
 
-    public DialogImage(Dialog nextDialog, string? backgroundImagePath = null, string? leftCharacterImagePath = null, string? rightCharacterImagePath = null) : this(nextDialog.ShowDialog, backgroundImagePath, leftCharacterImagePath, rightCharacterImagePath) { }
-
-    public DialogImage(JObject dialogData, Action onFinish) : this(onFinish, dialogData["background"]?.ToString(), new CharacterImageData(dialogData["left"]), new CharacterImageData(dialogData["right"])) { }
-
-    public Action GetOnFinish()
-    {
-        return onFinish;
-    }
-
-    public override void ShowDialog()
+    public override async Task ShowDialog()
     {
         DialogHandler.Instance!.ShowImage(this);
+        await base.ShowDialog();
     }
 
     public string? GetBackgroundImagePath()

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
@@ -11,10 +12,10 @@ using UnityEngine.UI;
 public class DialogHandler : MonoBehaviour, IPointerDownHandler
 {
     public static DialogHandler? Instance;
-    public static Action? dialogFinish;
-    public Dialog? firstDialog;
+    private Dialog? nextDialog;
+    private Action? nextOnFinish;
 
-    private Action? onClickAction;
+    private TaskCompletionSource<bool>? completeOnClick;
 
     public GameObject? dialogOptionPrefab;
 
@@ -23,9 +24,13 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         DialogHandler.Instance = this;
         SceneManager.activeSceneChanged += (Scene scene, Scene previousScene) =>
         {
-            transform.gameObject.SetActive(this.firstDialog != null);
-            this.firstDialog?.ShowDialog();
-            this.firstDialog = null;
+            transform.gameObject.SetActive(this.nextDialog != null);
+            if (this.nextDialog != null)
+            {
+                _ = StartDialog(this.nextDialog, changeScene: false, onFinish: this.nextOnFinish);
+                this.nextDialog = null;
+                this.nextOnFinish = null;
+            }
         };
         // Ensure the dialogOptionPrefab is assigned
         if (dialogOptionPrefab == null)
@@ -45,27 +50,30 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
     }
 
-    public void StartDialog(Dialog dialog, bool changeScene = true)
+    public async Task StartDialog(Dialog dialog, bool changeScene = true, Action? onFinish = null)
     {
-        new DialogImage(
+        UnityEngine.Debug.Log("Starting dialog: " + dialog.GetType().Name);
+        await new DialogImage(
             backgroundImagePath: "",
-            leftCharacterImagePath: "",
-            rightCharacterImagePath: "",
-            onFinish: () => { }
+            leftCharacterImageData: new CharacterImageData(imagePath: ""),
+            rightCharacterImageData: new CharacterImageData(imagePath: "")
         ).ShowDialog();
         if (changeScene)
         {
-            this.firstDialog = dialog;
+            UnityEngine.Debug.Log("Starting dialog in new scene: " + dialog.GetType().Name);
+            this.nextDialog = dialog;
+            this.nextOnFinish = onFinish ?? EndDialog;
             FadeHandler.Instance!.LoadScene("DialogScene");
         }
         else
         {
             transform.gameObject.SetActive(true);
-            dialog.ShowDialog();
+            await dialog.ShowDialog();
+            onFinish?.Invoke();
         }
     }
 
-    public void ShowText(DialogText dialog)
+    public async Task ShowText(DialogText dialog)
     {
         transform.Find("SelectArea").gameObject.SetActive(false);
         transform.Find("RewardArea").gameObject.SetActive(false);
@@ -75,7 +83,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         textArea.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = dialog.GetText();
         transform.Find("LeftCharacterImage").GetComponent<UnityEngine.UI.Image>().color = dialog.GetSpeaker() == "left" ? Color.white : Color.gray;
         transform.Find("RightCharacterImage").GetComponent<UnityEngine.UI.Image>().color = dialog.GetSpeaker() == "right" ? Color.white : Color.gray;
-        this.onClickAction = dialog.GetOnFinish();
+        await waitForPointerDown();
     }
 
     public void ShowImage(DialogImage dialog)
@@ -146,15 +154,12 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
         handleCharacterImage(dialog.GetLeftCharacterImageData(), "LeftCharacterImage");
         handleCharacterImage(dialog.GetRightCharacterImageData(), "RightCharacterImage");
-
-        dialog.GetOnFinish()();
     }
 
-    public void ShowSelect(DialogSelect dialog)
+    public Task<DialogOption> ShowSelect(DialogSelect dialog)
     {
         transform.Find("TextArea").gameObject.SetActive(false);
         transform.Find("RewardArea").gameObject.SetActive(false);
-        this.onClickAction = null;
 
         Transform selectArea = transform.Find("SelectArea");
         Rect selectRect = selectArea.GetComponent<RectTransform>().rect;
@@ -207,6 +212,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         }
 
         selectArea.Find("CardArea").gameObject.SetActive(dialog.GetSelectType() == SelectType.Cards);
+        TaskCompletionSource<DialogOption> optionSelected = new TaskCompletionSource<DialogOption>();
         switch (dialog.GetSelectType())
         {
             case SelectType.Buttons:
@@ -215,20 +221,26 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
                 {
                     GameObject newOption = Instantiate(this.dialogOptionPrefab!, selectArea);
                     newOption.GetComponent<DialogOptionHandler>().SetText(option.GetTitle());
-                    newOption.GetComponent<DialogOptionHandler>().SetAction(option.GetAction());
+                    newOption.GetComponent<DialogOptionHandler>().SetAction(() => 
+                    {
+                        optionSelected.SetResult(option);
+                    });
                     newOption.GetComponent<LayoutElement>().preferredHeight = selectRect.height * 0.1f;
                 }
                 break;
 
             case SelectType.Cards:
                 // Remove all current cards
-                selectArea.Find("CardArea").GetComponent<DialogCardActionAreaHandler>().SetDialogOptions(dialog.GetOptions());
+                DialogCardActionAreaHandler cardHandler = selectArea.Find("CardArea").GetComponent<DialogCardActionAreaHandler>();
+                cardHandler.SetDialogOptions(dialog.GetOptions());
+                cardHandler.SetSelectedTask(optionSelected);
                 break;
         }
 
+        return optionSelected.Task;
     }
 
-    public void ShowReward(DialogReward dialog)
+    public async Task ShowReward(DialogReward dialog)
     {
         transform.Find("SelectArea").gameObject.SetActive(false);
         transform.Find("TextArea").gameObject.SetActive(false);
@@ -236,7 +248,8 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         Transform rewardArea = transform.Find("RewardArea");
         rewardArea.gameObject.SetActive(true);
         rewardArea.Find("RewardContainer").Find("RewardDisplayArea").GetComponent<RewardAreaHandler>().SetRewards(dialog.GetRewards());
-        this.onClickAction = dialog.GetOnFinish();
+
+        await waitForPointerDown();
     }
 
     public void EndDialog()
@@ -246,6 +259,21 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        this.onClickAction?.Invoke();
+        if (this.completeOnClick != null)
+        {
+            TaskCompletionSource<bool> completeOnClick = this.completeOnClick;
+            this.completeOnClick = null;
+            completeOnClick.SetResult(true);
+        }
+    }
+
+    private Task<bool> waitForPointerDown()
+    {
+        if (this.completeOnClick != null)
+        {
+            throw new System.Exception("Already waiting for pointer down.");
+        }
+        this.completeOnClick = new TaskCompletionSource<bool>();
+        return completeOnClick.Task;
     }
 }

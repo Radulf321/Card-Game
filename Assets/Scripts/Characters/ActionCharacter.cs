@@ -1,12 +1,17 @@
+using System;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
 public abstract class ActionCharacter {
+    public static string CurrentTargetKey = "CurrentTarget";
+
+    private string id;
     private string? actionTitle;
     private string actionDescription;
     private string actionImagePath;
 
-    public ActionCharacter() {
+    public ActionCharacter(string id) {
+        this.id = id;
         this.actionTitle = null;
         this.actionDescription = "Not initialized";
         this.actionImagePath = "Placeholder";
@@ -14,6 +19,7 @@ public abstract class ActionCharacter {
 
     public ActionCharacter(JObject jsonObject)
     {
+        this.id = jsonObject["id"]!.ToString();
         JObject? action = jsonObject["action"] as JObject;
         if (action != null)
         {
@@ -35,14 +41,20 @@ public abstract class ActionCharacter {
             return null;
         }
         return new DialogOption(
-            this.actionTitle,
-            () =>
-            {
-                ExecuteAction();
-            },
-            this.actionDescription,
-            this.actionImagePath
+            title: this.actionTitle,
+            dialog: new DialogFlag<string>(
+                value: GetID(),
+                key: ActionCharacter.CurrentTargetKey,
+                validity: FlagValidity.Dialog
+            ),
+            description: this.actionDescription,
+            imagePath: this.actionImagePath
         );
+    }
+
+    public string GetID()
+    {
+        return this.id;
     }
 
     abstract public void ExecuteAction();

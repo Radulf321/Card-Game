@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
@@ -7,41 +8,24 @@ public class DialogText : Dialog
 {
     private string text;
     private string? speaker;
-    private Action onFinish;
 
-    public DialogText(string text, Action onFinish, string? speaker = null)
+    public DialogText(string text, string? speaker = null, Dialog? nextDialog = null) : base(nextDialog)
     {
         this.text = text;
         this.speaker = speaker;
-        this.onFinish = onFinish;
     }
 
-    public DialogText(string text, Dialog nextDialog, string? speaker = null) : this(text, nextDialog.ShowDialog, speaker) { }
-
-    public DialogText(List<string> texts, Action onFinish)
+    public DialogText(List<string> texts, Dialog? nextDialog = null) :
+        this(
+            text: texts[0],
+            nextDialog: texts.Count > 1 ?
+                new DialogText(texts.GetRange(1, texts.Count - 1), nextDialog) :
+                nextDialog
+        )
     {
-        if (texts.Count == 0)
-        {
-            throw new ArgumentException("List of texts cannot be empty.");
-        }
-        
-        this.text = texts[0];
-        if (texts.Count == 1)
-        {
-            this.onFinish = onFinish;
-        }
-        else {
-            this.onFinish = () =>
-            {
-                Dialog nextDialog = new DialogText(texts.GetRange(1, texts.Count - 1), onFinish);
-                nextDialog.ShowDialog();
-            };
-        }
     }
 
-    public DialogText(List<string> texts, Dialog nextDialog) : this(texts, nextDialog.ShowDialog) { }
-
-    public DialogText(JObject dialogData, Action onFinish) : this(LocalizationHelper.GetLocalizedString(dialogData["text"] as JObject), onFinish, dialogData["speaker"]?.ToString()) { }
+    public DialogText(JObject dialogData, Dialog? nextDialog = null) : this(text: LocalizationHelper.GetLocalizedString(dialogData["text"] as JObject), speaker: dialogData["speaker"]?.ToString(), nextDialog: nextDialog) { }
 
     public string GetText()
     {
@@ -53,13 +37,9 @@ public class DialogText : Dialog
         return speaker;
     }
 
-    public Action GetOnFinish()
+    public override async Task ShowDialog()
     {
-        return onFinish;
-    }
-
-    public override void ShowDialog()
-    {
-        UnityEngine.Object.FindAnyObjectByType<DialogHandler>().ShowText(this);
+        await DialogHandler.Instance!.ShowText(this);
+        await base.ShowDialog();
     }
 }

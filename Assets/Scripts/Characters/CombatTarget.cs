@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
@@ -12,7 +13,6 @@ public enum TargetType
 
 public class CombatTarget : ActionCharacter
 {
-    private string id;
     private int level;
     private Dictionary<string, int> experience;
 
@@ -33,9 +33,8 @@ public class CombatTarget : ActionCharacter
     private List<TriggerAction> triggerActions;
     private TargetType targetType;
 
-    public CombatTarget() : base()
+    public CombatTarget() : base("Default")
     {
-        this.id = "Default";
         this.level = 0;
         this.experience = new Dictionary<string, int>();
         this.introductionTalent = null;
@@ -59,8 +58,6 @@ public class CombatTarget : ActionCharacter
     {
         this.level = 0;
         this.experience = new Dictionary<string, int>();
-
-        this.id = jsonObject["id"]!.ToString();
 
         List<Talent> talents = new List<Talent>();
         foreach (JObject talentData in jsonObject["talents"] ?? new JArray())
@@ -161,11 +158,6 @@ public class CombatTarget : ActionCharacter
         return this.cardPileFactory.CreateCardPile();
     }
 
-    public string GetID()
-    {
-        return this.id;
-    }
-
     public int GetLevel()
     {
         return this.level;
@@ -236,8 +228,7 @@ public class CombatTarget : ActionCharacter
         // == false as introductionTalent could be null
         if (this.introductionTalent?.IsPurchased() == false)
         {
-            DialogHandler.dialogFinish = start;
-            this.introductionTalent?.Purchase();
+            this.introductionTalent?.Purchase(start);
         }
         else
         {
@@ -245,33 +236,30 @@ public class CombatTarget : ActionCharacter
         }
     }
 
-    public void EndCombat(bool win)
+    public async Task EndCombat(bool win)
     {
+        UnityEngine.Debug.Log("Combat ended with " + (win ? "win" : "loss"));
         if (!win)
         {
-            Game.Instance.AddRemainingRounds(-1);
-            DialogHandler.Instance!.StartDialog(
-                Dialog.FromJson(this.loseDialogData, onFinish: () =>
+            await DialogHandler.Instance!.StartDialog(
+                Dialog.FromJson(this.loseDialogData), onFinish: () =>
                 {
+                    Game.Instance.AddRemainingRounds(-1);
                     Game.Instance.EndRound();
-                })
+                }
             );
         }
         else
         {
-            DialogHandler.Instance!.StartDialog(
-                Dialog.FromJson(this.winDialogData, actionGenerator: (id) =>
+            UnityEngine.Debug.Log("Start win dialog");
+            UnityEngine.Debug.Log(DialogHandler.Instance);
+            UnityEngine.Debug.Log(Dialog.FromJson(this.winDialogData));
+            await DialogHandler.Instance!.StartDialog(
+                Dialog.FromJson(this.winDialogData), onFinish: () =>
                 {
-                    return () =>
-                    {
-                        if (id != null)
-                        {
-                            this.IncreaseExperience(id, 1);
-                        }
-                        this.IncreaseLevel();
-                        FadeHandler.Instance!.LoadScene("TalentTreeScene");
-                    };
-                })
+                    this.IncreaseLevel();
+                    FadeHandler.Instance!.LoadScene("TalentTreeScene");
+                }
             );
         }
     }

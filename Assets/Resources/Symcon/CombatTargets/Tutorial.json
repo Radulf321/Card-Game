@@ -98,10 +98,19 @@
                     },
                     "options": [
                         {
-                            "id": "comfort",
                             "title": {
                                 "en": "Let's add some nice comfort features. (+1 <sprite name=\"Comfort\">)",
                                 "de": "Zeit für ein paar schöne Komfortfunktionen. (+1 <sprite name=\"Comfort\">)"
+                            },
+                            "dialog": {
+                                "type": "reward",
+                                "rewards": [
+                                    {
+                                        "type": "experience",
+                                        "experienceType": "comfort",
+                                        "amount": 1
+                                    }
+                                ]
                             }
                         }
                     ]
