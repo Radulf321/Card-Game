@@ -213,6 +213,9 @@ jobs:
           name: Android_Build # Must match the name used in build-android's upload-artifact step
           path: ./android-build/ # Local directory where the artifact will be downloaded
 
+      - name: Wait for file handle to release
+        run: sleep 5s
+
       # Debugging step: Check contents of the directory after download
       - name: Debug - List Downloaded Contents
         run: |
