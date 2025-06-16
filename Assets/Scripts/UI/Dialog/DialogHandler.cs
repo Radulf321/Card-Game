@@ -67,7 +67,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         {
             transform.gameObject.SetActive(true);
             await dialog.ShowDialog();
-            onFinish?.Invoke();
+            (onFinish ?? EndDialog).Invoke();
         }
     }
 
