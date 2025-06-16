@@ -238,7 +238,6 @@ public class CombatTarget : ActionCharacter
 
     public async Task EndCombat(bool win)
     {
-        UnityEngine.Debug.Log("Combat ended with " + (win ? "win" : "loss"));
         if (!win)
         {
             await DialogHandler.Instance!.StartDialog(
@@ -251,9 +250,6 @@ public class CombatTarget : ActionCharacter
         }
         else
         {
-            UnityEngine.Debug.Log("Start win dialog");
-            UnityEngine.Debug.Log(DialogHandler.Instance);
-            UnityEngine.Debug.Log(Dialog.FromJson(this.winDialogData));
             await DialogHandler.Instance!.StartDialog(
                 Dialog.FromJson(this.winDialogData), onFinish: () =>
                 {

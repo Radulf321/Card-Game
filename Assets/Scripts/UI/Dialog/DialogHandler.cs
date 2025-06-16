@@ -52,7 +52,6 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
     public async Task StartDialog(Dialog dialog, bool changeScene = true, Action? onFinish = null)
     {
-        UnityEngine.Debug.Log("Starting dialog: " + dialog.GetType().Name);
         await new DialogImage(
             backgroundImagePath: "",
             leftCharacterImageData: new CharacterImageData(imagePath: ""),
@@ -60,7 +59,6 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         ).ShowDialog();
         if (changeScene)
         {
-            UnityEngine.Debug.Log("Starting dialog in new scene: " + dialog.GetType().Name);
             this.nextDialog = dialog;
             this.nextOnFinish = onFinish ?? EndDialog;
             FadeHandler.Instance!.LoadScene("DialogScene");
