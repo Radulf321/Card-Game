@@ -33,9 +33,10 @@ public class DebugHandler : MonoBehaviour
         game.StartRound();
     }
 
-    public async Task startDialog()
+    public async void startDialog()
     {
         Game game = new Game("Symcon");
+        game.GetPlayer().AddCurrency("cash", 100);
         JObject json = new JObject();
         json["left"] = "Player";
         DialogImage dialogImage = new DialogImage(
@@ -53,9 +54,28 @@ public class DebugHandler : MonoBehaviour
                         new DialogText("Second Card"), "Select the second card", "Placeholder")
                 }, SelectType.Cards)
             ),
+            new DialogOption("Show me cards with cost",
+                new DialogSelect("Select one", options: new List<DialogOption>() {
+                    new DialogOption("First",
+                        new DialogText("First Card"), "Free", "Placeholder", cost: new Dictionary<string, int>()),
+                    new DialogOption("Second",
+                        new DialogText("Second Card"), "Have the money", "Placeholder", cost: new Dictionary<string, int>(){
+                            {
+                                "cash", 50
+                            }
+                        }),
+                    new DialogOption("Third",
+                        new DialogText("Third Card"), "Too expensive", "Placeholder", cost: new Dictionary<string, int>(){
+                            {
+                                "cash", 500
+                            }
+                        })
+                }, selectType: SelectType.Cards, showUI: true)
+            ),
             new DialogOption("Walk away")
         }
-        )), onFinish: () => {
+        )), onFinish: () =>
+        {
             FadeHandler.Instance!.LoadScene("DebugScene");
         });
     }
@@ -68,5 +88,11 @@ public class DebugHandler : MonoBehaviour
         combatTarget.GetTalent("introduction")?.Purchase(() => { });
         combatTarget.IncreaseExperience("comfort", 10);
         FadeHandler.Instance!.LoadScene("TalentTreeScene");
+    }
+
+    public void resetPlayerPreferences()
+    {
+        PlayerPrefs.DeleteAll();
+        _ = DialogHandler.Instance.StartDialog(new DialogText("All data cleared"), changeScene: false);
     }
 }

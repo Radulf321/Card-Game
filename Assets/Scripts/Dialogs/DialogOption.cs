@@ -1,5 +1,9 @@
 #nullable enable
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using UnityEngine.Localization.Settings;
 
 public class DialogOption
 {
@@ -7,13 +11,15 @@ public class DialogOption
     private string? imagePath;
     private string? description;
     private Dialog? dialog;
+    private Dictionary<string, int>? cost;
 
-    public DialogOption(string title, Dialog? dialog = null, string? description = null, string? imagePath = null, string? id = null)
+    public DialogOption(string title, Dialog? dialog = null, string? description = null, string? imagePath = null, string? id = null, Dictionary<string, int>? cost = null)
     {
         this.title = title;
         this.description = description;
         this.dialog = dialog;
         this.imagePath = imagePath;
+        this.cost = cost;
     }
 
     public DialogOption(JObject optionData)
@@ -36,6 +42,7 @@ public class DialogOption
 
         }
         this.imagePath = optionData?["image"]?.ToString();
+        this.cost = JSONHelper.ObjectToDictionary<int>(optionData?["cost"] as JObject);
     }
 
     public string? GetDescription()
@@ -56,9 +63,55 @@ public class DialogOption
         }
         return Game.Instance.GetResourcePath() + "/Graphics/Dialog/" + this.imagePath;
     }
-    
+
     public Dialog? GetDialog()
     {
         return this.dialog;
+    }
+
+    public Task<string?> GetCostText()
+    {
+        if (this.cost == null)
+        {
+            return Task.FromResult<string?>(null);
+        }
+
+        if (this.cost.Count == 0)
+        {
+            return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "CostFree"));
+        }
+
+        List<string> results = new List<string>();
+        foreach (KeyValuePair<string, int> entry in this.cost)
+        {
+            results.Add(entry.Value.ToString() + Game.Instance.GetCurrencyInlineIcon(entry.Key));
+        }
+
+        return Task.FromResult<string?>(string.Join(" ", results));
+    }
+
+    public void Select(Action? onSucess)
+    {
+        if (this.cost == null)
+        {
+            onSucess?.Invoke();
+        }
+        else
+        {
+            Player player = Game.Instance.GetPlayer();
+            foreach (KeyValuePair<string, int> entry in this.cost)
+            {
+                if (player.GetCurrency(entry.Key) < entry.Value)
+                {
+                    // TODO: Show UI Feedback
+                    return;
+                }
+            }
+            foreach (KeyValuePair<string, int> entry in this.cost)
+            {
+                player.AddCurrency(entry.Key, -entry.Value);
+            }
+            onSucess?.Invoke();
+        }
     }
 }

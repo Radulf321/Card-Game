@@ -4,7 +4,7 @@ using UnityEngine;
 
 #nullable enable
 
-public class DialogCardActionAreaHandler : CardsContainerHandler<DialogOption>
+public class DialogCardActionAreaHandler : GenericCardsContainerHandler<DialogOption, DialogOptionCardHandler>
 {
     private List<DialogOption>? dialogOptions;
     private TaskCompletionSource<DialogOption>? selectedTask;
@@ -36,21 +36,22 @@ public class DialogCardActionAreaHandler : CardsContainerHandler<DialogOption>
         return this.dialogOptions!;
     }
 
-    protected override DialogOption GetHandlerData(CardHandler cardHandler)
+    protected override DialogOption GetHandlerData(DialogOptionCardHandler cardHandler)
     {
-        string title = cardHandler.GetTitle();
-        return dialogOptions!.Find(option => option.GetTitle() == title);
+        return cardHandler.GetOption()!;
     }
 
-    protected override void SetHandlerData(CardHandler cardHandler, DialogOption cardData)
+    protected override void SetHandlerData(DialogOptionCardHandler cardHandler, DialogOption cardData)
     {
-        cardHandler.SetTitle(cardData.GetTitle());
-        cardHandler.SetDescription(cardData.GetDescription());
-        cardHandler.SetSprite(Resources.Load<Sprite>(cardData.GetImagePath()));
-        cardHandler.SetCostSprite(null);
-        cardHandler.SetOnClickAction(() =>
+        cardHandler.SetOption(cardData);
+        cardHandler.SetOnClick(() =>
         {
             this.selectedTask?.SetResult(cardData);
         });
+    }
+
+    protected override DialogOptionCardHandler GetHandler(Transform transform)
+    {
+        return transform.GetComponent<DialogOptionCardHandler>();
     }
 }

@@ -47,6 +47,10 @@ MonoBehaviour:
     m_Key: DialogRewardTitle
     m_Metadata:
       m_Items: []
+  - m_Id: 13399060766302208
+    m_Key: CostFree
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

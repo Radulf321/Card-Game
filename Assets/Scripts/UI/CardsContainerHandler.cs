@@ -2,8 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class CardsContainerHandler<CARDDATA> : MonoBehaviour, IViewUpdater
-    where CARDDATA: class
+public abstract class CardsContainerHandler<CARDDATA> : GenericCardsContainerHandler<CARDDATA, CardHandler>
+    where CARDDATA : class
+{
+    protected override CardHandler GetHandler(Transform transform)
+    {
+        return transform.GetComponentInChildren<CardHandler>();
+    }
+}
+
+public abstract class GenericCardsContainerHandler<CARDDATA, HANDLER> : MonoBehaviour, IViewUpdater
+    where CARDDATA : class
+    where HANDLER : MonoBehaviour, IViewUpdater
 {
     public GameObject cardPrefab;
 
@@ -21,17 +31,18 @@ public abstract class CardsContainerHandler<CARDDATA> : MonoBehaviour, IViewUpda
     public void updateView()
     {
         List<CARDDATA> cards = GetCardData();
-        this.updateChildrenViews<CardsContainerHandler<CARDDATA>, CardHandler, CARDDATA>(
+        this.updateChildrenViews<GenericCardsContainerHandler<CARDDATA, HANDLER>, HANDLER, CARDDATA>(
             cards,
             (CARDDATA cardData) =>
             {
                 GameObject cardObject = Instantiate(cardPrefab);
-                SetHandlerData(cardObject.GetComponentInChildren<CardHandler>(), cardData);
+                SetHandlerData(GetHandler(cardObject.transform), cardData);
                 return cardObject;
             },
             GetHandlerData,
-            getChildComponent: (index) => {
-                return transform.GetChild(index).GetComponentInChildren<CardHandler>();
+            getChildComponent: (index) =>
+            {
+                return GetHandler(transform.GetChild(index));
             }
         );
 
@@ -49,6 +60,7 @@ public abstract class CardsContainerHandler<CARDDATA> : MonoBehaviour, IViewUpda
     }
 
     abstract protected List<CARDDATA> GetCardData();
-    abstract protected void SetHandlerData(CardHandler cardHandler, CARDDATA cardData);
-    abstract protected CARDDATA GetHandlerData(CardHandler cardHandler);
+    abstract protected void SetHandlerData(HANDLER handler, CARDDATA cardData);
+    abstract protected CARDDATA GetHandlerData(HANDLER handler);
+    abstract protected HANDLER GetHandler(Transform transform);
 }
