@@ -9,6 +9,8 @@ public abstract class StatusCondition
         {
             case "turn":
                 return new TurnStatusCondition(json);
+            case "flag":
+                return new FlagStatusCondition(json);
             default:
                 throw new System.Exception("Invalid condition type: " + json["type"].ToString());
         }
