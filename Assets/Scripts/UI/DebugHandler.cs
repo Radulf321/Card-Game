@@ -56,8 +56,8 @@ public class DebugHandler : MonoBehaviour
             ),
             new DialogOption("Show me cards with cost",
                 new DialogSelect("Select one", options: new List<DialogOption>() {
-                    new DialogOption("First",
-                        new DialogText("First Card"), "Free", "Placeholder", cost: new Dictionary<string, int>()),
+                    new DialogOption(card: Game.Instance.GetCard("optimizeObjectTree"),
+                        dialog: new DialogText("First Card"), cost: new Dictionary<string, int>()),
                     new DialogOption("Second",
                         new DialogText("Second Card"), "Have the money", "Placeholder", cost: new Dictionary<string, int>(){
                             {

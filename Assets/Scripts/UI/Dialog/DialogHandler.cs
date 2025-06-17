@@ -218,8 +218,8 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
                 foreach (DialogOption option in dialog.GetOptions())
                 {
                     GameObject newOption = Instantiate(this.dialogOptionPrefab!, selectArea);
-                    newOption.GetComponent<DialogOptionHandler>().SetText(option.GetTitle());
-                    newOption.GetComponent<DialogOptionHandler>().SetAction(() => 
+                    newOption.GetComponent<DialogOptionHandler>().SetText(option.GetTitle() ?? option.GetCard()?.GetName() ?? "This should never be visible");
+                    newOption.GetComponent<DialogOptionHandler>().SetAction(() =>
                     {
                         optionSelected.SetResult(option);
                     });

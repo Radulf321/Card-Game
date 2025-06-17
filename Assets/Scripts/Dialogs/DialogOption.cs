@@ -7,19 +7,21 @@ using UnityEngine.Localization.Settings;
 
 public class DialogOption
 {
-    private string title;
+    private string? title;
     private string? imagePath;
     private string? description;
     private Dialog? dialog;
+    private Card? card;
     private Dictionary<string, int>? cost;
 
-    public DialogOption(string title, Dialog? dialog = null, string? description = null, string? imagePath = null, string? id = null, Dictionary<string, int>? cost = null)
+    public DialogOption(string? title = null, Dialog? dialog = null, string? description = null, string? imagePath = null, string? id = null, Dictionary<string, int>? cost = null, Card? card = null)
     {
         this.title = title;
         this.description = description;
         this.dialog = dialog;
         this.imagePath = imagePath;
         this.cost = cost;
+        this.card = card;
     }
 
     public DialogOption(JObject optionData)
@@ -29,6 +31,7 @@ public class DialogOption
         this.dialog = Dialog.FromJson(optionData["dialog"]);
         this.imagePath = optionData?["image"]?.ToString();
         this.cost = JSONHelper.ObjectToDictionary<int>(optionData?["cost"] as JObject);
+        this.card = (optionData?["card"] != null) ? Game.Instance.GetCard(optionData["card"]!.ToString()) : null;
     }
 
     public string? GetDescription()
@@ -36,7 +39,7 @@ public class DialogOption
         return this.description;
     }
 
-    public string GetTitle()
+    public string? GetTitle()
     {
         return this.title;
     }
@@ -48,6 +51,11 @@ public class DialogOption
             return null;
         }
         return Game.Instance.GetResourcePath() + "/Graphics/Dialog/" + this.imagePath;
+    }
+
+    public Card? GetCard()
+    {
+        return this.card;
     }
 
     public Dialog? GetDialog()

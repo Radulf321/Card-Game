@@ -34,10 +34,30 @@ public class DialogOptionCardHandler : MonoBehaviour, IViewUpdater
     {
         this.option = option;
         CardHandler cardHandler = transform.Find("Card").GetComponentInChildren<CardHandler>();
-        cardHandler.SetTitle(option.GetTitle());
-        cardHandler.SetDescription(option.GetDescription());
-        cardHandler.SetSprite(Resources.Load<Sprite>(option.GetImagePath()));
-        cardHandler.SetCostSprite(null);
+        Card? card = option.GetCard();
+        if (card != null)
+        {
+            cardHandler.SetCard(card);
+        }
+        else
+        {
+            cardHandler.SetCostSprite(null);
+        }
+        string? title = option.GetTitle();
+        if (title != null)
+        {
+            cardHandler.SetTitle(title);   
+        }
+        string? description = option.GetDescription();
+        if (description != null)
+        {
+            cardHandler.SetDescription(description);
+        }
+        string? imagePath = option.GetImagePath();
+        if (imagePath != null)
+        {
+            cardHandler.SetSprite(Resources.Load<Sprite>(imagePath));
+        }
         cardHandler.SetOnClickAction(() =>
         {
             option.Select(this.onClick);
