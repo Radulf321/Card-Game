@@ -3,14 +3,17 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
-abstract public class Dialog {
-    public static Dialog FromJson(JArray? dialogData, Dialog? nextDialog = null) {
+abstract public class Dialog
+{
+    public static Dialog FromJson(JArray? dialogData, Dialog? nextDialog = null)
+    {
         if (dialogData == null || dialogData.Count == 0)
         {
             UnityEngine.Debug.Log("Throwing exception");
             throw new System.Exception("Dialog JSON is null or empty.");
         }
-        if (dialogData.Count == 1) {
+        if (dialogData.Count == 1)
+        {
             return FromJson(dialogData[0] as JObject ?? new JObject(), nextDialog);
         }
         dialogData = new JArray(dialogData);
@@ -19,9 +22,11 @@ abstract public class Dialog {
         return FromJson(dialogData, FromJson(singleDialogData, nextDialog));
     }
 
-    public static Dialog FromJson(JObject dialogData, Dialog? nextDialog = null) {
+    public static Dialog FromJson(JObject dialogData, Dialog? nextDialog = null)
+    {
         string type = dialogData["type"]?.ToString() ?? "Undefined";
-        switch (type) {
+        switch (type)
+        {
             case "text":
                 return new DialogText(dialogData, nextDialog);
             case "image":
@@ -30,8 +35,14 @@ abstract public class Dialog {
                 return new DialogReward(dialogData, nextDialog);
             case "select":
                 return new DialogSelect(dialogData, nextDialog);
+            case "flag":
+                return new DialogFlag(dialogData, nextDialog);
+            case "condition":
+                return new DialogCondition(dialogData, nextDialog);
+            case "random":
+                return new DialogRandom(dialogData, nextDialog);
             default:
-                UnityEngine.Debug.Log("Dialog type not recognized: " + type);
+                UnityEngine.Debug.LogError("Dialog type not recognized: " + type);
                 throw new System.Exception("Dialog type not recognized: " + type);
         }
     }
@@ -53,12 +64,16 @@ abstract public class Dialog {
 
     protected Dialog? nextDialog;
 
-    protected Dialog(Dialog? nextDialog = null) {
+    protected Dialog(Dialog? nextDialog = null)
+    {
         this.nextDialog = nextDialog;
     }
 
-    virtual public Task ShowDialog() {
-        if (nextDialog != null) {
+    virtual public Task ShowDialog()
+    {
+        if (nextDialog != null)
+        {
+            UnityEngine.Debug.Log("Show next dialog: " + nextDialog);
             return nextDialog.ShowDialog();
         }
         return Task.CompletedTask;
