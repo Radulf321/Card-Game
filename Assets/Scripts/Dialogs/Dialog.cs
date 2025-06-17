@@ -36,6 +36,21 @@ abstract public class Dialog {
         }
     }
 
+    public static Dialog? FromJson(JToken? json, Dialog? nextDialog = null)
+    {
+        switch (json?.Type)
+        {
+            case JTokenType.Array:
+                return Dialog.FromJson(json as JArray);
+
+            case JTokenType.Object:
+                return Dialog.FromJson((json as JObject)!);
+
+            default:
+                return null;
+        }
+    }
+
     protected Dialog? nextDialog;
 
     protected Dialog(Dialog? nextDialog = null) {

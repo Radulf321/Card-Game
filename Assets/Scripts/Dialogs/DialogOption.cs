@@ -26,21 +26,7 @@ public class DialogOption
     {
         this.title = LocalizationHelper.GetLocalizedString(optionData["title"] as JObject);
         this.description = (optionData["description"] != null) ? LocalizationHelper.GetLocalizedString(optionData["description"] as JObject) : null;
-        switch (optionData?["dialog"]?.Type)
-        {
-            case JTokenType.Array:
-                this.dialog = Dialog.FromJson(optionData["dialog"] as JArray);
-                break;
-
-            case JTokenType.Object:
-                this.dialog = Dialog.FromJson((optionData["dialog"] as JObject)!);
-                break;
-
-            default:
-                this.dialog = null;
-                break;
-
-        }
+        this.dialog = Dialog.FromJson(optionData["dialog"]);
         this.imagePath = optionData?["image"]?.ToString();
         this.cost = JSONHelper.ObjectToDictionary<int>(optionData?["cost"] as JObject);
     }
