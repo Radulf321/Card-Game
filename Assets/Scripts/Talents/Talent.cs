@@ -48,17 +48,6 @@ public class Talent {
             rewards.Add(Reward.FromJson(rewardData));
         }
         this.rewards = rewards;
-        foreach (JProperty costProperty in (talentData["cost"] as JObject ?? new JObject()).Properties()) {
-            string type = costProperty.Name;
-            int value = costProperty.Value.ToObject<int>();
-            this.cost[type] = value;
-        }
-        this.description = LocalizationHelper.GetLocalizedString(talentData["description"] as JObject);
-        this.imagePath = talentData["image"]?.ToString() ?? "Placeholder";
-        this.rewards = new List<Reward>();
-        foreach (JObject rewardData in talentData["rewards"] ?? new JArray()) {
-            this.rewards.Add(Reward.FromJson(rewardData));
-        }
         this.prerequisites = talentData["prerequisites"]?.ToObject<List<string>>() ?? new List<string>();
         this.dialog = Dialog.FromJson(talentData["dialog"] as JArray ?? new JArray());
         this.owner = owner;
