@@ -32,7 +32,7 @@ public class Talent {
 
     public Talent(JObject talentData, CombatTarget owner) {
         this.id = talentData["id"]?.ToString() ?? "Undefined";
-        this.title = LocalizationHelper.GetLocalizedString(talentData["title"] as JObject);
+        this.title = LocalizationHelper.GetLocalizedString(talentData["title"] as JObject)!;
         Dictionary<string, int> cost = new Dictionary<string, int>();
         JObject costObject = talentData["cost"] as JObject ?? new JObject();
         foreach (JProperty property in costObject.Properties()) {
@@ -41,7 +41,7 @@ public class Talent {
             cost[type] = value;
         }
         this.cost = cost;
-        this.description = LocalizationHelper.GetLocalizedString(talentData["description"] as JObject);
+        this.description = LocalizationHelper.GetLocalizedString(talentData["description"] as JObject)!;
         this.imagePath = talentData["imagePath"]?.ToString() ?? "Placeholder";
         List<Reward> rewards = new List<Reward>();
         foreach (JObject rewardData in talentData["rewards"] ?? new JArray()) {

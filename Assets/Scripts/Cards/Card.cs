@@ -53,7 +53,7 @@ public class Card
     public Card(JObject cardData)
     {
         this.cost = cardData["cost"]?.ToObject<int>() ?? 0;
-        this.name = LocalizationHelper.GetLocalizedString(cardData["name"] as JObject);
+        this.name = LocalizationHelper.GetLocalizedString(cardData["name"] as JObject)!;
         this.imagePath = cardData["image"]?.ToString() ?? "Placeholder";
         this.id = cardData["id"]!.ToString();
         List<CardEffect> effects = new List<CardEffect>();

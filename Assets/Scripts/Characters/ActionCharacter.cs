@@ -24,7 +24,7 @@ public abstract class ActionCharacter {
         if (action != null)
         {
             this.actionTitle = LocalizationHelper.GetLocalizedString(action!["title"] as JObject);
-            this.actionDescription = LocalizationHelper.GetLocalizedString(action!["description"] as JObject);
+            this.actionDescription = LocalizationHelper.GetLocalizedString(action!["description"] as JObject)!;
             this.actionImagePath = action!["image"]!.ToString();
         }
         else

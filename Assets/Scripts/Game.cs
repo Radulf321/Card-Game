@@ -64,7 +64,7 @@ class Game
         foreach (JObject goal in index["goals"]!)
         {
             string id = goal["id"]!.ToString();
-            string name = LocalizationHelper.GetLocalizedString(goal["name"] as JObject);
+            string name = LocalizationHelper.GetLocalizedString(goal["name"] as JObject)!;
             goalNames.Add(id, name);
         }
         this.goalNames = goalNames;

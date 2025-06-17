@@ -24,7 +24,7 @@ public class DialogSelect : Dialog {
     }
 
     public DialogSelect(JObject dialogData, Dialog? nextDialog = null) : base(nextDialog){
-        this.title = LocalizationHelper.GetLocalizedString(dialogData["title"] as JObject);
+        this.title = LocalizationHelper.GetLocalizedString(dialogData["title"] as JObject)!;
         this.showUI = dialogData["showUI"]?.ToObject<bool>() ?? false;
         this.selectType = (SelectType)Enum.Parse(typeof(SelectType), dialogData["selectType"]?.ToString() ?? "Buttons");
         List<DialogOption> options = new List<DialogOption>();

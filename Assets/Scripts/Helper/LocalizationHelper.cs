@@ -1,17 +1,22 @@
 using Newtonsoft.Json.Linq;
 
+#nullable enable
 public class LocalizationHelper
 {
     private static string defaultLocalization = "en";
-    public static string GetLocalizedString(JObject json)
+    public static string? GetLocalizedString(JObject? json)
     {
+        if (json == null)
+        {
+            return null;
+        }
         if (json.ContainsKey(GetLocalization()))
         {
-            return json[GetLocalization()].ToString();
+            return json[GetLocalization()]!.ToString();
         }
         else if (json.ContainsKey(defaultLocalization))
         {
-            return json[defaultLocalization].ToString();
+            return json[defaultLocalization]!.ToString();
         }
         else
         {
@@ -19,7 +24,8 @@ public class LocalizationHelper
         }
     }
 
-    public static string GetLocalization() {
+    public static string GetLocalization()
+    {
         return "de";
     }
 }

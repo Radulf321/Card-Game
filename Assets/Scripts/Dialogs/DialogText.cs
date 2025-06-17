@@ -25,7 +25,7 @@ public class DialogText : Dialog
     {
     }
 
-    public DialogText(JObject dialogData, Dialog? nextDialog = null) : this(text: LocalizationHelper.GetLocalizedString(dialogData["text"] as JObject), speaker: dialogData["speaker"]?.ToString(), nextDialog: nextDialog) { }
+    public DialogText(JObject dialogData, Dialog? nextDialog = null) : this(text: LocalizationHelper.GetLocalizedString(dialogData["text"] as JObject)!, speaker: dialogData["speaker"]?.ToString(), nextDialog: nextDialog) { }
 
     public string GetText()
     {

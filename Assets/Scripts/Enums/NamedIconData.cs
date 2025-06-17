@@ -10,7 +10,7 @@ public class NamedIconData {
 
     public NamedIconData(JObject experienceTypeData) {
         this.id = experienceTypeData["id"]?.ToString() ?? "Undefined";
-        this.name = LocalizationHelper.GetLocalizedString(experienceTypeData["name"] as JObject);
+        this.name = LocalizationHelper.GetLocalizedString(experienceTypeData["name"] as JObject)!;
         this.iconName = experienceTypeData["icon"]?.ToString();
     }
 
