@@ -17,27 +17,134 @@
             "background": "CommunityBoard"
         },
         {
-            "type": "text",
-            "text": {
-                "en": "You: I wonder if there's a better way to configure the Energy Manager...",
-                "de": "Du: Ich frage mich, ob es nicht einen besseren Weg gibt den Energy Manager zu konfigurieren..."
-            }
-        },
-        {
-            "type": "text",
-            "text": {
-                "en": "You: Ah, there's an extra thread for that module. Let's take a look.",
-                "de": "Du: Ah, da ist ein Extra Thread zu dem Modul. Schauen wir mal."
-            }
-        },
-        {
-            "type": "reward",
-            "rewards": [
+            "type": "condition",
+            "condition": {
+                "type": "flag",
+                "key": "communityBoardVisited",
+                "value": true
+            },
+            "if": [
                 {
-                    "type": "card",
-                    "card": "communitySupport"
+                    "type": "random",
+                    "dialogs": [
+                        [
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "You: Ah, one of the developers commented and explained how the counter aggregation is working",
+                                    "de": "Du: Ah, einer von den Entwicklern hat kommentiert und erklärt wie die Zähleraggregation funktioniert"
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "You: It's really nice to see them so active here",
+                                    "de": "Du: Es ist wirklich gut zu sehen wie aktiv die hier sind"
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "You: There's a new version of the Energy Manager with even more flexibility. I should give that a try.",
+                                    "de": "Du: Es gibt eine neue Version vom Energie Manager mit noch mehr Flexibilität. Ich sollte das mal ausprobieren."
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "You: That will be useful for a lot of upcoming costumer orders...",
+                                    "de": "Du: Das wird für einige kommende Kundenaufträge hilfreich sein..."
+                                }
+                            }
+                        ]
+                    ]
+                }
+            ],
+            "else": [
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: Ah, this is the Community Board that Pio mentioned. Let's create an account!",
+                        "de": "Du: Ah, das ist das Community Forum, dass Pio erwähnt hat. Ich erstelle am besten mal ein Konto!"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: User name... Symcon License... E-Mail... All right, that should be it",
+                        "de": "Du: Benutzername... Symcon-Lizenz... E-Mail... Alles klar, das sollte es sein"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: Let's see what awaits us here",
+                        "de": "Du: Dann schauen wir mal, was uns hier erwartet"
+                    }
+                },
+                {
+                    "type": "flag",
+                    "key": "communityBoardVisited",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "showUI": true,
+            "selectType": "Cards",
+            "title": {
+                "en": "Select a card for your deck",
+                "de": "Wähle eine Karte für dein Deck"
+            },
+            "options": [
+                {
+                    "card": "communitySupport",
+                    "cost": {},
+                    "dialog": {
+                        "type": "reward",
+                        "rewards": [
+                            {
+                                "type": "card",
+                                "card": "communitySupport"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "card": "adjustPresentation",
+                    "cost": {
+                        "cash": 100
+                    },
+                    "dialog": {
+                        "type": "reward",
+                        "rewards": [
+                            {
+                                "type": "card",
+                                "card": "adjustPresentation"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "card": "planAhead",
+                    "cost": {
+                        "cash": 100
+                    },
+                    "dialog": {
+                        "type": "reward",
+                        "rewards": [
+                            {
+                                "type": "card",
+                                "card": "planAhead"
+                            }
+                        ]
+                    }
                 }
             ]
         }
+        
     ]
 }
