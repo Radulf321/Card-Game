@@ -42,7 +42,7 @@ public abstract class ActionCharacter {
         }
         return new DialogOption(
             title: this.actionTitle,
-            dialog: new DialogFlag<string>(
+            dialog: new DialogFlag(
                 value: GetID(),
                 key: ActionCharacter.CurrentTargetKey,
                 validity: FlagValidity.Dialog

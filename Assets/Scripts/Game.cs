@@ -363,13 +363,13 @@ class Game
         }
     }
 
-    public void SetFlag<T>(FlagValidity validity, string key, T value)
+    public void SetFlag(FlagValidity validity, string key, object value)
     {
         if (!flagDictionaries.ContainsKey(validity))
         {
             flagDictionaries[validity] = new FlagDictionary();
         }
-        flagDictionaries[validity].SetValue<T>(key, value);
+        flagDictionaries[validity].SetValue(key, value);
     }
 
     public T? GetFlag<T>(FlagValidity validity, string key)
@@ -379,5 +379,14 @@ class Game
             return default(T);
         }
         return flagDictionaries[validity].GetValue<T>(key);
+    }
+
+    public object? GetFlag(FlagValidity validity, string key)
+    {
+        if (!flagDictionaries.ContainsKey(validity))
+        {
+            return null;
+        }
+        return flagDictionaries[validity].GetValue(key);
     }
 }

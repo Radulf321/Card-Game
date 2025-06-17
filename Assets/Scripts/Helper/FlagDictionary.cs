@@ -24,6 +24,30 @@ public class FlagDictionary
         stringFlags.Clear();
     }
 
+    public void SetValue(string key, object value)
+    {
+        if (value is bool boolValue)
+        {
+            SetValue<bool>(key, boolValue);
+        }
+        else if (value is int intValue)
+        {
+            SetValue<int>(key, intValue);
+        }
+        else if (value is float floatValue)
+        {
+            SetValue<float>(key, floatValue);
+        }
+        else if (value is string stringValue)
+        {
+            SetValue<string>(key, stringValue);
+        }
+        else
+        {
+            throw new ArgumentException("Unsupported type for flag value.");
+        }
+    }
+
     public void SetValue<T>(string key, T value)
     {
         if (value is bool boolValue)
@@ -45,6 +69,30 @@ public class FlagDictionary
         else
         {
             throw new ArgumentException("Unsupported type for flag value.");
+        }
+    }
+
+    public object GetValue(string key)
+    {
+        if (boolFlags.ContainsKey(key))
+        {
+            return GetValue<bool>(key);
+        }
+        else if (intFlags.ContainsKey(key))
+        {
+            return GetValue<int>(key);
+        }
+        else if (floatFlags.ContainsKey(key))
+        {
+            return GetValue<float>(key);
+        }
+        else if (stringFlags.ContainsKey(key))
+        {
+            return GetValue<string>(key);
+        }
+        else
+        {
+            return null;
         }
     }
 
