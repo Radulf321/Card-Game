@@ -95,15 +95,6 @@ jobs:
         with:
           lfs: true
 
-      # Cache
-      - name: Use Cache
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
-
       - name: Clean Docker cache
         run: |
           docker system prune -a -f --volumes
@@ -154,15 +145,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
-
-      # Cache
-      - name: Use Cache
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
 
       - name: Clean Docker cache
         run: |
