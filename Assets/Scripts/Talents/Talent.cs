@@ -42,7 +42,7 @@ public class Talent {
         }
         this.cost = cost;
         this.description = LocalizationHelper.GetLocalizedString(talentData["description"] as JObject)!;
-        this.imagePath = talentData["imagePath"]?.ToString() ?? "Placeholder";
+        this.imagePath = talentData["image"]?.ToString() ?? "Placeholder";
         List<Reward> rewards = new List<Reward>();
         foreach (JObject rewardData in talentData["rewards"] ?? new JArray()) {
             rewards.Add(Reward.FromJson(rewardData));
