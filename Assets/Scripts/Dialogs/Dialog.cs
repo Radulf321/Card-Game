@@ -12,7 +12,6 @@ abstract public class Dialog
     {
         if (dialogData == null || dialogData.Count == 0)
         {
-            UnityEngine.Debug.Log("Throwing exception");
             throw new System.Exception("Dialog JSON is null or empty.");
         }
         if (dialogData.Count == 1)
@@ -47,7 +46,6 @@ abstract public class Dialog
             case "jump":
                 return new DialogJump(dialogData, nextDialog);
             default:
-                UnityEngine.Debug.LogError("Dialog type not recognized: " + type);
                 throw new System.Exception("Dialog type not recognized: " + type);
         }
     }

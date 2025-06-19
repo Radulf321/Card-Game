@@ -26,12 +26,10 @@ public class DialogCondition : Dialog
         Dialog? dialog;
         if (condition.IsFulfilled())
         {
-            UnityEngine.Debug.Log("Show If Dialog");
             dialog = this.ifDialog;
         }
         else
         {
-            UnityEngine.Debug.Log("Show Else Dialog");
             dialog = this.elseDialog;
         }
 
