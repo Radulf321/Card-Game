@@ -8,12 +8,16 @@ public class DialogReward : Dialog
 {
     private List<Reward> rewards;
 
-    public DialogReward(List<Reward> rewards, Dialog? nextDialog = null) : base(nextDialog)
+    public DialogReward(List<Reward> rewards, Dialog? nextDialog = null, string? id = null) : base(nextDialog: nextDialog, id: id)
     {
         this.rewards = rewards;
     }
 
-    public DialogReward(JObject dialogData, Dialog? nextDialog = null) : this(Reward.FromJson(dialogData["rewards"] as JArray), nextDialog) { }
+    public DialogReward(JObject dialogData, Dialog? nextDialog = null) : this(
+        Reward.FromJson(dialogData["rewards"] as JArray),
+        nextDialog,
+        Dialog.GetIDFromJson(dialogData)
+    ) { }
 
     public List<Reward> GetRewards()
     {

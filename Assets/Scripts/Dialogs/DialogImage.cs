@@ -18,14 +18,14 @@ public class DialogImage : Dialog
     private CharacterImageData leftCharacterImageData;
     private CharacterImageData rightCharacterImageData;
 
-    public DialogImage(Dialog? nextDialog = null, string? backgroundImagePath = null, CharacterImageData? leftCharacterImageData = null, CharacterImageData? rightCharacterImageData = null) : base(nextDialog)
+    public DialogImage(Dialog? nextDialog = null, string? backgroundImagePath = null, CharacterImageData? leftCharacterImageData = null, CharacterImageData? rightCharacterImageData = null, string? id = null) : base(nextDialog: nextDialog, id: id)
     {
         this.backgroundImagePath = backgroundImagePath;
         this.leftCharacterImageData = leftCharacterImageData ?? new CharacterImageData();
         this.rightCharacterImageData = rightCharacterImageData ?? new CharacterImageData();
     }
 
-    public DialogImage(JObject dialogData, Dialog? nextDialog = null) : this(nextDialog, dialogData["background"]?.ToString(), new CharacterImageData(dialogData["left"]), new CharacterImageData(dialogData["right"])) { }
+    public DialogImage(JObject json, Dialog? nextDialog = null) : this(nextDialog, json["background"]?.ToString(), new CharacterImageData(json["left"]), new CharacterImageData(json["right"]), id: GetIDFromJson(json)) { }
 
     public override async Task ShowDialog()
     {

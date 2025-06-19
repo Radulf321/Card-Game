@@ -8,12 +8,12 @@ public class DialogRandom : Dialog
 {
     List<Dialog> dialogs;
 
-    public DialogRandom(List<Dialog> dialogs, Dialog? nextDialog = null) : base(nextDialog)
+    public DialogRandom(List<Dialog> dialogs, Dialog? nextDialog = null, string? id = null) : base(nextDialog: nextDialog, id: id)
     {
         this.dialogs = dialogs;
     }
 
-    public DialogRandom(JObject json, Dialog? nextDialog = null) : base(nextDialog)
+    public DialogRandom(JObject json, Dialog? nextDialog = null) : base(nextDialog: nextDialog, id: Dialog.GetIDFromJson(json))
     {
         List<Dialog> dialogs = new List<Dialog>();
         foreach (JToken dialogData in json["dialogs"] as JArray ?? new JArray())
@@ -35,5 +35,12 @@ public class DialogRandom : Dialog
             await this.dialogs[index].ShowDialog();
         }
         await base.ShowDialog();
+    }
+
+    public override List<Dialog> GetFollowingDialogs()
+    {
+        List<Dialog> result = base.GetFollowingDialogs();
+        result.AddRange(this.dialogs);
+        return result;
     }
 }

@@ -66,8 +66,10 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         else
         {
             transform.gameObject.SetActive(true);
+            Dialog.CurrentDialog = dialog;
             await dialog.ShowDialog();
             (onFinish ?? EndDialog).Invoke();
+            Dialog.CurrentDialog = null;
         }
     }
 
@@ -218,11 +220,8 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
                 foreach (DialogOption option in dialog.GetOptions())
                 {
                     GameObject newOption = Instantiate(this.dialogOptionPrefab!, selectArea);
-                    newOption.GetComponent<DialogOptionHandler>().SetText(option.GetTitle() ?? option.GetCard()?.GetName() ?? "This should never be visible");
-                    newOption.GetComponent<DialogOptionHandler>().SetAction(() =>
-                    {
-                        optionSelected.SetResult(option);
-                    });
+                    newOption.GetComponent<DialogOptionHandler>().SetDialogOption(option);
+                    newOption.GetComponent<DialogOptionHandler>().SetSelectedTask(optionSelected);
                     newOption.GetComponent<LayoutElement>().preferredHeight = selectRect.height * 0.1f;
                 }
                 break;

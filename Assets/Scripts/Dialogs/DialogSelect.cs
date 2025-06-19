@@ -15,15 +15,14 @@ public class DialogSelect : Dialog {
     private SelectType selectType;
     private bool showUI;
 
-
-    public DialogSelect(string title, List<DialogOption> options, SelectType selectType = SelectType.Buttons, bool showUI = false, Dialog? nextDialog = null) : base(nextDialog) {
+    public DialogSelect(string title, List<DialogOption> options, SelectType selectType = SelectType.Buttons, bool showUI = false, Dialog? nextDialog = null, string? id = null) : base(nextDialog: nextDialog, id: id) {
         this.showUI = showUI;
         this.title = title;
         this.options = options;
         this.selectType = selectType;
     }
 
-    public DialogSelect(JObject dialogData, Dialog? nextDialog = null) : base(nextDialog){
+    public DialogSelect(JObject dialogData, Dialog? nextDialog = null) : base(nextDialog, Dialog.GetIDFromJson(dialogData)){
         this.title = LocalizationHelper.GetLocalizedString(dialogData["title"] as JObject)!;
         this.showUI = dialogData["showUI"]?.ToObject<bool>() ?? false;
         this.selectType = (SelectType)Enum.Parse(typeof(SelectType), dialogData["selectType"]?.ToString() ?? "Buttons");
@@ -59,5 +58,18 @@ public class DialogSelect : Dialog {
 
     public bool IsShowUI() {
         return this.showUI;
+    }
+
+    public override List<Dialog> GetFollowingDialogs()
+    {
+        List<Dialog> result = base.GetFollowingDialogs();
+        foreach (DialogOption option in GetOptions())
+        {
+            Dialog? dialog = option.GetDialog();
+            if (dialog != null) {
+                result.Add(dialog);
+            }
+        }
+        return result;
     }
 }

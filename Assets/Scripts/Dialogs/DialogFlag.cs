@@ -9,7 +9,7 @@ public class DialogFlag : Dialog
     private string key;
     private object value;
 
-    public DialogFlag(object value, string key, FlagValidity validity = FlagValidity.Game, Dialog? nextDialog = null) : base(nextDialog)
+    public DialogFlag(object value, string key, FlagValidity validity = FlagValidity.Game, Dialog? nextDialog = null, string? id = null) : base(nextDialog: nextDialog, id: id)
     {
         if (!(value is bool || value is int || value is float || value is string))
         {
@@ -20,7 +20,7 @@ public class DialogFlag : Dialog
         this.key = key;
     }
 
-    public DialogFlag(JObject json, Dialog? nextDialog = null) : this(value: json["value"]!.ToObject<object>()!, validity: EnumHelper.ParseEnum<FlagValidity>(json["validity"]?.ToString()) ?? FlagValidity.Game, key: json["key"]?.ToString()!, nextDialog: nextDialog)
+    public DialogFlag(JObject json, Dialog? nextDialog = null) : this(value: json["value"]!.ToObject<object>()!, validity: EnumHelper.ParseEnum<FlagValidity>(json["validity"]?.ToString()) ?? FlagValidity.Game, key: json["key"]?.ToString()!, nextDialog: nextDialog, id: GetIDFromJson(json))
     {
     }
 
