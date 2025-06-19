@@ -118,30 +118,96 @@
                     "cost": {
                         "cash": 100
                     },
-                    "dialog": {
-                        "type": "reward",
-                        "rewards": [
-                            {
-                                "type": "card",
-                                "card": "adjustPresentation"
-                            }
-                        ]
-                    }
+                    "dialog": [
+                        {
+                            "id": "adjustPresentation",
+                            "type": "reward",
+                            "rewards": [
+                                {
+                                    "type": "card",
+                                    "card": "adjustPresentation"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "select",
+                            "showUI": true,
+                            "selectType": "Buttons",
+                            "title": {
+                                "en": "Buy more?",
+                                "de": "Noch mehr kaufen?"
+                            },
+                            "options": [
+                                {
+                                    "title": {
+                                        "en": "Buy another 'Adjust Presentation'",
+                                        "de": "Noch ein \"Darstellung anpassen\" kaufen"
+                                    },
+                                    "cost": {
+                                        "cash": 100
+                                    },
+                                    "dialog": {
+                                        "type": "jump",
+                                        "target": "adjustPresentation"
+                                    }
+                                },
+                                {
+                                    "title": {
+                                        "en": "Do not buy any more cards",
+                                        "de": "Keine weiteren Karten kaufen"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "card": "planAhead",
                     "cost": {
                         "cash": 100
                     },
-                    "dialog": {
-                        "type": "reward",
-                        "rewards": [
-                            {
-                                "type": "card",
-                                "card": "planAhead"
-                            }
-                        ]
-                    }
+                    "dialog": [
+                        {
+                            "id": "planAhead",
+                            "type": "reward",
+                            "rewards": [
+                                {
+                                    "type": "card",
+                                    "card": "planAhead"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "select",
+                            "showUI": true,
+                            "selectType": "Buttons",
+                            "title": {
+                                "en": "Buy more?",
+                                "de": "Noch mehr kaufen?"
+                            },
+                            "options": [
+                                {
+                                    "title": {
+                                        "en": "Buy another 'Plan Ahead'",
+                                        "de": "Noch ein \"Blick nach Vorn\" kaufen"
+                                    },
+                                    "cost": {
+                                        "cash": 100
+                                    },
+                                    "dialog": {
+                                        "type": "jump",
+                                        "target": "planAhead"
+                                    }
+                                },
+                                {
+                                    "title": {
+                                        "en": "Do not buy any more cards",
+                                        "de": "Keine weiteren Karten kaufen"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }
