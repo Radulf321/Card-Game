@@ -4,33 +4,53 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
-public enum SelectType {
+public enum SelectType
+{
     Buttons,
     Cards,
 }
 
-public class DialogSelect : Dialog {
+public class DialogSelect : Dialog
+{
     private string title;
-    private List<DialogOption> options;
+    private List<DialogOptionFactory> optionFactories;
     private SelectType selectType;
     private bool showUI;
 
-    public DialogSelect(string title, List<DialogOption> options, SelectType selectType = SelectType.Buttons, bool showUI = false, Dialog? nextDialog = null, string? id = null) : base(nextDialog: nextDialog, id: id) {
+    public DialogSelect(string title, List<DialogOptionFactory> optionFactories, SelectType selectType = SelectType.Buttons, bool showUI = false, Dialog? nextDialog = null, string? id = null) : base(nextDialog: nextDialog, id: id)
+    {
         this.showUI = showUI;
         this.title = title;
-        this.options = options;
+        this.optionFactories = optionFactories;
         this.selectType = selectType;
     }
 
-    public DialogSelect(JObject dialogData, Dialog? nextDialog = null) : base(nextDialog, Dialog.GetIDFromJson(dialogData)){
+    public DialogSelect(string title, List<DialogOption> options, SelectType selectType = SelectType.Buttons, bool showUI = false, Dialog? nextDialog = null, string? id = null)
+    : this(
+        title: title,
+        optionFactories: new List<DialogOptionFactory>()
+        {
+            new ConstantDialogOptionFactory(options)
+        },
+        selectType: selectType,
+        showUI: showUI,
+        nextDialog: nextDialog,
+        id: id
+    )
+    {
+    }
+
+    public DialogSelect(JObject dialogData, Dialog? nextDialog = null) : base(nextDialog, Dialog.GetIDFromJson(dialogData))
+    {
         this.title = LocalizationHelper.GetLocalizedString(dialogData["title"] as JObject)!;
         this.showUI = dialogData["showUI"]?.ToObject<bool>() ?? false;
         this.selectType = (SelectType)Enum.Parse(typeof(SelectType), dialogData["selectType"]?.ToString() ?? "Buttons");
-        List<DialogOption> options = new List<DialogOption>();
-        foreach (JObject optionData in dialogData["options"] ?? new JArray()) {
-            options.Add(new DialogOption(optionData));
+        List<DialogOptionFactory> options = new List<DialogOptionFactory>();
+        foreach (JObject optionData in dialogData["options"] ?? new JArray())
+        {
+            options.Add(DialogOptionFactory.FromJSON(optionData));
         }
-        this.options = options;
+        this.optionFactories = options;
     }
 
     public override async Task ShowDialog()
@@ -44,29 +64,39 @@ public class DialogSelect : Dialog {
         await base.ShowDialog();
     }
 
-    public string GetTitle() {
+    public string GetTitle()
+    {
         return this.title;
     }
 
-    public List<DialogOption> GetOptions() {
-        return this.options;
+    public List<DialogOption> GetOptions(bool allOptions = false)
+    {
+        List<DialogOption> result = new List<DialogOption>();
+        foreach (DialogOptionFactory factory in this.optionFactories)
+        {
+            result.AddRange(factory.GetOptions(allOptions));
+        }
+        return result;
     }
 
-    public SelectType GetSelectType() {
+    public SelectType GetSelectType()
+    {
         return this.selectType;
     }
 
-    public bool IsShowUI() {
+    public bool IsShowUI()
+    {
         return this.showUI;
     }
 
     public override List<Dialog> GetFollowingDialogs()
     {
         List<Dialog> result = base.GetFollowingDialogs();
-        foreach (DialogOption option in GetOptions())
+        foreach (DialogOption option in GetOptions(true))
         {
             Dialog? dialog = option.GetDialog();
-            if (dialog != null) {
+            if (dialog != null)
+            {
                 result.Add(dialog);
             }
         }
