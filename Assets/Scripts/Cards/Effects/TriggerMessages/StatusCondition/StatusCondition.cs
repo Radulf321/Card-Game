@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 public abstract class StatusCondition
@@ -11,6 +10,10 @@ public abstract class StatusCondition
                 return new TurnStatusCondition(json);
             case "flag":
                 return new FlagStatusCondition(json);
+            case "cardInDeck":
+                return new CardInDeckStatusCondition(json);
+            case "not":
+                return new NotStatusCondition(json);
             default:
                 throw new System.Exception("Invalid condition type: " + json["type"].ToString());
         }
