@@ -55,6 +55,10 @@ MonoBehaviour:
     m_Key: TriggerStartTurn
     m_Metadata:
       m_Items: []
+  - m_Id: 14949827285393408
+    m_Key: TriggerDrawCards
+    m_Metadata:
+      m_Items: []
   - m_Id: 5164853212520448
     m_Key: RequirementGoal
     m_Metadata:

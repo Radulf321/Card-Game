@@ -5,23 +5,25 @@ using UnityEngine.Localization.Settings;
 
 public class DrawCardsEffect : CardEffect {
     private int amount;
+    private CardEffectTrigger trigger;
 
-    public DrawCardsEffect(int amount) {
+    public DrawCardsEffect(int amount, CardEffectTrigger trigger = CardEffectTrigger.PlayCard)
+    {
         this.amount = amount;
+        this.trigger = trigger;
     }
 
-    public DrawCardsEffect(JObject json) {
-        this.amount = json["amount"]?.ToObject<int>() ?? 1;
+    public DrawCardsEffect(JObject json, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(amount: json["amount"]?.ToObject<int>() ?? 1, trigger: trigger) {
     }
 
     public override void applyEffect() {
         // Assuming RoundHandler has a method to apply the effect
-        CombatHandler.instance.getCardPile().DrawCards(this.amount);
+        CombatHandler.instance.getCardPile().DrawCards(this.amount, this.trigger);
     }
 
     public override CardEffect Clone(Card newOwner)
     {
-        return new DrawCardsEffect(this.amount);
+        return new DrawCardsEffect(this.amount, this.trigger);
     }
 
     public override Task<string> getDescription() {

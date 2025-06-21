@@ -13,6 +13,8 @@ public abstract class TriggerMessageCondition
                 return new TriggerMessageConditionStartTurn(json);
             case "talenttree":
                 return new TriggerMessageConditionTalentTree(json);
+            case "drawCards":
+                return new TriggerMessageConditionDrawCards(json);
             default:
                 throw new System.Exception("Invalid condition type: " + json["type"].ToString());
         }

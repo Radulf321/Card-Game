@@ -16,33 +16,19 @@ public class CardPile
         this.inPlay = new List<Card>();
     }
 
-    public void DrawCard(bool updateView = true)
+    public void DrawCard(CardEffectTrigger? trigger = null)
     {
-        if (deck.Count <= 0)
-        {
-            ShuffleDiscardIntoDeck();
-        }
-
-        if (deck.Count > 0)
-        {
-            Card drawnCard = deck[0];
-            deck.RemoveAt(0);
-            hand.Add(drawnCard);
-        }
-
-        if (updateView)
-        {
-            CombatHandler.instance.updateView();
-        }
+        DrawCards(1, trigger);
     }
 
-    public void DrawCards(int numberOfCards)
+    public void DrawCards(int numberOfCards, CardEffectTrigger? trigger = null)
     {
         for (int i = 0; i < numberOfCards; i++)
         {
-            DrawCard(false);
+            DrawSingleCard();
         }
         CombatHandler.instance.updateView();
+        Game.Instance.SendTriggerMessage(new TriggerMessage(type: TriggerType.DrawCards, data: new TriggerMessageData(amount: numberOfCards, trigger: trigger)));
     }
 
     public void DiscardRandomCards(int numberOfCards)
@@ -57,13 +43,6 @@ public class CardPile
             DiscardCard(hand[index], false);
         }
         CombatHandler.instance.updateView();
-    }
-
-    private void ShuffleDiscardIntoDeck()
-    {
-        deck.AddRange(discardPile);
-        discardPile.Clear();
-        ShuffleDeck();
     }
 
     public List<Card> GetHand()
@@ -120,5 +99,27 @@ public class CardPile
         inPlay.Remove(card);
         discardPile.Remove(card);
         deck.Remove(card);
+    }
+
+    private void DrawSingleCard()
+    {
+        if (deck.Count <= 0)
+        {
+            ShuffleDiscardIntoDeck();
+        }
+
+        if (deck.Count > 0)
+        {
+            Card drawnCard = deck[0];
+            deck.RemoveAt(0);
+            hand.Add(drawnCard);
+        }
+    }
+
+    private void ShuffleDiscardIntoDeck()
+    {
+        deck.AddRange(discardPile);
+        discardPile.Clear();
+        ShuffleDeck();
     }
 }

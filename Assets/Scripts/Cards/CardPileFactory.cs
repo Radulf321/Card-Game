@@ -54,7 +54,7 @@ public class CardPileFactory
         {
             cardPile.ShuffleDeck();
         }
-        cardPile.DrawCards(this.startingHandSize);
+        cardPile.DrawCards(this.startingHandSize, CardEffectTrigger.CombatStart);
         return cardPile;
     }
 }

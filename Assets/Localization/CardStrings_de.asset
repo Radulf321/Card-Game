@@ -78,6 +78,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
+  - m_Id: 14949827285393408
+    m_Localized: du {minimum:plural:|{} oder mehr }Karten ziehst
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
   references:
     version: 2
     RefIds:
@@ -96,3 +101,4 @@ MonoBehaviour:
         - id: 3926566040805376
         - id: 5164853212520448
         - id: 8390389678252032
+        - id: 14949827285393408

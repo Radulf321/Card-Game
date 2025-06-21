@@ -155,7 +155,7 @@ public class CombatHandler : MonoBehaviour
         {
             // TODO: Some start of turn effect, e.g., increase max energy, draw cards, add complication, ...
             currentTurn++;
-            cardPile.DrawCard();
+            cardPile.DrawCard(CardEffectTrigger.TurnStart);
             startTurn();
         }
     }

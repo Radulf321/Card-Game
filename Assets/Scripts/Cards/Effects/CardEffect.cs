@@ -9,7 +9,7 @@ abstract public class CardEffect {
         {
             "goal" => new GoalEffect(json, owner, trigger),
             "energy" => new EnergyEffect(json),
-            "drawCards" => new DrawCardsEffect(json),
+            "drawCards" => new DrawCardsEffect(json, trigger),
             "discardCards" => new DiscardCardsEffect(json),
             "caption" => new CaptionEffect(json),
             "afterPlay" => new AfterPlayEffect(json, owner!),
