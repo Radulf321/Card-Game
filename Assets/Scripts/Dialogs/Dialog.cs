@@ -124,7 +124,6 @@ abstract public class Dialog
     {
         if (nextDialog != null)
         {
-            UnityEngine.Debug.Log("Show next dialog: " + nextDialog);
             return nextDialog.ShowDialog();
         }
         return Task.CompletedTask;
