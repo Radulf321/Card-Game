@@ -232,6 +232,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Relic
+      rect:
+        serializedVersion: 2
+        x: 2143
+        y: 1280
+        width: 965
+        height: 866
+      alignment: 9
+      pivot: {x: -0.009017518, y: -0.0007382012}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b16f8d7d7bff1343930a409ef61d186
+      internalID: -1496290106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -250,6 +272,7 @@ TextureImporter:
       Check: -727081251
       Comfort: 730683644
       Energy: 1049207144
+      Relic: -1496290106
       Rounds: 2103016240
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

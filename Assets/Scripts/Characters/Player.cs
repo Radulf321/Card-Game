@@ -4,12 +4,14 @@ using Newtonsoft.Json.Linq;
 public class Player
 {
     private List<Card> deck;
+    private List<Card> relics;
     private EnergyInfo energyInfo;
     private Dictionary<string, int> currencies;
 
     public Player()
     {
         this.deck = new List<Card>();
+        this.relics = new List<Card>();
         this.energyInfo = new EnergyInfo();
         this.currencies = new Dictionary<string, int>();
     }
@@ -22,6 +24,7 @@ public class Player
             deck.Add(Game.Instance.GetCard(cardId));
         }
         this.deck = deck;
+        this.relics = new List<Card>();
         this.energyInfo = new EnergyInfo(energyInfo);
         this.currencies = new Dictionary<string, int>();
     }
@@ -31,9 +34,23 @@ public class Player
         return deck;
     }
 
+    public List<Card> GetRelics()
+    {
+        return relics;
+    }
+
     public void AddCardToDeck(Card card)
     {
-        this.deck.Add(card);
+        switch (card.GetCardType())
+        {
+            case CardType.Regular:
+                this.deck.Add(card);
+                break;
+
+            case CardType.Relic:
+                this.relics.Add(card);
+                break;
+        }
     }
 
     public void RemoveCardFromDeck(Card card)

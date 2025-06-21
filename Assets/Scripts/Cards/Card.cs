@@ -5,11 +5,18 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 #nullable enable
 
-public enum CardAfterPlay {
+public enum CardAfterPlay
+{
     Discard,
     RemoveCurrentGame,
     RemovePermanent,
     StayInPlay
+}
+
+public enum CardType
+{
+    Regular,
+    Relic,
 }
 
 public static class CardAfterPlayHelper
@@ -29,30 +36,27 @@ public static class CardAfterPlayHelper
 
 public class Card
 {
-    private int cost;
+    private CardType type;
+    private int? cost;
     private List<CardEffect> effects;
     private string name;
     private string imagePath;
     private string id;
     private CardAfterPlay afterPlay = CardAfterPlay.Discard;
 
-    public Card(int cost, string id, List<CardEffect> effects, string name, string imagePath)
+    public Card(int? cost, string id, List<CardEffect> effects, string name, string imagePath, CardType type = CardType.Regular)
     {
         this.cost = cost;
         this.effects = effects;
         this.name = name;
         this.imagePath = imagePath;
         this.id = id;
-    }
-
-    public Card(int cost, string id, CardEffect effect, string name, string imagePath)
-        : this(cost, id, new List<CardEffect> { effect }, name, imagePath)
-    {
+        this.type = type;
     }
 
     public Card(JObject cardData)
     {
-        this.cost = cardData["cost"]?.ToObject<int>() ?? 0;
+        this.cost = cardData["cost"]?.ToObject<int>();
         this.name = LocalizationHelper.GetLocalizedString(cardData["name"] as JObject)!;
         this.imagePath = cardData["image"]?.ToString() ?? "Placeholder";
         this.id = cardData["id"]!.ToString();
@@ -62,6 +66,7 @@ public class Card
             effects.Add(CardEffect.FromJson(effectData, this));
         }
         this.effects = effects;
+        this.type = EnumHelper.ParseEnum<CardType>(cardData["type"]?.ToString()) ?? CardType.Regular;
     }
 
     public bool CanPlay()
@@ -73,7 +78,7 @@ public class Card
                 return false;
             }
         }
-        return this.cost <= CombatHandler.instance.getCurrentEnergy();
+        return (this.cost == null) || (this.cost <= CombatHandler.instance.getCurrentEnergy());
     }
 
     public void Play()
@@ -83,7 +88,10 @@ public class Card
             this.afterPlay = CardAfterPlay.Discard;
             CardPile cardPile = CombatHandler.instance.getCardPile();
             cardPile.AddCardToPlay(this);
-            CombatHandler.instance.looseEnergy(this.cost);
+            if (this.cost != null)
+            {
+                CombatHandler.instance.looseEnergy(this.cost.Value);
+            }
             foreach (CardEffect effect in effects)
             {
                 effect.applyEffect();
@@ -118,9 +126,14 @@ public class Card
         }
     }
 
-    public int GetCost()
+    public int? GetCost()
     {
         return this.cost;
+    }
+
+    public CardType GetCardType()
+    {
+        return this.type;
     }
 
     public string GetName()
@@ -131,7 +144,8 @@ public class Card
     public async Task<string> GetDescription()
     {
         List<string> descriptions = new List<string>();
-        foreach (CardEffect effect in this.effects) {
+        foreach (CardEffect effect in this.effects)
+        {
             descriptions.Add(await effect.getDescription());
         }
         return string.Join("\n", descriptions);
@@ -159,7 +173,14 @@ public class Card
 
     public Card Clone()
     {
-        Card clone = new Card(cost: this.cost, id: this.id, effects: new List<CardEffect>(), name: this.name, imagePath: this.imagePath);
+        Card clone = new Card(
+            cost: this.cost,
+            id: this.id,
+            effects: new List<CardEffect>(),
+            name: this.name,
+            imagePath: this.imagePath,
+            type: this.GetCardType()
+        );
         List<CardEffect> clonedEffects = this.effects.Select(effect => effect.Clone(clone)).ToList();
         clone.SetEffects(clonedEffects);
         return clone;

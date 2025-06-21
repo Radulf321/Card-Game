@@ -28,6 +28,9 @@ public class CombatHandler : MonoBehaviour
         this.maxEnergy = combatTarget.GetStartingEnergy();
         this.cardPile = combatTarget.CreateCardPile();
         this.turns = combatTarget.GenerateTurns();
+        foreach (Card relic in Game.Instance.GetPlayer().GetRelics()) {
+            relic.Play();
+        }
         startTurn();
     }
 

@@ -31,7 +31,6 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
     {
         if (this.shouldUpdate)
         {
-
             Transform nameArea = transform.Find("NameArea");
             nameArea.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text =
                 this.title ?? card?.GetName() ??
@@ -45,7 +44,21 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
                 Image costImage = costArea.Find("CostImage").GetComponent<Image>();
                 costImage.sprite = this.costSprite;
                 TMPro.TextMeshProUGUI costText = costArea.Find("Cost").GetComponent<TMPro.TextMeshProUGUI>();
-                costText.text = this.cost ?? card?.GetCost().ToString() ?? (talent!.IsPurchased() ? "" : talent!.GetCost().First().Value.ToString());
+                if (this.cost != null)
+                {
+                    costText.text = this.cost;
+                }
+                else if (this.card != null)
+                {
+                    costText.text = card!.GetCost()?.ToString() ?? "";
+                }
+                else if (this.talent != null)
+                {
+                    costText.text = talent!.IsPurchased() ? "" : talent!.GetCost().First().Value.ToString();
+                }
+                else {
+                    throw new Exception("Could not deduce cost of card as no specific cost is set, nor any talent or card");
+                }
             }
             Image image = transform.Find("Image").GetComponent<Image>();
             if (image.sprite != this.sprite)
@@ -69,7 +82,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
         this.card = card;
         this.talent = null;
         this.sprite = Resources.Load<Sprite>(card.GetImagePath());
-        this.costSprite = Game.Instance.GetIcon("Energy");
+        this.costSprite = (card.GetCardType() == CardType.Relic) ? Game.Instance.GetIcon("Relic") : Game.Instance.GetIcon("Energy");
         // TODO: Think about going for NoWrap for cards, it could look nicer for multiple effects in one line each...
         GetDescriptionText().textWrappingMode = TMPro.TextWrappingModes.Normal;
         updateView();
