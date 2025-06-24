@@ -114,100 +114,68 @@
                     }
                 },
                 {
-                    "card": "adjustPresentation",
-                    "cost": {
-                        "cash": 100
-                    },
-                    "dialog": [
+                    "type": "random",
+                    "amount": 2,
+                    "options": [
                         {
-                            "id": "adjustPresentation",
-                            "type": "reward",
-                            "rewards": [
-                                {
-                                    "type": "card",
-                                    "card": "adjustPresentation"
-                                }
-                            ]
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "copyPaste",
+                            "cost": 150
                         },
                         {
-                            "type": "select",
-                            "showUI": true,
-                            "selectType": "Buttons",
-                            "title": {
-                                "en": "Buy more?",
-                                "de": "Noch mehr kaufen?"
-                            },
-                            "options": [
-                                {
-                                    "title": {
-                                        "en": "Buy another 'Adjust Presentation'",
-                                        "de": "Noch ein \"Darstellung anpassen\" kaufen"
-                                    },
-                                    "cost": {
-                                        "cash": 100
-                                    },
-                                    "dialog": {
-                                        "type": "jump",
-                                        "target": "adjustPresentation"
-                                    }
-                                },
-                                {
-                                    "title": {
-                                        "en": "Do not buy any more cards",
-                                        "de": "Keine weiteren Karten kaufen"
-                                    }
-                                }
-                            ]
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "optimizeObjectTree",
+                            "cost": 100
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "perfectBalance",
+                            "cost": 150
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "adjustPresentation",
+                            "cost": 100
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "planAhead",
+                            "cost": 100
                         }
                     ]
                 },
+                
                 {
-                    "card": "planAhead",
-                    "cost": {
-                        "cash": 100
-                    },
-                    "dialog": [
-                        {
-                            "id": "planAhead",
-                            "type": "reward",
-                            "rewards": [
-                                {
-                                    "type": "card",
-                                    "card": "planAhead"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "select",
-                            "showUI": true,
-                            "selectType": "Buttons",
-                            "title": {
-                                "en": "Buy more?",
-                                "de": "Noch mehr kaufen?"
-                            },
-                            "options": [
-                                {
-                                    "title": {
-                                        "en": "Buy another 'Plan Ahead'",
-                                        "de": "Noch ein \"Blick nach Vorn\" kaufen"
-                                    },
-                                    "cost": {
-                                        "cash": 100
-                                    },
-                                    "dialog": {
-                                        "type": "jump",
-                                        "target": "planAhead"
-                                    }
-                                },
-                                {
-                                    "title": {
-                                        "en": "Do not buy any more cards",
-                                        "de": "Keine weiteren Karten kaufen"
-                                    }
-                                }
-                            ]
+                    "type": "conditional",
+                    "condition": {
+                        "type": "not",
+                        "condition": {
+                            "type": "cardInDeck",
+                            "card": "fullCustomization"
                         }
-                    ]
+                    },
+                    "options": {
+                        "card": "fullCustomization",
+                        "cost": {
+                            "cash": 300
+                        },
+                        "dialog": [
+                            {
+                                "type": "reward",
+                                "rewards": [
+                                    {
+                                        "type": "card",
+                                        "card": "fullCustomization"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 }
             ]
         }
