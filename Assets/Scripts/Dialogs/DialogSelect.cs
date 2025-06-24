@@ -45,12 +45,7 @@ public class DialogSelect : Dialog
         this.title = LocalizationHelper.GetLocalizedString(dialogData["title"] as JObject)!;
         this.showUI = dialogData["showUI"]?.ToObject<bool>() ?? false;
         this.selectType = (SelectType)Enum.Parse(typeof(SelectType), dialogData["selectType"]?.ToString() ?? "Buttons");
-        List<DialogOptionFactory> options = new List<DialogOptionFactory>();
-        foreach (JObject optionData in dialogData["options"] ?? new JArray())
-        {
-            options.Add(DialogOptionFactory.FromJSON(optionData));
-        }
-        this.optionFactories = options;
+        this.optionFactories = DialogOptionFactory.FromJson(dialogData["options"]!);
     }
 
     public override async Task ShowDialog()
