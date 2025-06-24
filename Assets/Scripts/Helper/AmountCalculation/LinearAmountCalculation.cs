@@ -31,7 +31,7 @@ public class LinearAmountCalculation : AmountCalculation {
         int inputValue;
         switch (input) {
             case "previousPlays":
-                inputValue = CombatHandler.instance.getCardsPlayed(card!.GetID());
+                inputValue = CombatHandler.instance?.getCardsPlayed(card!.GetID()) ?? 0;
                 break;
 
             case "targetLevel":

@@ -1,13 +1,14 @@
-using System;
+#nullable enable
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatHandler : MonoBehaviour
 {
-    public static CombatHandler instance;
+    public static CombatHandler? instance;
 
     private int currentTurn = 0;
-    private List<Turn> turns;
+    private List<Turn> turns = new List<Turn>();
     private Dictionary<string, int> goals = new Dictionary<string, int>();
     private Dictionary<string, int> goalsThisTurn = new Dictionary<string, int>();
 
@@ -16,7 +17,7 @@ public class CombatHandler : MonoBehaviour
     private int maxEnergy;
     private int currentEnergy = 0;
 
-    private CardPile cardPile;
+    private CardPile cardPile = new CardPile();
     private bool requireUpdate = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

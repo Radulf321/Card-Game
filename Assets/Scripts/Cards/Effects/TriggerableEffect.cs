@@ -80,7 +80,7 @@ public class TriggerableEffect : CardEffect
         if ((this.currentLimit == 0) && (this.limitType == LimitType.Total))
         {
             Game.Instance.UnsubscribeFromTriggerMessages(HandleMessage);
-            CombatHandler.instance.getCardPile().DiscardCard(this.owner);
+            CombatHandler.instance?.getCardPile().DiscardCard(this.owner);
         }
     }
 

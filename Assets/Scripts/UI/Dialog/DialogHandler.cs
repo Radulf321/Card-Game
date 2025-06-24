@@ -24,6 +24,10 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         DialogHandler.Instance = this;
         SceneManager.activeSceneChanged += (Scene scene, Scene previousScene) =>
         {
+            if (scene.name != "CombatScene")
+            {
+                CombatHandler.instance = null;
+            }
             transform.gameObject.SetActive(this.nextDialog != null);
             if (this.nextDialog != null)
             {

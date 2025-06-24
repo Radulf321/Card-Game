@@ -78,25 +78,30 @@ public class Card
                 return false;
             }
         }
-        return (this.cost == null) || (this.cost <= CombatHandler.instance.getCurrentEnergy());
+        return (this.cost == null) || (this.cost <= CombatHandler.instance?.getCurrentEnergy());
     }
 
     public void Play()
     {
+        CombatHandler? combatHandler = CombatHandler.instance;
+        if (combatHandler == null)
+        {
+            throw new Exception("Cannot play card without combat handler");
+        }
         if (CanPlay())
         {
             this.afterPlay = CardAfterPlay.Discard;
-            CardPile cardPile = CombatHandler.instance.getCardPile();
+            CardPile cardPile = combatHandler.getCardPile();
             cardPile.AddCardToPlay(this);
             if (this.cost != null)
             {
-                CombatHandler.instance.looseEnergy(this.cost.Value);
+                combatHandler.looseEnergy(this.cost.Value);
             }
             foreach (CardEffect effect in effects)
             {
                 effect.applyEffect();
             }
-            CombatHandler.instance.playCard(this.id);
+            combatHandler.playCard(this.id);
             switch (this.afterPlay)
             {
                 case CardAfterPlay.Discard:

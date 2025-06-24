@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +18,11 @@ public class CardPile
         this.inPlay = new List<Card>();
     }
 
+    public CardPile() : this(new List<Card>())
+    {
+
+    }
+
     public void DrawCard(CardEffectTrigger? trigger = null)
     {
         DrawCards(1, trigger);
@@ -27,7 +34,7 @@ public class CardPile
         {
             DrawSingleCard();
         }
-        CombatHandler.instance.updateView();
+        CombatHandler.instance?.updateView();
         Game.Instance.SendTriggerMessage(new TriggerMessage(type: TriggerType.DrawCards, data: new TriggerMessageData(amount: numberOfCards, trigger: trigger)));
     }
 
@@ -42,7 +49,7 @@ public class CardPile
             int index = UnityEngine.Random.Range(0, hand.Count);
             DiscardCard(hand[index], false);
         }
-        CombatHandler.instance.updateView();
+        CombatHandler.instance?.updateView();
     }
 
     public List<Card> GetHand()
@@ -77,7 +84,7 @@ public class CardPile
             discardPile.Add(card);
             if (updateView)
             {
-                CombatHandler.instance.updateView();
+                CombatHandler.instance?.updateView();
             }
         }
         else
@@ -90,7 +97,7 @@ public class CardPile
     {
         hand.Remove(card);
         inPlay.Add(card);
-        CombatHandler.instance.updateView();
+        CombatHandler.instance?.updateView();
     }
 
     public void RemoveCard(Card card)
