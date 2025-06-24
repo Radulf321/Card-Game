@@ -168,7 +168,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         Transform selectArea = transform.Find("SelectArea");
         Rect selectRect = selectArea.GetComponent<RectTransform>().rect;
         VerticalLayoutGroup selectLayoutGroup = selectArea.GetComponent<VerticalLayoutGroup>();
-        selectLayoutGroup.spacing = selectRect.height * 0.01f;
+        // Spacing is set lower depending on type
         selectLayoutGroup.padding = new RectOffset(
             Mathf.FloorToInt(selectRect.width * 0.02f),
             Mathf.FloorToInt(selectRect.width * 0.02f),
@@ -220,6 +220,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         switch (dialog.GetSelectType())
         {
             case SelectType.Buttons:
+                selectLayoutGroup.spacing = selectRect.height * 0.01f;
                 // Add new options
                 foreach (DialogOption option in dialog.GetOptions())
                 {
@@ -231,6 +232,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
                 break;
 
             case SelectType.Cards:
+                selectLayoutGroup.spacing = selectRect.height * 0.1f;
                 // Remove all current cards
                 DialogCardActionAreaHandler cardHandler = selectArea.Find("CardArea").GetComponent<DialogCardActionAreaHandler>();
                 cardHandler.SetDialogOptions(dialog.GetOptions());

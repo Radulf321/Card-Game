@@ -87,24 +87,13 @@ public class DialogOptionCardHandler : MonoBehaviour, IViewUpdater
         AspectRatioFitter aspectRatioFitter = transform.GetComponent<AspectRatioFitter>();
         Transform costTextTransform = transform.Find("CostText");
         Transform cardTransform = transform.Find("Card");
-        aspectRatioFitter.aspectRatio = cardTransform.GetComponent<AspectRatioFitter>().aspectRatio;
-        RectTransform cardRect = cardTransform.GetComponent<RectTransform>();
         LayoutElement layoutElement = transform.GetComponent<LayoutElement>();
         float height = transform.GetComponent<RectTransform>().rect.height;
-        if (this.costText == null)
-        {
-            cardRect.anchorMin = new Vector2(0, 0);
-            costTextTransform.gameObject.SetActive(false);
-            layoutElement.preferredWidth = height * aspectRatioFitter.aspectRatio;
-        }
-        else
-        {
-            aspectRatioFitter.aspectRatio = DialogOptionCardHandler.aspectRatioWithCost;
-            cardTransform.GetComponent<RectTransform>().anchorMin = new Vector2(0, DialogOptionCardHandler.cardOffsetWithCost);
-            costTextTransform.gameObject.SetActive(true);
-            costTextTransform.GetComponent<TMPro.TextMeshProUGUI>().text = costText;
-            layoutElement.preferredWidth = height * aspectRatioFitter.aspectRatio;
-        }
+        aspectRatioFitter.aspectRatio = DialogOptionCardHandler.aspectRatioWithCost;
+        cardTransform.GetComponent<RectTransform>().anchorMin = new Vector2(0, DialogOptionCardHandler.cardOffsetWithCost);
+        costTextTransform.gameObject.SetActive(true);
+        costTextTransform.GetComponent<TMPro.TextMeshProUGUI>().text = costText;
+        layoutElement.preferredWidth = height * aspectRatioFitter.aspectRatio;
 
         LayoutGroup parentLayoutGroup = GetComponentInParent<LayoutGroup>();
         if (parentLayoutGroup != null)
