@@ -8,41 +8,20 @@ public class LinearAmountCalculation : AmountCalculation {
     private float rate;
     private int? min;
     private int? max;
-    private string? input;
 
-    public LinearAmountCalculation(int baseValue, float rate, string? input = null, int? min = null, int? max = null)
+    public LinearAmountCalculation(int baseValue, float rate, CalculationInput input = CalculationInput.Constant, int? min = null, int? max = null) : base(input)
     {
         this.baseValue = baseValue;
         this.rate = rate;
-        this.input = input;
         this.min = min;
         this.max = max;
     }
 
-    public LinearAmountCalculation(JObject json) {
+    public LinearAmountCalculation(JObject json) : base(json) {
         this.baseValue = json["base"]?.ToObject<int>() ?? 0;
         this.rate = json["rate"]?.ToObject<float>() ?? 0;
-        this.input = json["input"]?.ToString() ?? "";
         this.min = json["min"]?.ToObject<int>();
         this.max = json["max"]?.ToObject<int>();
-    }
-
-    public override int GetValue(Card? card = null) {
-        int inputValue;
-        switch (input) {
-            case "previousPlays":
-                inputValue = CombatHandler.instance?.getCardsPlayed(card!.GetID()) ?? 0;
-                break;
-
-            case "targetLevel":
-                inputValue = Game.Instance.GetCurrentCombatTarget().GetLevel();
-                break;
-
-            default:
-                throw new System.Exception("Invalid input type: " + input);
-        }
-
-        return GetValue(inputValue);
     }
 
     public override int GetValue(int number) {

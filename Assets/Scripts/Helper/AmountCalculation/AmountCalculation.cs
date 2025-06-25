@@ -2,6 +2,13 @@ using Newtonsoft.Json.Linq;
 
 #nullable enable
 
+public enum CalculationInput
+{
+    PreviousPlays,
+    TargetLevel,
+    Constant,
+}
+
 public abstract class AmountCalculation
 {
     public static AmountCalculation? FromJson(JToken? json)
@@ -33,6 +40,42 @@ public abstract class AmountCalculation
         }
     }
 
-    abstract public int GetValue(Card? card = null);
+    private CalculationInput input;
+
+    public AmountCalculation(CalculationInput input = CalculationInput.Constant)
+    {
+        this.input = input;
+    }
+
+    public AmountCalculation(JObject json)
+    {
+        this.input = EnumHelper.ParseEnum<CalculationInput>(json["input"]?.ToString()) ?? CalculationInput.Constant;
+    }
+
+
+    public int GetValue(Card? card = null)
+    {
+        int inputValue;
+        switch (input)
+        {
+            case CalculationInput.Constant:
+                inputValue = 0;
+                break;
+
+            case CalculationInput.PreviousPlays:
+                inputValue = CombatHandler.instance?.getCardsPlayed(card!.GetID()) ?? 0;
+                break;
+
+            case CalculationInput.TargetLevel:
+                inputValue = Game.Instance.GetCurrentCombatTarget().GetLevel();
+                break;
+
+            default:
+                throw new System.Exception("Invalid input type: " + input);
+        }
+
+        return GetValue(inputValue);
+    }
+
     abstract public int GetValue(int number);
 }
