@@ -7,6 +7,7 @@ public enum CalculationInput
     PreviousPlays,
     TargetLevel,
     Constant,
+    CurrentEnergy,
 }
 
 public abstract class AmountCalculation
@@ -68,6 +69,10 @@ public abstract class AmountCalculation
 
             case CalculationInput.TargetLevel:
                 inputValue = Game.Instance.GetCurrentCombatTarget().GetLevel();
+                break;
+
+            case CalculationInput.CurrentEnergy:
+                inputValue = CombatHandler.instance?.getCurrentEnergy() ?? Game.Instance.GetPlayer().GetStartingEnergy();
                 break;
 
             default:
