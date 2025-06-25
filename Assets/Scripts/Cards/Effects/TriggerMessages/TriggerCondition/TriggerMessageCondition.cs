@@ -11,6 +11,8 @@ public abstract class TriggerMessageCondition
                 return new TriggerMessageConditionAddGoal(json);
             case "startturn":
                 return new TriggerMessageConditionStartTurn(json);
+            case "endTurn":
+                return new TriggerMessageConditionEndTurn(json);
             case "talenttree":
                 return new TriggerMessageConditionTalentTree(json);
             case "drawCards":

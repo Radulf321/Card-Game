@@ -144,6 +144,7 @@ public class CombatHandler : MonoBehaviour
 
     public void endTurn()
     {
+        SendTriggerMessage(new TriggerMessage(TriggerType.EndTurn, new TriggerMessageData(amount: getCurrentTurnIndex())));
         // Conditions not fulfilled -> Lost
         if (!getCurrentTurn().areRequirementsFulfilled())
         {

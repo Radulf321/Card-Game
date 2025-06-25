@@ -74,12 +74,17 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205826
   - m_Id: 8390389678252032
-    m_Localized: der {number:choose(null):|{}. }Zug beginnt
+    m_Localized: den {number:choose(null):|{}. }Zug startest
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
   - m_Id: 14949827285393408
     m_Localized: du {minimum:plural:|{} oder mehr }Karten ziehst
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 16396495348342784
+    m_Localized: den {number:choose(null):|{}. }Zug beendest
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
@@ -102,3 +107,4 @@ MonoBehaviour:
         - id: 5164853212520448
         - id: 8390389678252032
         - id: 14949827285393408
+        - id: 16396495348342784

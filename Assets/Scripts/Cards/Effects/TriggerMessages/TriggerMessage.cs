@@ -5,7 +5,8 @@ public enum TriggerType
     AddGoal,
     StartTurn,
     TalentTree,
-    DrawCards
+    DrawCards,
+    EndTurn,
 }
 
 public class TriggerMessage
