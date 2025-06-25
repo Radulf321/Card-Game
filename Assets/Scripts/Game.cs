@@ -174,10 +174,37 @@ class Game
         {
             selectActionText = "Select an action";
         }
-        _ = DialogHandler.Instance!.StartDialog(new DialogImage(new DialogSelect(selectActionText, new List<DialogOption>() {
-            this.combatTargets[0].GetDialogOption()!,
-            this.locations[0].GetDialogOption()!,
-        }, SelectType.Cards, true), this.selectActionBackground), onFinish: () =>
+        List<DialogOption> options = new List<DialogOption>();
+        List<List<DialogOption>> dialogOptionsByType = new List<List<DialogOption>>();
+        foreach (IEnumerable<ActionCharacter> actionCharacters in new List<IEnumerable<ActionCharacter>>() { this.combatTargets.Cast<ActionCharacter>(), this.locations.Cast<ActionCharacter>() }) {
+            List<DialogOption> dialogOptionsForType = new List<DialogOption>();
+            foreach (ActionCharacter actionCharacter in actionCharacters)
+            {
+                DialogOption? dialogOption = actionCharacter.GetDialogOption();
+                if (dialogOption != null)
+                {
+                    dialogOptionsForType.Add(dialogOption);
+                }
+            }
+            if (dialogOptionsForType.Count > 0)
+            {
+                int index = UnityEngine.Random.Range(0, dialogOptionsForType.Count);
+                options.Add(dialogOptionsForType[index]);
+                dialogOptionsForType.RemoveAt(index);
+            }
+            if (dialogOptionsForType.Count > 0)
+            {
+                dialogOptionsByType.Add(dialogOptionsForType);
+            }
+        }
+
+        if (dialogOptionsByType.Count > 0) {
+            int typeIndex = UnityEngine.Random.Range(0, dialogOptionsByType.Count);
+            int optionIndex = UnityEngine.Random.Range(0, dialogOptionsByType[typeIndex].Count);
+            options.Insert(1, dialogOptionsByType[typeIndex][optionIndex]);
+        }
+
+        _ = DialogHandler.Instance!.StartDialog(new DialogImage(new DialogSelect(selectActionText, options, SelectType.Cards, true), this.selectActionBackground), onFinish: () =>
         {
             string targetID = GetFlag<string>(FlagValidity.Dialog, CombatTarget.CurrentTargetKey)!;
             GetActionCharacter(targetID)?.ExecuteAction();
