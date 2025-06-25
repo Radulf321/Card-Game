@@ -1,0 +1,20 @@
+{
+    "id": "premiumSupport",
+    "cost": 0,
+    "name": {
+        "en": "Premium Support",
+        "de": "Premium Support"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "knowhow",
+            "amount": 5
+        },
+        {
+            "type": "afterPlay",
+            "afterPlay": "RemovePermanent"
+        }
+    ],
+    "image": "PremiumSupport"
+}

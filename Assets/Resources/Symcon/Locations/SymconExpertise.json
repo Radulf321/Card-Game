@@ -1,0 +1,208 @@
+{
+    "id": "symconExpertise",
+    "action": {
+        "title": {
+            "en": "Symcon Expertise",
+            "de": "Symcon Kenntnis"
+        },
+        "description": {
+            "en": "There are different ways to expand your Know-How about Symcon and its possibilities.",
+            "de": "Es gibt diverse Möglichkeiten sein Know-How über Symcon und die Möglichkeiten der Software zu erweitern."
+        },
+        "image": "SymconExpertise"
+    },
+    "dialog": [
+        {
+            "type": "image",
+            "background": "SymconExpertise"
+        },
+        {
+            "type": "condition",
+            "condition": {
+                "type": "flag",
+                "key": "symconExpertiseVisited",
+                "value": true
+            },
+            "if": [
+                {
+                    "type": "random",
+                    "dialogs": [
+                        [
+                            {
+                                "type": "image",
+                                "left": "PioTutorial"
+                            },
+                            {
+                                "type": "text",
+                                "speaker": "left",
+                                "text": {
+                                    "en": "Pio: It's good to hear from you again. You wrote a mail with some challenges in your newest project.",
+                                    "de": "Pio: Es ist schön mal wieder von dir zu hören. Du hattest eine Mail mit ein paar Herausforderungen in deinem aktuellen Projekt geschrieben."
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "speaker": "left",
+                                "text": {
+                                    "en": "Pio: Let's take a look how we can solve it.",
+                                    "de": "Pio: Dann wollen wir mal schauen, wie wir das lösen können."
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "Pio explains you a couple of new methods that will help you in your current and future projects",
+                                    "de": "Pio erklärt dir einige Methoden, die in deinem aktuellen und kommenden Projekten helfen werden"
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "You: Oh, there's a webinar about the new version today. Fortunately I have some time. I'll definitely take a look.",
+                                    "de": "Du: Oh, heute gibt es ein Webinar zur neuen Version. Zum Glück habe ich Zeit. Das schaue ich mir definitiv an."
+                                }
+                            },
+                            {
+                                "type": "image",
+                                "background": "SymconExpertiseVideo"
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "You follow the webinar, excited about awesome upcoming features that will make handling Symcon even better",
+                                    "de": "Du folgst dem Webinar, gespannt auf die großartigen kommenden Features, die deine Verwendung von Symcon noch besser machen werden"
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "You: That was a great webinar. I should definitely leave a like and subscribe",
+                                    "de": "Du: Ein großartiges Webinar. Ich sollte definitiv den Daumen hoch drücken und dem Kanal folgen"
+                                }
+                            }
+                        ]
+                    ]
+                }
+            ],
+            "else": [
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: Let's take a look if we find anything interesting on the Symcon homepage",
+                        "de": "Du: Schauen wir mal, ob es irgendwas interessantes auf der Symcon Homepage gibt"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: The documentation seems pretty extensive. And there are more than a few videos, ranging from basics to specific topics",
+                        "de": "Du: Die Dokumentation scheint ziemlich umfangreich. Und es gibt einige Videos, die von Grundlagen bis hin zu spezifischen Themen reichen"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: And I can book some more Premium Support as well, getting some one on one support from Pio. It'll be nice to hear from him again",
+                        "de": "Du: Ansonsten kann ich auch Premium Support buchen. Dann bekomme ich persönlichen Support von Pio. Von dem würde ich gerne mal wieder was hören"
+                    }
+                },
+                {
+                    "type": "flag",
+                    "key": "communityBoardVisited",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "showUI": true,
+            "selectType": "Cards",
+            "title": {
+                "en": "Select a card for your deck",
+                "de": "Wähle eine Karte für dein Deck"
+            },
+            "options": [
+                {
+                    "card": "premiumSupport",
+                    "cost": {},
+                    "dialog": {
+                        "type": "reward",
+                        "rewards": [
+                            {
+                                "type": "card",
+                                "card": "premiumSupport"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "random",
+                    "amount": 2,
+                    "options": [
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "betaFeatures",
+                            "cost": 150
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "optimizeObjectTree",
+                            "cost": 100
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "perfectBalance",
+                            "cost": 150
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "createVariable",
+                            "cost": 100
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "createFlowScript",
+                            "cost": 150
+                        }
+                    ]
+                },
+                
+                {
+                    "type": "conditional",
+                    "condition": {
+                        "type": "not",
+                        "condition": {
+                            "type": "cardInDeck",
+                            "card": "overtime"
+                        }
+                    },
+                    "options": {
+                        "card": "overtime",
+                        "cost": {
+                            "cash": 300
+                        },
+                        "dialog": [
+                            {
+                                "type": "reward",
+                                "rewards": [
+                                    {
+                                        "type": "card",
+                                        "card": "overtime"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+        
+    ]
+}

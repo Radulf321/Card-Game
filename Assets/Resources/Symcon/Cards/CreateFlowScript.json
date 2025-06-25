@@ -1,0 +1,16 @@
+{
+    "id": "createFlowScript",
+    "cost": 3,
+    "name": {
+        "en": "Create Flow Script",
+        "de": "Ablaufplan erstellen"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "knowhow",
+            "amount": 6
+        }
+    ],
+    "image": "CreateFlowScript"
+}
