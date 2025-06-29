@@ -35,6 +35,14 @@ MonoBehaviour:
     m_Key: RoundsCaption
     m_Metadata:
       m_Items: []
+  - m_Id: 13441226708393984
+    m_Key: BuffShort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13441847289225216
+    m_Key: BuffCaption
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

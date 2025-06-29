@@ -86,9 +86,18 @@ public class TriggerableEffect : GameEffect
 
     private void HandleMessage(TriggerMessage triggerMessage)
     {
-        if ((triggerMessage.GetTriggerType() == TriggerType.StartTurn) && (this.limitType == LimitType.PerTurn))
+        switch (triggerMessage.GetTriggerType())
         {
-            this.currentLimit = this.limit;
+            case TriggerType.StartTurn:
+                this.currentLimit = this.limit;
+                break;
+
+            case TriggerType.EndRound:
+                Game.Instance.UnsubscribeFromTriggerMessages(HandleMessage);
+                break;
+
+
         }
+        
     }
 }

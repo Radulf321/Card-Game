@@ -36,11 +36,13 @@ public class TriggerAction
         this.conditions = conditions;
     }
 
-    public void Subscribe() {
+    public void Subscribe()
+    {
         Game.Instance.SubscribeToTriggerMessages(this.HandleMessage);
     }
 
-    public void Unsubscribe() {
+    public void Unsubscribe()
+    {
         Game.Instance.UnsubscribeFromTriggerMessages(this.HandleMessage);
     }
 
@@ -70,11 +72,16 @@ public class TriggerAction
 
     private void HandleMessage(TriggerMessage triggerMessage)
     {
-        if (this.trigger.FulfillsCondition(triggerMessage) && 
+        if (this.trigger.FulfillsCondition(triggerMessage) &&
             this.conditions.TrueForAll(condition => condition.IsFulfilled()))
         {
             this.effect.applyEffect();
             this.onTrigger?.Invoke();
+        }
+
+        if (triggerMessage.GetTriggerType() == TriggerType.EndRound)
+        {
+            this.Unsubscribe();
         }
     }
 }

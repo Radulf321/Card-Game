@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 #nullable enable
@@ -34,6 +35,7 @@ class Game
     private List<Action<TriggerMessage>> triggerMessageSubscribers = new List<Action<TriggerMessage>>();
     private bool tutorialDone;
     private Dictionary<FlagValidity, FlagDictionary> flagDictionaries;
+    private HashSet<Modifier> modifiers;
 
     public Game()
     {
@@ -52,6 +54,7 @@ class Game
         this.gameOverDialog = new DialogText("Dummy");
         this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
+        this.modifiers = new HashSet<Modifier>();
     }
 
     public Game(string ResourcePath)
@@ -120,6 +123,7 @@ class Game
         this.gameOverDialog = Dialog.FromJson(index["gameOverDialog"] as JArray ?? new JArray());
         this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
+        this.modifiers = new HashSet<Modifier>();
     }
 
     public Player GetPlayer()
@@ -176,7 +180,8 @@ class Game
         }
         List<DialogOption> options = new List<DialogOption>();
         List<List<DialogOption>> dialogOptionsByType = new List<List<DialogOption>>();
-        foreach (IEnumerable<ActionCharacter> actionCharacters in new List<IEnumerable<ActionCharacter>>() { this.combatTargets.Cast<ActionCharacter>(), this.locations.Cast<ActionCharacter>() }) {
+        foreach (IEnumerable<ActionCharacter> actionCharacters in new List<IEnumerable<ActionCharacter>>() { this.combatTargets.Cast<ActionCharacter>(), this.locations.Cast<ActionCharacter>() })
+        {
             List<DialogOption> dialogOptionsForType = new List<DialogOption>();
             foreach (ActionCharacter actionCharacter in actionCharacters)
             {
@@ -198,7 +203,8 @@ class Game
             }
         }
 
-        if (dialogOptionsByType.Count > 0) {
+        if (dialogOptionsByType.Count > 0)
+        {
             int typeIndex = UnityEngine.Random.Range(0, dialogOptionsByType.Count);
             int optionIndex = UnityEngine.Random.Range(0, dialogOptionsByType[typeIndex].Count);
             options.Insert(1, dialogOptionsByType[typeIndex][optionIndex]);
@@ -213,7 +219,7 @@ class Game
 
     public void EndRound()
     {
-        this.triggerMessageSubscribers.Clear();
+        SendTriggerMessage(new TriggerMessage(TriggerType.EndRound));
         remainingRounds--;
         if (remainingRounds <= 0)
         {
@@ -348,7 +354,8 @@ class Game
 
     public void SendTriggerMessage(TriggerMessage message)
     {
-        foreach (Action<TriggerMessage> subscriber in this.triggerMessageSubscribers)
+        // Clone list as some subscribers could unsubscribe during loop execution
+        foreach (Action<TriggerMessage> subscriber in new List<Action<TriggerMessage>>(this.triggerMessageSubscribers))
         {
             subscriber(message);
         }
@@ -385,7 +392,8 @@ class Game
         {
             return combatTarget;
         }
-        else {
+        else
+        {
             return GetLocation(id);
         }
     }
@@ -415,5 +423,25 @@ class Game
             return null;
         }
         return flagDictionaries[validity].GetValue(key);
+    }
+
+    public void RegisterModifier(Modifier modifier)
+    {
+        this.modifiers.Add(modifier);
+    }
+
+    public void UnRegisterModifier(Modifier modifier)
+    {
+        this.modifiers.Remove(modifier);
+    }
+
+    public int ApplyModifiers(ModifierType type, int baseValue, int? turn = null)
+    {
+        int value = baseValue;
+        foreach (Modifier modifier in this.modifiers)
+        {
+            value = modifier.GetValue(value, type, turn);
+        }
+        return value;
     }
 }

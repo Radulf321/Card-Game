@@ -7,6 +7,7 @@ public enum TriggerType
     TalentTree,
     DrawCards,
     EndTurn,
+    EndRound,
 }
 
 public class TriggerMessage

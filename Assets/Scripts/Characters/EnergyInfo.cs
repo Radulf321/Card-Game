@@ -27,7 +27,7 @@ public class EnergyInfo
 
     public int GetEnergyForTurn(int turn)
     {
-        return energy.TryGetValue(turn, out int value) ? value : 0;
+        return Game.Instance.ApplyModifiers(ModifierType.Energy, energy.TryGetValue(turn, out int value) ? value : 0, turn);
     }
 
     public void AddEnergy(int amount, int turn)

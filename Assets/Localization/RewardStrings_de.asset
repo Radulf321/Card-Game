@@ -41,6 +41,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401544152646156355
+  - m_Id: 13441226708393984
+    m_Localized: "Tempor\xE4rer Bonus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13441847289225216
+    m_Localized: '{modifier} ({duration} Runden)'
+    m_Metadata:
+      m_Items:
+      - rid: 6401544152646156355
   references:
     version: 2
     RefIds:
@@ -51,3 +60,4 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 274664824832
         - id: 700374097920
+        - id: 13441847289225216
