@@ -8,12 +8,12 @@ using Newtonsoft.Json.Linq;
 public class TriggerAction
 {
     private TriggerMessageCondition trigger;
-    private CardEffect effect;
+    private GameEffect effect;
     private List<StatusCondition> conditions;
     private Action? onTrigger;
 
 
-    public TriggerAction(TriggerMessageCondition trigger, CardEffect effect, List<StatusCondition>? conditions = null)
+    public TriggerAction(TriggerMessageCondition trigger, GameEffect effect, List<StatusCondition>? conditions = null)
     {
         this.trigger = trigger;
         this.effect = effect;
@@ -22,7 +22,7 @@ public class TriggerAction
 
     public TriggerAction(JObject json, Card? owner = null) : this(
         trigger: TriggerMessageCondition.FromJson(json["trigger"] as JObject),
-        effect: CardEffect.FromJson(json["effect"] as JObject ?? new JObject(), owner, CardEffectTrigger.TriggerEffect)
+        effect: GameEffect.FromJson(json["effect"] as JObject ?? new JObject(), owner, CardEffectTrigger.TriggerEffect)
     )
     {
         List<StatusCondition> conditions = new List<StatusCondition>();

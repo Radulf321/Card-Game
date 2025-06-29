@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-public class CaptionEffect : CardEffect {
+public class CaptionEffect : GameEffect {
 
     private string caption;
 
@@ -18,7 +18,7 @@ public class CaptionEffect : CardEffect {
         // The caption effect does not have any gameplay effect
     }
 
-    public override CardEffect Clone(Card newOwner)
+    public override GameEffect Clone(Card newOwner)
     {
         return new CaptionEffect(this.caption);
     }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
-public class GoalEffect : CardEffect
+public class GoalEffect : GameEffect
 {
 
     private Card owner;
@@ -33,7 +33,7 @@ public class GoalEffect : CardEffect
         CombatHandler.instance.addGoal(goal, this.amountCalculation.GetValue(this.owner), this.trigger);
     }
 
-    public override CardEffect Clone(Card newOwner)
+    public override GameEffect Clone(Card newOwner)
     {
         return new GoalEffect(this.goal, this.amountCalculation, newOwner, this.trigger);
     }

@@ -205,7 +205,7 @@ public class CombatHandler : MonoBehaviour
         currentEnergy = maxEnergy;
         goalsThisTurn.Clear();
         Turn currentTurn = getCurrentTurn();
-        foreach (CardEffect effect in currentTurn.getEffects()) {
+        foreach (GameEffect effect in currentTurn.getEffects()) {
             effect.applyEffect();
         }
         SendTriggerMessage(new TriggerMessage(TriggerType.StartTurn, new TriggerMessageData(amount: getCurrentTurnIndex())));

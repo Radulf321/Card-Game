@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
-public class DrawCardsEffect : CardEffect {
+public class DrawCardsEffect : GameEffect {
     private int amount;
     private CardEffectTrigger trigger;
 
@@ -21,7 +21,7 @@ public class DrawCardsEffect : CardEffect {
         CombatHandler.instance.getCardPile().DrawCards(this.amount, this.trigger);
     }
 
-    public override CardEffect Clone(Card newOwner)
+    public override GameEffect Clone(Card newOwner)
     {
         return new DrawCardsEffect(this.amount, this.trigger);
     }

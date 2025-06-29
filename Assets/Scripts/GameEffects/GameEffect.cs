@@ -2,8 +2,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
-abstract public class CardEffect {
-    public static CardEffect FromJson(JObject json, Card? owner = null, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) {
+abstract public class GameEffect {
+    public static GameEffect FromJson(JObject json, Card? owner = null, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) {
         string? type = json["type"]?.ToString();
         return type switch
         {
@@ -23,7 +23,7 @@ abstract public class CardEffect {
 
     abstract public Task<string> getDescription();
 
-    abstract public CardEffect Clone(Card? newOwner);
+    abstract public GameEffect Clone(Card? newOwner);
 
     virtual public bool canPlay()
     {

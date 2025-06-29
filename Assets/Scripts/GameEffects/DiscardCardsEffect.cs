@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
-public class DiscardCardsEffect : CardEffect {
+public class DiscardCardsEffect : GameEffect {
     private int amount;
 
     public DiscardCardsEffect(int amount) {
@@ -25,7 +25,7 @@ public class DiscardCardsEffect : CardEffect {
         return CombatHandler.instance.getCardPile().GetHand().Count >= (amount + 1);
     }
 
-    public override CardEffect Clone(Card newOwner)
+    public override GameEffect Clone(Card newOwner)
     {
         return new DiscardCardsEffect(this.amount);
     }

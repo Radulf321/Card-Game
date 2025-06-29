@@ -4,12 +4,12 @@ using System.Collections.Generic;
 public class Turn
 {
     private List<Requirement> requirements;
-    private List<CardEffect> effects;
+    private List<GameEffect> effects;
 
-    public Turn(List<Requirement>? requirements = null, List<CardEffect>? effects = null)
+    public Turn(List<Requirement>? requirements = null, List<GameEffect>? effects = null)
     {
         this.requirements = requirements ?? new List<Requirement>();
-        this.effects = effects ?? new List<CardEffect>();
+        this.effects = effects ?? new List<GameEffect>();
     }
 
     public bool areRequirementsFulfilled()
@@ -29,7 +29,7 @@ public class Turn
         return requirements;
     }
 
-    public List<CardEffect> getEffects()
+    public List<GameEffect> getEffects()
     {
         return this.effects;
     }

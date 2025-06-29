@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
 #nullable enable
-public class AfterPlayEffect : CardEffect {
+public class AfterPlayEffect : GameEffect {
     private CardAfterPlay afterPlay;
     private Card owner;
 
@@ -24,7 +24,7 @@ public class AfterPlayEffect : CardEffect {
         this.owner.SetAfterPlay(this.afterPlay);
     }
 
-    public override CardEffect Clone(Card? newOwner)
+    public override GameEffect Clone(Card? newOwner)
     {
         return new AfterPlayEffect(this.afterPlay, newOwner ?? this.owner);
     }

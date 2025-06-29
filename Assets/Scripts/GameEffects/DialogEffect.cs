@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-public class DialogEffect : CardEffect
+public class DialogEffect : GameEffect
 {
     private Dialog dialog;
 
@@ -19,7 +19,7 @@ public class DialogEffect : CardEffect
         _ = DialogHandler.Instance.StartDialog(this.dialog, changeScene: false);
     }
 
-    public override CardEffect Clone(Card newOwner)
+    public override GameEffect Clone(Card newOwner)
     {
         return new DialogEffect(this.dialog);
     }

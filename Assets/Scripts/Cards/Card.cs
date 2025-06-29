@@ -38,13 +38,13 @@ public class Card
 {
     private CardType type;
     private int? cost;
-    private List<CardEffect> effects;
+    private List<GameEffect> effects;
     private string name;
     private string imagePath;
     private string id;
     private CardAfterPlay afterPlay = CardAfterPlay.Discard;
 
-    public Card(int? cost, string id, List<CardEffect> effects, string name, string imagePath, CardType type = CardType.Regular)
+    public Card(int? cost, string id, List<GameEffect> effects, string name, string imagePath, CardType type = CardType.Regular)
     {
         this.cost = cost;
         this.effects = effects;
@@ -60,10 +60,10 @@ public class Card
         this.name = LocalizationHelper.GetLocalizedString(cardData["name"] as JObject)!;
         this.imagePath = cardData["image"]?.ToString() ?? "Placeholder";
         this.id = cardData["id"]!.ToString();
-        List<CardEffect> effects = new List<CardEffect>();
+        List<GameEffect> effects = new List<GameEffect>();
         foreach (JObject effectData in cardData["effects"] ?? new JArray())
         {
-            effects.Add(CardEffect.FromJson(effectData, this));
+            effects.Add(GameEffect.FromJson(effectData, this));
         }
         this.effects = effects;
         this.type = EnumHelper.ParseEnum<CardType>(cardData["type"]?.ToString()) ?? CardType.Regular;
@@ -71,7 +71,7 @@ public class Card
 
     public bool CanPlay()
     {
-        foreach (CardEffect effect in effects)
+        foreach (GameEffect effect in effects)
         {
             if (!effect.canPlay())
             {
@@ -97,7 +97,7 @@ public class Card
             {
                 combatHandler.looseEnergy(this.cost.Value);
             }
-            foreach (CardEffect effect in effects)
+            foreach (GameEffect effect in effects)
             {
                 effect.applyEffect();
             }
@@ -149,7 +149,7 @@ public class Card
     public async Task<string> GetDescription()
     {
         List<string> descriptions = new List<string>();
-        foreach (CardEffect effect in this.effects)
+        foreach (GameEffect effect in this.effects)
         {
             descriptions.Add(await effect.getDescription());
         }
@@ -171,7 +171,7 @@ public class Card
         this.afterPlay = afterPlay;
     }
 
-    public void SetEffects(List<CardEffect> effects)
+    public void SetEffects(List<GameEffect> effects)
     {
         this.effects = effects;
     }
@@ -181,12 +181,12 @@ public class Card
         Card clone = new Card(
             cost: this.cost,
             id: this.id,
-            effects: new List<CardEffect>(),
+            effects: new List<GameEffect>(),
             name: this.name,
             imagePath: this.imagePath,
             type: this.GetCardType()
         );
-        List<CardEffect> clonedEffects = this.effects.Select(effect => effect.Clone(clone)).ToList();
+        List<GameEffect> clonedEffects = this.effects.Select(effect => effect.Clone(clone)).ToList();
         clone.SetEffects(clonedEffects);
         return clone;
     }

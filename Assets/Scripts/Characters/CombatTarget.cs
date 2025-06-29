@@ -142,7 +142,7 @@ public class CombatTarget : ActionCharacter
             }
             // turnIndex starts at zero while index for GetEnergyForTurn starts at 1
             int energy = this.GetEnergyForTurn(turnIndex + 1);
-            List<CardEffect> effects = new List<CardEffect>();
+            List<GameEffect> effects = new List<GameEffect>();
             if (energy > 0)
             {
                 effects.Add(new EnergyEffect(energy, maxEnergy: true));

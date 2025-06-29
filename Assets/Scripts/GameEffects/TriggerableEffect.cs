@@ -11,7 +11,7 @@ public enum LimitType
     Total,
 }
 
-public class TriggerableEffect : CardEffect
+public class TriggerableEffect : GameEffect
 {
     private TriggerAction triggerAction;
     private Card owner;
@@ -49,7 +49,7 @@ public class TriggerableEffect : CardEffect
         this.owner.SetAfterPlay(CardAfterPlay.StayInPlay);
     }
 
-    public override CardEffect Clone(Card? newOwner)
+    public override GameEffect Clone(Card? newOwner)
     {
         return new TriggerableEffect(triggerAction.Clone(newOwner), newOwner ?? this.owner, limitType: this.limitType, limit: this.limit);
     }

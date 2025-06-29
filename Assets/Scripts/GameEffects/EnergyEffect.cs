@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
-public class EnergyEffect : CardEffect
+public class EnergyEffect : GameEffect
 {
     private int amount;
     private bool maxEnergy;
@@ -46,7 +46,7 @@ public class EnergyEffect : CardEffect
         ));
     }
 
-    public override CardEffect Clone(Card newOwner)
+    public override GameEffect Clone(Card newOwner)
     {
         return new EnergyEffect(this.amount, this.maxEnergy);
     }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
-public class RequirementGoalEffect : CardEffect {
+public class RequirementGoalEffect : GameEffect {
     private Dictionary<string, int> requirements;
 
     public RequirementGoalEffect(Dictionary<string, int> requirements)
@@ -36,7 +36,7 @@ public class RequirementGoalEffect : CardEffect {
         return true;
     }
 
-    public override CardEffect Clone(Card newOwner)
+    public override GameEffect Clone(Card newOwner)
     {
         return new RequirementGoalEffect(this.requirements);
     }
