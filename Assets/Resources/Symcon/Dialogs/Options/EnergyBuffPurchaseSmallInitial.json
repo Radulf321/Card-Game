@@ -1,0 +1,16 @@
+{
+    "type": "file",
+    "file": "Options/EnergyBuffPurchase",
+    "title": {
+        "en": "More Energy next round",
+        "de": "Mehr Energie nächste Runde"
+    },
+    "description": {
+        "en": "+1 initial <sprite name=\"Energy\"> during the next round",
+        "de": "+1 <sprite name=\"Energy\"> zum Start während der nächsten Runde"
+    },
+    "image": "EnergySmall",
+    "cost": {},
+    "turn": 0,
+    "duration": 1
+}

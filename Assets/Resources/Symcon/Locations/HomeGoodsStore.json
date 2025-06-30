@@ -1,0 +1,340 @@
+{
+    "id": "homeGoodsStore",
+    "action": {
+        "title": {
+            "en": "Smart Living",
+            "de": "Smart Living"
+        },
+        "description": {
+            "en": "'Smart Living' is a home goods store that includes a nice selection of smart devices and furniture, making your everyday life easier and thus providing more energy during work.",
+            "de": "\"Smart Living\" ist ein Einrichtungshaus mit einer guten Auswahl von smarten Geräten und Möbeln, die deinen alltägliches Leben vereinfachen, was zu mehr Energie bei der Arbeit führt."
+        },
+        "image": "HomeGoodsStore"
+    },
+    "dialog": [
+        {
+            "type": "image",
+            "background": "HomeGoodsStore",
+            "right": "HomeGoodsStore",
+            "left": "Player"
+        },
+        {
+            "type": "condition",
+            "condition": {
+                "type": "flag",
+                "key": "homeGoodsStoreVisited",
+                "value": true
+            },
+            "if": [
+                {
+                    "type": "random",
+                    "dialogs": [
+                        [
+                            {
+                                "type": "text",
+                                "speaker": "right",
+                                "text": {
+                                    "en": "Wilson: Welcome back! I hope you enjoyed your last purchase at 'Smart Living'. We just got the the new collection of smart couches.",
+                                    "de": "Wilson: Willkommen zurück! Ich hoffe, du hast deinen letzten Einkauf bei \"Smart Living\" genossen. Wir haben gerade die neue Kollektion von smarten Sofas erhalten."
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "speaker": "right",
+                                "text": {
+                                    "en": "Wilson: You can control the softness and temperature of the couch. Like everything here, it's fully compatible with Symcon, so adjust the parameters via flow script, event, or visualization.",
+                                    "de": "Wilson: Du kannst die Weichheit und Temperatur des Sofas steuern. Wie alles hier ist es voll kompatibel mit Symcon, also passe die Parameter über Ablaufplan, Ereignis oder Visualisierung an."
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "Once again, Wilson is not letting you go. He is showing you the new couches, explaining all the features and how to use them.",
+                                    "de": "Wieder einmal lässt dich Wilson nicht gehen. Er zeigt dir die neuen Sofas, erklärt alle Funktionen und wie man sie benutzt."
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                "type": "text",
+                                "speaker": "right",
+                                "text": {
+                                    "en": "Wilson: Hello, it's good to see you again. Here, have a coffee. I was just testing the Symcon intergration of this coffee machine.",
+                                    "de": "Wilson: Hallo, schön dich wiederzusehen. Hier, nimm einen Kaffee. Ich habe gerade die Symcon-Integration dieser Kaffeemaschine getestet."
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "speaker": "right",
+                                "text": {
+                                    "en": "Wilson: What do you think? Even better than the stuff they serve in the coffee shop, righ?",
+                                    "de": "Wilson: Was denkst du? Sogar besser als das Zeug, das sie im Café servieren, oder?"
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "speaker": "right",
+                                "text": {
+                                    "en": "Wilson: And even better, you can control it via Symcon! Just set up a flow script or an event to brew your coffee in the morning.",
+                                    "de": "Wilson: Und noch besser, du kannst es über Symcon steuern! Richte einfach einen Ablaufplan oder ein Ereignis ein, um deinen Kaffee am Morgen zu kochen."
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "en": "You're not sure if you want to buy a coffee machine, but you have to admit that the coffee is really good. Wilson keeps talking about the features of the coffee machine, and you can't help but listen.",
+                                    "de": "Du bist dir nicht sicher, ob du eine Kaffeemaschine kaufen möchtest, aber du musst zugeben, dass der Kaffee wirklich gut ist. Wilson redet weiter über die Funktionen der Kaffeemaschine, und du kannst nicht anders, als zuzuhören."
+                                }
+                            }
+                        ]
+                    ]
+                }
+            ],
+            "else": [
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Wilson: Welcome to 'Smart Living'! My name is Wilson, and I'm here to help you find the perfect smart devices and furniture for your home.",
+                        "de": "Wilson: Willkommen bei \"Smart Living\"! Ich bin Wilson und helfe dir, die perfekten smarten Geräte und Möbel für dein Zuhause zu finden."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Wilson: So, what can we improve in your home today? Are you looking for a comfy couch or a new coffee machine?",
+                        "de": "Wilson: Also, was können wir heute in deinem Zuhause verbessern? Suchst du nach einem bequemen Sofa oder einer neuen Kaffeemaschine?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Wilson: You look like a man of culture. So, let me assure you that any piece of device or furniture is fully compatible with Symcon. We test each product ourselves!",
+                        "de": "Wilson: Du siehst aus wie ein Mann von Welt. Lass mich dir versichern, dass jedes Gerät oder Möbelstück voll kompatibel mit Symcon ist. Wir testen jedes Produkt selbst!"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I think I'll just take a...",
+                        "de": "Du: Ich glaube, ich schaue einfach..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Wilson: Of course! Take a look at our products. They will amaze you! Come, let me show you our selection of smart coffee machines.",
+                        "de": "Wilson: Natürlich! Mach dir ein Bild von unseren Produkten. Sie werden dich begeistern! Komm, ich zeige dir unsere Auswahl an smarten Kaffeemachinen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You realise that you can't shake Wilson off. So you just follow him to the coffee machines.",
+                        "de": "Du merkst, dass du Wilson nicht los wirst. Also folgst du ihm einfach zu den Kaffeemaschinen."
+                    }
+                },
+                {
+                    "type": "flag",
+                    "key": "homeGoodsStoreVisited",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "showUI": true,
+            "selectType": "Cards",
+            "title": {
+                "en": "Select a bonus",
+                "de": "Wähle einen Bonus"
+            },
+            "options": [
+                {
+                    "type": "random",
+                    "options": [
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseSmallInitial"
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseSmall",
+                            "turn": 1,
+                            "turnDisplay": 2
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseSmall",
+                            "turn": 2,
+                            "turnDisplay": 3
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseSmall",
+                            "turn": 3,
+                            "turnDisplay": 4
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseSmall",
+                            "turn": 4,
+                            "turnDisplay": 5
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseSmall",
+                            "turn": 5,
+                            "turnDisplay": 6
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseSmall",
+                            "turn": 6,
+                            "turnDisplay": 7
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseSmall",
+                            "turn": 7,
+                            "turnDisplay": 8
+                        }
+                    ]
+                },
+                {
+                    "type": "random",
+                    "options": [
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "energyBurst",
+                            "cost": 100
+                        }
+                    ]
+                },
+                {
+                    "type": "random",
+                    "options": [
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseMediumInitial",
+                            "cost": 180
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseMedium",
+                            "turn": 1,
+                            "turnDisplay": 2,
+                            "cost": 140
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseMedium",
+                            "turn": 2,
+                            "turnDisplay": 3,
+                            "cost": 110
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseMedium",
+                            "turn": 3,
+                            "turnDisplay": 4,
+                            "cost": 90
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseMedium",
+                            "turn": 4,
+                            "turnDisplay": 5,
+                            "cost": 70
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseMedium",
+                            "turn": 5,
+                            "turnDisplay": 6,
+                            "cost": 50
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseMedium",
+                            "turn": 6,
+                            "turnDisplay": 7,
+                            "cost": 40
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyBuffPurchaseMedium",
+                            "turn": 7,
+                            "turnDisplay": 8,
+                            "cost": 30
+                        }
+                    ]
+                },
+                {
+                    "type": "random",
+                    "options": [
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyPermanentPurchaseInitial",
+                            "cost": 540
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyPermanentPurchase",
+                            "turn": 1,
+                            "turnDisplay": 2,
+                            "cost": 420
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyPermanentPurchase",
+                            "turn": 2,
+                            "turnDisplay": 3,
+                            "cost": 330
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyPermanentPurchase",
+                            "turn": 3,
+                            "turnDisplay": 4,
+                            "cost": 270
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyPermanentPurchase",
+                            "turn": 4,
+                            "turnDisplay": 5,
+                            "cost": 210
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyPermanentPurchase",
+                            "turn": 5,
+                            "turnDisplay": 6,
+                            "cost": 150
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyPermanentPurchase",
+                            "turn": 6,
+                            "turnDisplay": 7,
+                            "cost": 120
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/EnergyPermanentPurchase",
+                            "turn": 7,
+                            "turnDisplay": 8,
+                            "cost": 90
+                        }
+                    ]
+                }
+            ]
+        }        
+    ]
+}

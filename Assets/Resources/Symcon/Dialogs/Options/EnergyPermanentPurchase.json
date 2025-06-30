@@ -1,0 +1,24 @@
+{
+    "title": {
+        "en": "More Energy permanently",
+        "de": "Dauerhaft mehr Energie"
+    },
+    "description": {
+        "en": "+1 <sprite name=\"Energy\"> in Turn ${turnDisplay} permanently",
+        "de": "Dauerhaft +1 <sprite name=\"Energy\"> in Zug ${turnDisplay}"
+    },
+    "image": "EnergyLarge",
+    "cost": {
+        "cash": "${cost}"
+    },
+    "dialog": {
+        "type": "reward",
+        "rewards": [
+            {
+                "type": "energy",
+                "turn": "${turn}",
+                "value": 1
+            }
+        ]
+    }
+}
