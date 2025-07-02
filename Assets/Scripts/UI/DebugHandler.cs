@@ -30,7 +30,7 @@ public class DebugHandler : MonoBehaviour
     public void startGame()
     {
         Game game = new Game("Symcon");
-        game.StartRound();
+        game.StartGame();
     }
 
     public async void startDialog()
