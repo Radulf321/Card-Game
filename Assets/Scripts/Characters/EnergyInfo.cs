@@ -7,7 +7,7 @@ public class EnergyInfo
 
     public EnergyInfo(Dictionary<int, int> energy = null)
     {
-        this.energy = energy ?? new Dictionary<int, int>();
+        this.energy = energy ?? new Dictionary<int, int>(){{0, 1}};
     }
 
     public EnergyInfo(JObject json)

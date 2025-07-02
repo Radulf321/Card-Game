@@ -16,6 +16,7 @@ class Game
     private int remainingRounds;
     private List<CombatTarget> combatTargets;
     private List<Location> locations;
+    private List<Equipment> equipment;
 
     private Dictionary<string, string> goalNames;
 
@@ -43,6 +44,7 @@ class Game
         this.remainingRounds = 0;
         this.combatTargets = new List<CombatTarget>();
         this.locations = new List<Location>();
+        this.equipment = new List<Equipment>();
         this.goalNames = new Dictionary<string, string>();
         this.experienceTypes = new Dictionary<string, NamedIconData>();
         this.currencies = new Dictionary<string, NamedIconData>();
@@ -96,7 +98,6 @@ class Game
         this.icons = icons;
 
         this.cardLibrary = new CardLibrary(ResourcePath + "/Cards/");
-        this.player = new Player(index["startingCards"]!.ToObject<List<string>>(), (index["startingEnergy"] as JObject)!);
         List<CombatTarget> combatTargets = new List<CombatTarget>();
         TextAsset[] jsonFilesCombatTarget = Resources.LoadAll<TextAsset>(ResourcePath + "/CombatTargets/");
         foreach (TextAsset jsonFile in jsonFilesCombatTarget)
@@ -115,6 +116,17 @@ class Game
             locations.Add(location);
         }
         this.locations = locations;
+        List<Equipment> equipment = new List<Equipment>();
+        TextAsset[] jsonFilesEquipment = Resources.LoadAll<TextAsset>(ResourcePath + "/Equipment/");
+        foreach (TextAsset jsonFile in jsonFilesEquipment)
+        {
+            JObject jsonObject = JObject.Parse(jsonFile.text);
+            Equipment equipmentItem = new Equipment(jsonObject);
+            equipment.Add(equipmentItem);
+        }
+        this.equipment = equipment;
+        this.player = new Player();
+
         this.remainingRounds = 4;
 
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
@@ -153,6 +165,18 @@ class Game
     public void SetCurrentCombatTarget(CombatTarget combatTarget)
     {
         this.currentCombatTarget = combatTarget;
+    }
+
+    public void StartGame()
+    {
+        // TODO: Check if equipment screen should be shown and if so, show it
+        // Skip screen if no additional equipment is unlocked and
+        // all starting equipment can be equipped simultaneously
+        foreach (Equipment equipment in this.equipment)
+        {
+            equipment.ApplyEffects(this.player);
+        }
+        StartRound();
     }
 
     public void StartRound()

@@ -36,23 +36,6 @@
         }
     ],
     "selectActionBackground": "Regular",
-    "startingCards": [
-        "optimizeObjectTree",
-        "optimizeObjectTree",
-        "energyBurst",
-        "energyBurst",
-        "createVariable",
-        "createVariable",
-        "adjustPresentation",
-        "adjustPresentation",
-        "copyPaste",
-        "betaFeatures"
-    ],
-    "startingEnergy": {
-        "0": 2,
-        "3": 1,
-        "6": 1
-    },
     "checkIcon": "Check",
     "gameOverDialog": [
         {

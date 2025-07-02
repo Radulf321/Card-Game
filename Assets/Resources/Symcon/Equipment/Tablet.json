@@ -1,0 +1,28 @@
+{
+    "id": "tablet",
+    "name": {
+        "en": "Tablet",
+        "de": "Tablet"
+    },
+    "slot": "tool",
+    "icon": "Tablet",
+    "effects": [
+        {
+            "type": "cards",
+            "cards": [
+                "adjustPresentation",
+                "adjustPresentation"
+            ]
+        },
+        {
+            "type": "energy",
+            "amount": 1,
+            "turn": 3
+        },
+        {
+            "type": "energy",
+            "amount": 1,
+            "turn": 6
+        }
+    ]
+}
