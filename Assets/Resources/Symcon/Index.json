@@ -29,8 +29,8 @@
         {
             "id": "cash",
             "name": {
-                "en": "Symoleon",
-                "de": "Symoleon"
+                "en": "SymCoin",
+                "de": "SymCoin"
             },
             "icon": "Cash"
         }
