@@ -39,4 +39,9 @@ public class Equipment
             effect.ApplyEffect(player);
         }
     }
+
+    public string GetID()
+    {
+        return id;
+    }
 }

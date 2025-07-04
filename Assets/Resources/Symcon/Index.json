@@ -37,6 +37,12 @@
     ],
     "selectActionBackground": "Regular",
     "checkIcon": "Check",
+    "startingEquipment": [
+        "thermalMug",
+        "integratorsOverall",
+        "symconCap",
+        "tablet"
+    ],
     "gameOverDialog": [
         {
             "type": "image",
