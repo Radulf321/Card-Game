@@ -172,7 +172,7 @@ jobs:
           ANDROID_KEYALIAS_NAME: ${{ secrets.ANDROID_KEYALIAS_NAME }}
           ANDROID_KEYALIAS_PASS: ${{ secrets.ANDROID_KEYALIAS_PASS }}
         with:
-          androidVersionCode: 3
+          androidVersionCode: 4
           targetPlatform: Android
           versioning: Custom
           version: ${{ needs.create-version.outputs.new_version }} # Use the new version from the previous job
