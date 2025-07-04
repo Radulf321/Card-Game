@@ -11,8 +11,7 @@
             "type": "cards",
             "cards": [
                 "createVariable",
-                "createVariable",
-                "betaFeatures"
+                "createVariable"
             ]
         }
     ]

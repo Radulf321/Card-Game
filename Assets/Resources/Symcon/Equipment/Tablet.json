@@ -11,7 +11,8 @@
             "type": "cards",
             "cards": [
                 "adjustPresentation",
-                "adjustPresentation"
+                "adjustPresentation",
+                "betaFeatures"
             ]
         },
         {
