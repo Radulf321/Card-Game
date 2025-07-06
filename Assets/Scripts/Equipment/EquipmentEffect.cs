@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 public abstract class EquipmentEffect
@@ -15,4 +15,5 @@ public abstract class EquipmentEffect
     }
 
     public abstract void ApplyEffect(Player player);
+    public abstract Task<string> GetCaption();
 }

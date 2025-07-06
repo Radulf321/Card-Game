@@ -16,8 +16,6 @@ class Game
     private int remainingRounds;
     private List<CombatTarget> combatTargets;
     private List<Location> locations;
-    private Dictionary<string, Equipment> equipment;
-    private List<string> startingEquipment;
 
     private Dictionary<string, string> goalNames;
 
@@ -38,6 +36,7 @@ class Game
     private bool tutorialDone;
     private Dictionary<FlagValidity, FlagDictionary> flagDictionaries;
     private HashSet<Modifier> modifiers;
+    private EquipmentManager equipmentManager;
 
     public Game()
     {
@@ -45,8 +44,6 @@ class Game
         this.remainingRounds = 0;
         this.combatTargets = new List<CombatTarget>();
         this.locations = new List<Location>();
-        this.equipment = new Dictionary<string, Equipment>();
-        this.startingEquipment = new List<string>();
         this.goalNames = new Dictionary<string, string>();
         this.experienceTypes = new Dictionary<string, NamedIconData>();
         this.currencies = new Dictionary<string, NamedIconData>();
@@ -59,6 +56,7 @@ class Game
         this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
         this.modifiers = new HashSet<Modifier>();
+        this.equipmentManager = new EquipmentManager();
     }
 
     public Game(string ResourcePath)
@@ -118,16 +116,6 @@ class Game
             locations.Add(location);
         }
         this.locations = locations;
-        Dictionary<string, Equipment> equipment = new Dictionary<string, Equipment>();
-        TextAsset[] jsonFilesEquipment = Resources.LoadAll<TextAsset>(ResourcePath + "/Equipment/");
-        foreach (TextAsset jsonFile in jsonFilesEquipment)
-        {
-            JObject jsonObject = JObject.Parse(jsonFile.text);
-            Equipment equipmentItem = new Equipment(jsonObject);
-            equipment.Add(equipmentItem.GetID(), equipmentItem);
-        }
-        this.equipment = equipment;
-        this.startingEquipment = index["startingEquipment"]!.ToObject<List<string>>() ?? new List<string>();
         this.player = new Player();
 
         this.remainingRounds = 4;
@@ -139,6 +127,7 @@ class Game
         this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
         this.modifiers = new HashSet<Modifier>();
+        this.equipmentManager = new EquipmentManager(ResourcePath, index["equipment"] as JObject);
     }
 
     public Player GetPlayer()
@@ -172,14 +161,7 @@ class Game
 
     public void StartGame()
     {
-        // TODO: Check if equipment screen should be shown and if so, show it
-        // Skip screen if no additional equipment is unlocked and
-        // all starting equipment can be equipped simultaneously
-        foreach (string equipmentID in this.startingEquipment)
-        {
-            equipment[equipmentID].ApplyEffects(this.player);
-        }
-        StartRound();
+        this.equipmentManager.HandlePreparation(StartRound);
     }
 
     public void StartRound()
@@ -470,5 +452,10 @@ class Game
             value = modifier.GetValue(value, type, turn);
         }
         return value;
+    }
+
+    public EquipmentManager GetEquipmentManager()
+    {
+        return this.equipmentManager;
     }
 }

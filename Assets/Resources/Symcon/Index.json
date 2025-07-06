@@ -36,13 +36,48 @@
         }
     ],
     "selectActionBackground": "Regular",
+    "equipment": {
+        "equipmentBackground": "Equipment",
+        "gamePreparationBackground": "Regular",
+        "startingEquipment": [
+            "thermalMug",
+            "integratorsOverall",
+            "symconCap",
+            "tablet"
+        ],
+        "selectedColor": 3327148,
+        "slots": [
+            {
+                "id": "head",
+                "width": 0.4,
+                "height": 0.5,
+                "x": 0,
+                "y": 0.5
+            },
+            {
+                "id": "body",
+                "width": 0.4,
+                "height": 0.5,
+                "x": 0.6,
+                "y": 0.5
+            },
+            {
+                "id": "tool",
+                "width": 0.4,
+                "height": 0.5,
+                "x": 0,
+                "y": 0
+            },
+            {
+                "id": "accessory",
+                "width": 0.4,
+                "height": 0.5,
+                "x": 0.6,
+                "y": 0
+            }
+        ]
+    },
     "checkIcon": "Check",
-    "startingEquipment": [
-        "thermalMug",
-        "integratorsOverall",
-        "symconCap",
-        "tablet"
-    ],
     "gameOverDialog": [
         {
             "type": "image",

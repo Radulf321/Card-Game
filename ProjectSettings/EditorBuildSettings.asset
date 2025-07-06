@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TalentTreeScene.unity
     guid: f7bee9cca020f4f46a9997d6ee11a400
+  - enabled: 1
+    path: Assets/Scenes/GamePreparationScene.unity
+    guid: fb92ff7323fb7f047b9aff3804d43f51
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 23fde41f1e5ed6e478b77ecaf9421ac0, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: ddbcc107deb107f46b570f4dd6ff2e2e, type: 2}

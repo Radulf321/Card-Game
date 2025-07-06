@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 public class Equipment
@@ -43,5 +44,41 @@ public class Equipment
     public string GetID()
     {
         return id;
+    }
+
+    public string GetSlot()
+    {
+        return slot;
+    }
+
+    public string GetIconPath()
+    {
+        return Game.Instance.GetResourcePath() + "/Graphics/Equipment/" + this.iconPath;
+    }
+
+    public List<Card> GetCards()
+    {
+        List<Card> cards = new List<Card>();
+        foreach (EquipmentEffect effect in effects)
+        {
+            if (effect is CardsEquipmentEffect cardEffect)
+            {
+                cards.AddRange(cardEffect.GetCards());
+            }
+        }
+        return cards;
+    }
+
+    public async Task<string> GetOtherEffectText()
+    {
+        List<string> effectTexts = new List<string>();
+        foreach (EquipmentEffect effect in effects)
+        {
+            if (!(effect is CardsEquipmentEffect))
+            {
+                effectTexts.Add(await effect.GetCaption());
+            }
+        }
+        return string.Join(", ", effectTexts);
     }
 }

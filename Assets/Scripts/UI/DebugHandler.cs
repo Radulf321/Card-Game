@@ -90,6 +90,12 @@ public class DebugHandler : MonoBehaviour
         FadeHandler.Instance!.LoadScene("TalentTreeScene");
     }
 
+    public void startEquipment()
+    {
+        Game game = new Game("Symcon");
+        FadeHandler.Instance!.LoadScene("GamePreparationScene");
+    }
+
     public void resetPlayerPreferences()
     {
         PlayerPrefs.DeleteAll();
