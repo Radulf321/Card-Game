@@ -6,6 +6,11 @@
     },
     "slot": "head",
     "icon": "GeekGlasses",
+    "requirements": [
+        {
+            "type": "unlock"
+        }
+    ],
     "effects": [
         {
             "type": "cards",

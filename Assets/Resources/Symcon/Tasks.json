@@ -1,0 +1,16 @@
+[
+    {
+        "id": "task1",
+        "type": "wins",
+        "amount": 3,
+        "rewards": [
+            {
+                "type": "unlock",
+                "unlock": {
+                    "type": "equipment",
+                    "id": "geekGlasses"
+                }
+            }
+        ]
+    }
+]

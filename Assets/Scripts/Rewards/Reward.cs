@@ -29,6 +29,8 @@ public abstract class Reward
                 return new ExperienceReward(json);
             case "buff":
                 return new BuffReward(json);
+            case "unlock":
+                return new UnlockReward(json);
             default:
                 throw new System.Exception("Reward type not recognized: " + type);
         }

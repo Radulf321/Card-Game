@@ -37,6 +37,7 @@ class Game
     private Dictionary<FlagValidity, FlagDictionary> flagDictionaries;
     private HashSet<Modifier> modifiers;
     private EquipmentManager equipmentManager;
+    private TaskManager taskManager;
 
     public Game()
     {
@@ -57,6 +58,7 @@ class Game
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
         this.modifiers = new HashSet<Modifier>();
         this.equipmentManager = new EquipmentManager();
+        this.taskManager = new TaskManager();
     }
 
     public Game(string ResourcePath)
@@ -127,7 +129,8 @@ class Game
         this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
         this.modifiers = new HashSet<Modifier>();
-        this.equipmentManager = new EquipmentManager(ResourcePath, index["equipment"] as JObject);
+        this.equipmentManager = new EquipmentManager(ResourcePath, (index["equipment"] as JObject)!);
+        this.taskManager = new TaskManager(ResourcePath);
     }
 
     public Player GetPlayer()
@@ -161,6 +164,7 @@ class Game
 
     public void StartGame()
     {
+        this.taskManager.Initialize();
         this.equipmentManager.HandlePreparation(StartRound);
     }
 
@@ -234,6 +238,7 @@ class Game
         {
             _ = DialogHandler.Instance!.StartDialog(this.gameOverDialog, onFinish: () =>
         {
+            this.taskManager.EndGame();
             FadeHandler.Instance!.LoadScene("DebugScene");
         });
         }
@@ -457,5 +462,10 @@ class Game
     public EquipmentManager GetEquipmentManager()
     {
         return this.equipmentManager;
+    }
+
+    public TaskManager GetTaskManager()
+    {
+        return this.taskManager;
     }
 }

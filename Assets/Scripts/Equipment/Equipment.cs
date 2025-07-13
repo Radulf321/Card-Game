@@ -2,21 +2,23 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-public class Equipment
+public class Equipment : IUnlockable
 {
     private string id;
     private string name;
     private string iconPath;
     private string slot;
     private List<EquipmentEffect> effects = new List<EquipmentEffect>();
+    private List<AvailableRequirement> requirements;
 
-    public Equipment(string id, string name, string iconPath, List<EquipmentEffect> effects, string slot)
+    public Equipment(string id, string name, string iconPath, List<EquipmentEffect> effects, string slot, List<AvailableRequirement> requirements)
     {
         this.slot = slot;
         this.id = id;
         this.name = name;
         this.iconPath = iconPath;
         this.effects = effects;
+        this.requirements = requirements;
     }
 
     public Equipment(JObject equipmentData)
@@ -31,6 +33,15 @@ public class Equipment
             effects.Add(EquipmentEffect.FromJson(effectData));
         }
         this.effects = effects;
+        List<AvailableRequirement> requirements = new List<AvailableRequirement>();
+        if (equipmentData["requirements"] is JArray requirementsArray)
+        {
+            foreach (JObject requirementData in requirementsArray)
+            {
+                requirements.Add(AvailableRequirement.FromJson(requirementData, RequirementOrigin.Equipment));
+            }
+        }
+        this.requirements = requirements;
     }
 
     public void ApplyEffects(Player player)
@@ -80,5 +91,23 @@ public class Equipment
             }
         }
         return string.Join(", ", effectTexts);
+    }
+
+    public bool IsInitialEquipment()
+    {
+        return this.requirements.Count == 0;
+    }
+
+    public bool IsAvailable()
+    {
+        foreach (AvailableRequirement requirement in requirements)
+        {
+            if (!requirement.IsAvailable(this))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

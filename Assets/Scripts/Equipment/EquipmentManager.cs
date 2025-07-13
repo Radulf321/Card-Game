@@ -59,21 +59,23 @@ public class SlotData
 public class EquipmentManager
 {
     private Dictionary<string, Equipment> equipment;
-    private List<string> startingEquipment;
     private string gamePreparationBackground;
     private string equipmentBackground;
     private Color selectedColor;
     private List<SlotData> slots;
+    private List<Equipment> unlockedEquipment;
+    private List<Equipment> initialEquipment;
     private Action? onPreparationComplete;
 
     public EquipmentManager()
     {
         this.equipment = new Dictionary<string, Equipment>();
-        this.startingEquipment = new List<string>();
         this.gamePreparationBackground = "";
         this.equipmentBackground = "";
         this.selectedColor = Color.green;
         this.slots = new List<SlotData>();
+        this.unlockedEquipment = new List<Equipment>();
+        this.initialEquipment = new List<Equipment>();
     }
 
     public EquipmentManager(String resourcePath, JObject json)
@@ -81,15 +83,19 @@ public class EquipmentManager
         this.equipmentBackground = json["equipmentBackground"]!.ToString();
         this.gamePreparationBackground = json["gamePreparationBackground"]!.ToString();
         Dictionary<string, Equipment> equipment = new Dictionary<string, Equipment>();
+        List<Equipment> initialEquipment = new List<Equipment>();
         TextAsset[] jsonFilesEquipment = Resources.LoadAll<TextAsset>(resourcePath + "/Equipment/");
         foreach (TextAsset jsonFile in jsonFilesEquipment)
         {
             JObject jsonObject = JObject.Parse(jsonFile.text);
             Equipment equipmentItem = new Equipment(jsonObject);
             equipment.Add(equipmentItem.GetID(), equipmentItem);
+            if (equipmentItem.IsInitialEquipment())
+            {
+                initialEquipment.Add(equipmentItem);
+            }
         }
         this.equipment = equipment;
-        this.startingEquipment = json["startingEquipment"]!.ToObject<List<string>>() ?? new List<string>();
         int rgb = json["selectedColor"]!.ToObject<int>(); // Default to green if not specified
         float r = ((rgb >> 16) & 0xFF) / 255f;
         float g = ((rgb >> 8) & 0xFF) / 255f;
@@ -102,15 +108,41 @@ public class EquipmentManager
             slots.Add(slotData);
         }
         this.slots = slots;
+        this.unlockedEquipment = new List<Equipment>();
+        this.initialEquipment = initialEquipment;
     }
 
     public void HandlePreparation(Action afterPreparation)
     {
         this.onPreparationComplete = afterPreparation;
-        // TODO: Check if equipment screen should be shown and if so, show it
+
         // Skip screen if no additional equipment is unlocked and
         // all starting equipment can be equipped simultaneously
-        
+        if (this.unlockedEquipment.Count == 0)
+        {
+            bool skipPreparation = true;
+            List<string> takenSlots = new List<string>();
+            foreach (Equipment equipment in this.initialEquipment)
+            {
+                string slot = equipment.GetSlot();
+                if (!takenSlots.Contains(slot))
+                {
+                    takenSlots.Add(slot);
+                }
+                else
+                {
+                    skipPreparation = false;
+                    break;
+                }
+            }
+            if (skipPreparation)
+            {
+                this.ConfirmPreparation(this.initialEquipment);
+                return;
+            }
+        }
+
+        // Otherwise, load the game preparation scene
         FadeHandler.Instance!.LoadScene("GamePreparationScene");
     }
 
@@ -164,5 +196,24 @@ public class EquipmentManager
         }
         this.onPreparationComplete?.Invoke();
         this.onPreparationComplete = null;
+    }
+
+    public bool IsEquipmentUnlocked(string equipmentID)
+    {
+        return this.unlockedEquipment.Exists(e => e.GetID() == equipmentID);
+    }
+    
+    public void UnlockEquipment(string equipmentID)
+    {
+        Equipment? equipment = GetEquipment(equipmentID);
+        if (equipment == null)
+        {
+            throw new ArgumentException($"Equipment with ID {equipmentID} does not exist.");
+        }
+
+        if (!this.unlockedEquipment.Contains(equipment))
+        {
+            this.unlockedEquipment.Add(equipment);
+        }
     }
 }
