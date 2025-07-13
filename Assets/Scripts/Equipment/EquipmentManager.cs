@@ -141,7 +141,6 @@ public class EquipmentManager
             if (equipmentItem.GetSlot() == slot)
             {
                 equipmentList.Add(equipmentItem);
-                UnityEngine.Debug.Log($"Found equipment for slot {slot}: {equipmentItem.GetID()}");
             }
         }
         return equipmentList;
