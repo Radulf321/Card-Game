@@ -168,7 +168,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          androidVersionCode: 5
+          androidVersionCode: 6
           targetPlatform: Android
           versioning: Custom
           version: ${{ needs.create-version.outputs.new_version }} # Use the new version from the previous job
