@@ -231,7 +231,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.RELEASE_VERSION }} # Use the same tag name as created above
+          tag_name: v${{ env.RELEASE_VERSION }} # Use the same tag name as created above
           name: Release ${{ env.RELEASE_VERSION }}
           body: |
             ## Release Notes - v${{ env.RELEASE_VERSION }}
