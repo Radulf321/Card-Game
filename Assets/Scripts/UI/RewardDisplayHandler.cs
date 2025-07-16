@@ -5,8 +5,9 @@ using TMPro;
 #nullable enable
 public class RewardDisplayHandler : MonoBehaviour, IViewUpdater
 {
-    Reward? reward;
+    private Reward? reward;
     private bool shouldUpdate = false;
+    private Color? textColor;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,7 +35,12 @@ public class RewardDisplayHandler : MonoBehaviour, IViewUpdater
                 transform.Find("CardReward").gameObject.SetActive(false);
                 Transform spriteTransform = transform.Find("SpriteReward");
                 spriteTransform.Find("Image").GetComponent<Image>().sprite = reward.GetSprite();
-                AsyncHelper.UpdateTextFromTask(spriteTransform.Find("Text").GetComponent<TextMeshProUGUI>(), reward.GetCaption());
+                TextMeshProUGUI text = spriteTransform.Find("Text").GetComponent<TextMeshProUGUI>();
+                AsyncHelper.UpdateTextFromTask(text, reward.GetCaption());
+                if (this.textColor != null)
+                {
+                    text.color = this.textColor.Value;
+                }
                 spriteTransform.gameObject.SetActive(true);
 
             }
@@ -51,6 +57,12 @@ public class RewardDisplayHandler : MonoBehaviour, IViewUpdater
     public void SetReward(Reward reward)
     {
         this.reward = reward;
+        updateView();
+    }
+
+    public void SetTextColor(Color? color)
+    {
+        this.textColor = color;
         updateView();
     }
 

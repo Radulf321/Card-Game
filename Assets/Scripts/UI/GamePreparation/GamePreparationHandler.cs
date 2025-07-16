@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 #nullable enable
@@ -30,6 +31,8 @@ public class GamePreparationHandler : MonoBehaviour
             selectionRect.anchorMax = new Vector2(slot.GetX() + slot.GetWidth(), slot.GetY() + slot.GetHeight());
             equipmentSelectionHandlers.Add(selectionHandler);
         }
+
+        UpdateTasks(equipmentArea.Find("TaskInfo"));
     }
 
     // Update is called once per frame
@@ -49,5 +52,25 @@ public class GamePreparationHandler : MonoBehaviour
             }
         }
         Game.Instance.GetEquipmentManager().ConfirmPreparation(selectedEquipment);
+    }
+
+    private async void UpdateTasks(Transform taskInfo)
+    {
+        TMPro.TextMeshProUGUI taskText = taskInfo.GetComponent<TMPro.TextMeshProUGUI>();
+        taskText.text = "";
+        List<string> taskDescriptions = new List<string>();
+        foreach (GameTask task in Game.Instance.GetTaskManager().GetActiveTasks())
+        {
+            taskDescriptions.Add("- " + (await task.GetDescription()));
+        }
+
+        if (taskDescriptions.Count > 0)
+        {
+            taskText.text = string.Join("\n", taskDescriptions);
+        }
+        else
+        {
+            taskText.text = await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("TaskStrings", "NoTasks"));
+        }
     }
 }

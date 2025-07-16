@@ -65,6 +65,19 @@ MonoBehaviour:
     m_Localized: Continue
     m_Metadata:
       m_Items: []
+  - m_Id: 23571719105847296
+    m_Localized: Final Statistics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23572230261481472
+    m_Localized: Back to Main Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24290181314813952
+    m_Localized: 'Won combats: {amount}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543859698663637
   references:
     version: 2
     RefIds:
@@ -75,3 +88,4 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 126060634112
         - id: 1417602409472000
+        - id: 24290181314813952

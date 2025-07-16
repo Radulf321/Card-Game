@@ -77,6 +77,10 @@
             }
         ]
     },
+    "gameEnd": {
+        "statisticsBackground": "Equipment",
+        "gameEndBackground": "Regular"
+    },
     "checkIcon": "Check",
     "gameOverDialog": [
         {

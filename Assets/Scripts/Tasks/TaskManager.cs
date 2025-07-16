@@ -11,6 +11,8 @@ public class TaskManager
 
     private List<GameTask> tasks;
     private List<GameTask> activeTasks;
+    private string statisticsBackground;
+    private string gameEndBackground;
 
     // Statistics relevant for tasks
     private int totalWins;
@@ -20,10 +22,14 @@ public class TaskManager
         totalWins = 0;
         this.tasks = new List<GameTask>();
         this.activeTasks = new List<GameTask>();
+        this.statisticsBackground = "";
+        this.gameEndBackground = "";
     }
 
-    public TaskManager(string resourcePath) : this()
+    public TaskManager(string resourcePath, JObject json) : this()
     {
+        this.statisticsBackground = json["statisticsBackground"]!.ToString();
+        this.gameEndBackground = json["gameEndBackground"]!.ToString();
         JArray tasksData = JArray.Parse(Resources.Load<TextAsset>(resourcePath + "/Tasks").text);
         foreach (JObject taskJson in tasksData)
         {
@@ -69,6 +75,21 @@ public class TaskManager
     public int GetTotalWins()
     {
         return totalWins;
+    }
+
+    public List<GameTask> GetActiveTasks()
+    {
+        return new List<GameTask>(this.activeTasks);
+    }
+
+    public string GetStatisticsBackground()
+    {
+        return Game.Instance.GetResourcePath() + "/Graphics/Backgrounds/" + this.statisticsBackground;
+    }
+
+    public string GetGameEndBackground()
+    {
+        return Game.Instance.GetResourcePath() + "/Graphics/Backgrounds/" + this.gameEndBackground;
     }
 
     private void OnTriggerMessage(TriggerMessage message)

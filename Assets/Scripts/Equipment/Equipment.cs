@@ -80,6 +80,11 @@ public class Equipment : IUnlockable
         return cards;
     }
 
+    public string GetName()
+    {
+        return this.name;
+    }
+
     public async Task<string> GetOtherEffectText()
     {
         List<string> effectTexts = new List<string>();

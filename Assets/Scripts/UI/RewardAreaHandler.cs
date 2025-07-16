@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class RewardAreaHandler : MonoBehaviour, IViewUpdater
 {
     public GameObject? rewardPrefab;
+    public Color textColor = Color.white;
     List<Reward> rewards = new List<Reward>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,7 +33,13 @@ public class RewardAreaHandler : MonoBehaviour, IViewUpdater
             (Reward reward) =>
             {
                 GameObject rewardObject = Instantiate(rewardPrefab!);
-                rewardObject.GetComponent<RewardDisplayHandler>().SetReward(reward);
+                RewardDisplayHandler rewardHandler = rewardObject.GetComponent<RewardDisplayHandler>();
+                rewardHandler.SetTextColor(this.textColor);
+                rewardHandler.SetReward(reward);
+                LayoutElement myLayout = transform.GetComponent<LayoutElement>();
+                LayoutElement rewardLayout = rewardObject.GetComponent<LayoutElement>();
+                rewardLayout.preferredHeight = myLayout.preferredHeight;
+                rewardLayout.flexibleHeight = myLayout.flexibleHeight;
                 return rewardObject;
             },
             (RewardDisplayHandler rewardHandler) =>

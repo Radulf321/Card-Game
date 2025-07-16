@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 public abstract class GameTask
@@ -36,8 +37,6 @@ public abstract class GameTask
         this.rewards = rewards;
     }
 
-    public abstract bool IsCompleted();
-
     public void CollectRewards()
     {
         foreach (Reward reward in this.rewards)
@@ -46,8 +45,28 @@ public abstract class GameTask
         }
     }
 
+    public List<Reward> GetRewards()
+    {
+        return this.rewards;
+    }
+
     public string GetID()
     {
         return this.id;
     }
+
+    public virtual bool IsCompleted()
+    {
+        int? total = this.GetTotal();
+        int? progress = this.GetProgress();
+        if (total == null || progress == null)
+        {
+            throw new System.Exception("Total or progress is null");
+        }
+        return progress >= total;
+    }
+
+    public abstract Task<string> GetDescription();
+    public abstract int? GetProgress();
+    public abstract int? GetTotal();
 }

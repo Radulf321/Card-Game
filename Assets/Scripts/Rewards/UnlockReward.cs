@@ -44,11 +44,37 @@ public class UnlockReward : Reward
 
     public override Task<string> GetCaption()
     {
-        throw new System.NotImplementedException("UnlockReward does not support GetCaption.");
+        switch (this.origin)
+        {
+            case RequirementOrigin.Equipment:
+                return Task.FromResult(Game.Instance.GetEquipmentManager().GetEquipment(this.unlockID).GetName());
+
+            case RequirementOrigin.CombatTarget:
+                throw new System.NotImplementedException("Combat target unlocking is not implemented yet.");
+
+            case RequirementOrigin.Location:
+                throw new System.NotImplementedException("Location unlocking is not implemented yet.");
+
+            default:
+                throw new System.ArgumentException($"Unknown requirement origin: {this.origin}");
+        }
     }
 
     public override Sprite GetSprite()
     {
-        throw new System.NotImplementedException("UnlockReward does not support GetSprite.");
+        switch (this.origin)
+        {
+            case RequirementOrigin.Equipment:
+                return Resources.Load<Sprite>(Game.Instance.GetEquipmentManager().GetEquipment(this.unlockID).GetIconPath());
+
+            case RequirementOrigin.CombatTarget:
+                throw new System.NotImplementedException("Combat target unlocking is not implemented yet.");
+
+            case RequirementOrigin.Location:
+                throw new System.NotImplementedException("Location unlocking is not implemented yet.");
+
+            default:
+                throw new System.ArgumentException($"Unknown requirement origin: {this.origin}");
+        }
     }
 }

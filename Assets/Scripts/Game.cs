@@ -130,7 +130,7 @@ class Game
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
         this.modifiers = new HashSet<Modifier>();
         this.equipmentManager = new EquipmentManager(ResourcePath, (index["equipment"] as JObject)!);
-        this.taskManager = new TaskManager(ResourcePath);
+        this.taskManager = new TaskManager(ResourcePath, (index["gameEnd"] as JObject)!);
     }
 
     public Player GetPlayer()
@@ -239,7 +239,7 @@ class Game
             _ = DialogHandler.Instance!.StartDialog(this.gameOverDialog, onFinish: () =>
         {
             this.taskManager.EndGame();
-            FadeHandler.Instance!.LoadScene("DebugScene");
+            FadeHandler.Instance!.LoadScene("GameEndScene");
         });
         }
         else

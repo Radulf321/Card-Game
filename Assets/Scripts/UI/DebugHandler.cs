@@ -96,6 +96,17 @@ public class DebugHandler : MonoBehaviour
         FadeHandler.Instance!.LoadScene("GamePreparationScene");
     }
 
+    public void startEndGame()
+    {
+        Game game = new Game("Symcon");
+        game.GetTaskManager().Initialize();
+        for (int i = 0; i < 3; i++)
+        {
+            game.SendTriggerMessage(new TriggerMessage(TriggerType.EndCombat, new TriggerMessageData(success: true)));
+        }
+        FadeHandler.Instance!.LoadScene("GameEndScene");
+    }
+
     public void resetPlayerPreferences()
     {
         PlayerPrefs.DeleteAll();
