@@ -11,14 +11,16 @@ public class UnlockAvailableRequirement : AvailableRequirement
 
     public override bool IsAvailable(IUnlockable parent)
     {
+        UnityEngine.Debug.Log($"Unlockable available? {parent.GetID()} - {origin}");
         switch (origin)
         {
             case RequirementOrigin.Equipment:
-                return Game.Instance.GetEquipmentManager().IsEquipmentUnlocked(parent.GetID());;
+                return Game.Instance.GetEquipmentManager().IsEquipmentUnlocked(parent.GetID());
+
             case RequirementOrigin.CombatTarget:
-                throw new NotImplementedException();
             case RequirementOrigin.Location:
-                throw new NotImplementedException();
+                return Game.Instance.GetCharacterManager().IsCharacterUnlocked(parent.GetID());
+
             default:
                 throw new ArgumentException($"Unknown requirement origin: {origin}");
         }

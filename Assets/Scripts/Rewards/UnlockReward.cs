@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 
+#nullable enable
 public class UnlockReward : Reward
 {
     private RequirementOrigin origin;
@@ -14,7 +14,7 @@ public class UnlockReward : Reward
         this.unlockID = unlockID;
     }
 
-    public UnlockReward(JObject rewardData) : this(origin: EnumHelper.ParseEnum<RequirementOrigin>(rewardData["unlock"]["type"].ToString()).Value, unlockID: rewardData["unlock"]["id"].ToString())
+    public UnlockReward(JObject rewardData) : this(origin: EnumHelper.ParseEnum<RequirementOrigin>(rewardData["unlock"]!["type"]!.ToString())!.Value, unlockID: rewardData["unlock"]!["id"]!.ToString())
     {
     }
 
@@ -27,10 +27,9 @@ public class UnlockReward : Reward
                 break;
 
             case RequirementOrigin.CombatTarget:
-                throw new System.NotImplementedException("Combat target unlocking is not implemented yet.");
-
             case RequirementOrigin.Location:
-                throw new System.NotImplementedException("Location unlocking is not implemented yet.");
+                Game.Instance.GetCharacterManager().UnlockCharacter(this.unlockID);
+                break;
 
             default:
                 throw new System.ArgumentException($"Unknown requirement origin: {this.origin}");
@@ -47,13 +46,11 @@ public class UnlockReward : Reward
         switch (this.origin)
         {
             case RequirementOrigin.Equipment:
-                return Task.FromResult(Game.Instance.GetEquipmentManager().GetEquipment(this.unlockID).GetName());
+                return Task.FromResult(Game.Instance.GetEquipmentManager().GetEquipment(this.unlockID)?.GetName() ?? "Unlocked Equipment does not exist");
 
             case RequirementOrigin.CombatTarget:
-                throw new System.NotImplementedException("Combat target unlocking is not implemented yet.");
-
             case RequirementOrigin.Location:
-                throw new System.NotImplementedException("Location unlocking is not implemented yet.");
+                return Task.FromResult(Game.Instance.GetCharacterManager().GetActionCharacter(this.unlockID)?.GetName() ?? "Unlocked Character does not exist");
 
             default:
                 throw new System.ArgumentException($"Unknown requirement origin: {this.origin}");
@@ -65,13 +62,11 @@ public class UnlockReward : Reward
         switch (this.origin)
         {
             case RequirementOrigin.Equipment:
-                return Resources.Load<Sprite>(Game.Instance.GetEquipmentManager().GetEquipment(this.unlockID).GetIconPath());
+                return Resources.Load<Sprite>(Game.Instance.GetEquipmentManager().GetEquipment(this.unlockID)!.GetIconPath());
 
             case RequirementOrigin.CombatTarget:
-                throw new System.NotImplementedException("Combat target unlocking is not implemented yet.");
-
             case RequirementOrigin.Location:
-                throw new System.NotImplementedException("Location unlocking is not implemented yet.");
+                return Resources.Load<Sprite>(Game.Instance.GetCharacterManager().GetActionCharacter(this.unlockID)!.GetDialogOption()!.GetImagePath());
 
             default:
                 throw new System.ArgumentException($"Unknown requirement origin: {this.origin}");

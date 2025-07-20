@@ -1,20 +1,24 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
-public abstract class ActionCharacter {
+public abstract class ActionCharacter : IUnlockable {
     public static string CurrentTargetKey = "CurrentTarget";
 
     private string id;
     private string? actionTitle;
     private string actionDescription;
     private string actionImagePath;
+    private List<AvailableRequirement> requirements;
 
-    public ActionCharacter(string id) {
+    public ActionCharacter(string id)
+    {
         this.id = id;
         this.actionTitle = null;
         this.actionDescription = "Not initialized";
         this.actionImagePath = "Placeholder";
+        this.requirements = new List<AvailableRequirement>();
     }
 
     public ActionCharacter(JObject jsonObject)
@@ -33,6 +37,7 @@ public abstract class ActionCharacter {
             this.actionDescription = "Not initialized";
             this.actionImagePath = "Placeholder";
         }
+        this.requirements = UnlockableExtensions.GetRequirementsFromJson(jsonObject, (this is CombatTarget) ? RequirementOrigin.CombatTarget : RequirementOrigin.Location);
     }
 
     public DialogOption? GetDialogOption() {
@@ -55,6 +60,11 @@ public abstract class ActionCharacter {
     public string GetID()
     {
         return this.id;
+    }
+
+    public List<AvailableRequirement> GetRequirements()
+    {
+        return this.requirements;
     }
 
     abstract public void ExecuteAction();
