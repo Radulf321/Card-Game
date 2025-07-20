@@ -33,6 +33,10 @@ public abstract class AmountCalculation
                         return new LinearAmountCalculation(jsonObject);
                     case "constant":
                         return new ConstantAmountCalculation(jsonObject);
+                    case "random":
+                        return new RandomAmountCalculation(jsonObject);
+                    case "polynom":
+                        return new PolynomialAmountCalculation(jsonObject);
                     default:
                         throw new System.Exception("Invalid amount calculation type: " + type);
                 }
