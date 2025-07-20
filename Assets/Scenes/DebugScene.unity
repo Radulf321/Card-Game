@@ -2468,6 +2468,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: RewardDisplayArea
       objectReference: {fileID: 0}
+    - target: {fileID: 6618626490020219955, guid: 7dda27ee7ecea954da0ac3378cde5a5e, type: 3}
+      propertyPath: textColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618626490020219955, guid: 7dda27ee7ecea954da0ac3378cde5a5e, type: 3}
+      propertyPath: textColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618626490020219955, guid: 7dda27ee7ecea954da0ac3378cde5a5e, type: 3}
+      propertyPath: textColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618626490020219955, guid: 7dda27ee7ecea954da0ac3378cde5a5e, type: 3}
+      propertyPath: textColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
