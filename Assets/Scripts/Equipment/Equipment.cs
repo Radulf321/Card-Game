@@ -33,15 +33,7 @@ public class Equipment : IUnlockable
             effects.Add(EquipmentEffect.FromJson(effectData));
         }
         this.effects = effects;
-        List<AvailableRequirement> requirements = new List<AvailableRequirement>();
-        if (equipmentData["requirements"] is JArray requirementsArray)
-        {
-            foreach (JObject requirementData in requirementsArray)
-            {
-                requirements.Add(AvailableRequirement.FromJson(requirementData, RequirementOrigin.Equipment));
-            }
-        }
-        this.requirements = requirements;
+        this.requirements = UnlockableExtensions.GetRequirementsFromJson(equipmentData, RequirementOrigin.Equipment);
     }
 
     public void ApplyEffects(Player player)
@@ -103,16 +95,8 @@ public class Equipment : IUnlockable
         return this.requirements.Count == 0;
     }
 
-    public bool IsAvailable()
+    public List<AvailableRequirement> GetRequirements()
     {
-        foreach (AvailableRequirement requirement in requirements)
-        {
-            if (!requirement.IsAvailable(this))
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return this.requirements;
     }
 }
