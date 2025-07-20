@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -264,17 +265,18 @@ public class CombatTarget : ActionCharacter
     private List<Requirement> GetRandomRequirements(int turn)
     {
         int numberOfRequirements = this.numberOfRequirementsCalculation.GetValue(turn);
-        List<int> requirementIndexes = new List<int>();
+        List<RequirementFactory> usedFactories = new List<RequirementFactory>();
         List<Requirement> requirements = new List<Requirement>();
         for (int i = 0; i < numberOfRequirements; i++)
         {
+            List<RequirementFactory> validRequirements = this.requirementFactories.Where(factory => factory.IsValid(i, turn)).ToList();
             int random;
             do
             {
-                random = UnityEngine.Random.Range(0, this.requirementFactories.Count);
-            } while (requirementIndexes.Contains(random));
-            requirementIndexes.Add(random);
-            requirements.Add(this.requirementFactories[random].CreateRequirement(turn));
+                random = UnityEngine.Random.Range(0, validRequirements.Count);
+            } while (usedFactories.Contains(validRequirements[random]));
+            usedFactories.Add(validRequirements[random]);
+            requirements.Add(validRequirements[random].CreateRequirement(turn));
         }
 
         return requirements;
