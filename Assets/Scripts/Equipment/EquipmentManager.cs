@@ -170,7 +170,7 @@ public class EquipmentManager
         List<Equipment> equipmentList = new List<Equipment>();
         foreach (Equipment equipmentItem in this.equipment.Values)
         {
-            if (equipmentItem.GetSlot() == slot)
+            if ((equipmentItem.GetSlot() == slot) && equipmentItem.IsAvailable())
             {
                 equipmentList.Add(equipmentItem);
             }
