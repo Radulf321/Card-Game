@@ -10,38 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: TaskStrings_en
+  m_Name: RequirementStrings_en
   m_EditorClassIdentifier: 
   m_LocaleId:
     m_Code: en
-  m_SharedData: {fileID: 11400000, guid: 4d8ab01eb0daaca4b8e2b54e9cd0e292, type: 2}
+  m_SharedData: {fileID: 11400000, guid: 82c697299629ea8418586a3201c4177e, type: 2}
   m_Metadata:
     m_Items:
-    - rid: 2631328474858782721
+    - rid: 2631328602047381584
   m_TableData:
-  - m_Id: 12244000768
-    m_Localized: Win {amount} combats
+  - m_Id: 5759606784
+    m_Localized: '{comparison:choose(AtLeast|Maximum):|Maximum }{name}: {current}/{amount}'
     m_Metadata:
       m_Items:
-      - rid: 2631328474858782721
-  - m_Id: 1352521261056
-    m_Localized: Active Tasks
+      - rid: 2631328602047381584
+  - m_Id: 1616271679488
+    m_Localized: 'Total: {current}/{amount}'
     m_Metadata:
-      m_Items: []
-  - m_Id: 3710038876160
-    m_Localized: All Tasks fulfilled
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2032360292655104
-    m_Localized: Finish a game
-    m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 2631328602047381584
   references:
     version: 2
     RefIds:
-    - rid: 2631328474858782721
+    - rid: 2631328602047381584
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries: 
         m_SharedEntries:
-        - id: 12244000768
+        - id: 5759606784
+        - id: 1616271679488

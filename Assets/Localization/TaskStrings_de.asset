@@ -32,6 +32,10 @@ MonoBehaviour:
     m_Localized: "Alle Aufgaben erf\xFCllt"
     m_Metadata:
       m_Items: []
+  - m_Id: 2032360292655104
+    m_Localized: "Schlie\xDFe ein Spiel ab"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
