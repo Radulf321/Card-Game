@@ -1,5 +1,9 @@
 {
     "id": "singleFamilyHome",
+    "name": {
+        "en": "Frank",
+        "de": "Frank"
+    },
     "action": {
         "title": {
             "en": "Work at Frank's",

@@ -1,0 +1,171 @@
+{
+    "id": "realEstateCompany",
+    "name": {
+        "en": "Tailor Estate",
+        "de": "Schneider Immobilien"
+    },
+    "action": {
+        "title": {
+            "en": "Work for Tailor Estate",
+            "de": "Arbeiten für Schneider Immobilien"
+        },
+        "description": {
+            "en": "Prepare a sample project for Tailor Estate to prove that you can work for them on a grand scale. Take your time for this project and be ready to show your Knowhow.",
+            "de": "Bereite ein exemplarisches Projekt für Schneider Immobilen vor und zeige, dass du im großen Stil für sie arbeiten kannst. Lass dir bei diesem Projekt Zeit und zeige dein Knowhow."
+        },
+        "image": "RealEstateCompany"
+    },
+    "requirements": [
+        {
+            "type": "unlock"
+        }
+    ],
+    "combat": {
+        "background": "RealEstateCompany",
+        "numberOfTurns": 10,
+        "turnsWithRequirement": {
+            "type": "linear",
+            "base": 1.5,
+            "rate": 2.5
+        },
+        "numberOfRequirements": {
+            "type": "random",
+            "min": 1,
+            "max": 2
+        },
+        "requirements": [
+            {
+                "type": "goal",
+                "goal": "knowhow",
+                "index": 0,
+                "amount": {
+                    "type": "polynom",
+                    "coefficients": [1, 0.3, 0.2]
+                }
+            },
+            {
+                "type": "total",
+                "index": 0,
+                "amount": {
+                    "type": "polynom",
+                    "coefficients": [2, 0.4, 0.3]
+                }
+            },
+            {
+                "type": "goal",
+                "goal": "creativity",
+                "index": 1,
+                "round": {
+                    "min": 5
+                },
+                "amount": {
+                    "type": "linear",
+                    "base": -3,
+                    "rate": 1
+                }
+            },
+            {
+                "type": "goal",
+                "goal": "creativity",
+                "comparison": "maximum",
+                "index": 1,
+                "levelIncrement": 1,
+                "round": {
+                    "max": 4
+                },
+                "amount": {
+                    "type": "linear",
+                    "base": 1,
+                    "rate": 1
+                }
+            }
+        ],
+        "win": {
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "RealEstateCompany",
+                    "left": "Player"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Looking good! So, what exactly should I focus on?",
+                        "de": "Du: Sieht gut aus! Worauf genau soll ich den Fokus legen?"
+                    }
+                },
+                {
+                    "type": "select",
+                    "title": {
+                        "en": "What should I focus on?",
+                        "de": "Worauf soll ich mich konzentrieren?"
+                    },
+                    "options": [
+                        {
+                            "title": {
+                                "en": "Let's add some nice comfort features. (+1 <sprite name=\"Comfort\">)",
+                                "de": "Zeit für ein paar schöne Komfortfunktionen. (+1 <sprite name=\"Comfort\">)"
+                            },
+                            "dialog": {
+                                "type": "reward",
+                                "rewards": [
+                                    {
+                                        "type": "experience",
+                                        "experienceType": "comfort",
+                                        "amount": 1
+                                    },
+                                    {
+                                        "type": "currency",
+                                        "currency": "cash",
+                                        "amount": {
+                                            "type": "linear",
+                                            "base": 50,
+                                            "rate": 10,
+                                            "input": "targetLevel"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "lose": {
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "RealEstateCompany",
+                    "left": "Player"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: No, that didn't work... But how do I configure that instance?",
+                        "de": "Du: Nein, das funktioniert nicht... Wie konfiguriere ich die Instanz denn jetzt?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I guess I should watch a couple of Tutorial Videos before continuing here....",
+                        "de": "Du: Ich sollte wohl noch ein paar Tutorialvideos anschauen bevor ich hier weitermache..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You lose an additional <sprite name=\"Rounds\">",
+                        "de": "Du verlierst einen zusätzlichen <sprite name=\"Rounds\">"
+                    }
+                }
+            ]
+        }
+    },
+    "talentBackground": "RealEstateCompany",
+    "talents": [
+    ]
+}
