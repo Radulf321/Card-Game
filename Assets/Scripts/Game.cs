@@ -14,8 +14,6 @@ class Game
 
     private Player player;
     private int remainingRounds;
-    private List<CombatTarget> combatTargets;
-    private List<Location> locations;
 
     private Dictionary<string, string> goalNames;
 
@@ -38,13 +36,12 @@ class Game
     private HashSet<Modifier> modifiers;
     private EquipmentManager equipmentManager;
     private TaskManager taskManager;
+    private CharacterManager characterManager;
 
     public Game()
     {
         this.player = new Player();
         this.remainingRounds = 0;
-        this.combatTargets = new List<CombatTarget>();
-        this.locations = new List<Location>();
         this.goalNames = new Dictionary<string, string>();
         this.experienceTypes = new Dictionary<string, NamedIconData>();
         this.currencies = new Dictionary<string, NamedIconData>();
@@ -59,6 +56,7 @@ class Game
         this.modifiers = new HashSet<Modifier>();
         this.equipmentManager = new EquipmentManager();
         this.taskManager = new TaskManager();
+        this.characterManager = new CharacterManager();
     }
 
     public Game(string ResourcePath)
@@ -100,24 +98,6 @@ class Game
         this.icons = icons;
 
         this.cardLibrary = new CardLibrary(ResourcePath + "/Cards/");
-        List<CombatTarget> combatTargets = new List<CombatTarget>();
-        TextAsset[] jsonFilesCombatTarget = Resources.LoadAll<TextAsset>(ResourcePath + "/CombatTargets/");
-        foreach (TextAsset jsonFile in jsonFilesCombatTarget)
-        {
-            JObject jsonObject = JObject.Parse(jsonFile.text);
-            CombatTarget combatTarget = new CombatTarget(jsonObject);
-            combatTargets.Add(combatTarget);
-        }
-        this.combatTargets = combatTargets;
-        List<Location> locations = new List<Location>();
-        TextAsset[] jsonFilesLocations = Resources.LoadAll<TextAsset>(ResourcePath + "/Locations/");
-        foreach (TextAsset jsonFile in jsonFilesLocations)
-        {
-            JObject jsonObject = JObject.Parse(jsonFile.text);
-            Location location = new Location(jsonObject);
-            locations.Add(location);
-        }
-        this.locations = locations;
         this.player = new Player();
 
         this.remainingRounds = 4;
@@ -131,6 +111,7 @@ class Game
         this.modifiers = new HashSet<Modifier>();
         this.equipmentManager = new EquipmentManager(ResourcePath, (index["equipment"] as JObject)!);
         this.taskManager = new TaskManager(ResourcePath, (index["gameEnd"] as JObject)!);
+        this.characterManager = new CharacterManager(ResourcePath);
     }
 
     public Player GetPlayer()
@@ -175,7 +156,7 @@ class Game
             this.tutorialDone = true;
             PlayerPrefs.SetInt(Game.tutorialDoneKey, 1);
             PlayerPrefs.Save();
-            CombatTarget? tutorialTarget = combatTargets.Find(target => target.GetTargetType() == TargetType.Tutorial);
+            CombatTarget? tutorialTarget = characterManager.GetTutorialTarget();
             if (tutorialTarget != null)
             {
                 tutorialTarget.ExecuteAction();
@@ -191,42 +172,11 @@ class Game
         {
             selectActionText = "Select an action";
         }
-        List<DialogOption> options = new List<DialogOption>();
-        List<List<DialogOption>> dialogOptionsByType = new List<List<DialogOption>>();
-        foreach (IEnumerable<ActionCharacter> actionCharacters in new List<IEnumerable<ActionCharacter>>() { this.combatTargets.Cast<ActionCharacter>(), this.locations.Cast<ActionCharacter>() })
-        {
-            List<DialogOption> dialogOptionsForType = new List<DialogOption>();
-            foreach (ActionCharacter actionCharacter in actionCharacters)
-            {
-                DialogOption? dialogOption = actionCharacter.GetDialogOption();
-                if (dialogOption != null)
-                {
-                    dialogOptionsForType.Add(dialogOption);
-                }
-            }
-            if (dialogOptionsForType.Count > 0)
-            {
-                int index = UnityEngine.Random.Range(0, dialogOptionsForType.Count);
-                options.Add(dialogOptionsForType[index]);
-                dialogOptionsForType.RemoveAt(index);
-            }
-            if (dialogOptionsForType.Count > 0)
-            {
-                dialogOptionsByType.Add(dialogOptionsForType);
-            }
-        }
 
-        if (dialogOptionsByType.Count > 0)
-        {
-            int typeIndex = UnityEngine.Random.Range(0, dialogOptionsByType.Count);
-            int optionIndex = UnityEngine.Random.Range(0, dialogOptionsByType[typeIndex].Count);
-            options.Insert(1, dialogOptionsByType[typeIndex][optionIndex]);
-        }
-
-        _ = DialogHandler.Instance!.StartDialog(new DialogImage(new DialogSelect(selectActionText, options, SelectType.Cards, true), this.selectActionBackground), onFinish: () =>
+        _ = DialogHandler.Instance!.StartDialog(new DialogImage(new DialogSelect(selectActionText, characterManager.GetRoundOptions(), SelectType.Cards, true), this.selectActionBackground), onFinish: () =>
         {
             string targetID = GetFlag<string>(FlagValidity.Dialog, CombatTarget.CurrentTargetKey)!;
-            GetActionCharacter(targetID)?.ExecuteAction();
+            characterManager.GetActionCharacter(targetID)?.ExecuteAction();
         });
     }
 
@@ -375,43 +325,6 @@ class Game
         }
     }
 
-    public CombatTarget? GetCombatTarget(string id)
-    {
-        foreach (CombatTarget target in combatTargets)
-        {
-            if (target.GetID() == id)
-            {
-                return target;
-            }
-        }
-        return null;
-    }
-
-    public Location? GetLocation(string id)
-    {
-        foreach (Location location in locations)
-        {
-            if (location.GetID() == id)
-            {
-                return location;
-            }
-        }
-        return null;
-    }
-
-    public ActionCharacter? GetActionCharacter(string id)
-    {
-        CombatTarget? combatTarget = GetCombatTarget(id);
-        if (combatTarget != null)
-        {
-            return combatTarget;
-        }
-        else
-        {
-            return GetLocation(id);
-        }
-    }
-
     public void SetFlag(FlagValidity validity, string key, object value)
     {
         if (!flagDictionaries.ContainsKey(validity))
@@ -467,5 +380,10 @@ class Game
     public TaskManager GetTaskManager()
     {
         return this.taskManager;
+    }
+
+    public CharacterManager GetCharacterManager()
+    {
+        return this.characterManager;
     }
 }

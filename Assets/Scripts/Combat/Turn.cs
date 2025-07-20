@@ -16,7 +16,7 @@ public class Turn
     {
         foreach (Requirement requirement in requirements)
         {
-            if (!requirement.isFulfilled())
+            if (!requirement.IsFulfilled())
             {
                 return false;
             }

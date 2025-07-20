@@ -11,7 +11,8 @@ public abstract class GameTask
         {
             case "wins":
                 return new WinsTask(json);
-            // Add other task types here
+            case "finish":
+                return new FinishTask(json);
             default:
                 throw new System.Exception($"Unknown task type: {type}");
         }
@@ -66,7 +67,15 @@ public abstract class GameTask
         return progress >= total;
     }
 
+    public virtual int? GetProgress()
+    {
+        return null;
+    }
+
+    public virtual int? GetTotal()
+    {
+        return null;
+    }
+
     public abstract Task<string> GetDescription();
-    public abstract int? GetProgress();
-    public abstract int? GetTotal();
 }

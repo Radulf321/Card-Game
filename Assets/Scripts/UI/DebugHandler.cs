@@ -83,7 +83,7 @@ public class DebugHandler : MonoBehaviour
     public void startTalent()
     {
         Game game = new Game("Symcon");
-        CombatTarget combatTarget = game.GetCombatTarget("singleFamilyHome");
+        CombatTarget combatTarget = game.GetCharacterManager().GetCombatTarget("singleFamilyHome");
         game.SetCurrentCombatTarget(combatTarget);
         combatTarget.GetTalent("introduction")?.Purchase(() => { });
         combatTarget.IncreaseExperience("comfort", 10);

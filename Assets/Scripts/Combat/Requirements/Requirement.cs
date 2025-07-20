@@ -1,5 +1,7 @@
+using System.Threading.Tasks;
+
 abstract public class Requirement
 {
-    abstract public bool isFulfilled();
-    abstract public string toString();
+    abstract public bool IsFulfilled();
+    abstract public Task<string> GetDescription();
 }

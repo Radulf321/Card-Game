@@ -113,7 +113,11 @@ public class TurnHandler : MonoBehaviour, IViewUpdater
 
     private async void updateText(TextMeshProUGUI text)
     {
-        List<string> texts = turn.getRequirements().Select(req => req.toString()).ToList();
+        List<string> texts = new List<string>();
+        foreach (Requirement requirement in turn.getRequirements())
+        {
+            texts.Add(await requirement.GetDescription());
+        }
         foreach (GameEffect effect in turn.getEffects())
         {
             texts.Add(await effect.getTurnEffectDescription());
