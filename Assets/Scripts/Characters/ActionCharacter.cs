@@ -7,6 +7,7 @@ public abstract class ActionCharacter : IUnlockable {
     public static string CurrentTargetKey = "CurrentTarget";
 
     private string id;
+    private string name;
     private string? actionTitle;
     private string actionDescription;
     private string actionImagePath;
@@ -15,6 +16,7 @@ public abstract class ActionCharacter : IUnlockable {
     public ActionCharacter(string id)
     {
         this.id = id;
+        this.name = "Not initialized";
         this.actionTitle = null;
         this.actionDescription = "Not initialized";
         this.actionImagePath = "Placeholder";
@@ -24,6 +26,7 @@ public abstract class ActionCharacter : IUnlockable {
     public ActionCharacter(JObject jsonObject)
     {
         this.id = jsonObject["id"]!.ToString();
+        this.name = LocalizationHelper.GetLocalizedString(jsonObject["name"] as JObject) ?? "No name defined";
         JObject? action = jsonObject["action"] as JObject;
         if (action != null)
         {
@@ -60,6 +63,11 @@ public abstract class ActionCharacter : IUnlockable {
     public string GetID()
     {
         return this.id;
+    }
+
+    public string GetName()
+    {
+        return this.name;
     }
 
     public List<AvailableRequirement> GetRequirements()
