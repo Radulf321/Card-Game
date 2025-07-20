@@ -35,7 +35,6 @@ public class TaskOutcomeHandler : MonoBehaviour
 
     public void SetTask(GameTask? task)
     {
-        Debug.Log($"Setting task {task?.GetID()} in TaskOutcomeHandler");
         this.task = task;
         needUpdate = true;
     }
@@ -52,7 +51,6 @@ public class TaskOutcomeHandler : MonoBehaviour
 
     private async Task UpdateDescription()
     {
-        Debug.Log("Updating task description");
         TMPro.TextMeshProUGUI taskDescription = transform.Find("TaskDescription").GetComponent<TMPro.TextMeshProUGUI>();
         taskDescription.text = "";
         if (this.task != null)
