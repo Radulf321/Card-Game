@@ -15,7 +15,7 @@ public class ConstantAmountCalculation : AmountCalculation
         this.value = json["value"]?.ToObject<int>() ?? 0;
     }
 
-    public override int GetValue(int number)
+    public override float GetRawValue(int number)
     {
         return this.value;
     }

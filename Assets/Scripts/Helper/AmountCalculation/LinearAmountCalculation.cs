@@ -4,12 +4,12 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 public class LinearAmountCalculation : AmountCalculation {
-    private int baseValue;
+    private float baseValue;
     private float rate;
     private int? min;
     private int? max;
 
-    public LinearAmountCalculation(int baseValue, float rate, CalculationInput input = CalculationInput.Constant, int? min = null, int? max = null) : base(input)
+    public LinearAmountCalculation(float baseValue, float rate, CalculationInput input = CalculationInput.Constant, int? min = null, int? max = null) : base(input)
     {
         this.baseValue = baseValue;
         this.rate = rate;
@@ -18,14 +18,14 @@ public class LinearAmountCalculation : AmountCalculation {
     }
 
     public LinearAmountCalculation(JObject json) : base(json) {
-        this.baseValue = json["base"]?.ToObject<int>() ?? 0;
+        this.baseValue = json["base"]?.ToObject<float>() ?? 0;
         this.rate = json["rate"]?.ToObject<float>() ?? 0;
         this.min = json["min"]?.ToObject<int>();
         this.max = json["max"]?.ToObject<int>();
     }
 
-    public override int GetValue(int number) {
-        int value = Mathf.FloorToInt(baseValue + rate * number);
+    public override float GetRawValue(int number) {
+        float value = baseValue + rate * number;
         if (min.HasValue && value < min.Value) {
             return min.Value;
         }

@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 #nullable enable
 
@@ -82,5 +83,11 @@ public abstract class AmountCalculation
         return GetValue(inputValue);
     }
 
-    abstract public int GetValue(int number);
+    public int GetValue(int number)
+    {
+        return Mathf.FloorToInt(GetRawValue(number));
+    }
+
+    abstract public float GetRawValue(int number);
+
 }
