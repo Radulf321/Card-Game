@@ -167,5 +167,181 @@
     },
     "talentBackground": "RealEstateCompany",
     "talents": [
+        {
+            "id": "introduction",
+            "title": {
+                "en": "Introduction",
+                "de": "Einführung"
+            },
+            "cost": {},
+            "description": {
+                "en": "First Contact with Tailor Estate",
+                "de": "Erster Kontakt zu Schneider Immobilien"
+            },
+            "image": "RealEstateCompany/Introduction",
+            "rewards": [],
+            "prerequisites": [],
+            "introduction": true,
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "RealEstateCompany",
+                    "left": "Player",
+                    "right": "RealEstateCompany"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: It's a pleasure to meet you in person, sir. I'm Ms. Tanner and I am your contact person to Tailor Estate.",
+                        "de": "Frau Gerber: Es freut mich Sie persönlich kennen zu lernen. Ich bin Frau Gerber und ich bin Ihre Kontaktperson zu Schneider Immobilien."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: The pleasure is all mine. I'm looking forward to many shared projects!",
+                        "de": "Du: Die Freude ist ganz meinerseits. Ich freue mich auf viele gemeinsame Projekte!"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: Now, as you probably know, Tailor Estate's main business is the construction of turnkey residential buildings.",
+                        "de": "Frau Gerber: Nun, wie Sie sicherlich wissen ist das Hauptgeschäft von Schneider Immobilien die Errichtung von schlüsselfertigen Wohngebäuden."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: And in this context, Smart features become more and more relevant and we need to update our portfolio correspondingly.",
+                        "de": "Frau Gerber: Und in diesem Kontext werden intelligente Funktionen immer relevanter und wir müssen unser Portfolio entsprechend erweitern."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: This is where you come into play. You'll get free reign for technology within a sample house.",
+                        "de": "Frau Gerber: Hier kommen Sie ins Spiel. Sie haben freie Hand bei der Techologie in einem Musterhaus."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: Convince us, that you are the right person to advise on and integrate Smart technology for Tailor Estate.",
+                        "de": "Frau Gerber: Überzeugen Sie uns, dass Sie die richtige Person sind um smarte Technologie für Schneider Immobilien zu integrieren und uns zu beraten."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I will. I've got just the right server system to bring all ideas under one roof...",
+                        "de": "Du: Das werde ich. Ich habe da genau das richtige Serversystem parat um alle Ideen unter einen Hut zu bringen..."
+                    }
+                }
+            ]
+        },
+        {
+            "id": "planningWiring",
+            "title": {
+                "en": "Planning Wiring",
+                "de": "Verkabelung planen"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Plan and prepare the wiring for future implementations",
+                "de": "Plane die Verkabelung uns setze sie für kommende Erweiterungen um"
+            },
+            "image": "RealEstateCompany/PlanningWiring",
+            "rewards": [
+                {
+                    "type": "card",
+                    "card": "millingSlots"
+                }
+            ],
+            "prerequisites": [
+                "introduction"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "RealEstateCompany",
+                    "left": "Player",
+                    "right": "RealEstateCompany"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Now, as you can see, I've already began to prepare the wiring. There's electricity, network, and a bus signal for smart devices.",
+                        "de": "Du: Also, wie Sie sehen können habe ich schon mit der Verkabelung angefangen. Wir haben Strom, Netzwerk und einen Signalbus für smarte Geräte."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Thanks to the bus, any desired logic can be programmed later on. A simple example would be to decide which light switch controls which light.",
+                        "de": "Du: Dank das Busses kann jede beliebige Logik später programmiert werden. Ein einfaches Beispiel wäre hier welcher Lichtschalter welches Licht kontrolliert."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: That's pretty complex wiring. Why do we need that data bus? Aren't there many systems available that work wireless?",
+                        "de": "Frau Gerber: Die Verkablung ist ziemlich kopmlex. Warum brauchen wir den Datenbus? Gibt es nicht diverse Systeme, die kabellos funktionieren?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Of course, but wired as always more reliable than wireless. Wireless is a nice option for expansion later on. But since we do wiring anyway, I would highly recommend a wired system.",
+                        "de": "Du: Natürlich, aber Kabel ist immer verlässlicher als kabellos. Kabellos ist eine gute Option für eine spätere Erweiterung. Aber da wir die Verkablung sowieso machen, würde ich definitiv ein kabelgebundenes System empfehlen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: I see. Thank you for the explanation. I will keep my eyes on your project.",
+                        "de": "Frau Gerber: Ich verstehe. Danke für die Erklärung. Ich behalte Ihr Projekt weiter im Auge."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: I see. Thank you for the explanation. I will keep my eyes on your project.",
+                        "de": "Frau Gerber: Ich verstehe. Danke für die Erklärung. Ich behalte Ihr Projekt weiter im Auge."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You can't really read that much into Ms. Tanner's expressions, but you have the feeling you can see the hint of a smile as she says that...",
+                        "de": "Du kannst zwar nicht viel aus Frau Gerbers Mimik lesen, aber du hast das Gefühl dass du ein kurzes Lächeln siehst als sie das sagt..."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "millingSlots"
+                        }
+                    ]
+                }
+            ]
+        }
     ]
 }
