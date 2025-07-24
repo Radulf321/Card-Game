@@ -11,7 +11,6 @@ public class UnlockAvailableRequirement : AvailableRequirement
 
     public override bool IsAvailable(IUnlockable parent)
     {
-        UnityEngine.Debug.Log($"Unlockable available? {parent.GetID()} - {origin}");
         switch (origin)
         {
             case RequirementOrigin.Equipment:

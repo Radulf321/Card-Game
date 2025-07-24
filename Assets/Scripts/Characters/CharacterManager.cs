@@ -121,7 +121,6 @@ public class CharacterManager
 
     public bool IsCharacterUnlocked(string characterID)
     {
-        UnityEngine.Debug.Log($"Character {characterID} unlocked? - {this.unlockedCharacters.Exists(e => e.GetID() == characterID)}");
         return this.unlockedCharacters.Exists(e => e.GetID() == characterID);
     }
 
@@ -146,14 +145,6 @@ public class CharacterManager
 
     private List<CombatTarget> GetAvailableCombatTargets()
     {
-        foreach (ActionCharacter unlockedCharacter in this.unlockedCharacters)
-        {
-            UnityEngine.Debug.Log($"Character unlocked: {unlockedCharacter.GetID()}");
-        }
-        foreach (CombatTarget combatTarget in this.combatTargets)
-        {
-            UnityEngine.Debug.Log($"Checking Target {combatTarget.GetID()}: {combatTarget.IsAvailable()}");
-        }
         return this.combatTargets.Where(combatTarget => combatTarget.IsAvailable()).ToList();
     }
 }
