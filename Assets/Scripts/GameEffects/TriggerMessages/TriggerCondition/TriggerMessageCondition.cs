@@ -5,17 +5,17 @@ public abstract class TriggerMessageCondition
 {
     static public TriggerMessageCondition FromJson(JObject json)
     {
-        switch (json["type"].ToString())
+        switch (json["type"].ToString().ToLower())
         {
             case "addgoal":
                 return new TriggerMessageConditionAddGoal(json);
             case "startturn":
                 return new TriggerMessageConditionStartTurn(json);
-            case "endTurn":
+            case "endturn":
                 return new TriggerMessageConditionEndTurn(json);
             case "talenttree":
                 return new TriggerMessageConditionTalentTree(json);
-            case "drawCards":
+            case "drawcards":
                 return new TriggerMessageConditionDrawCards(json);
             default:
                 throw new System.Exception("Invalid condition type: " + json["type"].ToString());
