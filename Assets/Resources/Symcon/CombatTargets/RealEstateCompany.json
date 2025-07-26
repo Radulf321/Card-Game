@@ -342,6 +342,241 @@
                     ]
                 }
             ]
+        },
+        {
+            "id": "lighting",
+            "title": {
+                "en": "Lighting",
+                "de": "Beleuchtung"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Installing the lights. It seems trivial, but is one of the most relevant things in a new house.",
+                "de": "Die Lampen einbauen. Es wirkt simpel, ist aber eine der wichtigsten Dinge in einem neuen Haus."
+            },
+            "image": "RealEstateCompany/Lighting",
+            "rewards": [
+                {
+                    "type": "energy",
+                    "turn": 4
+                },
+                {
+                    "type": "energy",
+                    "turn": 7
+                }
+            ],
+            "prerequisites": [
+                "planningWiring"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "RealEstateCompany",
+                    "left": "Player",
+                    "right": "RealEstateCompany"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: Ah, I see you've installed the lights. They look good.",
+                        "de": "Frau Gerber: Ah, ich sehe Sie haben die Lampen installiert. Sie sehen gut aus."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Thank you. So far, it doesn't seem different from what you're used to. But each light is connected to the data bus.",
+                        "de": "Du: Danke. Bisher wirkt das ganze noch nicht anders als Sie es gewohnt sind. Aber jede Lampe ist zum Datenbus verbunden."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: Which means they can be controlled via this data bus if I understood you correctly?",
+                        "de": "Frau Gerber: Und kann demnach über diesen Datenbus gesteuert werden, wenn ich Sie da richtig verstanden habe?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Correct. You'll see what we can do with that in the next steps. I'm looking forward to show you.",
+                        "de": "Du: Korrekt. Sie werden in den nächsten Schritten sehen was wir damit machen können. Ich freue mich schon darauf es Ihnen zu zeigen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: So am I. I'll stay in contact to see what else you have in store.",
+                        "de": "Frau Gerber: Ich mich auch. Ich bleibe in Kontakt, um zu sehen, was Sie noch auf Lager haben."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "energy",
+                            "turn": 4
+                        },
+                        {
+                            "type": "energy",
+                            "turn": 7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "shading",
+            "title": {
+                "en": "Shading",
+                "de": "Beschattung"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Proper shading makes the house comfortable on sunny days.",
+                "de": "Gute Beschattung macht es an sonnigen Tagen gemütlich im Haus."
+            },
+            "image": "RealEstateCompany/Shading",
+            "rewards": [
+                {
+                    "type": "rounds",
+                    "amount": 4
+                }
+            ],
+            "prerequisites": [
+                "planningWiring"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "RealEstateCompany",
+                    "left": "Player",
+                    "right": "RealEstateCompany"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I just finished installing the last shutter. Every window is equipped with shutters, so it's easy to block the sun anywhere.",
+                        "de": "Du: Ich habe gerade den letzten Rollladen eingebaut. Jedes Fenster ist mit Rollläden ausgestattet, man kann also abdunkeln, egal wo man ist."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: Yes, proper shading is important for many customers. Good job.",
+                        "de": "Frau Gerber: Ja, eine gute Beschattung ist vielen Kunden wichtig. Gute Arbeit."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Thank you. In the future, it'll be easy to prepare a schedule or automatically adjust the shading on the current sun intensity.",
+                        "de": "Du: Danke. Zukünftig wird es damit einfach einen Wochenplan vorzubereiten oder die Beschattung automatisch an die Intensität der Sonne anzupassen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: But that's then. For now, the technological base for that is established.",
+                        "de": "Du: Aber das kommt dann. Für den Moment ist die technologische Grundlage geschaffen."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "rounds",
+                            "amount": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "heating",
+            "title": {
+                "en": "Heating",
+                "de": "Heizung"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Staying warm when it's cold outside is not only cozy, but important for staying healthy.",
+                "de": "Sich warm zu halten, wenn es draußen kalt ist, ist nicht nur gemütlich, sondern auch wichtig, um gesund zu bleiben."
+            },
+            "image": "RealEstateCompany/Heating",
+            "rewards": [
+                {
+                    "type": "card",
+                    "card": "installANewDevice"
+                }
+            ],
+            "prerequisites": [
+                "planningWiring"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "RealEstateCompany",
+                    "left": "Player",
+                    "right": "RealEstateCompany"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: I see you've installed the radiators. I like the thermostats with the display, they look really modern.",
+                        "de": "Frau Gerber: Ich sehe Sie haben die Heizungen eingebaut. Ich mag die Thermostate mit den Displays, die sehen sehr modern aus."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Not only that, they offer a lot of potential for future optimization. For example, you could control the heating based on the presence of people in the house.",
+                        "de": "Du: Nicht nur das, sie offen einiges an Potential für kommende Optimierung. Zum Beispiel könnte man die Heizung basierend auf der Anwesenheit von Personen im Haus steuern."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: Interesting. That would save money on heating in return. Our customers will love that.",
+                        "de": "Frau Gerber: Interessant. Das würde dann ja im Gegenzug Geld beim Heizen sparen. Unsere Kunden werden es lieben."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I'm glad you think so. I'm really looking forward to install some smart features once the basics are done.",
+                        "de": "Du: Schön, dass Sie das so sehen. Ich freue mich schon darauf ein paar intelligente Funktionen einzubauen sobald die Grundlagen fertig sind."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "installANewDevice"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
