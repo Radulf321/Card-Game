@@ -81,19 +81,20 @@ public class Card
         return (this.cost == null) || (this.cost <= CombatHandler.instance?.getCurrentEnergy());
     }
 
-    public void Play()
+    public void Play(bool force = false)
     {
+        UnityEngine.Debug.Log("Playing Card: " + this.name);
         CombatHandler? combatHandler = CombatHandler.instance;
         if (combatHandler == null)
         {
             throw new Exception("Cannot play card without combat handler");
         }
-        if (CanPlay())
+        if (CanPlay() || force)
         {
             this.afterPlay = CardAfterPlay.Discard;
             CardPile cardPile = combatHandler.getCardPile();
             cardPile.AddCardToPlay(this);
-            if (this.cost != null)
+            if ((this.cost != null) && !force)
             {
                 combatHandler.looseEnergy(this.cost.Value);
             }
@@ -189,5 +190,12 @@ public class Card
         List<GameEffect> clonedEffects = this.effects.Select(effect => effect.Clone(clone)).ToList();
         clone.SetEffects(clonedEffects);
         return clone;
+    }
+
+    public void OnDraw()
+    {
+        foreach (GameEffect effect in this.effects) {
+            effect.OnDraw();
+        }
     }
 }

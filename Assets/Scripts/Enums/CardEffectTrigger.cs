@@ -4,4 +4,5 @@ public enum CardEffectTrigger
     TriggerEffect,
     CombatStart,
     TurnStart,
+    Discard,
 }

@@ -67,6 +67,18 @@ MonoBehaviour:
     m_Key: RequirementGoal
     m_Metadata:
       m_Items: []
+  - m_Id: 27627690392330240
+    m_Key: OnDiscard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27627876883668992
+    m_Key: PlayOwner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27628022279217152
+    m_Key: TriggerPlayOwner
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

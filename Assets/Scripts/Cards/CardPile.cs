@@ -3,6 +3,12 @@
 using System;
 using System.Collections.Generic;
 
+public enum DiscardType
+{
+    AfterPlay,
+    Discard,
+}
+
 public class CardPile
 {
     public List<Card> deck;
@@ -47,7 +53,7 @@ public class CardPile
                 throw new Exception("No cards to discard.");
             }
             int index = UnityEngine.Random.Range(0, hand.Count);
-            DiscardCard(hand[index], false);
+            DiscardCard(hand[index], false, DiscardType.Discard);
         }
         CombatHandler.instance?.updateView();
     }
@@ -75,7 +81,7 @@ public class CardPile
         this.deck = newDeck;
     }
 
-    public void DiscardCard(Card card, bool updateView = true)
+    public void DiscardCard(Card card, bool updateView = true, DiscardType type = DiscardType.AfterPlay)
     {
         if (hand.Contains(card) || inPlay.Contains(card))
         {
@@ -91,6 +97,8 @@ public class CardPile
         {
             throw new Exception("Card not in hand.");
         }
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.DiscardCard, new TriggerMessageData(card: card, discardType: type)));
+
     }
 
     public void AddCardToPlay(Card card)
@@ -120,6 +128,7 @@ public class CardPile
             Card drawnCard = deck[0];
             deck.RemoveAt(0);
             hand.Add(drawnCard);
+            drawnCard.OnDraw();
         }
     }
 

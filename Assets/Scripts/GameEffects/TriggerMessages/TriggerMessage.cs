@@ -9,6 +9,7 @@ public enum TriggerType
     EndTurn,
     EndRound,
     EndCombat,
+    DiscardCard,
 }
 
 public class TriggerMessage

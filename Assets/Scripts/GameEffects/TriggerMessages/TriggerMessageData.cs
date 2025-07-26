@@ -3,17 +3,21 @@
 
 public class TriggerMessageData
 {
-    int? amount;
-    string? goal;
-    CardEffectTrigger? trigger;
-    bool? success;
+    private int? amount;
+    private string? goal;
+    private CardEffectTrigger? trigger;
+    private bool? success;
+    private DiscardType? discardType;
+    private Card? card;
 
-    public TriggerMessageData(int? amount = null, string? goal = null, CardEffectTrigger? trigger = null, bool? success = null)
+    public TriggerMessageData(int? amount = null, string? goal = null, CardEffectTrigger? trigger = null, bool? success = null, DiscardType? discardType = null, Card? card = null)
     {
         this.amount = amount;
         this.goal = goal;
         this.trigger = trigger;
         this.success = success;
+        this.discardType = discardType;
+        this.card = card;
     }
 
     public int? GetAmount()
@@ -34,5 +38,15 @@ public class TriggerMessageData
     public bool? GetSuccess()
     {
         return this.success;
+    }
+
+    public DiscardType? GetDiscardType()
+    {
+        return this.discardType;
+    }
+
+    public Card? GetCard()
+    {
+        return this.card;
     }
 }
