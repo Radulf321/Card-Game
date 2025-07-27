@@ -83,7 +83,6 @@ public class Card
 
     public void Play(bool force = false)
     {
-        UnityEngine.Debug.Log("Playing Card: " + this.name);
         CombatHandler? combatHandler = CombatHandler.instance;
         if (combatHandler == null)
         {

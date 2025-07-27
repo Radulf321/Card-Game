@@ -44,20 +44,6 @@ public class CardPile
         Game.Instance.SendTriggerMessage(new TriggerMessage(type: TriggerType.DrawCards, data: new TriggerMessageData(amount: numberOfCards, trigger: trigger)));
     }
 
-    public void DiscardRandomCards(int numberOfCards)
-    {
-        for (int i = 0; i < numberOfCards; i++)
-        {
-            if (hand.Count <= 0)
-            {
-                throw new Exception("No cards to discard.");
-            }
-            int index = UnityEngine.Random.Range(0, hand.Count);
-            DiscardCard(hand[index], false, DiscardType.Discard);
-        }
-        CombatHandler.instance?.updateView();
-    }
-
     public List<Card> GetHand()
     {
         return this.hand;

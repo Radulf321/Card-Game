@@ -36,7 +36,10 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205825
   - m_Id: 442092946759680
-    m_Localized: Discard {amount:choose(1):a random card|{amount} random cards}
+    m_Localized: Discard {discardPosition:choose(Random|Left|Right):{amount:choose(1):a
+      random card|{amount} random cards}|{amount:choose(1):the leftmost card|the
+      {amount} leftmost cards}|{amount:choose(1):the rightmost card|the {amount}
+      rightmost cards}}
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825

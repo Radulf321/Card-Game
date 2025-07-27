@@ -36,8 +36,7 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205826
   - m_Id: 442092946759680
-    m_Localized: "Wirf {amount:choose(1):eine zuf\xE4llige Karte|{amount} zuf\xE4llige
-      Karten} ab"
+    m_Localized: Wirf {discardPosition:choose(Random):44} ab
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
