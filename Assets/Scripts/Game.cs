@@ -308,7 +308,10 @@ class Game
 
     public void SubscribeToTriggerMessages(Action<TriggerMessage> subscriber)
     {
-        this.triggerMessageSubscribers.Add(subscriber);
+        if (!this.triggerMessageSubscribers.Contains(subscriber))
+        {
+            this.triggerMessageSubscribers.Add(subscriber);
+        }
     }
 
     public void UnsubscribeFromTriggerMessages(Action<TriggerMessage> subscriber)

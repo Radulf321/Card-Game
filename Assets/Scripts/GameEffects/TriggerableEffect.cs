@@ -41,7 +41,7 @@ public class TriggerableEffect : GameEffect
     {
         this.triggerAction.Subscribe();
         this.triggerAction.SetOnTrigger(this.OnTrigger);
-        if (this.limitType == LimitType.PerTurn)
+        if (this.limit != null)
         {
             Game.Instance.SubscribeToTriggerMessages(this.HandleMessage);
         }
@@ -77,10 +77,14 @@ public class TriggerableEffect : GameEffect
         // This discards the card from play if limit is exhausted and limit is total, i.e., does not refresh
         // TODO: Consider permanent cards with different effects and limits. In case limit is exhausted
         // does not mean it's exhausted for all effects, so you should check if card can be discarded
-        if ((this.currentLimit == 0) && (this.limitType == LimitType.Total))
+        if (this.currentLimit == 0)
         {
-            Game.Instance.UnsubscribeFromTriggerMessages(HandleMessage);
-            CombatHandler.instance?.getCardPile().DiscardCard(this.owner);
+            triggerAction.Unsubscribe();
+            if (this.limitType == LimitType.Total)
+            {
+                Game.Instance.UnsubscribeFromTriggerMessages(HandleMessage);
+                CombatHandler.instance?.getCardPile().DiscardCard(this.owner);
+            }
         }
     }
 
@@ -90,6 +94,7 @@ public class TriggerableEffect : GameEffect
         {
             case TriggerType.StartTurn:
                 this.currentLimit = this.limit;
+                this.triggerAction.Subscribe();
                 break;
 
             case TriggerType.EndRound:
