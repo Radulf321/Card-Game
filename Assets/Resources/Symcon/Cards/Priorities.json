@@ -1,0 +1,26 @@
+{
+    "id": "priorities",
+    "cost": 7,
+    "name": {
+        "en": "Priorities",
+        "de": "Prioritäten"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "knowhow",
+            "amount": 12
+        },
+        {
+            "type": "drawCards",
+            "amount": 2
+        },
+        {
+            "type": "discardCards",
+            "amount": 2,
+            "discardPosition": "Left",
+            "checkCardsAvailable": false
+        }
+    ],
+    "image": "Priorities"
+}
