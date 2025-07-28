@@ -72,7 +72,7 @@ public class DiscardCardsEffect : GameEffect
 
     public override GameEffect Clone(Card newOwner)
     {
-        return new DiscardCardsEffect(this.amount);
+        return new DiscardCardsEffect(amount: this.amount, discardPosition: this.discardPosition, checkCardsAvailable: this.checkCardsAvailable);
     }
 
     public override Task<string> getDescription()
