@@ -577,6 +577,128 @@
                     ]
                 }
             ]
+        },
+        {
+            "id": "switchingViaApp",
+            "title": {
+                "en": "Switching via App",
+                "de": "Per App schalten"
+            },
+            "cost": {
+                "comfort": 2
+            },
+            "description": {
+                "en": "With all the base actors prepared, it's easy to create a first visualization and control them remotely.",
+                "de": "Da die grundlegenden Aktoren nun vorbereitet sind, ist es ein einfaches eine erste Visualisierung zu erstellen und sie aus der Ferne zu steuern."
+            },
+            "image": "RealEstateCompany/SwitchingViaApp",
+            "rewards": [
+                {
+                    "type": "card",
+                    "card": "priorities"
+                }
+            ],
+            "prerequisites": [
+                "lighting",
+                "heating",
+                "shading"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "RealEstateCompany",
+                    "left": "Player",
+                    "right": "RealEstateCompany"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Ah, it's good that you're here, ma'am. Today, I can finally present you something you don't have in your classical house.",
+                        "de": "Du: Ah, gut dass Sie da sind. Heute kann ich Ihnen endlich etwas zeigen, was Sie in Ihren klassischen Häusern nicht haben."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Please, grab your mobile phone and install the Symcon app.",
+                        "de": "Du: Bitte, nehmen Sie Ihr Handy und installieren die Symcon App."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: All right, I'm intrigued. It's downloading right now...",
+                        "de": "Frau Gerber: Alles klar, ich bin gespannt. Ich lade die App jetzt runter..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: And done. What now?",
+                        "de": "Frau Gerber: Und fertig. Was jetzt?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Simply start it. Everything should be pretty self explanatory.",
+                        "de": "Du: Starten Sie einfach. Das sollte alles recht selbsterklärend sein."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: Oh, it already found a project. I'm opening it. I see some tiles for different rooms. I'll just tap the living room as we're here right now.",
+                        "de": "Frau Gerber: Oh, es wurde direkt ein Projekt gefunden. Ich öffne das mal. Ich sehe ein paar Kacheln für verschiedene Räume. Ich drücke mal aufs Wohnzimmer, da wir da ja gerade sind."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: Among others, there's the shutter here. I'll try closing it via app.",
+                        "de": "Frau Gerber: Unter anderem ist hier der Rollladen. Ich versuche mal den per App zu schließen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "It's not much of a surprise to you, but the shutters close as intended.",
+                        "de": "Keine große Überraschung, aber der Rollladen schließt wie vorgesehen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Ms. Tanner: That's definitely a nice start. But I guess you're not done yet, are you?",
+                        "de": "Frau Gerber: Das ist definitiv ein schöner Start. Aber ich vermute Sie sind noch nicht fertig, oder?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I'm far from done. It's only just starting to get interesting...",
+                        "de": "Du: Ich bin noch lange nicht fertig. Es fängt doch gerade erst an interessant zu werden..."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "priorities"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
