@@ -39,7 +39,7 @@ MonoBehaviour:
     m_Localized: Discard {discardPosition:choose(Random|Left|Right):{amount:choose(1):a
       random card|{amount} random cards}|{amount:choose(1):the leftmost card|the
       {amount} leftmost cards}|{amount:choose(1):the rightmost card|the {amount}
-      rightmost cards}}
+      rightmost cards}|Never visible}
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
