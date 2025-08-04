@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+#nullable enable
 public class FlagDictionary
 {
     private Dictionary<string, bool> boolFlags;
@@ -72,7 +73,7 @@ public class FlagDictionary
         }
     }
 
-    public object GetValue(string key)
+    public object? GetValue(string key)
     {
         if (boolFlags.ContainsKey(key))
         {
@@ -96,22 +97,38 @@ public class FlagDictionary
         }
     }
 
-    public T GetValue<T>(string key)
+    public T? GetValue<T>(string key)
     {
         if (typeof(T) == typeof(bool))
         {
+            if (!boolFlags.ContainsKey(key))
+            {
+                return default(T);
+            }
             return (T)(object)boolFlags[key];
         }
         else if (typeof(T) == typeof(int))
         {
+            if (!intFlags.ContainsKey(key))
+            {
+                return default(T);
+            }
             return (T)(object)intFlags[key];
         }
         else if (typeof(T) == typeof(float))
         {
+            if (!floatFlags.ContainsKey(key))
+            {
+                return default(T);
+            }
             return (T)(object)floatFlags[key];
         }
         else if (typeof(T) == typeof(string))
         {
+            if (!stringFlags.ContainsKey(key))
+            {
+                return default(T);
+            }
             return (T)(object)stringFlags[key];
         }
         else

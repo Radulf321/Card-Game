@@ -337,22 +337,53 @@ class Game
         flagDictionaries[validity].SetValue(key, value);
     }
 
-    public T? GetFlag<T>(FlagValidity validity, string key)
+    public T? GetFlag<T>(FlagValidity? validity, string key)
     {
-        if (!flagDictionaries.ContainsKey(validity))
+        foreach (FlagValidity innerValidity in Enum.GetValues(typeof(FlagValidity)))
         {
-            return default(T);
+            if (validity.HasValue && innerValidity != validity.Value)
+            {
+                continue;
+            }
+            if (flagDictionaries.ContainsKey(innerValidity))
+            {
+                T? value = flagDictionaries[innerValidity].GetValue<T>(key);
+                if (value != null)
+                {
+                    return value;
+                }
+            }
         }
-        return flagDictionaries[validity].GetValue<T>(key);
+        return default(T);
     }
 
-    public object? GetFlag(FlagValidity validity, string key)
+    public object? GetFlag(FlagValidity? validity, string key)
     {
-        if (!flagDictionaries.ContainsKey(validity))
+        bool? boolValue = GetFlag<bool>(validity, key);
+        if (boolValue.HasValue)
         {
-            return null;
+            return boolValue.Value;
         }
-        return flagDictionaries[validity].GetValue(key);
+
+        int? intValue = GetFlag<int>(validity, key);
+        if (intValue.HasValue)
+        {
+            return intValue.Value;
+        }
+
+        float? floatValue = GetFlag<float>(validity, key);
+        if (floatValue.HasValue)
+        {
+            return floatValue.Value;
+        }
+
+        string? stringValue = GetFlag<string>(validity, key);
+        if (stringValue != null)
+        {
+            return stringValue;
+        }
+
+        return null;
     }
 
     public void RegisterModifier(Modifier modifier)

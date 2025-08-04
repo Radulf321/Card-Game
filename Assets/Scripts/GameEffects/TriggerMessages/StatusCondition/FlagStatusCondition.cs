@@ -4,7 +4,7 @@ public class FlagStatusCondition : StatusCondition
 {
     private object value;
     private string key;
-    FlagValidity validity;
+    FlagValidity? validity;
 
     public FlagStatusCondition(JObject json)
     {
@@ -16,7 +16,7 @@ public class FlagStatusCondition : StatusCondition
 
         this.value = value;
         this.key = json["key"].ToString();
-        this.validity = EnumHelper.ParseEnum<FlagValidity>(json["validity"]?.ToString()) ?? FlagValidity.Game;
+        this.validity = EnumHelper.ParseEnum<FlagValidity>(json["validity"]?.ToString());
     }
 
     public override bool IsFulfilled()
