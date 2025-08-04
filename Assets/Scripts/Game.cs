@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 #nullable enable
@@ -10,7 +9,8 @@ class Game
 {
     public static Game Instance { get; private set; } = new Game();
 
-    private static readonly string tutorialDoneKey = "TutorialDone";
+    public static readonly string tutorialDoneKey = "TutorialDone";
+    public static readonly string permanentFlagsKey = "PermanentFlags";
 
     private Player player;
     private int remainingRounds;
@@ -51,7 +51,7 @@ class Game
         this.selectActionBackground = "";
         this.checkIcon = "";
         this.gameOverDialog = new DialogText("Dummy");
-        this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
+        this.tutorialDone = PlayerPrefs.GetInt(this.resourcePath + Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
         this.modifiers = new HashSet<Modifier>();
         this.equipmentManager = new EquipmentManager();
@@ -106,8 +106,13 @@ class Game
         this.checkIcon = index["checkIcon"]!.ToString();
 
         this.gameOverDialog = Dialog.FromJson(index["gameOverDialog"] as JArray ?? new JArray());
-        this.tutorialDone = PlayerPrefs.GetInt(Game.tutorialDoneKey, 0) == 1;
+        this.tutorialDone = PlayerPrefs.GetInt(this.resourcePath + Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
+        if (PlayerPrefs.HasKey(this.resourcePath + permanentFlagsKey))
+        {
+            JObject json = JObject.Parse(PlayerPrefs.GetString(this.resourcePath + permanentFlagsKey));
+            this.flagDictionaries[FlagValidity.Permanent] = new FlagDictionary(json);
+        }
         this.modifiers = new HashSet<Modifier>();
         this.equipmentManager = new EquipmentManager(ResourcePath, (index["equipment"] as JObject)!);
         this.taskManager = new TaskManager(ResourcePath, (index["gameEnd"] as JObject)!);
@@ -154,7 +159,7 @@ class Game
         if (!this.tutorialDone)
         {
             this.tutorialDone = true;
-            PlayerPrefs.SetInt(Game.tutorialDoneKey, 1);
+            PlayerPrefs.SetInt(this.resourcePath + Game.tutorialDoneKey, 1);
             PlayerPrefs.Save();
             CombatTarget? tutorialTarget = characterManager.GetTutorialTarget();
             if (tutorialTarget != null)
@@ -326,6 +331,13 @@ class Game
         {
             subscriber(message);
         }
+
+        if ((message.GetTriggerType() == TriggerType.EndDialog) &&
+            this.flagDictionaries.ContainsKey(FlagValidity.Dialog))
+        {
+            // Clear dialog flags after dialog ends
+            this.flagDictionaries[FlagValidity.Dialog].Clear();
+        }
     }
 
     public void SetFlag(FlagValidity validity, string key, object value)
@@ -335,6 +347,12 @@ class Game
             flagDictionaries[validity] = new FlagDictionary();
         }
         flagDictionaries[validity].SetValue(key, value);
+
+        if (validity == FlagValidity.Permanent)
+        {
+            PlayerPrefs.SetString(this.resourcePath + permanentFlagsKey, flagDictionaries[FlagValidity.Permanent].ToJson());
+            PlayerPrefs.Save();
+        }
     }
 
     public T? GetFlag<T>(FlagValidity? validity, string key)

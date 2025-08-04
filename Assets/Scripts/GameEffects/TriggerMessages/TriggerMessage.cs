@@ -10,6 +10,7 @@ public enum TriggerType
     EndRound,
     EndCombat,
     DiscardCard,
+    EndDialog,
 }
 
 public class TriggerMessage

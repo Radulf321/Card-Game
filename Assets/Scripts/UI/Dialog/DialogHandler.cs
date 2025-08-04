@@ -74,6 +74,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
             await dialog.ShowDialog();
             (onFinish ?? EndDialog).Invoke();
             Dialog.CurrentDialog = null;
+            Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.EndDialog));
         }
     }
 

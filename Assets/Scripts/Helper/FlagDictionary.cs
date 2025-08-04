@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 #nullable enable
 public class FlagDictionary
@@ -15,6 +16,14 @@ public class FlagDictionary
         intFlags = new Dictionary<string, int>();
         floatFlags = new Dictionary<string, float>();
         stringFlags = new Dictionary<string, string>();
+    }
+
+    public FlagDictionary(JObject json)
+    {
+        boolFlags = json["bool"]?.ToObject<Dictionary<string, bool>>() ?? new Dictionary<string, bool>();
+        intFlags = json["int"]?.ToObject<Dictionary<string, int>>() ?? new Dictionary<string, int>();
+        floatFlags = json["float"]?.ToObject<Dictionary<string, float>>() ?? new Dictionary<string, float>();
+        stringFlags = json["string"]?.ToObject<Dictionary<string, string>>() ?? new Dictionary<string, string>();
     }
 
     public void Clear()
@@ -135,5 +144,16 @@ public class FlagDictionary
         {
             throw new KeyNotFoundException("Invalid type for GetValue: " + typeof(T).Name);
         }
+    }
+
+    public string ToJson()
+    {
+        return JObject.FromObject(new Dictionary<string, object>
+        {
+            {"bool", boolFlags},
+            {"int", intFlags},
+            {"float", floatFlags},
+            {"string", stringFlags}            
+        }).ToString();
     }
 }
