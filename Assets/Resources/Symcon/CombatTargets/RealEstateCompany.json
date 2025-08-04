@@ -164,7 +164,8 @@
                 }
             ]
         }
-    },"triggerActions": [
+    },
+    "triggerActions": [
         {
             "trigger": {
                 "type": "startturn",
