@@ -168,8 +168,16 @@
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: Cheers! Thank you for choosing Symcon as your home automation system. I promise you won't regret it. Now, you wrote that you want to get listed as integrator on our homepage.",
-                            "de": "Pio: Moin! Danke, dass du Symcon als dein Heimautomatisierungssystem gewählt hast. Ich verspreche dir, du wirst es nicht bereuen. Du hast geschrieben, dass du als Integrator auf unserer Homepage gelistet werden möchtest."
+                            "en": "Pio: Cheers! Thank you for choosing Symcon as your home automation system. I promise you won't regret it.",
+                            "de": "Pio: Moin! Danke, dass du Symcon als dein Heimautomatisierungssystem gewählt hast. Ich verspreche dir, du wirst es nicht bereuen."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: I'm Pio from the Symcon GmbH and I'll help you with your first steps. Now, you wrote that you want to get listed as integrator on our homepage.",
+                            "de": "Pio: Ich bin Pio von der Symcon GmbH und ich werde dir bei deinen ersten Schritten helfen. Du hast geschrieben, dass du als Integrator auf unserer Homepage gelistet werden möchtest."
                         }
                     },
                     {
@@ -497,6 +505,14 @@
                     "text": {
                         "en": "Pio: One final thing, your career has a certain number of rounds. Each round is a work day at a customer or you can visit some other locations to improve yourself.",
                         "de": "Pio: Eine letzte Sache noch, deine Karriere hat eine bestimmte Anzahl von Runden. Jede Runde ist ein Arbeitstag bei einem Kunden oder du kannst andere Orte besuchen, um dich zu verbessern."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Pio: You usually want to finish as many customer jobs as possible before your rounds are depleted, so focus on those and visit locations when you realise they're getting too tough.",
+                        "de": "Pio: Du möchtest normalerweise so viele Kundenaufträge wie möglich erledigen bevor deine Runden aufgebraucht sind. Daher solltest du dich darauf fokussieren und andere Orte erst besuchen, wenn die Kunden zu anspruchsvoll werden."
                     }
                 },
                 {
