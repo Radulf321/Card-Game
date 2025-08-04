@@ -14,6 +14,8 @@ public abstract class StatusCondition
                 return new CardInDeckStatusCondition(json);
             case "not":
                 return new NotStatusCondition(json);
+            case "requirementType":
+                return new RequirementTypeCondition(json);
             default:
                 throw new System.Exception("Invalid condition type: " + json["type"].ToString());
         }

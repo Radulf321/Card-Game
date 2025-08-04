@@ -50,4 +50,9 @@ public class GoalRequirement : Requirement
             }
         ));
     }
+
+    public RequirementComparison GetComparison()
+    {
+        return this.comparison;
+    }
 }
