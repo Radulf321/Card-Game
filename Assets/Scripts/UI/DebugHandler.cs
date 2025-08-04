@@ -112,4 +112,10 @@ public class DebugHandler : MonoBehaviour
         PlayerPrefs.DeleteAll();
         _ = DialogHandler.Instance.StartDialog(new DialogText("All data cleared"), changeScene: false);
     }
+
+    public void resetPermanentFlags()
+    {
+        PlayerPrefs.DeleteKey("Symcon" + Game.permanentFlagsKey);
+        _ = DialogHandler.Instance.StartDialog(new DialogText("Permanent Flags cleared"), changeScene: false);
+    }
 }
