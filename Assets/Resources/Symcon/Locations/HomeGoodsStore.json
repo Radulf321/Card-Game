@@ -142,6 +142,84 @@
                     "type": "flag",
                     "key": "homeGoodsStoreVisited",
                     "value": true
+                },
+                {
+                    "type": "condition",
+                    "condition": {
+                        "type": "not",
+                        "condition": {
+                            "type": "flag",
+                            "key": "homeGoodsStoreTutorialDone",
+                            "value": true
+                        }
+                    },
+                    "if": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "en": "As you follow Wilson, you get a call. It's Pio.",
+                                "de": "Während du Wilson folgst, bekommst du einen Anruf. Es ist Pio."
+                            }
+                        },
+                        {
+                            "type": "image",
+                            "right": {
+                                "image": "PioTutorial",
+                                "alignment": "center",
+                                "mirror": true
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "right",
+                            "text": {
+                                "en": "Pio: Hey, I just saw you entering the 'Smart Living' store. I hope Wilson isn't too annoying. He can be a bit... enthusiastic.",
+                                "de": "Pio: Hey, ich habe dich gerade im \"Smart Living\"-Laden gesehen. Ich hoffe, Wilson ist nicht zu nervig. Er kann manchmal etwas... enthusiastisch sein."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "right",
+                            "text": {
+                                "en": "Pio: Nonetheless, getting some devices and furniture is a good idea. They'll provide you with more energy during customer jobs.",
+                                "de": "Pio: Dennoch ist es eine gute Idee, ein paar Geräte und Möbel zu besorgen. Sie geben dir mehr Energie bei Kundenaufträgen."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "right",
+                            "text": {
+                                "en": "Pio: The more SymCoins you're willing to spend, the longer the energy boost will last. In addition, early energy is more expensive than later energy.",
+                                "de": "Pio: Je mehr SymCoins du bereit bist auszugeben, desto länger hält der Energieschub an. Darüber hinaus ist frühe Energie teurer als späte Energie."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "right",
+                            "text": {
+                                "en": "Pio: You can even buy some cards here that help with your energy.",
+                                "de": "Pio: Du kannst hier sogar ein paar Karten kaufen, die mit deiner Energie helfen."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "right",
+                            "text": {
+                                "en": "Pio: All right then, enjoy your shopping trip. And give Wilson my best regards!",
+                                "de": "Pio: Alles klar, dann viel Spaß beim Einkaufen. Und richte Wilson meine besten Grüße aus!"
+                            }
+                        },
+                        {
+                            "type": "image",
+                            "left": "HomeGoodsStore"
+                        },
+                        {
+                            "type": "flag",
+                            "key": "homeGoodsStoreTutorialDone",
+                            "validity": "Permanent",
+                            "value": true
+                        }
+                    ]
                 }
             ]
         },

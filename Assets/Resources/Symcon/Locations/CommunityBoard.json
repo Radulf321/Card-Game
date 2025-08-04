@@ -88,6 +88,107 @@
                     "type": "flag",
                     "key": "communityBoardVisited",
                     "value": true
+                },
+                {
+                    "type": "condition",
+                    "condition": {
+                        "type": "not",
+                        "condition": {
+                            "type": "flag",
+                            "key": "communityBoardTutorialDone",
+                            "value": true
+                        }
+                    },
+                    "if": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "en": "You: Oh, I'm already getting a message. It's from Pio:",
+                                "de": "Du: Oh, ich bekomme schon eine Nachricht. Sie ist von Pio:"
+                            }
+                        },
+                        {
+                            "type": "image",
+                            "left": {
+                                "image": "PioTutorial",
+                                "alignment": "center"
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: Hi, I see you found the community board. It's a great place to exchange ideas and get help from other users.",
+                                "de": "Pio: Hi, ich sehe du hast das Community Forum gefunden. Es ist ein großartiger Ort um Ideen auszutauschen und Hilfe von anderen Benutzern zu bekommen."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: Here, you can get all kinds of cards that revolve around Creativity.",
+                                "de": "Pio: Hier kannst du alle Arten von Karten bekommen, die sich um Kreativität drehen."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: New cards cost SymCoins, which you can earn by completing customer jobs. But there's also a free card available.",
+                                "de": "Pio: Neue Karten kosten SymCoins, die du durch das Abschließen von Kundenaufträgen verdienen kannst. Aber es gibt auch eine kostenlose Karte."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: You can even purchase a relic. A relic is a special type of card.",
+                                "de": "Pio: Du kannst sogar ein Relikt kaufen. Ein Relikt ist eine spezielle Art von Karte."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: Unlike regular cards, relics are immediately played at the beginning of a customer job and provide a powerful buff.",
+                                "de": "Pio: Im Gegensatz zu normalen Karten werden Relikte sofort zu Beginn eines Kundenauftrags gespielt und bieten einen mächtigen Bonus."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: However, they are also quite expensive. So think about whether the SymCoins are worth it.",
+                                "de": "Pio: Im Gegenzug sind sie auch recht teuer. Überlege also, ob sich die SymCoins dafür lohnen."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: You can recognize relics by the fact that instead of the energy symbol in the top right corner, the Symcon logo is shown.",
+                                "de": "Pio: Du kannst Relikte übrigens daran erkennen, dass an Stelle der Kosten oben rechts statt dem Energiesymbol das Symcon-Logo gezeigt wird."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: If you have any questions, feel free to ask me or the other users. Have fun!",
+                                "de": "Pio: Wenn du Fragen hast, frag mich oder die anderen Benutzer. Viel Spaß!"
+                            }
+                        },
+                        {
+                            "type": "image",
+                            "left": ""
+                        },
+                        {
+                            "type": "flag",
+                            "key": "communityBoardTutorialDone",
+                            "validity": "Permanent",
+                            "value": true
+                        }
+                    ]
                 }
             ]
         },

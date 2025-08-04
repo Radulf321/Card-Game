@@ -112,6 +112,107 @@
                     "type": "flag",
                     "key": "communityBoardVisited",
                     "value": true
+                },
+                {
+                    "type": "condition",
+                    "condition": {
+                        "type": "not",
+                        "condition": {
+                            "type": "flag",
+                            "key": "symconExpertiseTutorialDone",
+                            "value": true
+                        }
+                    },
+                    "if": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "en": "You: Oh, I'm already getting a response from Pio. Let's see.",
+                                "de": "Du: Oh, ich bekomme schon eine Antwort von Pio. Mal schauen."
+                            }
+                        },
+                        {
+                            "type": "image",
+                            "left": {
+                                "image": "PioTutorial",
+                                "alignment": "center"
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: Cheers, I'm glad to see you want to expand your knowledge about Symcon.",
+                                "de": "Pio: Moin, ich freue mich, dass du dein Wissen über Symcon erweitern möchtest."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: Everything that's offered here is about Know How, so if your deck lacks those cards, this is the place to be.",
+                                "de": "Pio: Alles, was hier angeboten wird, dreht sich um Know How. Wenn dir also die entsprechenden Karten fehlen, dann bist du hier genau richtig."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: New cards cost SymCoins, which you can earn by completing customer jobs. But there's also a free card available.",
+                                "de": "Pio: Neue Karten kosten SymCoins, die du durch das Abschließen von Kundenaufträgen verdienen kannst. Aber es gibt auch eine kostenlose Karte."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: You can even purchase a relic. A relic is a special type of card.",
+                                "de": "Pio: Du kannst sogar ein Relikt kaufen. Ein Relikt ist eine spezielle Art von Karte."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: Unlike regular cards, relics are immediately played at the beginning of a customer job and provide a powerful buff.",
+                                "de": "Pio: Im Gegensatz zu normalen Karten werden Relikte sofort zu Beginn eines Kundenauftrags gespielt und bieten einen mächtigen Bonus."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: However, they are also quite expensive. So think about whether the SymCoins are worth it.",
+                                "de": "Pio: Im Gegenzug sind sie auch recht teuer. Überlege also, ob sich die SymCoins dafür lohnen."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: You can recognize relics by the fact that instead of the energy symbol in the top right corner, the Symcon logo is shown.",
+                                "de": "Pio: Du kannst Relikte übrigens daran erkennen, dass an Stelle der Kosten oben rechts statt dem Energiesymbol das Symcon-Logo gezeigt wird."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: Now, take a look and decide which approach suits you best.",
+                                "de": "Pio: Jetzt schau dich mal um und entscheide, welcher Ansatz dir am besten gefällt."
+                            }
+                        },
+                        {
+                            "type": "image",
+                            "left": ""
+                        },
+                        {
+                            "type": "flag",
+                            "key": "symconExpertiseTutorialDone",
+                            "validity": "Permanent",
+                            "value": true
+                        }
+                    ]
                 }
             ]
         },
