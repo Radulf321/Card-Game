@@ -30,7 +30,10 @@
                         [
                             {
                                 "type": "image",
-                                "left": "PioTutorial"
+                                "left": {
+                                    "image": "PioTutorial",
+                                    "alignment": "center"
+                                }
                             },
                             {
                                 "type": "text",
@@ -110,7 +113,7 @@
                 },
                 {
                     "type": "flag",
-                    "key": "communityBoardVisited",
+                    "key": "symconExpertiseVisited",
                     "value": true
                 },
                 {
