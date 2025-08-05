@@ -14,6 +14,10 @@ public abstract class GameTask
                 return new WinsTask(json);
             case "finish":
                 return new FinishTask(json);
+            case "talent":
+                return new TalentTask(json);
+            case "and":
+                return new AndTask(json);
             default:
                 throw new System.Exception($"Unknown task type: {type}");
         }
