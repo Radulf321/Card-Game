@@ -42,12 +42,11 @@ public class TaskManager
         Game.Instance.SubscribeToTriggerMessages(OnTriggerMessage);
         foreach (GameTask task in this.tasks)
         {
-            bool taskComplete = PlayerPrefs.GetInt(GetTaskCompleteKey(task), 0) == 1;
-            if (taskComplete)
+            if (IsTaskCompleted(task))
             {
                 task.CollectRewards();
             }
-            else if (this.activeTasks.Count < MAX_ACTIVE_TASKS)
+            else if ((this.activeTasks.Count < MAX_ACTIVE_TASKS) && task.IsAvailable())
             {
                 this.activeTasks.Add(task);
             }
@@ -92,6 +91,16 @@ public class TaskManager
         return Game.Instance.GetResourcePath() + "/Graphics/Backgrounds/" + this.gameEndBackground;
     }
 
+    public bool IsTaskCompleted(GameTask task)
+    {
+        return IsTaskCompleted(task.GetID());
+    }
+
+    public bool IsTaskCompleted(string taskID)
+    {
+        return PlayerPrefs.GetInt(GetTaskCompleteKey(taskID), 0) == 1;
+    }
+
     private void OnTriggerMessage(TriggerMessage message)
     {
         if (message.GetTriggerType() == TriggerType.EndCombat)
@@ -105,6 +114,11 @@ public class TaskManager
 
     private string GetTaskCompleteKey(GameTask task, string? resourcePath = null)
     {
-        return (resourcePath ?? Game.Instance.GetResourcePath()) + TASK_COMPLETE_PREFIX + task.GetID();
+        return GetTaskCompleteKey(task.GetID(), resourcePath);
+    }
+
+    private string GetTaskCompleteKey(string taskID, string? resourcePath = null)
+    {
+        return (resourcePath ?? Game.Instance.GetResourcePath()) + TASK_COMPLETE_PREFIX + taskID;
     }
 }

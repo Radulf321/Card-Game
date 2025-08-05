@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
+#nullable enable
 public abstract class GameTask
 {
     public static GameTask FromJson(JObject json)
@@ -19,23 +20,31 @@ public abstract class GameTask
     }
 
     private List<Reward> rewards;
+    private List<StatusCondition> conditions;
     private string id;
 
-    public GameTask(string id, List<Reward> rewards)
+    public GameTask(string id, List<Reward>? rewards = null, List<StatusCondition>? conditions = null)
     {
         this.id = id;
-        this.rewards = rewards;
+        this.rewards = rewards ?? new List<Reward>();
+        this.conditions = conditions ?? new List<StatusCondition>();
     }
 
     public GameTask(JObject json)
     {
-        this.id = json["id"]!.ToString();
+        this.id = json["id"]?.ToString() ?? "unknownID";
         List<Reward> rewards = new List<Reward>();
-        foreach (JObject rewardJson in json["rewards"] as JArray)
+        foreach (JObject rewardJson in (json["rewards"] as JArray) ?? new JArray())
         {
             rewards.Add(Reward.FromJson(rewardJson));
         }
         this.rewards = rewards;
+        List<StatusCondition> conditions = new List<StatusCondition>();
+        foreach (JObject conditionsJson in (json["conditions"] as JArray) ?? new JArray())
+        {
+            conditions.Add(StatusCondition.FromJson(conditionsJson));
+        }
+        this.conditions = conditions;
     }
 
     public void CollectRewards()
@@ -54,6 +63,18 @@ public abstract class GameTask
     public string GetID()
     {
         return this.id;
+    }
+
+    public bool IsAvailable()
+    {
+        foreach (StatusCondition condition in this.conditions)
+        {
+            if (!condition.IsFulfilled())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public virtual bool IsCompleted()
