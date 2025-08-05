@@ -260,6 +260,12 @@
                         {
                             "type": "file",
                             "file": "Options/CardPurchaseRepeat",
+                            "card": "widgets",
+                            "cost": 100
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
                             "card": "perfectBalance",
                             "cost": 150
                         },

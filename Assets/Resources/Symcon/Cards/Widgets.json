@@ -1,0 +1,21 @@
+{
+    "id": "widgets",
+    "cost": 2,
+    "name": {
+        "en": "Widgets",
+        "de": "Widgets"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "knowhow",
+            "amount": 2
+        },
+        {
+            "type": "goal",
+            "goal": "creativity",
+            "amount": 2
+        }
+    ],
+    "image": "Widgets"
+}
