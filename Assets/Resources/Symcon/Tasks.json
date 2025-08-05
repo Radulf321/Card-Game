@@ -25,5 +25,66 @@
                 }
             }
         ]
+    },
+    {
+        "id": "sceneControl",
+        "type": "talent",
+        "combatTarget": "singleFamilyHome",
+        "talent": "livingRoomSceneControl",
+        "rewards": [
+            {
+                "type": "unlock",
+                "unlock": {
+                    "type": "equipment",
+                    "id": "symBox"
+                }
+            }
+        ]
+    },
+    {
+        "id": "win6",
+        "type": "wins",
+        "amount": 6,
+        "conditions": [
+            {
+                "type": "taskCompleted",
+                "task": "win3"
+            }
+        ],
+        "rewards": [
+            {
+                "type": "rounds",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": "win2-2",
+        "type": "and",
+        "tasks": [
+            {
+                "type": "wins",
+                "amount": 2
+            },
+            {
+                "type": "wins",
+                "amount": 2
+            }
+        ],
+        "conditions": [
+            {
+                "type": "taskCompleted",
+                "task": "win3"
+            }
+        ],
+        "rewards": [
+            {
+                "type": "unlock",
+                "unlock": {
+                    "type": "equipment",
+                    "id": "todoList"
+                }
+            }
+        ]
     }
 ]
