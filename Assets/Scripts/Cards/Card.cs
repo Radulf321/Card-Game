@@ -124,6 +124,8 @@ public class Card
                 default:
                     throw new Exception("Unknown After Play state");
             }
+
+            Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.PlayCard, new TriggerMessageData(card: this)));
         }
         else
         {
