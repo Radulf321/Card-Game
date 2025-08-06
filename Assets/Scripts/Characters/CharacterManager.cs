@@ -82,7 +82,7 @@ public class CharacterManager
         return options;
     }
 
-    public CombatTarget? GetCombatTarget(string id)
+    public CombatTarget? GetCombatTarget(string? id)
     {
         foreach (CombatTarget target in combatTargets)
         {

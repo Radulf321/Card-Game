@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 2631328474858782722
   m_TableData:
   - m_Id: 12244000768
-    m_Localized: "Gewinne {amount} K\xE4mpfe"
+    m_Localized: "Gewinne {amount} K\xE4mpfe{combatTarget:choose(null):| gegen {}}"
     m_Metadata:
       m_Items:
       - rid: 2631328474858782722

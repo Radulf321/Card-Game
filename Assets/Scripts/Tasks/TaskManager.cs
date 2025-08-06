@@ -15,11 +15,11 @@ public class TaskManager
     private string gameEndBackground;
 
     // Statistics relevant for tasks
-    private int totalWins;
+    private Dictionary<string, int> wins;
 
     public TaskManager()
     {
-        totalWins = 0;
+        this.wins = new Dictionary<string, int>();
         this.tasks = new List<GameTask>();
         this.activeTasks = new List<GameTask>();
         this.statisticsBackground = "";
@@ -73,7 +73,24 @@ public class TaskManager
 
     public int GetTotalWins()
     {
+        int totalWins = 0;
+        foreach (int win in wins.Values)
+        {
+            totalWins += win;
+        }
         return totalWins;
+    }
+
+    public int GetWins(string combatTargetID)
+    {
+        if (wins.ContainsKey(combatTargetID))
+        {
+            return wins[combatTargetID];
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     public List<GameTask> GetActiveTasks()
@@ -105,9 +122,18 @@ public class TaskManager
     {
         if (message.GetTriggerType() == TriggerType.EndCombat)
         {
-            if (message.GetData().GetSuccess() == true)
+            string? combatTargetID = message.GetData().GetCombatTarget()?.GetID();
+            if (combatTargetID == null)
             {
-                totalWins++;
+                throw new System.ArgumentNullException("CombatTarget ID cannot be null.");
+            }
+            if (!wins.ContainsKey(combatTargetID))
+            {
+                wins[combatTargetID] = 1;
+            }
+            else
+            {
+                wins[combatTargetID]++;
             }
         }
     }
