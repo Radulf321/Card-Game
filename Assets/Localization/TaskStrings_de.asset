@@ -36,6 +36,21 @@ MonoBehaviour:
     m_Localized: "Schlie\xDFe ein Spiel ab"
     m_Metadata:
       m_Items: []
+  - m_Id: 7986785070915584
+    m_Localized: Kaufe das Talent {talent} von {combatTarget}
+    m_Metadata:
+      m_Items:
+      - rid: 2631328474858782722
+  - m_Id: 7991688715608064
+    m_Localized: '{tasks:list:{}|, | und }'
+    m_Metadata:
+      m_Items:
+      - rid: 2631328474858782722
+  - m_Id: 8330442642857984
+    m_Localized: Spiele {amount} Karten in einem einzigen Zug
+    m_Metadata:
+      m_Items:
+      - rid: 2631328474858782722
   references:
     version: 2
     RefIds:
@@ -45,3 +60,6 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 12244000768
+        - id: 7986785070915584
+        - id: 7991688715608064
+        - id: 8330442642857984

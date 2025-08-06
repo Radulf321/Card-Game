@@ -36,6 +36,21 @@ MonoBehaviour:
     m_Localized: Finish a game
     m_Metadata:
       m_Items: []
+  - m_Id: 7986785070915584
+    m_Localized: Purchase the talent {talent} from {combatTarget}
+    m_Metadata:
+      m_Items:
+      - rid: 2631328474858782721
+  - m_Id: 7991688715608064
+    m_Localized: '{tasks:plural:||{tasks:list:{}| and }|{tasks:list:{}|, |, and }}'
+    m_Metadata:
+      m_Items:
+      - rid: 2631328474858782721
+  - m_Id: 8330442642857984
+    m_Localized: Play {amount} cards during a single turn
+    m_Metadata:
+      m_Items:
+      - rid: 2631328474858782721
   references:
     version: 2
     RefIds:
@@ -45,3 +60,6 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 12244000768
+        - id: 7986785070915584
+        - id: 7991688715608064
+        - id: 8330442642857984

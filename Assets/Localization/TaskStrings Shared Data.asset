@@ -31,6 +31,18 @@ MonoBehaviour:
     m_Key: FinishDescription
     m_Metadata:
       m_Items: []
+  - m_Id: 7986785070915584
+    m_Key: TalentDescription
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7991688715608064
+    m_Key: AndDescription
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8330442642857984
+    m_Key: PlayCardsDescription
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
