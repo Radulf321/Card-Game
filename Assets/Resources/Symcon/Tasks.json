@@ -42,19 +42,16 @@
         ]
     },
     {
-        "id": "win6",
-        "type": "wins",
-        "amount": 6,
-        "conditions": [
-            {
-                "type": "taskCompleted",
-                "task": "win3"
-            }
-        ],
+        "id": "cards5",
+        "type": "playCards",
+        "amount": 5,
         "rewards": [
             {
-                "type": "rounds",
-                "amount": 1
+                "type": "unlock",
+                "unlock": {
+                    "type": "equipment",
+                    "id": "simpleShirt"
+                }
             }
         ]
     },
@@ -64,11 +61,13 @@
         "tasks": [
             {
                 "type": "wins",
-                "amount": 2
+                "amount": 2,
+                "combatTarget": "singleFamilyHome"
             },
             {
                 "type": "wins",
-                "amount": 2
+                "amount": 2,
+                "combatTarget": "realEstateCompany"
             }
         ],
         "conditions": [
@@ -86,5 +85,29 @@
                 }
             }
         ]
+    },
+    {
+        "id": "win8",
+        "type": "wins",
+        "amount": 8,
+        "conditions": [
+            {
+                "type": "taskCompleted",
+                "task": "win3"
+            }
+        ],
+        "rewards": [
+            {
+                "type": "rounds",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": "switchingViaApp",
+        "type": "talent",
+        "combatTarget": "realEstateCompany",
+        "talent": "switchingViaApp",
+        "rewards": []
     }
 ]
