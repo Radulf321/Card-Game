@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using UnityEngine.SceneManagement;
 
 #nullable enable
-public class Talent {
-    
+public class Talent
+{
+
     private string id;
     private string title;
     private Dictionary<string, int> cost;
@@ -18,7 +18,8 @@ public class Talent {
     private bool purchased = false;
     private CombatTarget owner;
 
-    public Talent(string title, Dictionary<string, int> cost, string description, string imagePath, List<Reward> rewards, List<Talent> prerequisites, Dialog dialog, CombatTarget owner) {
+    public Talent(string title, Dictionary<string, int> cost, string description, string imagePath, List<Reward> rewards, List<Talent> prerequisites, Dialog dialog, CombatTarget owner)
+    {
         this.id = title;
         this.title = title;
         this.cost = cost;
@@ -30,12 +31,14 @@ public class Talent {
         this.owner = owner;
     }
 
-    public Talent(JObject talentData, CombatTarget owner) {
+    public Talent(JObject talentData, CombatTarget owner)
+    {
         this.id = talentData["id"]?.ToString() ?? "Undefined";
         this.title = LocalizationHelper.GetLocalizedString(talentData["title"] as JObject)!;
         Dictionary<string, int> cost = new Dictionary<string, int>();
         JObject costObject = talentData["cost"] as JObject ?? new JObject();
-        foreach (JProperty property in costObject.Properties()) {
+        foreach (JProperty property in costObject.Properties())
+        {
             string type = property.Name;
             int value = property.Value.ToObject<int>();
             cost[type] = value;
@@ -53,15 +56,18 @@ public class Talent {
         this.owner = owner;
     }
 
-    public string GetID() {
+    public string GetID()
+    {
         return this.id;
     }
 
-    public string GetTitle() {
+    public string GetTitle()
+    {
         return this.title;
     }
 
-    public Dictionary<string, int> GetCost() {
+    public Dictionary<string, int> GetCost()
+    {
         return this.cost;
     }
 
@@ -69,11 +75,15 @@ public class Talent {
         if (this.rewards.Count == 0) {
             return this.description;
         }
-        else {
+        else
+        {
             string rewardName;
-            if (LocalizationHelper.GetLocalization() == "de") {
+            if (LocalizationHelper.GetLocalization() == "de")
+            {
                 rewardName = "Belohnung";
-            } else {
+            }
+            else
+            {
                 rewardName = "Reward";
             }
             List<string> rewardStrings = new List<string>();
@@ -85,15 +95,18 @@ public class Talent {
         }
     }
 
-    public string GetInfoDescription() {
+    public string GetInfoDescription()
+    {
         return this.description;
     }
 
-    public string GetImagePath() {
-        return Game.Instance.GetResourcePath() +  "/Graphics/Talents/" + this.imagePath;
+    public string GetImagePath()
+    {
+        return Game.Instance.GetResourcePath() + "/Graphics/Talents/" + this.imagePath;
     }
 
-    public List<string> GetPrerequisites() {
+    public List<string> GetPrerequisites()
+    {
         return this.prerequisites;
     }
 
@@ -101,31 +114,39 @@ public class Talent {
         return this.rewards;
     }
 
-    public Dialog GetDialog() {
+    public Dialog GetDialog()
+    {
         return this.dialog;
     }
 
-    public bool IsPurchased() {
+    public bool IsPurchased()
+    {
         return this.purchased;
     }
 
-    public async Task Purchase(Action? afterDialog = null) {
-        if (this.purchased) {
+    public async Task Purchase(Action? afterDialog = null)
+    {
+        if (this.purchased)
+        {
             throw new System.Exception("Talent already purchased.");
         }
 
-        foreach (string type in GetCost().Keys) {
-            if (this.owner.GetExperience(type) < GetCost()[type]) {
+        foreach (string type in GetCost().Keys)
+        {
+            if (this.owner.GetExperience(type) < GetCost()[type])
+            {
                 throw new System.Exception("Not enough experience to purchase talent.");
             }
         }
-        
-        foreach (string type in GetCost().Keys) {
+
+        foreach (string type in GetCost().Keys)
+        {
             owner.IncreaseExperience(type, -GetCost()[type]);
         }
 
         this.purchased = true;
-        await DialogHandler.Instance!.StartDialog(GetDialog(), onFinish: afterDialog ?? (() => {
+        await DialogHandler.Instance!.StartDialog(GetDialog(), onFinish: afterDialog ?? (() =>
+        {
             Game.Instance!.EndRound();
         }));
     }
