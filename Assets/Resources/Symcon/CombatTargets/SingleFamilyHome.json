@@ -161,7 +161,6 @@
                 "de": "Du lernst Frank kennen"
             },
             "image": "SingleFamilyHome/Introduction",
-            "rewards": [],
             "prerequisites": [],
             "introduction": true,
             "dialog": [
@@ -232,12 +231,6 @@
                 "de": "Erste Schritte mit der Visualisierung"
             },
             "image": "SingleFamilyHome/BasicVisualization",
-            "rewards": [
-                {
-                    "type": "card",
-                    "card": "flexibility"
-                }
-            ],
             "prerequisites": [
                 "introduction"
             ],
@@ -312,11 +305,6 @@
                 "de": "Integriere den Smart TV in Symcon und starte mit smarten Filmabenden durch"
             },
             "image": "SingleFamilyHome/LivingRoomSmartTV",
-            "rewards": [
-                {
-                    "type": "energy"
-                }
-            ],
             "prerequisites": [
                 "basicVisualisation"
             ],
@@ -391,11 +379,6 @@
                 "de": "Kontrolliere die Rollläden und halte die Sonne fern wenn sie dich stört"
             },
             "image": "SingleFamilyHome/LivingRoomShutters",
-            "rewards": [
-                {
-                    "type": "rounds"
-                }
-            ],
             "prerequisites": [
                 "basicVisualisation"
             ],
@@ -470,12 +453,6 @@
                 "de": "Ruhige Ambientklänge oder harte Musik aus allen Rohren. Kontrolliere den Sound genau so wie du es möchtest"
             },
             "image": "SingleFamilyHome/LivingRoomSoundSystem",
-            "rewards": [
-                {
-                    "type": "card",
-                    "card": "perfectBalance"
-                }
-            ],
             "prerequisites": [
                 "basicVisualisation"
             ],
@@ -576,12 +553,6 @@
                 "de": "Szenen vorbereiten und mit einer einfachen Berührung wieder aufzurufen ermöglicht ein komfortables Schalten auf übliche Konfigurationen"
             },
             "image": "SingleFamilyHome/LivingRoomSceneControl",
-            "rewards": [
-                {
-                    "type": "card",
-                    "card": "inTheFlow"
-                }
-            ],
             "prerequisites": [
                 "livingRoomSmartTV",
                 "livingRoomShutters",

@@ -467,11 +467,6 @@
                 "de": "Nachdem du das Tutorial abgeschlossen hast, kannst du dich jetzt als Integrator auf der Symcon-Homepage listen lassen."
             },
             "image": "Tutorial/Tutorial",
-            "rewards": [
-                {
-                    "type": "rounds"
-                }
-            ],
             "dialog": [
                 {
                     "type": "image",

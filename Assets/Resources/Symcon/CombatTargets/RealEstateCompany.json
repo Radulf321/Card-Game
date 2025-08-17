@@ -179,7 +179,6 @@
                 "de": "Erster Kontakt zu Schneider Immobilien"
             },
             "image": "RealEstateCompany/Introduction",
-            "rewards": [],
             "prerequisites": [],
             "introduction": true,
             "dialog": [
@@ -261,12 +260,6 @@
                 "de": "Plane die Verkabelung uns setze sie für kommende Erweiterungen um"
             },
             "image": "RealEstateCompany/PlanningWiring",
-            "rewards": [
-                {
-                    "type": "card",
-                    "card": "millingSlots"
-                }
-            ],
             "prerequisites": [
                 "introduction"
             ],
@@ -357,16 +350,6 @@
                 "de": "Die Lampen einbauen. Es wirkt simpel, ist aber eine der wichtigsten Dinge in einem neuen Haus."
             },
             "image": "RealEstateCompany/Lighting",
-            "rewards": [
-                {
-                    "type": "energy",
-                    "turn": 4
-                },
-                {
-                    "type": "energy",
-                    "turn": 7
-                }
-            ],
             "prerequisites": [
                 "planningWiring"
             ],
@@ -446,12 +429,6 @@
                 "de": "Gute Beschattung macht es an sonnigen Tagen gemütlich im Haus."
             },
             "image": "RealEstateCompany/Shading",
-            "rewards": [
-                {
-                    "type": "rounds",
-                    "amount": 4
-                }
-            ],
             "prerequisites": [
                 "planningWiring"
             ],
@@ -519,12 +496,6 @@
                 "de": "Sich warm zu halten, wenn es draußen kalt ist, ist nicht nur gemütlich, sondern auch wichtig, um gesund zu bleiben."
             },
             "image": "RealEstateCompany/Heating",
-            "rewards": [
-                {
-                    "type": "card",
-                    "card": "installANewDevice"
-                }
-            ],
             "prerequisites": [
                 "planningWiring"
             ],
@@ -592,12 +563,6 @@
                 "de": "Da die grundlegenden Aktoren nun vorbereitet sind, ist es ein einfaches eine erste Visualisierung zu erstellen und sie aus der Ferne zu steuern."
             },
             "image": "RealEstateCompany/SwitchingViaApp",
-            "rewards": [
-                {
-                    "type": "card",
-                    "card": "priorities"
-                }
-            ],
             "prerequisites": [
                 "lighting",
                 "heating",
