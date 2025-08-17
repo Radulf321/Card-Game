@@ -33,6 +33,8 @@ public class GamePreparationHandler : MonoBehaviour
         }
 
         UpdateTasks(equipmentArea.Find("TaskInfo"));
+        
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.Preparation));
     }
 
     // Update is called once per frame

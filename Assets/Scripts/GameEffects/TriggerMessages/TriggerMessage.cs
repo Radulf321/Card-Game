@@ -12,6 +12,8 @@ public enum TriggerType
     DiscardCard,
     PlayCard,
     EndDialog,
+    Preparation,
+    EndGame,
 }
 
 public class TriggerMessage

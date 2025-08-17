@@ -31,7 +31,7 @@ public class GameEndHandler : MonoBehaviour
         totalWins.transform.SetParent(basicStatisticsArea, true);
 
         TMPro.TextMeshProUGUI totalWinsText = totalWins.AddComponent<TMPro.TextMeshProUGUI>();
-        
+
         AsyncHelper.UpdateTextFromTask(totalWinsText, AsyncHelper.HandleToTask(
             LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "TotalWins",
             arguments: new Dictionary<string, object> {
@@ -41,6 +41,8 @@ public class GameEndHandler : MonoBehaviour
         ));
         totalWinsText.fontSize = 36; // Set font size or other properties as needed
         totalWinsText.color = Color.black; // Set color if desired
+        
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.EndGame));
     }
 
     public void ReturnToMainMenu()
