@@ -59,26 +59,12 @@ public class TalentInfoHandler : MonoBehaviour
         descriptionText.text = talent.GetInfoDescription();
         descriptionText.fontSize = descriptionSize;
         descriptionArea.Find("RewardsTitle").GetComponent<TMPro.TextMeshProUGUI>().fontSize = titleSize;
-        Transform rewardsArea = descriptionArea.Find("RewardsArea");
         rightArea.Find("DescriptionScroll").GetComponentInChildren<Scrollbar>(includeInactive: true).value = 1;
 
-        for (int i = 0; i < rewardsArea.childCount; i++)
-        {
-            Destroy(rewardsArea.GetChild(i).gameObject);
-        }
-
-        foreach (Reward reward in talent.GetRewards())
-        {
-            if (reward is CardReward cardReward)
-            {
-                GameObject cardObject = Instantiate(cardPrefab!);
-                cardObject.GetComponentInChildren<CardHandler>().SetCard(cardReward.GetCard());
-                cardObject.GetComponentInChildren<CardHandler>().SetActive(false);
-                float cardHeight = Mathf.Max(240, 0.38f * myHeight);
-                cardObject.GetComponent<RectTransform>().sizeDelta = new UnityEngine.Vector2(cardHeight * cardObject.GetComponent<AspectRatioFitter>().aspectRatio, cardHeight);
-                cardObject.transform.SetParent(rewardsArea, false);
-            }
-        }
+        Transform rewardDisplayArea = descriptionArea.Find("RewardDisplayArea");
+        rewardDisplayArea.GetComponent<LayoutElement>().preferredHeight = Mathf.Max(240, 0.38f * myHeight);
+        rewardDisplayArea.GetComponent<LayoutElement>().flexibleHeight = 0;
+        rewardDisplayArea.GetComponent<RewardAreaHandler>().SetRewards(talent.GetRewards());
 
         Transform confirmButton = rightArea.Find("ButtonArea").Find("ConfirmButton");
         AsyncOperationHandle<string> confirmButtonLocalization = talent.IsPurchased() ?
