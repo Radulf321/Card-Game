@@ -14,7 +14,8 @@ public abstract class TriggerMessageCondition
             case "endturn":
                 return new TriggerMessageConditionEndTurn(json);
             case "talenttree":
-                return new TriggerMessageConditionTalentTree(json);
+            case "openscene":
+                return new TriggerMessageConditionOpenScene(json);
             case "drawcards":
                 return new TriggerMessageConditionDrawCards(json);
             default:
