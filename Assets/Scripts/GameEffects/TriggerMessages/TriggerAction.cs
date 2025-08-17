@@ -11,18 +11,21 @@ public class TriggerAction
     private GameEffect effect;
     private List<StatusCondition> conditions;
     private Action? onTrigger;
+    private bool unregisterOnEndRound = false;
 
 
-    public TriggerAction(TriggerMessageCondition trigger, GameEffect effect, List<StatusCondition>? conditions = null)
+    public TriggerAction(TriggerMessageCondition trigger, GameEffect effect, List<StatusCondition>? conditions = null, bool unregisterOnEndRound = true)
     {
         this.trigger = trigger;
         this.effect = effect;
         this.conditions = conditions ?? new List<StatusCondition>();
+        this.unregisterOnEndRound = unregisterOnEndRound;
     }
 
-    public TriggerAction(JObject json, Card? owner = null) : this(
+    public TriggerAction(JObject json, Card? owner = null, bool? unregisterOnEndRound = null) : this(
         trigger: TriggerMessageCondition.FromJson(json["trigger"] as JObject),
-        effect: GameEffect.FromJson(json["effect"] as JObject ?? new JObject(), owner, CardEffectTrigger.TriggerEffect)
+        effect: GameEffect.FromJson(json["effect"] as JObject ?? new JObject(), owner, CardEffectTrigger.TriggerEffect),
+        unregisterOnEndRound: unregisterOnEndRound ?? json["unregisterOnEndRound"]?.ToObject<bool>() ?? true
     )
     {
         List<StatusCondition> conditions = new List<StatusCondition>();
@@ -79,7 +82,7 @@ public class TriggerAction
             this.onTrigger?.Invoke();
         }
 
-        if (triggerMessage.GetTriggerType() == TriggerType.EndRound)
+        if (this.unregisterOnEndRound && (triggerMessage.GetTriggerType() == TriggerType.EndRound))
         {
             this.Unsubscribe();
         }

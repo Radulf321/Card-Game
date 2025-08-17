@@ -37,6 +37,7 @@ class Game
     private EquipmentManager equipmentManager;
     private TaskManager taskManager;
     private CharacterManager characterManager;
+    private List<TriggerAction> triggerActions;
 
     public Game()
     {
@@ -57,6 +58,7 @@ class Game
         this.equipmentManager = new EquipmentManager();
         this.taskManager = new TaskManager();
         this.characterManager = new CharacterManager();
+        this.triggerActions = new List<TriggerAction>();
     }
 
     public Game(string ResourcePath)
@@ -105,6 +107,12 @@ class Game
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
         this.checkIcon = index["checkIcon"]!.ToString();
 
+        List<TriggerAction> triggerActions = new List<TriggerAction>();
+        foreach (JObject triggerActionData in index["triggerActions"] ?? new JArray())
+        {
+            triggerActions.Add(new TriggerAction(triggerActionData, unregisterOnEndRound: false));
+        }
+        this.triggerActions = triggerActions;
         this.gameOverDialog = Dialog.FromJson(index["gameOverDialog"] as JArray ?? new JArray());
         this.tutorialDone = PlayerPrefs.GetInt(this.resourcePath + Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
@@ -150,6 +158,10 @@ class Game
 
     public void StartGame()
     {
+        foreach (TriggerAction triggerAction in this.triggerActions)
+        {
+            triggerAction.Subscribe();
+        }
         this.taskManager.Initialize();
         this.equipmentManager.HandlePreparation(StartRound);
     }
