@@ -12,7 +12,6 @@ public class Talent
     private Dictionary<string, int> cost;
     private string description;
     private string imagePath;
-    private List<Reward> rewards;
     private List<string> prerequisites;
     private Dialog dialog;
     private bool purchased = false;
@@ -25,7 +24,6 @@ public class Talent
         this.cost = cost;
         this.description = description;
         this.imagePath = imagePath;
-        this.rewards = rewards;
         this.prerequisites = prerequisites.ConvertAll(t => t.GetTitle());
         this.dialog = dialog;
         this.owner = owner;
@@ -46,11 +44,6 @@ public class Talent
         this.cost = cost;
         this.description = LocalizationHelper.GetLocalizedString(talentData["description"] as JObject)!;
         this.imagePath = talentData["image"]?.ToString() ?? "Placeholder";
-        List<Reward> rewards = new List<Reward>();
-        foreach (JObject rewardData in talentData["rewards"] ?? new JArray()) {
-            rewards.Add(Reward.FromJson(rewardData));
-        }
-        this.rewards = rewards;
         this.prerequisites = talentData["prerequisites"]?.ToObject<List<string>>() ?? new List<string>();
         this.dialog = Dialog.FromJson(talentData["dialog"] as JArray ?? new JArray());
         this.owner = owner;
@@ -71,8 +64,11 @@ public class Talent
         return this.cost;
     }
 
-    public async Task<string> GetDescription() {
-        if (this.rewards.Count == 0) {
+    public async Task<string> GetDescription()
+    {
+        List<Reward> rewards = this.GetRewards();
+        if (rewards.Count == 0)
+        {
             return this.description;
         }
         else
@@ -86,8 +82,8 @@ public class Talent
             {
                 rewardName = "Reward";
             }
-            List<string> rewardStrings = new List<string>();
-            foreach (Reward reward in this.rewards)
+            HashSet<string> rewardStrings = new HashSet<string>();
+            foreach (Reward reward in rewards)
             {
                 rewardStrings.Add(await reward.ToNiceString());
             }
@@ -110,8 +106,9 @@ public class Talent
         return this.prerequisites;
     }
 
-    public List<Reward> GetRewards() {
-        return this.rewards;
+    public List<Reward> GetRewards()
+    {
+        return ExtractRewardsFromDialog(this.dialog);
     }
 
     public Dialog GetDialog()
@@ -149,5 +146,21 @@ public class Talent
         {
             Game.Instance!.EndRound();
         }));
+    }
+
+    private List<Reward> ExtractRewardsFromDialog(Dialog dialog)
+    {
+        List<Reward> rewards = new List<Reward>();
+        if (dialog is DialogReward rewardDialog)
+        {
+            rewards.AddRange(rewardDialog.GetRewards());
+        }
+
+        foreach (Dialog followingDialog in dialog.GetFollowingDialogs())
+        {
+            rewards.AddRange(ExtractRewardsFromDialog(followingDialog));
+        }
+
+        return rewards;
     }
 }
