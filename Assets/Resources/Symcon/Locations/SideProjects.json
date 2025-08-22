@@ -1,0 +1,395 @@
+{
+    "id": "sideProjects",
+    "action": {
+        "title": {
+            "en": "Side Projects",
+            "de": "Nebenprojekte"
+        },
+        "description": {
+            "en": "Sometimes, you don't need long term jobs but rather short simple tasks to earn some SymCoins.",
+            "de": "Manchmal braucht man nicht die großen Aufträge, sondern eher kurze einfache Aufgaben, um ein paar SymCoins zu verdienen."
+        },
+        "image": "SideProjects"
+    },
+    "requirements": [
+        {
+            "type": "unlock"
+        }
+    ],
+    "dialog": [
+        {
+            "type": "image",
+            "background": "Regular"
+        },
+        {
+            "type": "condition",
+            "condition": {
+                "type": "flag",
+                "key": "sideProjectsVisited",
+                "value": true
+            },
+            "if": [
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: All right, let's see what we can do today.",
+                        "de": "Du: Alles klar, schauen wir mal, was wir heute machen können."
+                    }
+                }
+            ],
+            "else": [
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "After you got listed as integrator on the Symcon homepage, you got a number of mails with tasks of different complexity.",
+                        "de": "Nachdem du als Integrator auf der Symcon-Homepage gelistet wurdest, hast du eine Reihe von Mails mit Aufgaben unterschiedlicher Komplexität erhalten."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You: I could do some of these for some extra income. Let's see...",
+                        "de": "Du: Ich könnte ein paar davon für ein bisschen extra Einkommen machen. Mal schauen..."
+                    }
+                },
+                {
+                    "type": "flag",
+                    "key": "symconExpertiseVisited",
+                    "value": true
+                },
+                {
+                    "type": "condition",
+                    "condition": {
+                        "type": "not",
+                        "condition": {
+                            "type": "flag",
+                            "key": "sideProjectsTutorialDone",
+                            "value": true
+                        }
+                    },
+                    "if": [
+                        {
+                            "type": "image",
+                            "left": {
+                                "image": "PioTutorial",
+                                "alignment": "center"
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: Hey, I see you're ready to take on some side projects. That's a good way to earn some extra SymCoins.",
+                                "de": "Pio: Moin, ich sehe du bist bereit, ein paar Nebenprojekte zu übernehmen. Das ist eine gute Möglichkeit, ein paar extra SymCoins zu verdienen."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: There are bigger and smaller projects. The bigger ones take more time and you'll spend extra rounds on them, but they also pay more.",
+                                "de": "Pio: Es gibt größere und kleinere Projekte. Die größeren dauern länger und du wirst extra Runden dafür brauchen, aber dafür ist die Bezahlung auch besser."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: Also, you earn more the further you are with your main projects, so each won customer job will increase your income from side projects.",
+                                "de": "Pio: Außerdem verdienst du mehr, je weiter du mit deinen Hauptprojekten bist, also wird jeder gewonnene Kundenauftrag dein Einkommen aus Nebenprojekten erhöhen."
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "speaker": "left",
+                            "text": {
+                                "en": "Pio: That's it about side projects. Good luck with your first one!",
+                                "de": "Pio: Soweit zu Nebenprojekten. Viel Erfolg mit deinem ersten!"
+                            }
+                        },
+                        {
+                            "type": "image",
+                            "left": ""
+                        },
+                        {
+                            "type": "flag",
+                            "key": "sideProjectsTutorialDone",
+                            "validity": "Permanent",
+                            "value": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "showUI": true,
+            "selectType": "Cards",
+            "title": {
+                "en": "Select a side project",
+                "de": "Wähle ein Nebenprojekt"
+            },
+            "options": [
+                {
+                    "type": "file",
+                    "file": "Options/SideProject",
+                    "rounds": 0,
+                    "title": {
+                        "en": "Small project",
+                        "de": "Kleines Projekt"
+                    },
+                    "description": {
+                        "en": "A small project that can be done in a day",
+                        "de": "Ein kleines Projekt, das an einem Tag erledigt werden kann"
+                    },
+                    "multiplier": 1,
+                    "image": "CashSmall",
+                    "dialog": {
+                        "type": "random",
+                        "dialogs": [
+                            [
+                                {
+                                    "type": "image",
+                                    "background": "LivingRoom",
+                                    "left": "Player",
+                                    "right": "YoungMan"
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Man: Hey mate! Thanks for coming. My shutter control is broken and doesn't respond any more.",
+                                        "de": "Mann: Hey Kumpel! Danke, dass du gekommen bist. Meine Rollladensteuerung ist kaputt und reagiert nicht mehr."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Man: I guess I shouldn't have bought the cheapest one, but I didn't expect it to break so soon.",
+                                        "de": "Mann: Ich hätte wohl nicht das billigste kaufen sollen, aber ich hätte nicht gedacht, dass es so schnell kaputt geht."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "left",
+                                    "text": {
+                                        "en": "You: No problem, I can take a look and quickly replace it if needed.",
+                                        "de": "Du: Kein Problem, ich kann es mir anschauen und bei Bedarf schnell ersetzen."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Man: Thanks, man! You're the best!",
+                                        "de": "Mann: Danke, Mann! Du bist der Beste!"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "type": "image",
+                                    "background": "Garden",
+                                    "left": "Player",
+                                    "right": "OldWoman"
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Old Woman: Thank you so much for coming! I really need some help with mowing the grass.",
+                                        "de": "Alte Frau: Vielen Dank, dass Sie gekommen sind! Ich brauche wirklich Hilfe beim Rasenmähen."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "left",
+                                    "text": {
+                                        "en": "You: I'm sorry, ma'am, but I'm not a gardener but an integrator.",
+                                        "de": "Du: Es tut mir leid, gnädige Frau, aber ich bin kein Gärtner, sondern ein Integrator."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Old Woman: That's good, you can find the lawn mover in the shed.",
+                                        "de": "Alte Frau: Das ist gut, Sie können den Rasenmäher im Schuppen finden."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "text": {
+                                        "en": "You realize that her hearing is not the best, so you decide to simply help her. Even though it's not your usual job, you still get paid for it.",
+                                        "de": "Du merkst, dass ihr Gehör nicht das beste ist, also entscheidest du dich einfach zu helfen. Auch wenn es nicht deine übliches Arbeit ist, wirst du dafür immerhin bezahlt."
+                                    }
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    "type": "file",
+                    "file": "Options/SideProject",
+                    "rounds": 1,
+                    "title": {
+                        "en": "Medium project",
+                        "de": "Mittleres Projekt"
+                    },
+                    "description": {
+                        "en": "A project for a few days",
+                        "de": "Ein Projekt für ein paar Tage"
+                    },
+                    "multiplier": 3,
+                    "image": "CashMedium",
+                    "dialog": {
+                        "type": "random",
+                        "dialogs": [
+                            [
+                                {
+                                    "type": "image",
+                                    "background": "Regular",
+                                    "left": "Player",
+                                    "right": "Integrator"
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Integrator: Hey, I should teach some newbies how to use Symcon, but I don't have the time. Can you help me out?",
+                                        "de": "Integrator: Hey, ich sollte ein paar Neulinge in die Nutzung von Symcon einweisen, aber ich habe keine Zeit. Kannst du mir helfen?"
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Integrator: Nothing fancy, just show them the basics: Configurators, variable presentations, archive functions, etc.",
+                                        "de": "Integrator: Nichts Besonderes, zeig ihnen einfach die Grundlagen: Konfiguratoren, Variablendarstellungen, Archivfunktionen usw."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "left",
+                                    "text": {
+                                        "en": "You: Sure, no problem, when should I start?",
+                                        "de": "Du: Klar, kein Problem, wann soll ich anfangen?"
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Integrator: Today? The course is in the afternoon, so you have some time to prepare.",
+                                        "de": "Integrator: Heute? Der Kurs ist am Nachmittag, also hast du etwas Zeit, dich vorzubereiten."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "left",
+                                    "text": {
+                                        "en": "You: Sporty, but no problem. I can manage that.",
+                                        "de": "Du: Sportlich, aber kein Problem. Ich bekomme das hin."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Integrator: Thanks, you're a lifesaver!",
+                                        "de": "Integrator: Danke, du bist mein persönlicher Held!"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "type": "image",
+                                    "background": "Garage",
+                                    "left": "Player",
+                                    "right": "Hipster"
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Man: I just had solar panels installed on my roof, but the installer didn't properly connect them.",
+                                        "de": "Mann: Ich habe gerade Solarpanels auf meinem Dach installieren lassen, aber der Installateur hat sie nicht richtig angeschlossen."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Man: I need you to finish the job and properly configure the Energy Manager in Symcon so I can use it.",
+                                        "de": "Mann: Du musst den Job beenden und den Energiemanager in Symcon richtig konfigurieren, damit ich ihn nutzen kann."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "left",
+                                    "text": {
+                                        "en": "You: All right, I'll get started right away.",
+                                        "de": "Du: Alles klar, ich lege direkt los."
+                                    }
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    "type": "file",
+                    "file": "Options/SideProject",
+                    "rounds": 2,
+                    "title": {
+                        "en": "Big project",
+                        "de": "Großes Projekt"
+                    },
+                    "description": {
+                        "en": "It takes a while but it pays well",
+                        "de": "Es dauert eine Weile, aber es wird gut bezahlt"
+                    },
+                    "multiplier": 5,
+                    "image": "CashLarge",
+                    "dialog": {
+                        "type": "random",
+                        "dialogs": [
+                            [
+                                {
+                                    "type": "image",
+                                    "background": "Casino",
+                                    "left": "Player",
+                                    "right": "CasinoDealer"
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Dealer: Welcome and thank you for coming. We need to update our lighting system and wanted to turn it smart in the process.",
+                                        "de": "Geber: Willkommen und danke, dass Sie gekommen sind. Wir müssen unser Beleuchtungssystem aktualisieren und wollten es dabei smart machen."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "right",
+                                    "text": {
+                                        "en": "Dealer: We want to be able to control the lights in the casino and the parking lot, and also have some nice effects for special events.",
+                                        "de": "Geber: Wir wollen die Lichter im Casino und auf dem Parkplatz steuern können und auch schöne Effekte für besondere Veranstaltungen haben."
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "speaker": "left",
+                                    "text": {
+                                        "en": "You: That sounds like an interesting project! I can help you with that.",
+                                        "de": "You: Das klingt nach einem interessanten Projekt! Ich kann Ihnen dabei helfen."
+                                    }
+                                }
+                            ]
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

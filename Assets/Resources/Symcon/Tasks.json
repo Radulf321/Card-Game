@@ -42,6 +42,21 @@
         ]
     },
     {
+        "id": "cash500",
+        "type": "currency",
+        "currency": "cash",
+        "amount": 500,
+        "rewards": [
+            {
+                "type": "unlock",
+                "unlock": {
+                    "type": "location",
+                    "id": "sideProjects"
+                }
+            }
+        ]
+    },
+    {
         "id": "cards5",
         "type": "playCards",
         "amount": 5,
