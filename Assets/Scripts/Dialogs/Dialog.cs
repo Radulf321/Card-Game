@@ -8,7 +8,7 @@ abstract public class Dialog
 {
     public static Dialog? CurrentDialog;
 
-    public static Dialog FromJson(JArray? dialogData, Dialog? nextDialog = null)
+    public static Dialog? FromJson(JArray? dialogData, Dialog? nextDialog = null)
     {
         if (dialogData == null || dialogData.Count == 0)
         {
@@ -16,10 +16,11 @@ abstract public class Dialog
         }
         if (dialogData.Count == 1)
         {
-            return FromJson(dialogData[0] as JObject ?? new JObject(), nextDialog);
+            JToken firstToken = dialogData.First!;
+            return FromJson(firstToken, nextDialog);
         }
         dialogData = new JArray(dialogData);
-        JObject singleDialogData = dialogData[dialogData.Count - 1] as JObject ?? new JObject();
+        JToken singleDialogData = dialogData[dialogData.Count - 1];
         dialogData.RemoveAt(dialogData.Count - 1);
         return FromJson(dialogData, FromJson(singleDialogData, nextDialog));
     }
