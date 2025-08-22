@@ -3,6 +3,7 @@
 public enum TriggerType
 {
     AddGoal,
+    AddCurrency,
     StartTurn,
     TalentTree,
     DrawCards,

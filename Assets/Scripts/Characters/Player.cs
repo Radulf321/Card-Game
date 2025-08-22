@@ -92,5 +92,11 @@ public class Player
         {
             this.currencies[currencyID] = amount;
         }
+        Game.Instance.SendTriggerMessage(
+            new TriggerMessage(
+                TriggerType.AddCurrency,
+                new TriggerMessageData(amount: amount, currency: currencyID)
+            )
+        );
     }
 }

@@ -10,8 +10,9 @@ public class TriggerMessageData
     private DiscardType? discardType;
     private Card? card;
     private CombatTarget? combatTarget;
+    private string? currency;
 
-    public TriggerMessageData(int? amount = null, string? goal = null, CardEffectTrigger? trigger = null, bool? success = null, DiscardType? discardType = null, Card? card = null, CombatTarget? combatTarget = null)
+    public TriggerMessageData(int? amount = null, string? goal = null, CardEffectTrigger? trigger = null, bool? success = null, DiscardType? discardType = null, Card? card = null, CombatTarget? combatTarget = null, string? currency = null)
     {
         this.amount = amount;
         this.goal = goal;
@@ -20,6 +21,7 @@ public class TriggerMessageData
         this.discardType = discardType;
         this.card = card;
         this.combatTarget = combatTarget;
+        this.currency = currency;
     }
 
     public int? GetAmount()
@@ -55,5 +57,10 @@ public class TriggerMessageData
     public CombatTarget? GetCombatTarget()
     {
         return this.combatTarget;
+    }
+
+    public string? GetCurrency()
+    {
+        return this.currency;
     }
 }

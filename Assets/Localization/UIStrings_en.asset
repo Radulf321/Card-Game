@@ -78,6 +78,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543859698663637
+  - m_Id: 36607776017653760
+    m_Localized: -{amount} <sprite name="Rounds">
+    m_Metadata:
+      m_Items:
+      - rid: 6401543859698663637
   references:
     version: 2
     RefIds:
@@ -89,3 +94,4 @@ MonoBehaviour:
         - id: 126060634112
         - id: 1417602409472000
         - id: 24290181314813952
+        - id: 36607776017653760
