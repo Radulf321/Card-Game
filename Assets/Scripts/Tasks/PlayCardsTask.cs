@@ -13,7 +13,7 @@ public class PlayCardsTask : GameTask
     private int progress;
     private int maxProgress;
 
-    public PlayCardsTask(string id, List<Reward> rewards, int amount, string? combatTargetID = null) : base(id, rewards)
+    public PlayCardsTask(string id, List<Reward> rewards, int amount) : base(id, rewards)
     {
         this.amount = amount;
         this.progress = 0;
