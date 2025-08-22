@@ -1,5 +1,6 @@
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
@@ -64,7 +65,7 @@ abstract public class DialogOptionFactory
             {
                 case JTokenType.String:
                     string content = token.ToString();
-                    var match = Regex.Match(content, @"^\$\{(\w+)\}$");
+                    Match match = Regex.Match(content, @"^\$\{(\w+)\}$");
                     if (match.Success)
                     {
                         string variableName = match.Groups[1].Value;
@@ -74,11 +75,40 @@ abstract public class DialogOptionFactory
                     else
                     {
                         // Replace all ${variable} with the value from json
-                        return Regex.Replace(content, @"\$\{(\w+)\}", match =>
+                        content = Regex.Replace(content, @"\$\{(\w+)\}", match =>
                         {
                             string variableName = match.Groups[1].Value;
                             return json[variableName]?.ToString() ?? match.Value;
                         });
+
+                        // Apply modificators like *{value, -1}
+                        Match modificatorMatch = Regex.Match(content, @"^\*\{([0-9.,\-\s]+)\}$");
+                        if (modificatorMatch.Success)
+                        {
+                            List<float> parts = new List<string>(modificatorMatch.Groups[1].Value.Split(',')).ConvertAll<float>(float.Parse);
+                            float product = 1f;
+                            foreach (float part in parts)
+                            {
+                                product *= part;
+                            }
+                            return product;
+                        }
+                        else
+                        {
+                            // Replace all ${variable} with the value from json
+                            content = Regex.Replace(content, @"\*\{([0-9.,\-\s]+)\}", match =>
+                            {
+                                List<float> parts = new List<string>(modificatorMatch.Groups[1].Value.Split(',')).ConvertAll<float>(float.Parse);
+                                float product = 1f;
+                                foreach (float part in parts)
+                                {
+                                    product *= part;
+                                }
+                                return product.ToString();
+                            });
+                        }
+
+                        return content;
                     }
 
                 case JTokenType.Object:

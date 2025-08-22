@@ -63,25 +63,36 @@ public class DialogOption
         return this.dialog;
     }
 
-    public Task<string?> GetCostText()
+    public async Task<string?> GetCostText()
     {
         if (this.cost == null)
         {
-            return Task.FromResult<string?>(null);
+            return null;
         }
 
         if (this.cost.Count == 0)
         {
-            return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "CostFree"));
+            return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "CostFree"));
         }
 
         List<string> results = new List<string>();
         foreach (KeyValuePair<string, int> entry in this.cost)
         {
-            results.Add(entry.Value.ToString() + Game.Instance.GetCurrencyInlineIcon(entry.Key));
+            switch (entry.Key)
+            {
+                case "rounds":
+                    results.Add(await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "RoundsCost", arguments: new Dictionary<string, object> {
+                        { "amount", entry.Value },
+                    })));
+                    break;
+
+                default:
+                    results.Add(entry.Value.ToString() + Game.Instance.GetCurrencyInlineIcon(entry.Key));
+                    break;
+            }
         }
 
-        return Task.FromResult<string?>(string.Join(" ", results));
+        return string.Join(" ", results);
     }
 
     public void Select(Action? onSucess)
@@ -95,15 +106,37 @@ public class DialogOption
             Player player = Game.Instance.GetPlayer();
             foreach (KeyValuePair<string, int> entry in this.cost)
             {
-                if (player.GetCurrency(entry.Key) < entry.Value)
+                switch (entry.Key)
                 {
-                    // TODO: Show UI Feedback
-                    return;
+                    case "rounds":
+                        if (Game.Instance.GetRemainingRounds() < entry.Value)
+                        {
+                            // TODO: Show UI Feedback
+                            return;
+                        }
+                        break;
+
+                    default:
+                        if (player.GetCurrency(entry.Key) < entry.Value)
+                        {
+                            // TODO: Show UI Feedback
+                            return;
+                        }
+                        break;
                 }
             }
             foreach (KeyValuePair<string, int> entry in this.cost)
             {
-                player.AddCurrency(entry.Key, -entry.Value);
+                switch (entry.Key)
+                {
+                    case "rounds":
+                        Game.Instance.AddRemainingRounds(-entry.Value);
+                        break;
+
+                    default:
+                        player.AddCurrency(entry.Key, -entry.Value);
+                        break;
+                }
             }
             onSucess?.Invoke();
         }
