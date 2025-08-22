@@ -138,13 +138,13 @@ public class CharacterManager
         }
     }
 
+    public List<CombatTarget> GetAvailableCombatTargets()
+    {
+        return this.combatTargets.Where(combatTarget => combatTarget.IsAvailable()).ToList();
+    }
+
     private List<Location> GetAvailableLocations()
     {
         return this.locations.Where(location => location.IsAvailable()).ToList();
-    }
-
-    private List<CombatTarget> GetAvailableCombatTargets()
-    {
-        return this.combatTargets.Where(combatTarget => combatTarget.IsAvailable()).ToList();
     }
 }
