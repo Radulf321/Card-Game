@@ -42,10 +42,10 @@
         ]
     },
     {
-        "id": "cash500",
+        "id": "cash400",
         "type": "currency",
         "currency": "cash",
-        "amount": 500,
+        "amount": 400,
         "rewards": [
             {
                 "type": "unlock",
