@@ -1,5 +1,9 @@
 {
     "id": "sideProjects",
+    "name": {
+        "en": "Side Projects",
+        "de": "Nebenprojekte"
+    },
     "action": {
         "title": {
             "en": "Side Projects",
