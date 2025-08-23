@@ -297,6 +297,12 @@
                             "file": "Options/CardPurchaseRepeat",
                             "card": "energySupply",
                             "cost": 100
+                        },
+                        {
+                            "type": "file",
+                            "file": "Options/CardPurchaseRepeat",
+                            "card": "gettingReady",
+                            "cost": 100
                         }
                     ]
                 },

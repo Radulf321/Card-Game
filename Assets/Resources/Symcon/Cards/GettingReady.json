@@ -1,0 +1,25 @@
+{
+    "id": "gettingReady",
+    "cost": 1,
+    "name": {
+        "en": "Getting Ready",
+        "de": "Bereitmachen"
+    },
+    "effects": [
+        {
+            "type": "triggerable",
+            "limitType": "Total",
+            "limit": 1,
+            "action": {
+                "trigger": {
+                    "type": "startTurn"
+                },
+                "effect": {
+                    "type": "energy",
+                    "amount": 2
+                }
+            }
+        }
+    ],
+    "image": "GettingReady"
+}
