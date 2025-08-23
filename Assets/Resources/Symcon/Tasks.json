@@ -102,6 +102,27 @@
         ]
     },
     {
+        "id": "cash800",
+        "type": "currency",
+        "currency": "cash",
+        "amount": 800,
+        "conditions": [
+            {
+                "type": "taskCompleted",
+                "task": "cash400"
+            }
+        ],
+        "rewards": [
+            {
+                "type": "unlock",
+                "unlock": {
+                    "type": "equipment",
+                    "id": "bagOfCash"
+                }
+            }
+        ]
+    },
+    {
         "id": "win8",
         "type": "wins",
         "amount": 8,

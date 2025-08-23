@@ -1,0 +1,28 @@
+{
+    "id": "bagOfCash",
+    "name": {
+        "en": "Bag of Cash",
+        "de": "Tasche voller Geld"
+    },
+    "slot": "accessory",
+    "icon": "BagOfCash",
+    "requirements": [
+        {
+            "type": "unlock"
+        }
+    ],
+    "effects": [
+        {
+            "type": "cards",
+            "cards": [
+                "gettingReady",
+                "energyBurst"
+            ]
+        },
+        {
+            "type": "currency",
+            "currency": "cash",
+            "amount": 600
+        }
+    ]
+}
