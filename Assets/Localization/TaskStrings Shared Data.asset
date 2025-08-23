@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Key: PlayCardsDescription
     m_Metadata:
       m_Items: []
+  - m_Id: 14131930132684800
+    m_Key: CurrencyDescription
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

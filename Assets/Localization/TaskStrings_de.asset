@@ -51,6 +51,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 2631328474858782722
+  - m_Id: 14131930132684800
+    m_Localized: Verdiene {amount} {currency}
+    m_Metadata:
+      m_Items:
+      - rid: 2631328474858782722
   references:
     version: 2
     RefIds:
@@ -63,3 +68,4 @@ MonoBehaviour:
         - id: 7986785070915584
         - id: 7991688715608064
         - id: 8330442642857984
+        - id: 14131930132684800
