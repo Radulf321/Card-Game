@@ -26,9 +26,9 @@ public class EnergyEffect : GameEffect
         CombatHandler.instance.gainEnergy(this.amount, this.maxEnergy);
     }
 
-    public override Task<string> getDescription()
+    private Task<string> GetDescription(string tableEntry)
     {
-        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "Energy",
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
             arguments: new Dictionary<string, object> {
                 { "amount", this.amount },
                 { "maxEnergy", this.maxEnergy }
@@ -36,14 +36,19 @@ public class EnergyEffect : GameEffect
         ));
     }
 
+    public override Task<string> getDescription()
+    {
+        return GetDescription("Energy");
+    }
+
+    public override Task<string> getTriggerDescription()
+    {
+        return GetDescription("EnergyTrigger");
+    }
+
     public override Task<string> getTurnEffectDescription()
     {
-        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "EnergyTurnEffect",
-            arguments: new Dictionary<string, object> {
-                { "amount", this.amount },
-                { "maxEnergy", this.maxEnergy }
-            }
-        ));
+        return GetDescription("EnergyTurnEffect");
     }
 
     public override GameEffect Clone(Card newOwner)

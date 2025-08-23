@@ -47,12 +47,20 @@ MonoBehaviour:
     m_Key: Triggerable
     m_Metadata:
       m_Items: []
+  - m_Id: 37743929341026304
+    m_Key: CommonTrigger
+    m_Metadata:
+      m_Items: []
   - m_Id: 2633323739127808
     m_Key: TriggerAddGoal
     m_Metadata:
       m_Items: []
   - m_Id: 8390389678252032
     m_Key: TriggerStartTurn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37747409896120320
+    m_Key: TriggerStartTurnFull
     m_Metadata:
       m_Items: []
   - m_Id: 16396495348342784

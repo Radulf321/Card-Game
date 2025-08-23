@@ -48,9 +48,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2632551630675968
-    m_Localized: "{limitType:choose(PerTurn|Total):{limit:plural:Einmal|{} mal} pro
-      Zug|{limit:plural:Das n\xE4chste mal|Die n\xE4chsten {} male} when|Immer} wenn
-      du {condition}, {effect}"
+    m_Localized: '{trigger}, {effect}'
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
@@ -103,6 +101,19 @@ MonoBehaviour:
     m_Localized: spiele diese Karte
     m_Metadata:
       m_Items: []
+  - m_Id: 37743929341026304
+    m_Localized: "{limitType:choose(PerTurn|Total):{limit:plural:Einmal|{} mal} pro
+      Zug|{limit:plural:Das n\xE4chste mal|Die n\xE4chsten {} male}|Immer} wenn du
+      {condition}"
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 37747409896120320
+    m_Localized: When the {number:choose(null|1|2|3):{limitType:choose(Total):next
+      {limit:choose(1):|{} }|}|1st |2nd |3rd |{}th }turn starts
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
   references:
     version: 2
     RefIds:
@@ -124,3 +135,5 @@ MonoBehaviour:
         - id: 14949827285393408
         - id: 16396495348342784
         - id: 27627690392330240
+        - id: 37743929341026304
+        - id: 37747409896120320

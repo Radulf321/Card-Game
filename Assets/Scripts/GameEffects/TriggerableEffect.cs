@@ -56,14 +56,12 @@ public class TriggerableEffect : GameEffect
 
     public override async Task<string> getDescription()
     {
-        string conditionDescription = await this.triggerAction.GetTriggerDescription();
+        string triggerDescription = await this.triggerAction.GetTriggerDescription(this.limitType, this.limit);
         string effectDescription = await this.triggerAction.GetEffectDescription();
         return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "Triggerable",
             arguments: new Dictionary<string, object?> {
-                { "condition", conditionDescription },
-                { "effect", effectDescription },
-                { "limitType", this.limitType },
-                { "limit", this.limit }
+                { "trigger", triggerDescription },
+                { "effect", effectDescription }
             }
         ));
     }
@@ -103,6 +101,6 @@ public class TriggerableEffect : GameEffect
 
 
         }
-        
+
     }
 }

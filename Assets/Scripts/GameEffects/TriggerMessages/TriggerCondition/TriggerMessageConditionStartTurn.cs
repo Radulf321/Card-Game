@@ -31,8 +31,19 @@ public class TriggerMessageConditionStartTurn : TriggerMessageCondition
     public override Task<string> GetDescription()
     {
         return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerStartTurn",
-            arguments: new Dictionary<string, object> {
+            arguments: new Dictionary<string, object?> {
                 { "number", this.number },
+            }
+        ));
+    }
+
+    public override Task<string> GetFullDescription(LimitType? limitType = null, int? limit = null)
+    {
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerStartTurnFull",
+            arguments: new Dictionary<string, object?> {
+                { "number", this.number },
+                { "limitType", limitType },
+                { "limit", limit }
             }
         ));
     }

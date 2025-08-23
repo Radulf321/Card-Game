@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using UnityEngine.Localization.Settings;
 
 public abstract class TriggerMessageCondition
 {
@@ -25,4 +27,15 @@ public abstract class TriggerMessageCondition
 
     public abstract bool FulfillsCondition(TriggerMessage message);
     public abstract Task<string> GetDescription();
+    public virtual async Task<string> GetFullDescription(LimitType? limitType = null, int? limit = null)
+    {
+        string conditionDescription = await this.GetDescription();
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "CommonTrigger",
+            arguments: new Dictionary<string, object> {
+                { "condition", conditionDescription },
+                { "limitType", limitType },
+                { "limit", limit }
+            })
+        );
+    }
 }

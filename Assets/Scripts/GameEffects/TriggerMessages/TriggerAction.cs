@@ -63,14 +63,14 @@ public class TriggerAction
         );
     }
 
-    public async Task<string> GetTriggerDescription()
+    public Task<string> GetTriggerDescription(LimitType? limitType = null, int? limit = null)
     {
-        return await this.trigger.GetDescription();
+        return this.trigger.GetFullDescription(limitType, limit);
     }
 
-    public async Task<string> GetEffectDescription()
+    public Task<string> GetEffectDescription()
     {
-        return await this.effect.getTriggerDescription();
+        return this.effect.getTriggerDescription();
     }
 
     private void HandleMessage(TriggerMessage triggerMessage)
