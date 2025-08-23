@@ -19,6 +19,10 @@ MonoBehaviour:
     m_Key: EnergyCaption
     m_Metadata:
       m_Items: []
+  - m_Id: 17400790206160896
+    m_Key: CurrencyCaption
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

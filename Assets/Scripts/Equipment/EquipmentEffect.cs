@@ -10,6 +10,7 @@ public abstract class EquipmentEffect
         {
             "cards" => new CardsEquipmentEffect(effectData),
             "energy" => new EnergyEquipmentEffect(effectData),
+            "currency" => new CurrencyEquipmentEffect(effectData),
             _ => throw new System.Exception($"Unknown equipment effect type: {type}")
         };
     }

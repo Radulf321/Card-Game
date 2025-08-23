@@ -25,6 +25,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 2631328291108945988
+  - m_Id: 17400790206160896
+    m_Localized: +{amount} {currency} at the beginning
+    m_Metadata:
+      m_Items:
+      - rid: 2631328291108945988
   references:
     version: 2
     RefIds:
@@ -34,3 +39,4 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 19391094784
+        - id: 17400790206160896
