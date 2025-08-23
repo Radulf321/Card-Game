@@ -25,8 +25,8 @@
         "numberOfTurns": 10,
         "turnsWithRequirement": {
             "type": "linear",
-            "base": 1.5,
-            "rate": 2.5
+            "base": 3,
+            "rate": 2
         },
         "numberOfRequirements": {
             "type": "random",
@@ -55,13 +55,14 @@
                 "type": "goal",
                 "goal": "creativity",
                 "index": 1,
+                "levelIncrement": 1.1,
                 "round": {
-                    "min": 5
+                    "min": 7
                 },
                 "amount": {
                     "type": "linear",
-                    "base": -3,
-                    "rate": 1
+                    "base": -2,
+                    "rate": 0.5
                 }
             },
             {
@@ -71,12 +72,12 @@
                 "index": 1,
                 "levelIncrement": 1,
                 "round": {
-                    "max": 4
+                    "max": 5
                 },
                 "amount": {
                     "type": "linear",
                     "base": 1,
-                    "rate": 1
+                    "rate": 1.5
                 }
             }
         ],
