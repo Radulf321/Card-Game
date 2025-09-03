@@ -240,24 +240,34 @@ public class CombatTarget : ActionCharacter
     public async Task EndCombat(bool win)
     {
         Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.EndCombat, new TriggerMessageData(success: win, combatTarget: this)));
+        Dialog? dialog;
+        Action onFinish;
         if (!win)
         {
-            await DialogHandler.Instance!.StartDialog(
-                Dialog.FromJson(this.loseDialogData), onFinish: () =>
+            dialog = Dialog.FromJson(this.loseDialogData);
+            onFinish = () =>
+                    {
+                        Game.Instance.AddRemainingRounds(-1);
+                        Game.Instance.EndRound();
+                    };
+        }
+        else
+        {
+            dialog = Dialog.FromJson(this.winDialogData);
+            onFinish = () =>
                 {
-                    Game.Instance.AddRemainingRounds(-1);
-                    Game.Instance.EndRound();
-                }
-            );
+                    this.IncreaseLevel();
+                    FadeHandler.Instance!.LoadScene("TalentTreeScene");
+                };
+        }
+        if (dialog == null)
+        {
+            onFinish();
         }
         else
         {
             await DialogHandler.Instance!.StartDialog(
-                Dialog.FromJson(this.winDialogData), onFinish: () =>
-                {
-                    this.IncreaseLevel();
-                    FadeHandler.Instance!.LoadScene("TalentTreeScene");
-                }
+                dialog, onFinish: onFinish
             );
         }
     }
