@@ -109,8 +109,14 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205826
   - m_Id: 37747409896120320
-    m_Localized: When the {number:choose(null|1|2|3):{limitType:choose(Total):next
-      {limit:choose(1):|{} }|}|1st |2nd |3rd |{}th }turn starts
+    m_Localized: "Wenn der {number:choose(null):{limitType:choose(Total):n\xE4chste
+      {limit:choose(1):|{} }|}|{}. }Zug startet"
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 37749475536314368
+    m_Localized: "erh\xF6he {maxEnergy:choose(True|False): maximale|} <sprite name=\"Energy\">{maxEnergy:choose(True|False):|
+      f\xFCr diesen Zug} um {amount}"
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
@@ -137,3 +143,4 @@ MonoBehaviour:
         - id: 27627690392330240
         - id: 37743929341026304
         - id: 37747409896120320
+        - id: 37749475536314368

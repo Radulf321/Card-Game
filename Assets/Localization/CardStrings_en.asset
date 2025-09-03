@@ -114,6 +114,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
+  - m_Id: 37749475536314368
+    m_Localized: 'gain {amount} {maxEnergy:choose(True|False): maximum|} <sprite
+      name="Energy">{maxEnergy:choose(True|False):| for this turn}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
   references:
     version: 2
     RefIds:
@@ -137,3 +143,4 @@ MonoBehaviour:
         - id: 27627690392330240
         - id: 37743929341026304
         - id: 37747409896120320
+        - id: 37749475536314368
