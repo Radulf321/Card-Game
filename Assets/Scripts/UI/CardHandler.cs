@@ -5,8 +5,11 @@ using System.Linq;
 using System;
 
 #nullable enable
-public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
+public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, IScalable
 {
+    public static float standardHeight = 1038f;
+    public static float standardWidth = 778f;
+
     private Card? card;
     private Talent? talent;
     private Sprite? sprite;
@@ -31,16 +34,16 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
     {
         if (this.shouldUpdate)
         {
-            Transform nameArea = transform.Find("NameArea");
+            Transform cardContainer = transform.Find("CardContainer");
+            Transform nameArea = cardContainer.Find("NameArea");
             nameArea.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text =
                 this.title ?? card?.GetName() ??
                 talent?.GetTitle() ?? "This should never be visible";
             updateDescription();
-            Transform costArea = nameArea.Find("CostArea");
+            Transform costArea = cardContainer.Find("CostArea");
             costArea.gameObject.SetActive(this.costSprite != null);
             if (this.costSprite != null)
             {
-                costArea.GetComponent<AspectRatioFitter>().aspectRatio = Math.Max(1.0f, this.costSprite.rect.width / this.costSprite.rect.height);
                 Image costImage = costArea.Find("CostImage").GetComponent<Image>();
                 costImage.sprite = this.costSprite;
                 TMPro.TextMeshProUGUI costText = costArea.Find("Cost").GetComponent<TMPro.TextMeshProUGUI>();
@@ -60,14 +63,11 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
                     throw new Exception("Could not deduce cost of card as no specific cost is set, nor any talent or card");
                 }
             }
-            Image image = transform.Find("Image").GetComponent<Image>();
+            Image image = cardContainer.Find("ImageContainer").Find("Image").GetComponent<Image>();
             if (image.sprite != this.sprite)
             {
                 image.sprite = this.sprite;
-                RectTransform parentRectTransform = transform.GetComponentInParent<RectTransform>();
-                LayoutRebuilder.ForceRebuildLayoutImmediate(parentRectTransform);
             }
-            transform.GetComponentInParent<LayoutElement>().preferredWidth = transform.GetComponentInParent<RectTransform>().rect.height * transform.GetComponentInParent<AspectRatioFitter>().aspectRatio;
             this.shouldUpdate = false;
         }
     }
@@ -77,12 +77,34 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
         this.shouldUpdate = true;
     }
 
+    public void SetScale(float scale)
+    {
+        RectTransform containerRect = transform.Find("CardContainer").GetComponent<RectTransform>();
+        RectTransform rectTransform = transform.GetComponent<RectTransform>();
+        containerRect.localScale = new Vector3(scale, scale, scale);
+        rectTransform.sizeDelta = new Vector2(containerRect.rect.width * scale, containerRect.rect.height * scale);
+        transform.GetComponent<Image>().pixelsPerUnitMultiplier = 0.3f / scale;
+        this.shouldUpdate = true;
+    }
+
+    public void SetHeight(float height)
+    {
+        RectTransform containerRect = transform.Find("CardContainer").GetComponent<RectTransform>();
+        SetScale(height / containerRect.rect.height);
+    }
+
+    public void SetWidth(float width)
+    {
+        RectTransform containerRect = transform.Find("CardContainer").GetComponent<RectTransform>();
+        SetScale(width / containerRect.rect.width);
+    }
+
     public void SetCard(Card card)
     {
         this.card = card;
         this.talent = null;
         this.sprite = Resources.Load<Sprite>(card.GetImagePath());
-        this.costSprite = (card.GetCardType() == CardType.Relic) ? Game.Instance.GetIcon("Relic") : Game.Instance.GetIcon("Energy");
+        this.costSprite = (card.GetCardType() == CardType.Relic) ? Game.Instance.GetIcon("Relic") : Game.Instance.GetIcon("EnergyCard");
         // TODO: Think about going for NoWrap for cards, it could look nicer for multiple effects in one line each...
         GetDescriptionText().textWrappingMode = TMPro.TextWrappingModes.Normal;
         updateView();
@@ -134,6 +156,12 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
         updateView();
     }
 
+    public void SetDescriptionFontSize(float fontSize)
+    {
+        GetDescriptionText().fontSize = fontSize;
+        updateView();
+    }
+
     public void SetCost(string? cost)
     {
         this.cost = cost;
@@ -143,7 +171,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
     public void SetActive(bool active)
     {
         this.active = active;
-        transform.parent.GetComponent<HoverHandler>().SetActive(active);
+        transform.GetComponent<HoverHandler>().SetActive(active);
     }
 
     public void SetOnClickAction(Action? onClickAction)
@@ -232,6 +260,6 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler
 
     private TMPro.TextMeshProUGUI GetDescriptionText()
     {
-        return transform.Find("DescriptionArea").Find("Description").GetComponent<TMPro.TextMeshProUGUI>();
+        return transform.Find("CardContainer").Find("DescriptionArea").Find("Description").GetComponent<TMPro.TextMeshProUGUI>();
     }
 }

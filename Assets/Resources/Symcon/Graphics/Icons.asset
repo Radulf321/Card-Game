@@ -110,6 +110,16 @@ MonoBehaviour:
     m_GlyphIndex: 4
     m_Scale: 1
     m_Name: Cash
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 6
+    m_Scale: 1
+    m_Name: Creativity
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 7
+    m_Scale: 1
+    m_Name: EnergyCard
   m_GlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -119,10 +129,10 @@ MonoBehaviour:
       m_HorizontalBearingY: 439.69348
       m_HorizontalAdvance: 500
     m_GlyphRect:
-      m_X: 35
-      m_Y: 234
-      m_Width: 318
-      m_Height: 338
+      m_X: 22
+      m_Y: 150
+      m_Width: 204
+      m_Height: 217
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
@@ -135,10 +145,10 @@ MonoBehaviour:
       m_HorizontalBearingY: 877.06824
       m_HorizontalAdvance: 1328
     m_GlyphRect:
-      m_X: 440
-      m_Y: 70
-      m_Width: 846
-      m_Height: 690
+      m_X: 283
+      m_Y: 45
+      m_Width: 544
+      m_Height: 443
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
@@ -151,10 +161,10 @@ MonoBehaviour:
       m_HorizontalBearingY: 550
       m_HorizontalAdvance: 892.2589
     m_GlyphRect:
-      m_X: 1293
-      m_Y: 87
-      m_Width: 635
-      m_Height: 512
+      m_X: 830
+      m_Y: 56
+      m_Width: 408
+      m_Height: 329
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
@@ -167,10 +177,10 @@ MonoBehaviour:
       m_HorizontalBearingY: 640.0805
       m_HorizontalAdvance: 497.9726
     m_GlyphRect:
-      m_X: 137
-      m_Y: 756
-      m_Width: 497
-      m_Height: 839
+      m_X: 88
+      m_Y: 485
+      m_Width: 319
+      m_Height: 539
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
@@ -183,10 +193,10 @@ MonoBehaviour:
       m_HorizontalBearingY: 470.286
       m_HorizontalAdvance: 513.9128
     m_GlyphRect:
-      m_X: 767
-      m_Y: 758
-      m_Width: 513
-      m_Height: 520
+      m_X: 493
+      m_Y: 487
+      m_Width: 330
+      m_Height: 334
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
@@ -199,13 +209,45 @@ MonoBehaviour:
       m_HorizontalBearingY: 552.57697
       m_HorizontalAdvance: 615.2926
     m_GlyphRect:
-      m_X: 1366
-      m_Y: 816
-      m_Width: 615
-      m_Height: 552
+      m_X: 878
+      m_Y: 524
+      m_Width: 395
+      m_Height: 354
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: -1496290106, guid: 1faee744dd9652b499df4f39d9e96547, type: 3}
+  - m_Index: 6
+    m_Metrics:
+      m_Width: 322.44458
+      m_Height: 339.55838
+      m_HorizontalBearingX: -161.22229
+      m_HorizontalBearingY: 169.77919
+      m_HorizontalAdvance: 322.44458
+    m_GlyphRect:
+      m_X: 419
+      m_Y: 902
+      m_Width: 322
+      m_Height: 339
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -1508160427, guid: 1faee744dd9652b499df4f39d9e96547, type: 3}
+  - m_Index: 7
+    m_Metrics:
+      m_Width: 594.4944
+      m_Height: 624.64
+      m_HorizontalBearingX: -297.2472
+      m_HorizontalBearingY: 312.32
+      m_HorizontalAdvance: 594.4944
+    m_GlyphRect:
+      m_X: 197
+      m_Y: 1373
+      m_Width: 594
+      m_Height: 624
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: 1108346809, guid: 1faee744dd9652b499df4f39d9e96547, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []

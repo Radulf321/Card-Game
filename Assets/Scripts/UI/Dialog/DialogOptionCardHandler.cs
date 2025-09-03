@@ -5,15 +5,19 @@ using UnityEngine.UI;
 
 #nullable enable
 
-public class DialogOptionCardHandler : MonoBehaviour, IViewUpdater
+public class DialogOptionCardHandler : MonoBehaviour, IViewUpdater, IScalable
 {
-    private static float aspectRatioWithCost = 0.6f;
-    private static float cardOffsetWithCost = 0.2f;
+    private static float optionHeight = 1238f;
+    private static float optionWidth = 778f;
+    private static float cardHeight = 1038f;
+    private static float costHeight = 180f;
+    private static float costFontSize = 96f;
 
     private bool needTextUpdate = false;
     private DialogOption? option;
     private Action? onClick;
     private string? costText;
+    private float? scaledHeight;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -42,11 +46,12 @@ public class DialogOptionCardHandler : MonoBehaviour, IViewUpdater
         else
         {
             cardHandler.SetCostSprite(null);
+            cardHandler.SetDescriptionFontSize(36f);
         }
         string? title = option.GetTitle();
         if (title != null)
         {
-            cardHandler.SetTitle(title);   
+            cardHandler.SetTitle(title);
         }
         string? description = option.GetDescription();
         if (description != null)
@@ -82,18 +87,52 @@ public class DialogOptionCardHandler : MonoBehaviour, IViewUpdater
         this.onClick = onClick;
     }
 
+    public void SetScale(float scale)
+    {
+        transform.GetComponent<RectTransform>().sizeDelta = new Vector2(optionWidth * scale, GetReferenceHeight() * scale);
+        transform.Find("Card").GetComponentInChildren<CardHandler>().SetScale(scale);
+        if (this.costText != null)
+        {
+            Transform costText = transform.Find("CostText");
+            costText.GetComponent<RectTransform>().sizeDelta = new Vector2(optionWidth * scale, costHeight * scale);
+            costText.GetComponent<TMPro.TextMeshProUGUI>().fontSize = costFontSize * scale;
+        }
+    }
+
+    public void SetHeight(float height)
+    {
+        this.scaledHeight = height;
+        SetScale(height / GetReferenceHeight());
+    }
+
+    public void SetWidth(float width)
+    {
+        this.scaledHeight = null;
+        SetScale(width / optionWidth);
+    }
+
     private void UpdateText()
     {
-        AspectRatioFitter aspectRatioFitter = transform.GetComponent<AspectRatioFitter>();
         Transform costTextTransform = transform.Find("CostText");
-        Transform cardTransform = transform.Find("Card");
-        LayoutElement layoutElement = transform.GetComponent<LayoutElement>();
-        float height = transform.GetComponent<RectTransform>().rect.height;
-        aspectRatioFitter.aspectRatio = DialogOptionCardHandler.aspectRatioWithCost;
-        cardTransform.GetComponent<RectTransform>().anchorMin = new Vector2(0, DialogOptionCardHandler.cardOffsetWithCost);
-        costTextTransform.gameObject.SetActive(true);
+        bool newActive = this.costText != null;
+        bool currentActive = costTextTransform.gameObject.activeSelf;
+        costTextTransform.gameObject.SetActive(this.costText != null);
         costTextTransform.GetComponent<TMPro.TextMeshProUGUI>().text = costText;
-        layoutElement.preferredWidth = height * aspectRatioFitter.aspectRatio;
+
+        if (newActive != currentActive)
+        {
+            RectTransform rectTransform = transform.GetComponent<RectTransform>();
+            float scale = rectTransform.rect.width / optionWidth;
+            rectTransform.sizeDelta = new Vector2(
+                rectTransform.rect.width,
+                GetReferenceHeight() * scale
+            );
+
+            if (this.scaledHeight != null)
+            {
+                SetHeight(this.scaledHeight.Value);
+            }
+        }
 
         LayoutGroup parentLayoutGroup = GetComponentInParent<LayoutGroup>();
         if (parentLayoutGroup != null)
@@ -111,5 +150,10 @@ public class DialogOptionCardHandler : MonoBehaviour, IViewUpdater
     {
         this.updateView();
         this.needTextUpdate = true;
+    }
+
+    private float GetReferenceHeight()
+    {
+        return this.costText != null ? optionHeight : cardHeight;
     }
 }

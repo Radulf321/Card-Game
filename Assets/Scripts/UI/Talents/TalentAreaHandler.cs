@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TalentAreaHandler : MonoBehaviour
@@ -35,7 +33,7 @@ public class TalentAreaHandler : MonoBehaviour
         Dictionary<string, GameObject> talentObjects = new Dictionary<string, GameObject>();
         Rect parentSize = parent.GetComponent<RectTransform>().rect;
         float talentHeight = Mathf.Max(240f, parentSize.height * 0.4f);
-        float talentWidth = talentHeight * talentPrefab.GetComponent<AspectRatioFitter>().aspectRatio;
+        float talentWidth = talentHeight * CardHandler.standardWidth / CardHandler.standardHeight;
         float heightOffset = 2f / 3f * talentHeight;
         float maxY = 0;
 
@@ -79,14 +77,15 @@ public class TalentAreaHandler : MonoBehaviour
             foreach (Talent talent in talentsToAdd)
             {
                 GameObject cardObject = Instantiate(talentPrefab);
-                cardObject.GetComponentInChildren<CardHandler>().SetTalent(talent);
                 cardObject.transform.SetParent(this.transform, false);
+                CardHandler cardHandler = cardObject.GetComponentInChildren<CardHandler>();
+                cardHandler.SetTalent(talent);
+                cardHandler.SetHeight(talentHeight);
                 RectTransform cardRect = cardObject.GetComponent<RectTransform>();
                 cardRect.anchorMin = new Vector2(0, 0.5f);
                 cardRect.anchorMax = new Vector2(0, 0.5f);
                 cardRect.pivot = new Vector2(0, 0.5f);
                 cardRect.anchoredPosition = new Vector2(currentX, currentY);
-                cardRect.sizeDelta = new Vector2(talentWidth, talentHeight);
                 talentObjects.Add(talent.GetID(), cardObject);
                 foreach (string prerequisite in talent.GetPrerequisites())
                 {

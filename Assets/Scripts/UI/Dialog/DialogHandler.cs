@@ -168,18 +168,9 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
         Transform selectArea = transform.Find("SelectArea");
         Rect selectRect = selectArea.GetComponent<RectTransform>().rect;
-        VerticalLayoutGroup selectLayoutGroup = selectArea.GetComponent<VerticalLayoutGroup>();
-        // Spacing is set lower depending on type
-        selectLayoutGroup.padding = new RectOffset(
-            Mathf.FloorToInt(selectRect.width * 0.02f),
-            Mathf.FloorToInt(selectRect.width * 0.02f),
-            Mathf.FloorToInt(selectRect.height * 0.02f),
-            Mathf.FloorToInt(selectRect.height * 0.02f)
-        );
         selectArea.gameObject.SetActive(true);
         Transform titleTransform = selectArea.Find("Title");
         titleTransform.GetComponent<TMPro.TextMeshProUGUI>().text = dialog.GetTitle();
-        titleTransform.GetComponent<LayoutElement>().preferredHeight = selectRect.height * 0.1f;
 
         Transform infoArea = selectArea.Find("Info");
         infoArea.gameObject.SetActive(dialog.IsShowUI());
@@ -198,44 +189,32 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
             }
             infoArea.Find("Currency").GetComponent<TMPro.TextMeshProUGUI>().text = currencyString;
         }
-        // Remove all current options
-        for (int i = 0; i < selectArea.childCount; i++)
-        {
-            if (selectArea.GetChild(i).name == "Title")
-            {
-                continue;
-            }
-            if (selectArea.GetChild(i).name == "CardArea")
-            {
-                continue;
-            }
-            if (selectArea.GetChild(i).name == "Info")
-            {
-                continue;
-            }
-            Destroy(selectArea.GetChild(i).gameObject);
-        }
 
-        selectArea.Find("CardArea").gameObject.SetActive(dialog.GetSelectType() == SelectType.Cards);
+        Transform selectionContainer = selectArea.Find("SelectionContainer");
+        Transform cardArea = selectionContainer.Find("CardArea");
+        Transform buttonArea = selectionContainer.Find("ButtonArea");
+        cardArea.gameObject.SetActive(dialog.GetSelectType() == SelectType.Cards);
+        buttonArea.gameObject.SetActive(dialog.GetSelectType() == SelectType.Buttons);
         TaskCompletionSource<DialogOption> optionSelected = new TaskCompletionSource<DialogOption>();
         switch (dialog.GetSelectType())
         {
             case SelectType.Buttons:
-                selectLayoutGroup.spacing = selectRect.height * 0.01f;
+                // Remove all current options
+                for (int i = 0; i < buttonArea.childCount; i++)
+                {
+                    Destroy(selectArea.GetChild(i).gameObject);
+                }
                 // Add new options
                 foreach (DialogOption option in dialog.GetOptions())
                 {
-                    GameObject newOption = Instantiate(this.dialogOptionPrefab!, selectArea);
+                    GameObject newOption = Instantiate(this.dialogOptionPrefab!, buttonArea);
                     newOption.GetComponent<DialogOptionHandler>().SetDialogOption(option);
                     newOption.GetComponent<DialogOptionHandler>().SetSelectedTask(optionSelected);
-                    newOption.GetComponent<LayoutElement>().preferredHeight = selectRect.height * 0.1f;
                 }
                 break;
 
             case SelectType.Cards:
-                selectLayoutGroup.spacing = selectRect.height * 0.1f;
-                // Remove all current cards
-                DialogCardActionAreaHandler cardHandler = selectArea.Find("CardArea").GetComponent<DialogCardActionAreaHandler>();
+                DialogCardActionAreaHandler cardHandler = cardArea.GetComponent<DialogCardActionAreaHandler>();
                 cardHandler.SetDialogOptions(dialog.GetOptions());
                 cardHandler.SetSelectedTask(optionSelected);
                 break;

@@ -78,9 +78,9 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_Spacing: 30
   m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -96,4 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f064d7df04e4c49b245f28a7e86071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 8891090974656386616, guid: 23f7045151f7629499a9a4a8d687707c, type: 3}
   rewardPrefab: {fileID: 8891090974656386616, guid: 23f7045151f7629499a9a4a8d687707c, type: 3}
+  textColor: {r: 1, g: 1, b: 1, a: 1}

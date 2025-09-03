@@ -254,6 +254,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Creativity
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 2204
+        width: 787
+        height: 829
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 484be551ac1071e42a22fe611a52cfef
+      internalID: -1508160427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnergyCard
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 3353
+        width: 1451
+        height: 1525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29a124306b613074b87f27aa24d9569a
+      internalID: 1108346809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -271,7 +315,9 @@ TextureImporter:
       Cash: -1295072578
       Check: -727081251
       Comfort: 730683644
+      Creativity: -1508160427
       Energy: 1049207144
+      EnergyCard: 1108346809
       Relic: -1496290106
       Rounds: 2103016240
   mipmapLimitGroupName: 

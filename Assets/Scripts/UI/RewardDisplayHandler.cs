@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 
 #nullable enable
-public class RewardDisplayHandler : MonoBehaviour, IViewUpdater
+public class RewardDisplayHandler : MonoBehaviour, IViewUpdater, IScalable
 {
     private Reward? reward;
     private bool shouldUpdate = false;
@@ -44,7 +44,6 @@ public class RewardDisplayHandler : MonoBehaviour, IViewUpdater
                 spriteTransform.gameObject.SetActive(true);
 
             }
-            transform.GetComponentInParent<LayoutElement>().preferredWidth = transform.GetComponentInParent<RectTransform>().rect.height * transform.GetComponentInParent<AspectRatioFitter>().aspectRatio;
             this.shouldUpdate = false;
         }
     }
@@ -74,5 +73,25 @@ public class RewardDisplayHandler : MonoBehaviour, IViewUpdater
     public void updateView()
     {
         this.shouldUpdate = true;
+    }
+
+    public void SetScale(float scale)
+    {
+        transform.GetComponent<RectTransform>().sizeDelta = new Vector2(
+            CardHandler.standardWidth * scale,
+            CardHandler.standardHeight * scale
+        );
+        transform.Find("CardReward").GetComponent<CardHandler>().SetScale(scale);
+        transform.Find("SpriteReward").GetComponent<RectTransform>().localScale = new Vector3(scale, scale, scale);
+    }
+
+    public void SetHeight(float height)
+    {
+        SetScale(height / CardHandler.standardHeight);
+    }
+
+    public void SetWidth(float width)
+    {
+        SetScale(width / CardHandler.standardHeight);
     }
 }

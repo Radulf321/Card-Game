@@ -3,9 +3,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 #nullable enable
-public class RewardAreaHandler : MonoBehaviour, IViewUpdater
+public class RewardAreaHandler : GenericCardsContainerHandler<Reward, RewardDisplayHandler>, IViewUpdater
 {
-    public GameObject? rewardPrefab;
     public Color textColor = Color.white;
     List<Reward> rewards = new List<Reward>();
 
@@ -26,38 +25,24 @@ public class RewardAreaHandler : MonoBehaviour, IViewUpdater
         updateView();
     }
 
-    public void updateView()
+    protected override List<Reward> GetCardData()
     {
-        this.updateChildrenViews<RewardAreaHandler, RewardDisplayHandler, Reward>(
-            this.rewards,
-            (Reward reward) =>
-            {
-                GameObject rewardObject = Instantiate(rewardPrefab!);
-                RewardDisplayHandler rewardHandler = rewardObject.GetComponent<RewardDisplayHandler>();
-                rewardHandler.SetTextColor(this.textColor);
-                rewardHandler.SetReward(reward);
-                LayoutElement myLayout = transform.GetComponent<LayoutElement>();
-                LayoutElement rewardLayout = rewardObject.GetComponent<LayoutElement>();
-                rewardLayout.preferredHeight = myLayout.preferredHeight;
-                rewardLayout.flexibleHeight = myLayout.flexibleHeight;
-                return rewardObject;
-            },
-            (RewardDisplayHandler rewardHandler) =>
-            {
-                return rewardHandler.GetReward()!;
-            }
-        );
+        return this.rewards;
+    }
 
-        if (rewards.Count > 1)
-        {
-            float rewardWidth = GetComponent<RectTransform>().rect.height * rewardPrefab!.GetComponent<AspectRatioFitter>().aspectRatio;
-            float myWidth = GetComponent<RectTransform>().rect.width;
+    protected override void SetHandlerData(RewardDisplayHandler handler, Reward cardData)
+    {
+        handler.SetTextColor(this.textColor);
+        handler.SetReward(cardData);
+    }
 
-            float totalCardWidth = rewardWidth * rewards.Count;
-            float totalSpacing = myWidth - totalCardWidth;
-            float spacingPerCard = Mathf.Min(totalSpacing / (rewards.Count - 1), myWidth * 0.02f);
+    protected override Reward? GetHandlerData(RewardDisplayHandler handler)
+    {
+        return handler.GetReward();
+    }
 
-            transform.GetComponent<HorizontalLayoutGroup>().spacing = spacingPerCard;
-        }
+    protected override RewardDisplayHandler GetHandler(Transform transform)
+    {
+        return transform.GetComponent<RewardDisplayHandler>();
     }
 }

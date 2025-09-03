@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+#nullable enable
+
 public abstract class CardsContainerHandler<CARDDATA> : GenericCardsContainerHandler<CARDDATA, CardHandler>
     where CARDDATA : class
 {
@@ -13,9 +15,10 @@ public abstract class CardsContainerHandler<CARDDATA> : GenericCardsContainerHan
 
 public abstract class GenericCardsContainerHandler<CARDDATA, HANDLER> : MonoBehaviour, IViewUpdater
     where CARDDATA : class
-    where HANDLER : MonoBehaviour, IViewUpdater
+    where HANDLER : MonoBehaviour, IViewUpdater, IScalable
 {
     public GameObject cardPrefab;
+    private bool shouldUpdate = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,7 +28,11 @@ public abstract class GenericCardsContainerHandler<CARDDATA, HANDLER> : MonoBeha
     // Update is called once per frame
     void Update()
     {
-
+        if (this.shouldUpdate)
+        {
+            updateView();
+            this.shouldUpdate = false;
+        }
     }
 
     public void updateView()
@@ -36,7 +43,9 @@ public abstract class GenericCardsContainerHandler<CARDDATA, HANDLER> : MonoBeha
             (CARDDATA cardData) =>
             {
                 GameObject cardObject = Instantiate(cardPrefab);
-                SetHandlerData(GetHandler(cardObject.transform), cardData);
+                HANDLER cardHandler = GetHandler(cardObject.transform);
+                cardHandler.SetHeight(transform.GetComponent<RectTransform>().rect.height);
+                SetHandlerData(cardHandler, cardData);
                 return cardObject;
             },
             GetHandlerData,
@@ -48,7 +57,9 @@ public abstract class GenericCardsContainerHandler<CARDDATA, HANDLER> : MonoBeha
 
         if (cards.Count > 1)
         {
-            float cardWidth = GetComponent<RectTransform>().rect.height * cardPrefab.GetComponent<AspectRatioFitter>().aspectRatio;
+            RectTransform cardRect = cardPrefab.GetComponent<RectTransform>();
+            float aspectRatio = cardRect.rect.width / cardRect.rect.height;
+            float cardWidth = GetComponent<RectTransform>().rect.height * aspectRatio;
             float myWidth = GetComponent<RectTransform>().rect.width;
 
             float totalCardWidth = cardWidth * cards.Count;
@@ -59,8 +70,21 @@ public abstract class GenericCardsContainerHandler<CARDDATA, HANDLER> : MonoBeha
         }
     }
 
+    protected virtual void OnRectTransformDimensionsChange()
+    {
+        float height = transform.GetComponent<RectTransform>().rect.height;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            HANDLER cardData = GetHandler(transform.GetChild(i));
+            if (cardData == null) continue;
+            cardData.SetHeight(height);
+        }
+        this.shouldUpdate = true;
+
+    }
+
     abstract protected List<CARDDATA> GetCardData();
     abstract protected void SetHandlerData(HANDLER handler, CARDDATA cardData);
-    abstract protected CARDDATA GetHandlerData(HANDLER handler);
+    abstract protected CARDDATA? GetHandlerData(HANDLER handler);
     abstract protected HANDLER GetHandler(Transform transform);
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 #nullable enable
-public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     bool active = true;
 
@@ -50,5 +50,10 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         Canvas canvas = GetComponent<Canvas>();
         canvas.overrideSorting = false;
         canvas.sortingOrder = 0;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        StopHover();
     }
 }
