@@ -44,7 +44,11 @@ public class DebugHandler : MonoBehaviour
         );
         await DialogHandler.Instance.StartDialog(new DialogText("Initial", nextDialog: new DialogSelect("Test", new List<DialogOption>() {
             new DialogOption("Blabla",
-                new DialogText("Blabla")
+                new DialogSelect("Test 2", new List<DialogOption>() {
+                    new DialogOption("Blabla 2",
+                        new DialogText("Blabla")
+                    )
+                })
             ),
             new DialogOption("Show me cards",
                 new DialogSelect("Select one", new List<DialogOption>() {

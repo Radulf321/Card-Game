@@ -202,7 +202,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
                 // Remove all current options
                 for (int i = 0; i < buttonArea.childCount; i++)
                 {
-                    Destroy(selectArea.GetChild(i).gameObject);
+                    Destroy(buttonArea.GetChild(i).gameObject);
                 }
                 // Add new options
                 foreach (DialogOption option in dialog.GetOptions())
