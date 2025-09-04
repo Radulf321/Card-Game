@@ -8,6 +8,7 @@ Shader "UI/HorizontalGradientMasked"
         _ShadowColor ("Shadow Color", Color) = (0,0,0,0.5)
         _ShadowOffsetX ("Shadow Offset X", Float) = 0.02
         _ShadowOffsetY ("Shadow Offset Y", Float) = -0.02
+        _Stencil ("Stencil ID", Float) = 0
     }
     SubShader
     {
