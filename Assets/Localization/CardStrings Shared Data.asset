@@ -23,6 +23,10 @@ MonoBehaviour:
     m_Key: GoalTrigger
     m_Metadata:
       m_Items: []
+  - m_Id: 42492961129013248
+    m_Key: GoalIcon
+    m_Metadata:
+      m_Items: []
   - m_Id: 1160824791040
     m_Key: Energy
     m_Metadata:
@@ -39,8 +43,16 @@ MonoBehaviour:
     m_Key: DrawCards
     m_Metadata:
       m_Items: []
+  - m_Id: 42497594438230016
+    m_Key: DrawCardsIcon
+    m_Metadata:
+      m_Items: []
   - m_Id: 442092946759680
     m_Key: DiscardCards
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43571690009829376
+    m_Key: DiscardCardsIcon
     m_Metadata:
       m_Items: []
   - m_Id: 1914435304988672

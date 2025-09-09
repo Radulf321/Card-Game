@@ -15,7 +15,7 @@ class Game
     private Player player;
     private int remainingRounds;
 
-    private Dictionary<string, string> goalNames;
+    private Dictionary<string, NamedIconData> goals;
 
     private Dictionary<string, NamedIconData> experienceTypes;
     private Dictionary<string, NamedIconData> currencies;
@@ -28,7 +28,7 @@ class Game
 
     private string selectActionBackground;
     private string checkIcon;
-    private Dialog gameOverDialog;
+    private Dialog? gameOverDialog;
     private CombatTarget? currentCombatTarget;
     private List<Action<TriggerMessage>> triggerMessageSubscribers = new List<Action<TriggerMessage>>();
     private bool tutorialDone;
@@ -43,7 +43,7 @@ class Game
     {
         this.player = new Player();
         this.remainingRounds = 0;
-        this.goalNames = new Dictionary<string, string>();
+        this.goals = new Dictionary<string, NamedIconData>();
         this.experienceTypes = new Dictionary<string, NamedIconData>();
         this.currencies = new Dictionary<string, NamedIconData>();
         this.icons = new Dictionary<string, Sprite>();
@@ -67,14 +67,14 @@ class Game
         this.resourcePath = ResourcePath;
         TMPro.TMP_Settings.defaultSpriteAsset = Resources.Load<TMPro.TMP_SpriteAsset>(ResourcePath + "/Graphics/Icons");
         JObject index = JObject.Parse(Resources.Load<TextAsset>(ResourcePath + "/Index").text);
-        Dictionary<string, string> goalNames = new Dictionary<string, string>();
+        Dictionary<string, NamedIconData> goals = new Dictionary<string, NamedIconData>();
         foreach (JObject goal in index["goals"]!)
         {
             string id = goal["id"]!.ToString();
-            string name = LocalizationHelper.GetLocalizedString(goal["name"] as JObject)!;
-            goalNames.Add(id, name);
+            NamedIconData data = new NamedIconData(goal);
+            goals.Add(id, data);
         }
-        this.goalNames = goalNames;
+        this.goals = goals;
 
         Dictionary<string, NamedIconData> experienceTypes = new Dictionary<string, NamedIconData>();
         foreach (JObject experienceType in index["experienceTypes"]!)
@@ -218,14 +218,31 @@ class Game
 
     public string GetGoalName(string id)
     {
-        if (goalNames.ContainsKey(id))
+        if (goals.ContainsKey(id))
         {
-            return goalNames[id];
+            return goals[id].GetName();
         }
         else
         {
             return "Unknown Goal";
         }
+    }
+
+    public string GetGoalInlineIcon(string id)
+    {
+        if (goals.ContainsKey(id))
+        {
+            return goals[id].GetInlineIcon();
+        }
+        else
+        {
+            return "Unknown Goal";
+        }
+    }
+
+    public Sprite? GetGoalIcon(string id)
+    {
+        return goals[id]?.GetIcon();
     }
 
     public string GetExperienceTypeName(string id)

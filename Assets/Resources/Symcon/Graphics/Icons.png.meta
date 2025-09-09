@@ -262,8 +262,8 @@ TextureImporter:
         y: 2204
         width: 787
         height: 829
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -285,7 +285,7 @@ TextureImporter:
         width: 1451
         height: 1525
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -294,6 +294,116 @@ TextureImporter:
       bones: []
       spriteID: 29a124306b613074b87f27aa24d9569a
       internalID: 1108346809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnowHow
+      rect:
+        serializedVersion: 2
+        x: 2006
+        y: 2254
+        width: 784
+        height: 747
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42c61ea6814b3aa4da1ab4877df04eeb
+      internalID: -329008022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Card
+      rect:
+        serializedVersion: 2
+        x: 1973
+        y: 3139
+        width: 479
+        height: 541
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b117ba5bd5aaa8479c584532938c8a2
+      internalID: 542918639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiscardRandom
+      rect:
+        serializedVersion: 2
+        x: 2538
+        y: 3143
+        width: 485
+        height: 540
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea451f1cfa1596946b5b6eb425990f26
+      internalID: 1453083173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiscardRight
+      rect:
+        serializedVersion: 2
+        x: 2540
+        y: 3789
+        width: 485
+        height: 542
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6941ccec22cbf5e4895e9d39c54cd1a8
+      internalID: 1965963608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiscardLeft
+      rect:
+        serializedVersion: 2
+        x: 2043
+        y: 3789
+        width: 477
+        height: 540
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f32a7ac4d41d6b41801f36a6fe29c1d
+      internalID: -1034865969
       vertices: []
       indices: 
       edges: []
@@ -312,12 +422,17 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      Card: 542918639
       Cash: -1295072578
       Check: -727081251
       Comfort: 730683644
       Creativity: -1508160427
+      DiscardLeft: -1034865969
+      DiscardRandom: 1453083173
+      DiscardRight: 1965963608
       Energy: 1049207144
       EnergyCard: 1108346809
+      KnowHow: -329008022
       Relic: -1496290106
       Rounds: 2103016240
   mipmapLimitGroupName: 

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
+#nullable enable
+
 public class GoalEffect : GameEffect
 {
 
@@ -30,22 +32,27 @@ public class GoalEffect : GameEffect
     public override void applyEffect()
     {
         // Assuming RoundHandler has a method to apply the effect
-        CombatHandler.instance.addGoal(goal, this.amountCalculation.GetValue(this.owner), this.trigger);
+        CombatHandler.instance?.addGoal(goal, this.amountCalculation.GetValue(this.owner), this.trigger);
     }
 
-    public override GameEffect Clone(Card newOwner)
+    public override GameEffect Clone(Card? newOwner)
     {
-        return new GoalEffect(this.goal, this.amountCalculation, newOwner, this.trigger);
+        return new GoalEffect(this.goal, this.amountCalculation, newOwner ?? this.owner, this.trigger);
     }
 
-    private Task<string> GetDescription(string tableEntry)
+    private Task<string> GetDescription(string tableEntry, string? overrideGoal = null)
     {
         return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
             arguments: new Dictionary<string, object> {
                 { "amount", this.amountCalculation.GetValue(this.owner) },
-                { "goal", Game.Instance.GetGoalName(this.goal) }
+                { "goal", overrideGoal ?? Game.Instance.GetGoalName(this.goal) }
             }
         ));
+    }
+    
+    protected override async Task<string?> GetInternalIconDescription()
+    {
+        return await GetDescription("GoalIcon", overrideGoal: Game.Instance.GetGoalInlineIcon(this.goal));
     }
 
     public override Task<string> getDescription()

@@ -75,13 +75,23 @@ public class DiscardCardsEffect : GameEffect
         return new DiscardCardsEffect(amount: this.amount, discardPosition: this.discardPosition, checkCardsAvailable: this.checkCardsAvailable);
     }
 
-    public override Task<string> getDescription()
+    private Task<string> GetDescription(string tableEntry)
     {
-        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "DiscardCards",
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
             arguments: new Dictionary<string, object> {
                 { "amount", this.amount },
                 { "discardPosition", this.discardPosition }
             }
         ));
+    }
+
+    protected override async Task<string?> GetInternalIconDescription()
+    {
+        return await GetDescription("DiscardCardsIcon");
+    }
+
+    public override Task<string> getDescription()
+    {
+        return GetDescription("DiscardCards");
     }
 }

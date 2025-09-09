@@ -153,7 +153,7 @@ public class Card
         List<string> descriptions = new List<string>();
         foreach (GameEffect effect in this.effects)
         {
-            descriptions.Add(await effect.getDescription());
+            descriptions.Add(await effect.GetIconDescription());
         }
         return string.Join("\n", descriptions);
     }

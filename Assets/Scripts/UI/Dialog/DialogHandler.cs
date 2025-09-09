@@ -54,7 +54,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
     }
 
-    public async Task StartDialog(Dialog dialog, bool changeScene = true, Action? onFinish = null)
+    public async Task StartDialog(Dialog? dialog, bool changeScene = true, Action? onFinish = null)
     {
         await new DialogImage(
             backgroundImagePath: "",
@@ -71,7 +71,10 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         {
             transform.gameObject.SetActive(true);
             Dialog.CurrentDialog = dialog;
-            await dialog.ShowDialog();
+            if (dialog != null)
+            {
+                await dialog.ShowDialog();
+            }
             (onFinish ?? EndDialog).Invoke();
             Dialog.CurrentDialog = null;
             Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.EndDialog));

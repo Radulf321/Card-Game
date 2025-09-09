@@ -44,6 +44,24 @@ abstract public class GameEffect
         return this.getDescription();
     }
 
+    virtual async public Task<string> GetIconDescription()
+    {
+        string? internalDescription = await this.GetInternalIconDescription();
+        if (internalDescription != null)
+        {
+            return $"<size=300%>{internalDescription}</size>";
+        }
+        else
+        {
+            return await this.getDescription();
+        }
+    }
+
+    virtual protected Task<string?> GetInternalIconDescription()
+    {
+        return Task.FromResult<string?>(null);
+    }
+
     virtual public void OnDraw()
     {
         // Usually nothing happens when a card is drawn, but some may want to prepare or trigger an effect

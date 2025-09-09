@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using TMPro;
 
 #nullable enable
 public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, IScalable
@@ -240,21 +241,27 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
 
     private async void updateDescription()
     {
+        TextMeshProUGUI descriptionText = GetDescriptionText();
         if (this.description != null)
         {
-            GetDescriptionText().text = this.description;
+            descriptionText.text = this.description;
         }
         else if (card != null)
         {
-            GetDescriptionText().text = await card!.GetDescription();
+            descriptionText.text = await card!.GetDescription();
         }
         else if (talent != null)
         {
-            GetDescriptionText().text = await talent!.GetDescription();
+            descriptionText.text = await talent!.GetDescription();
         }
         else
         {
-            GetDescriptionText().text = "This should never be visible";
+            descriptionText.text = "This should never be visible";
+        }
+        descriptionText.ForceMeshUpdate();
+        if (descriptionText.isTextOverflowing)
+        {
+            descriptionText.fontSize *= 0.6f;
         }
     }
 

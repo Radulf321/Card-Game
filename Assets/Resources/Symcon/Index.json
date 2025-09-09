@@ -5,14 +5,16 @@
             "name": {
                 "en": "Know How",
                 "de": "Know How"
-            }
+            },
+            "icon": "KnowHow"
         },
         {
             "id": "creativity",
             "name": {
                 "en": "Creativity",
                 "de": "Kreativität"
-            }
+            },
+            "icon": "Creativity"
         }
     ],
     "experienceTypes": [

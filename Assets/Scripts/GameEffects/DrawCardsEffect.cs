@@ -3,7 +3,10 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
-public class DrawCardsEffect : GameEffect {
+#nullable enable
+
+public class DrawCardsEffect : GameEffect
+{
     private int amount;
     private CardEffectTrigger trigger;
 
@@ -13,24 +16,37 @@ public class DrawCardsEffect : GameEffect {
         this.trigger = trigger;
     }
 
-    public DrawCardsEffect(JObject json, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(amount: json["amount"]?.ToObject<int>() ?? 1, trigger: trigger) {
+    public DrawCardsEffect(JObject json, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(amount: json["amount"]?.ToObject<int>() ?? 1, trigger: trigger)
+    {
     }
 
-    public override void applyEffect() {
+    public override void applyEffect()
+    {
         // Assuming RoundHandler has a method to apply the effect
-        CombatHandler.instance.getCardPile().DrawCards(this.amount, this.trigger);
+        CombatHandler.instance?.getCardPile().DrawCards(this.amount, this.trigger);
     }
 
-    public override GameEffect Clone(Card newOwner)
+    public override GameEffect Clone(Card? newOwner)
     {
         return new DrawCardsEffect(this.amount, this.trigger);
     }
 
-    public override Task<string> getDescription() {
-        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "DrawCards",
+    private Task<string> GetDescription(string tableEntry)
+    {
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
             arguments: new Dictionary<string, object> {
                 { "amount", this.amount },
             }
         ));
+    }
+
+    protected override async Task<string?> GetInternalIconDescription()
+    {
+        return await GetDescription("DrawCardsIcon");
+    }
+
+    public override Task<string> getDescription()
+    {
+        return GetDescription("DrawCards");
     }
 }

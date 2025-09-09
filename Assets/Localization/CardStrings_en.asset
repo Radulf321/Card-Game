@@ -120,6 +120,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
+  - m_Id: 42492961129013248
+    m_Localized: '{amount}{goal}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 42497594438230016
+    m_Localized: '{amount:choose(1|2|3):<sprite name="Card">|<sprite name="Card"><sprite
+      name="Card">|<sprite name="Card"><sprite name="Card"><sprite name="Card">|{amount}<sprite
+      name="Card">}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 43571690009829376
+    m_Localized: '{discardPosition:choose(Random|Left|Right):{amount:choose(1|2|3):<sprite
+      name="DiscardRandom">|<sprite name="DiscardRandom"><sprite name="DiscardRandom">|<sprite
+      name="DiscardRandom"><sprite name="DiscardRandom"><sprite name="DiscardRandom">|{amount}<sprite
+      name="DiscardRandom">}|{amount:choose(1|2|3):<sprite name="DiscardLeft">|<sprite
+      name="DiscardLeft"><sprite name="DiscardLeft">|<sprite name="DiscardLeft"><sprite
+      name="DiscardLeft"><sprite name="DiscardLeft">|{amount}<sprite name="DiscardLeft">}|{amount:choose(1|2|3):<sprite
+      name="DiscardRight">|<sprite name="DiscardRight"><sprite name="DiscardRight">|<sprite
+      name="DiscardRight"><sprite name="DiscardRight"><sprite name="DiscardRight">|{amount}<sprite
+      name="DiscardRight">}|Never visible}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
   references:
     version: 2
     RefIds:
@@ -144,3 +169,6 @@ MonoBehaviour:
         - id: 37743929341026304
         - id: 37747409896120320
         - id: 37749475536314368
+        - id: 42492961129013248
+        - id: 42497594438230016
+        - id: 43571690009829376
