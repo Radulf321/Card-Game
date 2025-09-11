@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
+#nullable enable
+
 public abstract class TriggerMessageCondition
 {
     static public TriggerMessageCondition FromJson(JObject json)
     {
-        switch (json["type"].ToString().ToLower())
+        switch (json["type"]?.ToString().ToLower())
         {
             case "addgoal":
                 return new TriggerMessageConditionAddGoal(json);
@@ -21,7 +23,7 @@ public abstract class TriggerMessageCondition
             case "drawcards":
                 return new TriggerMessageConditionDrawCards(json);
             default:
-                throw new System.Exception("Invalid condition type: " + json["type"].ToString());
+                throw new System.Exception("Invalid condition type: " + json["type"]?.ToString());
         }
     }
 
@@ -31,11 +33,16 @@ public abstract class TriggerMessageCondition
     {
         string conditionDescription = await this.GetDescription();
         return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "CommonTrigger",
-            arguments: new Dictionary<string, object> {
+            arguments: new Dictionary<string, object?> {
                 { "condition", conditionDescription },
                 { "limitType", limitType },
                 { "limit", limit }
             })
         );
+    }
+
+    public virtual Task<string?> GetIconDescription()
+    {
+        return Task.FromResult<string?>(null);
     }
 }

@@ -408,6 +408,138 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Remove
+      rect:
+        serializedVersion: 2
+        x: 3102
+        y: 136
+        width: 621
+        height: 768
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d95d9918cf25634994f2652aca6999d
+      internalID: 705025036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CopyPaste
+      rect:
+        serializedVersion: 2
+        x: 3271
+        y: 1210
+        width: 1272
+        height: 786
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93ab4b88d3476a84c8388d1e6c048874
+      internalID: 758809506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnergyTurn
+      rect:
+        serializedVersion: 2
+        x: 3252
+        y: 3252
+        width: 806
+        height: 1348
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4c46d101c811d84a82d832b7ca0ecd7
+      internalID: -222727593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnergyPermanent
+      rect:
+        serializedVersion: 2
+        x: 4087
+        y: 3280
+        width: 791
+        height: 1320
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de0c18d504235b64fb4c34db3cecb831
+      internalID: -1368015551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArrowRight
+      rect:
+        serializedVersion: 2
+        x: 3978
+        y: 354
+        width: 518
+        height: 596
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7da1de9939e2ed4496b2eefab3f939f
+      internalID: -2022067928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Turn
+      rect:
+        serializedVersion: 2
+        x: 3311
+        y: 2070
+        width: 1626
+        height: 1007
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4be0a7b6f2a7d74f807ee50fd26810b
+      internalID: -1962995911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -422,19 +554,25 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      ArrowRight: -2022067928
       Card: 542918639
       Cash: -1295072578
       Check: -727081251
       Comfort: 730683644
+      CopyPaste: 758809506
       Creativity: -1508160427
       DiscardLeft: -1034865969
       DiscardRandom: 1453083173
       DiscardRight: 1965963608
       Energy: 1049207144
       EnergyCard: 1108346809
+      EnergyPermanent: -1368015551
+      EnergyTurn: -222727593
       KnowHow: -329008022
       Relic: -1496290106
+      Remove: 705025036
       Rounds: 2103016240
+      Turn: -1962995911
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

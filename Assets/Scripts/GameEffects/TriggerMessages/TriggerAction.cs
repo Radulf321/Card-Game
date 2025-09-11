@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using UnityEngine.Localization.Settings;
 
 #nullable enable
 
@@ -23,7 +24,7 @@ public class TriggerAction
     }
 
     public TriggerAction(JObject json, Card? owner = null, bool? unregisterOnEndRound = null) : this(
-        trigger: TriggerMessageCondition.FromJson(json["trigger"] as JObject),
+        trigger: TriggerMessageCondition.FromJson((json["trigger"] as JObject)!),
         effect: GameEffect.FromJson(json["effect"] as JObject ?? new JObject(), owner, CardEffectTrigger.TriggerEffect),
         unregisterOnEndRound: unregisterOnEndRound ?? json["unregisterOnEndRound"]?.ToObject<bool>() ?? true
     )
@@ -68,9 +69,31 @@ public class TriggerAction
         return this.trigger.GetFullDescription(limitType, limit);
     }
 
+    public async Task<string?> GetIconDescription()
+    {
+        string? triggerDescription = await this.trigger.GetIconDescription();
+        string? effectDescription = await this.effect.GetInternalIconDescription();
+        if ((triggerDescription == null) || (effectDescription == null))
+        {
+            return null;
+        }
+
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerIcon",
+            arguments: new Dictionary<string, object> {
+                { "trigger", triggerDescription },
+                { "effect", effectDescription }
+            }
+        ));
+    }
+
     public Task<string> GetEffectDescription()
     {
         return this.effect.getTriggerDescription();
+    }
+
+    public Task<string?> GetEffectIconDescription()
+    {
+        return this.effect.GetInternalIconDescription();
     }
 
     private void HandleMessage(TriggerMessage triggerMessage)

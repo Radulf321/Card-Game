@@ -145,6 +145,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
+  - m_Id: 43933987815333888
+    m_Localized: <sprite name="Remove">
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43948728700936192
+    m_Localized: '{amount:cond:<4?{maxEnergy:choose(True):{amount:repeat(<sprite
+      name="EnergyPermanent">)}|{amount:repeat(<sprite name="EnergyTurn">)}}|{maxEnergy:choose(True):{amount}<sprite
+      name="EnergyPermanent">|{amount}<sprite name="EnergyTurn">}}}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 44665572499955712
+    m_Localized: '{amount:choose(1|2|3):{icon}|{icon}{icon}|{icon}{icon}{icon}|{amount}{icon}}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 44669718758203392
+    m_Localized: '{trigger}<sprite name="ArrowRight">{effect}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
+  - m_Id: 44676214883655680
+    m_Localized: '{limitType:choose(PerTurn|Total):({limit}x/<sprite name="Turn">)|({limit}x)|#NONE#}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
   references:
     version: 2
     RefIds:
@@ -172,3 +198,7 @@ MonoBehaviour:
         - id: 42492961129013248
         - id: 42497594438230016
         - id: 43571690009829376
+        - id: 43948728700936192
+        - id: 44665572499955712
+        - id: 44669718758203392
+        - id: 44676214883655680

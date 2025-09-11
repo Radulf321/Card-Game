@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
+#nullable enable
+
 public class EnergyEffect : GameEffect
 {
     private int amount;
@@ -23,7 +25,7 @@ public class EnergyEffect : GameEffect
     public override void applyEffect()
     {
         // Assuming RoundHandler has a method to apply the effect
-        CombatHandler.instance.gainEnergy(this.amount, this.maxEnergy);
+        CombatHandler.instance?.gainEnergy(this.amount, this.maxEnergy);
     }
 
     private Task<string> GetDescription(string tableEntry)
@@ -51,7 +53,17 @@ public class EnergyEffect : GameEffect
         return GetDescription("EnergyTurnEffect");
     }
 
-    public override GameEffect Clone(Card newOwner)
+    public override Task<string?> GetInternalIconDescription()
+    {
+        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "AmountIcon",
+            arguments: new Dictionary<string, object> {
+                { "amount", this.amount },
+                { "icon", this.maxEnergy ? "<sprite name=\"EnergyPermanent\">" : "<sprite name=\"EnergyTurn\">" }
+            }
+        ));
+    }
+
+    public override GameEffect Clone(Card? newOwner)
     {
         return new EnergyEffect(this.amount, this.maxEnergy);
     }

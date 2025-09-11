@@ -33,7 +33,8 @@
             "caption": {
                 "en": "-1 for each Copy & Paste played",
                 "de": "-1 für jedes gespielte Kopieren & Einfügen"
-            }
+            },
+            "iconCaption": "-1/<sprite name=\"CopyPaste\">"
         }
     ],
     "image": "CopyPaste"

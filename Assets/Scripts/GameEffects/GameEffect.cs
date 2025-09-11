@@ -57,7 +57,7 @@ abstract public class GameEffect
         }
     }
 
-    virtual protected Task<string?> GetInternalIconDescription()
+    virtual public Task<string?> GetInternalIconDescription()
     {
         return Task.FromResult<string?>(null);
     }

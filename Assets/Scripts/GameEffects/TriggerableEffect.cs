@@ -66,6 +66,31 @@ public class TriggerableEffect : GameEffect
         ));
     }
 
+    public async override Task<string?> GetInternalIconDescription()
+    {
+        string? actionDescription = await this.triggerAction.GetIconDescription();
+        if (actionDescription == null)
+        {
+            return null;
+        }
+
+        string limitSuffix = await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerLimitIcon",
+            arguments: new Dictionary<string, object?> {
+                { "limitType", this.limitType },
+                { "limit", this.limit }
+            }
+        ));
+
+        if (limitSuffix == "#NONE#")
+        {
+            return actionDescription;
+        }
+        else
+        {
+            return actionDescription + "</size>\n<size=200%>" + limitSuffix;
+        }
+    }
+
     private void OnTrigger()
     {
         if (this.currentLimit != null)

@@ -107,7 +107,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
         this.sprite = Resources.Load<Sprite>(card.GetImagePath());
         this.costSprite = (card.GetCardType() == CardType.Relic) ? Game.Instance.GetIcon("Relic") : Game.Instance.GetIcon("EnergyCard");
         // TODO: Think about going for NoWrap for cards, it could look nicer for multiple effects in one line each...
-        GetDescriptionText().textWrappingMode = TMPro.TextWrappingModes.Normal;
+        GetDescriptionText().textWrappingMode = TMPro.TextWrappingModes.NoWrap;
         updateView();
     }
 

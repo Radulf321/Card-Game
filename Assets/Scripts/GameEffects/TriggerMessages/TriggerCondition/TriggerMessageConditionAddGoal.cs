@@ -42,4 +42,14 @@ public class TriggerMessageConditionAddGoal : TriggerMessageCondition
             }
         ));
     }
+
+    public async override Task<string?> GetIconDescription()
+    {
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "GoalIcon",
+            arguments: new Dictionary<string, object> {
+                { "amount", this.min },
+                { "goal", Game.Instance.GetGoalInlineIcon(this.goal ?? "unknown")}
+            }
+        ));
+    }
 }

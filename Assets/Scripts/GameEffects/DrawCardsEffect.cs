@@ -40,7 +40,7 @@ public class DrawCardsEffect : GameEffect
         ));
     }
 
-    protected override async Task<string?> GetInternalIconDescription()
+    public override async Task<string?> GetInternalIconDescription()
     {
         return await GetDescription("DrawCardsIcon");
     }

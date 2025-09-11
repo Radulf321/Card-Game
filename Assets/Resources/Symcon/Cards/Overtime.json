@@ -27,9 +27,10 @@
         {
             "type": "caption",
             "caption": {
-                "en": "Amount corresponds to remaining energy",
-                "de": "Menge entspricht der verbleibenden Energie"
-            }
+                "en": "X = remaining energy",
+                "de": "X = verbleibende Energie"
+            },
+            "iconCaption": "X=<sprite name=\"Energy\">"
         }
     ],
     "image": "Overtime"

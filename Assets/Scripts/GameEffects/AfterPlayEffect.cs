@@ -39,4 +39,15 @@ public class AfterPlayEffect : GameEffect {
                 throw new NotImplementedException();
         }
     }
+
+    public override Task<string?> GetInternalIconDescription() {
+        switch (this.afterPlay)
+        {
+            case CardAfterPlay.RemovePermanent:
+                return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "RemovePermanentIcon"));
+
+            default:
+                return Task.FromResult<string?>(null);
+        }
+    }
 }
