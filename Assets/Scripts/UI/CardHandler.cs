@@ -259,9 +259,12 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
             descriptionText.text = "This should never be visible";
         }
         descriptionText.ForceMeshUpdate();
-        if (descriptionText.isTextOverflowing)
+        while (descriptionText.isTextOverflowing ||
+            (descriptionText.textBounds.size.x >
+                descriptionText.transform.GetComponent<RectTransform>().rect.width))
         {
             descriptionText.fontSize *= 0.6f;
+            descriptionText.ForceMeshUpdate();
         }
     }
 
