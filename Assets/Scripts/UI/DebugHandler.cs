@@ -122,4 +122,10 @@ public class DebugHandler : MonoBehaviour
         PlayerPrefs.DeleteKey("Symcon" + Game.permanentFlagsKey);
         _ = DialogHandler.Instance.StartDialog(new DialogText("Permanent Flags cleared"), changeScene: false);
     }
+
+    public void StartCardGallery()
+    {
+        Game game = new Game("Symcon");
+        FadeHandler.Instance!.LoadScene("CardGalleryScene");
+    }
 }

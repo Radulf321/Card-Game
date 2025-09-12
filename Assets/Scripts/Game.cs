@@ -335,6 +335,11 @@ class Game
         return cardLibrary.GetCard(cardID);
     }
 
+    public List<Card> GetAllCards()
+    {
+        return cardLibrary.GetAllCards();
+    }
+
     public string GetResourcePath()
     {
         return resourcePath;
