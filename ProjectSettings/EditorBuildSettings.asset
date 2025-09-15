@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameEndScene.unity
     guid: 29026b074ff3715478f9a8144cd5c807
+  - enabled: 1
+    path: Assets/Scenes/CardGalleryScene.unity
+    guid: c8b114f71122c6d4db5f20229672cdaf
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 23fde41f1e5ed6e478b77ecaf9421ac0, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: ddbcc107deb107f46b570f4dd6ff2e2e, type: 2}
