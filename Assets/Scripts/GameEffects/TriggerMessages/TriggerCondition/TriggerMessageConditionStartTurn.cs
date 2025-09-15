@@ -47,4 +47,13 @@ public class TriggerMessageConditionStartTurn : TriggerMessageCondition
             }
         ));
     }
+
+    public async override Task<string?> GetIconDescription()
+    {
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerStartTurnIcon",
+            arguments: new Dictionary<string, object?> {
+                { "number", this.number },
+            }
+        ));
+    }
 }

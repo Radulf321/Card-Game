@@ -44,7 +44,7 @@ public class GoalEffect : GameEffect
     {
         return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
             arguments: new Dictionary<string, object> {
-                { "amount", this.amountCalculation.GetValue(this.owner) },
+                { "amount", this.amountCalculation.GetDescription(this.owner) },
                 { "goal", overrideGoal ?? Game.Instance.GetGoalName(this.goal) }
             }
         ));

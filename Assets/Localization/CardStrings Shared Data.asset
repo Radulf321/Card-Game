@@ -91,8 +91,16 @@ MonoBehaviour:
     m_Key: TriggerStartTurnFull
     m_Metadata:
       m_Items: []
+  - m_Id: 46108320977428480
+    m_Key: TriggerStartTurnIcon
+    m_Metadata:
+      m_Items: []
   - m_Id: 16396495348342784
     m_Key: TriggerEndTurn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46108049299775488
+    m_Key: TriggerEndTurnIcon
     m_Metadata:
       m_Items: []
   - m_Id: 14949827285393408
@@ -107,8 +115,16 @@ MonoBehaviour:
     m_Key: RequirementGoal
     m_Metadata:
       m_Items: []
+  - m_Id: 46116395083931648
+    m_Key: RequirementGoalIcon
+    m_Metadata:
+      m_Items: []
   - m_Id: 27627690392330240
     m_Key: OnDiscard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46110641169932288
+    m_Key: OnDiscardIcon
     m_Metadata:
       m_Items: []
   - m_Id: 27627876883668992

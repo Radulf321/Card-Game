@@ -169,6 +169,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
+  - m_Id: 46108049299775488
+    m_Localized: '{number:choose(null):|{}. }<sprite name="TurnEnd">'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 46108320977428480
+    m_Localized: '{number:choose(null):|{}. }<sprite name="TurnStart">'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 46110641169932288
+    m_Localized: 'Bei <sprite name="Discard">: {effect}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
+  - m_Id: 46116395083931648
+    m_Localized: <sprite name="Requirement">{requirements:list:{}|,}
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205826
   references:
     version: 2
     RefIds:
@@ -200,3 +220,7 @@ MonoBehaviour:
         - id: 44665572499955712
         - id: 44669718758203392
         - id: 44676214883655680
+        - id: 46108049299775488
+        - id: 46108320977428480
+        - id: 46110641169932288
+        - id: 46116395083931648

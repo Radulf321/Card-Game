@@ -55,6 +55,20 @@ public class OnDiscardEffect : GameEffect
         ));
     }
 
+    public override async Task<string?> GetInternalIconDescription()
+    {
+        string? effectDescription = await this.effect.GetInternalIconDescription();
+        if (effectDescription == null)
+        {
+            return null;
+        }
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "OnDiscardIcon",
+            arguments: new Dictionary<string, object> {
+                { "effect", effectDescription },
+            }
+        ));
+    }
+
     private void HandleMessage(TriggerMessage triggerMessage)
     {
         if ((triggerMessage.GetTriggerType() == TriggerType.DiscardCard) && (triggerMessage.GetData().GetCard() == this.owner))

@@ -38,4 +38,13 @@ public class TriggerMessageConditionDrawCards : TriggerMessageCondition
             }
         ));
     }
+
+    public async override Task<string?> GetIconDescription()
+    {
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "DrawCardsIcon",
+            arguments: new Dictionary<string, object> {
+                { "amount", this.minimum },
+            }
+        ));
+    }
 }

@@ -48,15 +48,28 @@ public abstract class AmountCalculation
     }
 
     private CalculationInput input;
+    private string? descriptionOverride;
 
-    public AmountCalculation(CalculationInput input = CalculationInput.Constant)
+    public AmountCalculation(CalculationInput input = CalculationInput.Constant, string? descriptionOverride = null)
     {
         this.input = input;
+        this.descriptionOverride = descriptionOverride;
     }
 
     public AmountCalculation(JObject json)
     {
         this.input = EnumHelper.ParseEnum<CalculationInput>(json["input"]?.ToString()) ?? CalculationInput.Constant;
+        this.descriptionOverride = json["description"]?.ToString(); 
+    }
+
+    public string GetDescription(Card? card = null)
+    {
+        if (this.descriptionOverride != null)
+        {
+            return this.descriptionOverride;
+        }
+
+        return this.GetValue(card).ToString();
     }
 
 

@@ -540,6 +540,94 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: TurnStart
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 4880
+        width: 1616
+        height: 987
+      alignment: 9
+      pivot: {x: 0, y: 0.15}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1987bacc821a314449009a975acdde56
+      internalID: 1806090244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TurnEnd
+      rect:
+        serializedVersion: 2
+        x: 1765
+        y: 4884
+        width: 1592
+        height: 981
+      alignment: 9
+      pivot: {x: 0, y: 0.15}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee8ec148dd6a1964ab7a452b8d0d390a
+      internalID: 1691076521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Discard
+      rect:
+        serializedVersion: 2
+        x: 2042
+        y: 4332
+        width: 478
+        height: 536
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 620c4171c6aec8240b3336b32fd80ad1
+      internalID: -867668272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Requirement
+      rect:
+        serializedVersion: 2
+        x: 3360
+        y: 4634
+        width: 577
+        height: 776
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 085411e310862a94b9f43ccd154f3e31
+      internalID: -1292171057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -561,6 +649,7 @@ TextureImporter:
       Comfort: 730683644
       CopyPaste: 758809506
       Creativity: -1508160427
+      Discard: -867668272
       DiscardLeft: -1034865969
       DiscardRandom: 1453083173
       DiscardRight: 1965963608
@@ -571,8 +660,11 @@ TextureImporter:
       KnowHow: -329008022
       Relic: -1496290106
       Remove: 705025036
+      Requirement: -1292171057
       Rounds: 2103016240
       Turn: -1962995911
+      TurnEnd: 1691076521
+      TurnStart: 1806090244
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

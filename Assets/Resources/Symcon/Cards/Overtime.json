@@ -16,6 +16,7 @@
                     "type": "goal",
                     "goal": "knowhow",
                     "amount": {
+                        "description": "X",
                         "input": "currentEnergy",
                         "type": "linear",
                         "base": 0,

@@ -31,7 +31,16 @@ public class TriggerMessageConditionEndTurn : TriggerMessageCondition
     public override Task<string> GetDescription()
     {
         return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerEndTurn",
-            arguments: new Dictionary<string, object> {
+            arguments: new Dictionary<string, object?> {
+                { "number", this.number },
+            }
+        ));
+    }
+
+    public async override Task<string?> GetIconDescription()
+    {
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerEndTurnIcon",
+            arguments: new Dictionary<string, object?> {
                 { "number", this.number },
             }
         ));
