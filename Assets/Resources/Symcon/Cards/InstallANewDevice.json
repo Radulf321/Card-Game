@@ -9,12 +9,15 @@
         {
             "type": "goal",
             "goal": "knowhow",
-            "amount": 9
+            "amount": 7
         },
         {
             "type": "onDiscard",
-            "effect": {
-                "type": "playOwner"
+            "effect": 
+            {
+                "type": "goal",
+                "goal": "knowhow",
+                "amount": 3
             }
         }
     ],
