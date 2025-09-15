@@ -628,6 +628,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Total
+      rect:
+        serializedVersion: 2
+        x: 3609
+        y: 5578
+        width: 1230
+        height: 1149
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b4295b6eccd5194d8a5a233b5586c49
+      internalID: -1583948739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -662,6 +684,7 @@ TextureImporter:
       Remove: 705025036
       Requirement: -1292171057
       Rounds: 2103016240
+      Total: -1583948739
       Turn: -1962995911
       TurnEnd: 1691076521
       TurnStart: 1806090244

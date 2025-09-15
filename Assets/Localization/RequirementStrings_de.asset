@@ -20,12 +20,12 @@ MonoBehaviour:
     - rid: 2631328602047381585
   m_TableData:
   - m_Id: 5759606784
-    m_Localized: '{comparison:choose(AtLeast|Maximum):|Maximal }{name}: {current}/{amount}'
+    m_Localized: '{comparison:choose(AtLeast|Maximum):|Max}{icon}: {current}/{amount}'
     m_Metadata:
       m_Items:
       - rid: 2631328602047381585
   - m_Id: 1616271679488
-    m_Localized: 'Gesamt: {current}/{amount}'
+    m_Localized: '{icon}: {current}/{amount}'
     m_Metadata:
       m_Items:
       - rid: 2631328602047381585

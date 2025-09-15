@@ -195,6 +195,11 @@ MonoBehaviour:
     m_GlyphIndex: 22
     m_Scale: 1
     m_Name: Requirement
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 23
+    m_Scale: 1
+    m_Name: Total
   m_GlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -564,5 +569,21 @@ MonoBehaviour:
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: -1292171057, guid: 1faee744dd9652b499df4f39d9e96547, type: 3}
+  - m_Index: 23
+    m_Metrics:
+      m_Width: 359.898
+      m_Height: 336.16458
+      m_HorizontalBearingX: -0
+      m_HorizontalBearingY: 302.54813
+      m_HorizontalAdvance: 359.898
+    m_GlyphRect:
+      m_X: 1055
+      m_Y: 1631
+      m_Width: 359
+      m_Height: 336
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -1583948739, guid: 1faee744dd9652b499df4f39d9e96547, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []

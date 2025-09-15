@@ -44,7 +44,7 @@ public class GoalRequirement : Requirement
             LocalizationSettings.StringDatabase.GetLocalizedStringAsync("RequirementStrings", "GoalDescription",
             arguments: new Dictionary<string, object> {
                 { "comparison", this.comparison },
-                { "name", Game.Instance.GetGoalName(this.goal) },
+                { "icon", Game.Instance.GetGoalInlineIcon(this.goal) },
                 { "current", CombatHandler.instance.getGoalAmount(this.goal) },
                 { "amount", this.amount },
             }

@@ -15,6 +15,14 @@
                 "de": "Kreativität"
             },
             "icon": "Creativity"
+        },
+        {
+            "id": "total",
+            "name": {
+                "en": "Total",
+                "de": "Gesamt"
+            },
+            "icon": "Total"
         }
     ],
     "experienceTypes": [

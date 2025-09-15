@@ -20,6 +20,7 @@ public class TotalRequirement : Requirement
             LocalizationSettings.StringDatabase.GetLocalizedStringAsync("RequirementStrings", "TotalDescription",
             arguments: new Dictionary<string, object> {
                 { "current", CombatHandler.instance.getTotal() },
+                { "icon", Game.Instance.GetGoalInlineIcon("total") },
                 { "amount", this.amount },
             }
         ));
