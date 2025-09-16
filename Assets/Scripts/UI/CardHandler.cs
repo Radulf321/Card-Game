@@ -16,6 +16,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
     private Sprite? sprite;
     private Sprite? costSprite;
     private bool active = true;
+    private bool tooltip = false;
 
     private string? title;
     private string? description;
@@ -86,6 +87,8 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
         RectTransform containerRect = transform.Find("CardContainer").GetComponent<RectTransform>();
         RectTransform rectTransform = transform.GetComponent<RectTransform>();
         containerRect.localScale = new Vector3(scale, scale, scale);
+        float tooltipScale = Mathf.Max(scale, 0.5f);
+        transform.Find("TooltipContainer").GetComponent<RectTransform>().localScale = new Vector3(tooltipScale, tooltipScale, tooltipScale);
         rectTransform.sizeDelta = new Vector2(containerRect.rect.width * scale, containerRect.rect.height * scale);
         transform.GetComponent<Image>().pixelsPerUnitMultiplier = 0.3f / scale;
         this.shouldUpdate = true;
@@ -260,6 +263,36 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
             }
         }
         beforeDragPosition = null;
+    }
+
+    public async void ShowTooltip()
+    {
+        if (this.card == null)
+        {
+            return;
+        }
+
+        tooltip = true;
+        string description = await card!.GetTextDescription();
+
+        // In case the tooltip was hidden while we were waiting for the description
+        if (!tooltip)
+        {
+            return;
+        }
+        Transform tooltipContainer = transform.Find("TooltipContainer");
+        TextMeshProUGUI tooltipText =
+             tooltipContainer.Find("TooltipText").GetComponent<TextMeshProUGUI>();
+        tooltipText.text = description;
+        RectTransform tooltipRect = tooltipContainer.GetComponent<RectTransform>();
+        tooltipRect.sizeDelta = new Vector2(tooltipRect.sizeDelta.x, tooltipText.preferredHeight + 100);
+        tooltipContainer.gameObject.SetActive(true);
+    }
+
+    public void HideTooltip()
+    {
+        tooltip = false;
+        transform.Find("TooltipContainer").gameObject.SetActive(false);
     }
 
     public Card GetCard()

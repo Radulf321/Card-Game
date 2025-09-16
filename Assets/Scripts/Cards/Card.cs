@@ -148,6 +148,16 @@ public class Card
         return this.name;
     }
 
+    public async Task<string> GetTextDescription()
+    {
+        List<string> descriptions = new List<string>();
+        foreach (GameEffect effect in this.effects)
+        {
+            descriptions.Add(await effect.getDescription());
+        }
+        return string.Join("\n", descriptions);
+    }
+
     public async Task<string> GetDescription()
     {
         List<string> descriptions = new List<string>();

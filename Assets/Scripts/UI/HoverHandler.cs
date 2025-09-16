@@ -55,6 +55,7 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         Canvas canvas = GetComponent<Canvas>();
         canvas.overrideSorting = false;
         canvas.sortingOrder = 0;
+        transform.GetComponent<CardHandler>()?.HideTooltip();
     }
 
     public void StartHover()
@@ -62,6 +63,7 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         Canvas canvas = GetComponent<Canvas>();
         canvas.overrideSorting = true;
         canvas.sortingOrder = 100; // Bring to front
+        transform.GetComponent<CardHandler>()?.ShowTooltip();
     }
 
     public void OnPointerDown(PointerEventData eventData)
