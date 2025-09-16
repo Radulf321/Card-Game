@@ -208,24 +208,32 @@
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: Check out the first turn. It has a goal of 2 Knowhow. You can see that in the top left corner. You can also see that it's shown in orange, meaning you haven't fulfilled the goal yet.",
-                            "de": "Pio: Schau dir den ersten Zug an. Er hat ein Ziel von 2 Knowhow. Das siehst du in der linken oberen Ecke. Du siehst auch, dass der Zug in Orange angezeigt wird, was bedeutet, dass du das Ziel noch nicht erfüllt hast."
+                            "en": "Pio: Check out the first turn. It has a goal of 2 Knowhow (<sprite name=\"KnowHow\">). You can see that in the top left corner. You can also see that it's shown in orange, meaning you haven't fulfilled the goal yet.",
+                            "de": "Pio: Schau dir den ersten Zug an. Er hat ein Ziel von 2 Knowhow (<sprite name=\"KnowHow\">). Das siehst du in der linken oberen Ecke. Du siehst auch, dass der Zug in Orange angezeigt wird, was bedeutet, dass du das Ziel noch nicht erfüllt hast."
                         }
                     },
                     {
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: You currently have 0 Knowhow, so you somehow need to gain 2 in this turn to turn this work day into a success.",
-                            "de": "Pio: Du hast aktuell 0 Knowhow, also musst du in diesem Zug irgendwo her 2 Knowhow bekommen um den Arbeitstag erfolgreich abzuschließen."
+                            "en": "Pio: You currently have 0 Knowhow (<sprite name=\"KnowHow\">), so you somehow need to gain 2 in this turn to turn this work day into a success.",
+                            "de": "Pio: Du hast aktuell 0 Knowhow (<sprite name=\"KnowHow\">), also musst du in diesem Zug irgendwo her 2 Knowhow (<sprite name=\"KnowHow\">) bekommen um den Arbeitstag erfolgreich abzuschließen."
                         }
                     },
                     {
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: But don't worry. At the bottom you see your hand of cards. You currently have one card 'Create Variable' which adds 2 Knowhow. Go ahead and play it by clicking or tapping it.",
-                            "de": "Pio: Mach dir keine Sorgen. Unten siehst du deine Handkarten. Du hast aktuell eine Karte 'Variable erstellen', die 2 Knowhow hinzufügt. Spiel sie einfach, indem du sie anklickst oder antippst."
+                            "en": "Pio: But don't worry. At the bottom you see your hand of cards. You currently have one card 'Create Variable' which adds 2 Knowhow (<sprite name=\"KnowHow\">). Go ahead and play it by dragging it into the center area of the screen.",
+                            "de": "Pio: Mach dir keine Sorgen. Unten siehst du deine Handkarten. Du hast aktuell eine Karte 'Variable erstellen', die 2 Knowhow (<sprite name=\"KnowHow\">) hinzufügt. Spiel sie einfach, indem du sie in den mittleren Bereich des Bildschirms ziehst."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Once you start dragging, the center area will be highlighted, so you'll know where to drop. Go ahead now! Give it a try!",
+                            "de": "Pio: Sobald du anfängst zu ziehen, wird der mittlere Bereich hervorgehoben, damit du weißt, wo du die Karte ablegen musst. Also los! Probier es aus!"
                         }
                     }
                 ]
@@ -255,8 +263,8 @@
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: Great! Now, you can see that you have 2/2 Knowhow and the turn is now green. That means you have fulfilled the goal and can continue to the next turn.",
-                            "de": "Pio: Super! Du kannst jetzt sehen, dass du 2/2 Knowhow hast und der Zug jetzt grün ist. Das bedeutet, du hast das Ziel erfüllt und kannst zum nächsten Zug übergehen."
+                            "en": "Pio: Great! Now, you can see that you have 2/2 Knowhow (<sprite name=\"KnowHow\">) and the turn is now green. That means you have fulfilled the goal and can continue to the next turn.",
+                            "de": "Pio: Super! Du kannst jetzt sehen, dass du 2/2 Knowhow (<sprite name=\"KnowHow\">) hast und der Zug jetzt grün ist. Das bedeutet, du hast das Ziel erfüllt und kannst zum nächsten Zug übergehen."
                         }
                     },
                     {
@@ -321,32 +329,32 @@
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: So, the second turn does not have any goals. But you shouldn't lean back but look ahead instead. See, the third turn has two goals: You need 2 Creativity and 5 Total.",
-                            "de": "Pio: So, der zweite Zug hat keine Ziele. Aber du solltest dich nicht ausruhen sondern stattdessen nach vorne schauen. Schau mal, der dritte Zug hat zwei Ziele: Du brauchst 2 Kreativität und 5 Gesamt."
+                            "en": "Pio: So, the second turn does not have any goals. But you shouldn't lean back but look ahead instead. See, the third turn has two goals: You need 2 Creativity (<sprite name=\"Creativity\">) and 5 Total (<sprite name=\"Total\">).",
+                            "de": "Pio: So, der zweite Zug hat keine Ziele. Aber du solltest dich nicht ausruhen sondern stattdessen nach vorne schauen. Schau mal, der dritte Zug hat zwei Ziele: Du brauchst 2 Kreativität (<sprite name=\"Creativity\">) und 5 Gesamt (<sprite name=\"Total\">)."
                         }
                     },
                     {
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: Most goals require Creativity or Knowhow, which you can gain by playing cards. Total combines those two, meaning both Knowhow and Creativity progress it.",
-                            "de": "Pio: Die meisten Ziele erfordern Kreativität oder Knowhow, die du durch das Spielen von Karten erhalten kannst. Gesamt kombiniert diese beiden, was bedeutet, dass sowohl Knowhow als auch Kreativität es voranbringen."
+                            "en": "Pio: Most goals require Creativity (<sprite name=\"Creativity\">) or Knowhow (<sprite name=\"KnowHow\">), which you can gain by playing cards. Total (<sprite name=\"Total\">) combines those two, meaning both Knowhow (<sprite name=\"KnowHow\">) and Creativity (<sprite name=\"Creativity\">) progress it.",
+                            "de": "Pio: Die meisten Ziele erfordern Kreativität (<sprite name=\"Creativity\">) oder Knowhow (<sprite name=\"KnowHow\">), die du durch das Spielen von Karten erhalten kannst. Gesamt (<sprite name=\"Total\">) kombiniert diese beiden, was bedeutet, dass sowohl Knowhow (<sprite name=\"KnowHow\">) als auch Kreativität (<sprite name=\"Creativity\">) es voranbringen."
                         }
                     },
                     {
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: That's also why you already have 2 total because you played 'Create Variable' in the first turn.",
-                            "de": "Pio: Darum hast du auch schon 2 Gesamt. Du hast ja 'Variable erstellen' im ersten Zug gespielt."
+                            "en": "Pio: That's also why you already have 2 total (<sprite name=\"Total\">) because you played 'Create Variable' in the first turn.",
+                            "de": "Pio: Darum hast du auch schon 2 Gesamt (<sprite name=\"Total\">). Du hast ja 'Variable erstellen' im ersten Zug gespielt."
                         }
                     },
                     {
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: At the beginning of the turn you've also drawn a new card: 'Adjust Presentation'. Play it to get some Creativity.",
-                            "de": "Pio: Am Anfang des Zuges hast du auch eine neue Karte gezogen: 'Darstellung anpassen'. Spiele sie, um etwas Kreativität zu bekommen."
+                            "en": "Pio: At the beginning of the turn you've also drawn a new card: 'Adjust Presentation'. Play it to get some Creativity (<sprite name=\"Creativity\">).",
+                            "de": "Pio: Am Anfang des Zuges hast du auch eine neue Karte gezogen: 'Darstellung anpassen'. Spiele sie, um etwas Kreativität (<sprite name=\"Creativity\">) zu bekommen."
                         }
                     }
                 ]
