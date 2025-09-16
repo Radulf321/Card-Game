@@ -2,6 +2,7 @@
 
 public enum TriggerType
 {
+    // Game Events
     AddGoal,
     AddCurrency,
     StartTurn,
@@ -15,6 +16,10 @@ public enum TriggerType
     EndDialog,
     Preparation,
     EndGame,
+
+    // UI Events
+    CardDragStart,
+    CardDragEnd,
 }
 
 public class TriggerMessage

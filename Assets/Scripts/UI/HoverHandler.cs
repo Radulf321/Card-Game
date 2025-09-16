@@ -5,17 +5,23 @@ using UnityEngine.EventSystems;
 public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     bool active = true;
+    bool dragging = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        Game.Instance.SubscribeToTriggerMessages(OnTriggerMessage);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    protected virtual void OnDestroy()
+    {
+        Game.Instance.UnsubscribeFromTriggerMessages(OnTriggerMessage);
     }
 
     public void SetActive(bool active)
@@ -26,18 +32,17 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // Hover effect: Bring the card to the top
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!active)
+        if (!active || dragging)
         {
             return;
         }
-        Canvas canvas = GetComponent<Canvas>();
-        canvas.overrideSorting = true; // Enable sorting order override
-        canvas.sortingOrder = 100; // Bring the card to the top
+
+        StartHover();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!active)
+        if (!active || dragging)
         {
             return;
         }
@@ -52,8 +57,32 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         canvas.sortingOrder = 0;
     }
 
+    public void StartHover()
+    {
+        Canvas canvas = GetComponent<Canvas>();
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = 100; // Bring to front
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         StopHover();
+    }
+
+    private void OnTriggerMessage(TriggerMessage message)
+    {
+        switch (message.GetTriggerType())
+        {
+            case TriggerType.CardDragEnd:
+                this.dragging = false;
+                break;
+
+            case TriggerType.CardDragStart:
+                this.dragging = true;
+                break;
+
+            default:
+                break;
+        }
     }
 }

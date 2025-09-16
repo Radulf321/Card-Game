@@ -6,7 +6,7 @@ using System;
 using TMPro;
 
 #nullable enable
-public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, IScalable
+public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, IScalable, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public static float standardHeight = 1038f;
     public static float standardWidth = 778f;
@@ -21,6 +21,8 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
     private string? description;
     private string? cost;
     private Action? onClickAction;
+
+    private Vector3? beforeDragPosition = null;
 
     private bool shouldUpdate = false;
 
@@ -60,7 +62,8 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
                 {
                     costText.text = talent!.IsPurchased() ? "" : talent!.GetCost().First().Value.ToString();
                 }
-                else {
+                else
+                {
                     throw new Exception("Could not deduce cost of card as no specific cost is set, nor any talent or card");
                 }
             }
@@ -198,22 +201,65 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
             return;
         }
 
-        if (card != null)
+        if (talent != null)
         {
-            if (card.CanPlay())
+            FindAnyObjectByType<TalentInfoHandler>(FindObjectsInactive.Include).ShowTalent(talent);
+            transform.parent.GetComponent<HoverHandler>().StopHover();
+        }
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (!active || (onClickAction != null) || (card == null))
+        {
+            return;
+        }
+        beforeDragPosition = GetComponent<RectTransform>().position;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragStart, new TriggerMessageData(card: card)));
+        GetComponent<HoverHandler>().StartHover();
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (beforeDragPosition == null)
+        {
+            return;
+        }
+        GetComponent<RectTransform>().position += (Vector3)eventData.delta;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (beforeDragPosition == null)
+        {
+            return;
+        }
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragEnd, new TriggerMessageData(card: card)));
+        if (eventData.pointerEnter?.GetComponent<CardsInPlayAreaHandler>() == null)
+        {
+            if (beforeDragPosition != null)
+            {
+                GetComponent<RectTransform>().position = beforeDragPosition.Value;
+            }
+        }
+        else
+        {
+            if (card?.CanPlay() == true)
             {
                 card.Play();
             }
             else
             {
                 Debug.Log("Not enough energy to play this card.");
+                if (beforeDragPosition != null)
+                {
+                    GetComponent<RectTransform>().position = beforeDragPosition.Value;
+                }
             }
         }
-        if (talent != null)
-        {
-            FindAnyObjectByType<TalentInfoHandler>(FindObjectsInactive.Include).ShowTalent(talent);
-            transform.parent.GetComponent<HoverHandler>().StopHover();
-        }
+        beforeDragPosition = null;
     }
 
     public Card GetCard()
