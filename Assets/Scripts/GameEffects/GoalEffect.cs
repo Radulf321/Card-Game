@@ -25,7 +25,7 @@ public class GoalEffect : GameEffect
     {
     }
 
-    public GoalEffect(JObject json, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(json["goal"]?.ToString() ?? "unknown", AmountCalculation.FromJson(json["amount"]), owner, trigger)
+    public GoalEffect(JObject json, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(json["goal"]?.ToString() ?? "unknown", AmountCalculation.FromJson(json["amount"]) ?? new ConstantAmountCalculation(0), owner, trigger)
     {
     }
 
@@ -40,19 +40,19 @@ public class GoalEffect : GameEffect
         return new GoalEffect(this.goal, this.amountCalculation, newOwner ?? this.owner, this.trigger);
     }
 
-    private Task<string> GetDescription(string tableEntry, string? overrideGoal = null)
+    private Task<string> GetDescription(string tableEntry)
     {
         return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
             arguments: new Dictionary<string, object> {
                 { "amount", this.amountCalculation.GetDescription(this.owner) },
-                { "goal", overrideGoal ?? Game.Instance.GetGoalName(this.goal) }
+                { "goal", Game.Instance.GetGoalInlineIcon(this.goal) }
             }
         ));
     }
     
     public override async Task<string?> GetInternalIconDescription()
     {
-        return await GetDescription("GoalIcon", overrideGoal: Game.Instance.GetGoalInlineIcon(this.goal));
+        return await GetDescription("GoalIcon");
     }
 
     public override Task<string> getDescription()

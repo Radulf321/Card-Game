@@ -52,7 +52,7 @@ public class RequirementGoalEffect : GameEffect
         List<string> requirementStrings = new List<string>();
         foreach (KeyValuePair<string, int> requirement in this.requirements)
         {
-            requirementStrings.Add(requirement.Value.ToString() + " " + Game.Instance.GetGoalName(requirement.Key));
+            requirementStrings.Add(requirement.Value.ToString() + " " + Game.Instance.GetGoalInlineIcon(requirement.Key));
         }
         return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "RequirementGoal",
             arguments: new Dictionary<string, object> {
