@@ -207,7 +207,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
         if (talent != null)
         {
             FindAnyObjectByType<TalentInfoHandler>(FindObjectsInactive.Include).ShowTalent(talent);
-            transform.parent.GetComponent<HoverHandler>().StopHover();
+            GetComponent<HoverHandler>().StopHover();
         }
     }
 
@@ -263,6 +263,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
             }
         }
         beforeDragPosition = null;
+        GetComponent<HoverHandler>().StopHover();
     }
 
     public async void ShowTooltip()
