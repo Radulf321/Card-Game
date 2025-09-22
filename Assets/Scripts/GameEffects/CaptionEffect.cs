@@ -16,7 +16,6 @@ public class CaptionEffect : GameEffect
 
     public CaptionEffect(JObject json)
     {
-        UnityEngine.Debug.Log($"Getting icon caption: {this.iconCaption}");
         this.caption = LocalizationHelper.GetLocalizedString((JObject)json["caption"]!)!;
         this.iconCaption = json["iconCaption"] != null ?
             (json["iconCaption"]!.Type == JTokenType.Object ?
