@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Threading.Tasks;
 
 #nullable enable
 public class RewardDisplayHandler : MonoBehaviour, IViewUpdater, IScalable
 {
+    const float defaultFontSize = 98;
     private Reward? reward;
     private bool shouldUpdate = false;
     private Color? textColor;
@@ -36,7 +38,24 @@ public class RewardDisplayHandler : MonoBehaviour, IViewUpdater, IScalable
                 Transform spriteTransform = transform.Find("SpriteReward");
                 spriteTransform.Find("Image").GetComponent<Image>().sprite = reward.GetSprite();
                 TextMeshProUGUI text = spriteTransform.Find("Text").GetComponent<TextMeshProUGUI>();
-                AsyncHelper.UpdateTextFromTask(text, reward.GetCaption());
+                _ = AsyncHelper.UpdateTextFromTask(text, reward.GetCaption()).ContinueWith(_ =>
+                {
+                    RewardAreaHandler? rewardAreaHandler = GetComponentInParent<RewardAreaHandler>();
+                    float maximumFontSize = rewardAreaHandler?.GetMaximumFontSize() ?? defaultFontSize;
+                    float fontSize = maximumFontSize;
+                    text.fontSize = fontSize;
+                    text.ForceMeshUpdate();
+                    while (text.isTextOverflowing)
+                    {
+                        fontSize /= 2;
+                        text.fontSize = fontSize;
+                        text.ForceMeshUpdate();
+                    }
+                    if (fontSize != maximumFontSize)
+                    {
+                        rewardAreaHandler?.SetMaximumFontSize(fontSize);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
                 if (this.textColor != null)
                 {
                     text.color = this.textColor.Value;

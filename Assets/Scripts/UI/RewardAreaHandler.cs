@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 
 #nullable enable
 public class RewardAreaHandler : GenericCardsContainerHandler<Reward, RewardDisplayHandler>, IViewUpdater
 {
     public Color textColor = Color.white;
+    private float? maximumFontSize;
     List<Reward> rewards = new List<Reward>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,6 +22,17 @@ public class RewardAreaHandler : GenericCardsContainerHandler<Reward, RewardDisp
     public void SetRewards(List<Reward> rewards)
     {
         this.rewards = rewards;
+        updateView();
+    }
+
+    public float? GetMaximumFontSize()
+    {
+        return this.maximumFontSize;
+    }
+
+    public void SetMaximumFontSize(float? fontSize)
+    {
+        this.maximumFontSize = fontSize;
         updateView();
     }
 
