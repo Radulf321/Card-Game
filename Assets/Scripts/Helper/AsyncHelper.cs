@@ -15,7 +15,7 @@ public static class AsyncHelper
         return result.Task;
     }
 
-    public static async void UpdateTextFromTask(TextMeshProUGUI textField, Task<string> textSource)
+    public static async Task UpdateTextFromTask(TextMeshProUGUI textField, Task<string> textSource)
     {
         textField.text = await textSource;
     }
