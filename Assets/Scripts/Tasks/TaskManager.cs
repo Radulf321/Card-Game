@@ -118,6 +118,15 @@ public class TaskManager
         return PlayerPrefs.GetInt(GetTaskCompleteKey(taskID), 0) == 1;
     }
 
+    public void DebugCompleteAllTasks()
+    {
+        foreach (GameTask task in this.tasks)
+        {
+            PlayerPrefs.SetInt(GetTaskCompleteKey(task), 1);
+        }
+        PlayerPrefs.Save();
+    }
+
     private void OnTriggerMessage(TriggerMessage message)
     {
         if (message.GetTriggerType() == TriggerType.EndCombat)

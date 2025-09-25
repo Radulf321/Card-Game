@@ -128,4 +128,13 @@ public class DebugHandler : MonoBehaviour
         Game game = new Game("Symcon");
         FadeHandler.Instance!.LoadScene("CardGalleryScene");
     }
+
+    public void CompleteAllTasks()
+    {
+        Game game = new Game("Symcon");
+        game.GetTaskManager().Initialize();
+        game.GetTaskManager().DebugCompleteAllTasks();
+        _ = DialogHandler.Instance.StartDialog(new DialogText("All tasks completed"), changeScene: false);
+
+    }
 }
