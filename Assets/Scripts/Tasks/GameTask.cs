@@ -22,6 +22,8 @@ public abstract class GameTask
                 return new PlayCardsTask(json);
             case "currency":
                 return new CurrencyTask(json);
+            case "relics":
+                return new RelicsTask(json);
             default:
                 throw new System.Exception($"Unknown task type: {type}");
         }

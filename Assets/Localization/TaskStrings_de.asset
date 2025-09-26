@@ -56,6 +56,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 2631328474858782722
+  - m_Id: 26834682482827264
+    m_Localized: Sammle {amount:choose(1):ein Relikt|{} Relikte}
+    m_Metadata:
+      m_Items:
+      - rid: 2631328474858782722
   references:
     version: 2
     RefIds:
@@ -69,3 +74,4 @@ MonoBehaviour:
         - id: 7991688715608064
         - id: 8330442642857984
         - id: 14131930132684800
+        - id: 26834682482827264

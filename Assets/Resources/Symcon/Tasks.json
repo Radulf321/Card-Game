@@ -145,5 +145,19 @@
         "combatTarget": "realEstateCompany",
         "talent": "switchingViaApp",
         "rewards": []
+    },
+    {
+        "id": "relic1",
+        "type": "relics",
+        "amount": 1,
+        "rewards": [
+            {
+                "type": "unlock",
+                "unlock": {
+                    "type": "equipment",
+                    "id": "barett"
+                }
+            }
+        ]
     }
 ]

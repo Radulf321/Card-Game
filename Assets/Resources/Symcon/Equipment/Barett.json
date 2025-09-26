@@ -1,0 +1,24 @@
+{
+    "id": "barett",
+    "name": {
+        "en": "Barett",
+        "de": "Barett"
+    },
+    "slot": "head",
+    "icon": "Barett",
+    "requirements": [
+        {
+            "type": "unlock"
+        }
+    ],
+    "effects": [
+        {
+            "type": "cards",
+            "cards": [
+                "planAhead",
+                "planAhead",
+                "loadATemplate"
+            ]
+        }
+    ]
+}

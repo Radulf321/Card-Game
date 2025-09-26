@@ -47,6 +47,10 @@ MonoBehaviour:
     m_Key: CurrencyDescription
     m_Metadata:
       m_Items: []
+  - m_Id: 26834682482827264
+    m_Key: RelicsDescription
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
