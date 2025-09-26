@@ -139,6 +139,26 @@ MonoBehaviour:
     m_Key: AmountIcon
     m_Metadata:
       m_Items: []
+  - m_Id: 50095652973879296
+    m_Key: AmountCalculationTargetLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096084089610240
+    m_Key: AmountCalculationPreviousPlays
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096316420497408
+    m_Key: AmountCalculationCurrentEnergy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096630666141696
+    m_Key: AmountCalculationTotalLevels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096779555545088
+    m_Key: AmountCalculationCardsInHand
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 6401543877616205825
   m_TableData:
   - m_Id: 33303601152
-    m_Localized: Add {amount} {goal}
+    m_Localized: Add {prefix} {goal}{suffix}
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
@@ -58,7 +58,7 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205825
   - m_Id: 2635793177550848
-    m_Localized: add {amount} {goal}
+    m_Localized: add {prefix} {goal}{suffix}
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
@@ -121,7 +121,7 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205825
   - m_Id: 42492961129013248
-    m_Localized: '{amount}{goal}'
+    m_Localized: '{prefix}{goal}{suffix}'
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
@@ -191,6 +191,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205825
+  - m_Id: 50095652973879296
+    m_Localized: ' per combat target level'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096084089610240
+    m_Localized: ' per times this card was already played'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096316420497408
+    m_Localized: ' per <sprite name="Energy">'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096630666141696
+    m_Localized: ' for each level of any combat target'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096779555545088
+    m_Localized: ' per card in hand'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

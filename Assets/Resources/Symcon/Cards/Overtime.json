@@ -16,7 +16,6 @@
                     "type": "goal",
                     "goal": "knowhow",
                     "amount": {
-                        "description": "X",
                         "input": "currentEnergy",
                         "type": "linear",
                         "base": 0,
@@ -24,14 +23,6 @@
                     }
                 }
             }
-        },
-        {
-            "type": "caption",
-            "caption": {
-                "en": "X = remaining energy",
-                "de": "X = verbleibende Energie"
-            },
-            "iconCaption": "X=<sprite name=\"Energy\">"
         }
     ],
     "image": "Overtime"

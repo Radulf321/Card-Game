@@ -40,19 +40,24 @@ public class GoalEffect : GameEffect
         return new GoalEffect(this.goal, this.amountCalculation, newOwner ?? this.owner, this.trigger);
     }
 
-    private Task<string> GetDescription(string tableEntry)
+    private async Task<string> GetDescription(string tableEntry, string? overridePrefix = null, string? overrideSuffix = null)
     {
-        return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
             arguments: new Dictionary<string, object> {
-                { "amount", this.amountCalculation.GetDescription(this.owner) },
-                { "goal", Game.Instance.GetGoalInlineIcon(this.goal) }
+                { "prefix", overridePrefix ?? (await this.amountCalculation.GetDescriptionPrefix(this.owner)) },
+                { "goal", Game.Instance.GetGoalInlineIcon(this.goal) },
+                { "suffix", overrideSuffix ?? (await this.amountCalculation.GetDescriptionSuffix(this.owner)) }
             }
         ));
     }
     
     public override async Task<string?> GetInternalIconDescription()
     {
-        return await GetDescription("GoalIcon");
+        return await GetDescription(
+            "GoalIcon",
+            overridePrefix: await this.amountCalculation.GetDescriptionPrefixIcon(this.owner),
+            overrideSuffix: await this.amountCalculation.GetDescriptionSuffixIcon(this.owner)
+        );
     }
 
     public override Task<string> getDescription()

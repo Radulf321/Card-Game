@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 6401543877616205826
   m_TableData:
   - m_Id: 33303601152
-    m_Localized: "F\xFCge {amount} {goal} hinzu"
+    m_Localized: "F\xFCge {prefix} {goal}{suffix} hinzu"
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
@@ -58,7 +58,7 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205826
   - m_Id: 2635793177550848
-    m_Localized: "f\xFCge {amount} {goal} hinzu"
+    m_Localized: "f\xFCge {prefix} {goal}{suffix} hinzu"
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
@@ -121,7 +121,7 @@ MonoBehaviour:
       m_Items:
       - rid: 6401543877616205826
   - m_Id: 42492961129013248
-    m_Localized: '{amount}{goal}'
+    m_Localized: '{prefix}{goal}{suffix}'
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
@@ -189,6 +189,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
+  - m_Id: 50095652973879296
+    m_Localized: ' pro Stufe des Kampfziels'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096084089610240
+    m_Localized: ' pro mal, das diese Karte gespielt wurde'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096316420497408
+    m_Localized: ' pro <sprite name="Energy">'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096630666141696
+    m_Localized: " f\xFCr jedes Level von irgend einem Kampfziel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50096779555545088
+    m_Localized: ' pro Karte in der Hand'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -10,6 +12,7 @@ public enum CalculationInput
     Constant,
     CurrentEnergy,
     TotalLevels,
+    CardsInHand,
 }
 
 public abstract class AmountCalculation
@@ -47,29 +50,16 @@ public abstract class AmountCalculation
         }
     }
 
-    private CalculationInput input;
-    private string? descriptionOverride;
+    protected CalculationInput input;
 
-    public AmountCalculation(CalculationInput input = CalculationInput.Constant, string? descriptionOverride = null)
+    public AmountCalculation(CalculationInput input = CalculationInput.Constant)
     {
         this.input = input;
-        this.descriptionOverride = descriptionOverride;
     }
 
     public AmountCalculation(JObject json)
     {
         this.input = EnumHelper.ParseEnum<CalculationInput>(json["input"]?.ToString()) ?? CalculationInput.Constant;
-        this.descriptionOverride = json["description"]?.ToString(); 
-    }
-
-    public string GetDescription(Card? card = null)
-    {
-        if (this.descriptionOverride != null)
-        {
-            return this.descriptionOverride;
-        }
-
-        return this.GetValue(card).ToString();
     }
 
 
@@ -102,11 +92,40 @@ public abstract class AmountCalculation
                 }
                 break;
 
+            case CalculationInput.CardsInHand:
+                List<Card> hand = CombatHandler.instance?.getCardPile().GetHand() ?? new List<Card>();
+                inputValue = hand.Count;
+                if ((card != null) && hand.Contains(card))
+                {
+                    inputValue -= 1;
+                }
+                break;
+
             default:
                 throw new System.Exception("Invalid input type: " + input);
         }
 
         return GetValue(inputValue);
+    }
+
+    public virtual Task<string> GetDescriptionPrefix(Card? card = null)
+    {
+        return Task.FromResult(GetValue(card).ToString());
+    }
+
+    public virtual Task<string> GetDescriptionSuffix(Card? card = null)
+    {
+        return Task.FromResult("");
+    }
+
+    public virtual Task<string> GetDescriptionPrefixIcon(Card? card = null)
+    {
+        return GetDescriptionPrefix(card);
+    }
+
+    public virtual Task<string> GetDescriptionSuffixIcon(Card? card = null)
+    {
+        return GetDescriptionSuffix(card);
     }
 
     public int GetValue(int number)

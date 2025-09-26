@@ -47,8 +47,9 @@ public class TriggerMessageConditionAddGoal : TriggerMessageCondition
     {
         return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "GoalIcon",
             arguments: new Dictionary<string, object> {
-                { "amount", this.min },
-                { "goal", Game.Instance.GetGoalInlineIcon(this.goal ?? "unknown")}
+                { "prefix", this.min },
+                { "goal", Game.Instance.GetGoalInlineIcon(this.goal ?? "unknown")},
+                { "suffix", "" }
             }
         ));
     }
