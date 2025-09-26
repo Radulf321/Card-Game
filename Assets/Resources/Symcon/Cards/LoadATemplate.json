@@ -1,0 +1,20 @@
+{
+    "id": "loadATemplate",
+    "cost": 3,
+    "name": {
+        "en": "Load a Template",
+        "de": "Lade eine Vorlage"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "creativity",
+            "amount": {
+                "type": "linear",
+                "input": "CardsInHand",
+                "rate": 1
+            }
+        }
+    ],
+    "image": "LoadATemplate"
+}
