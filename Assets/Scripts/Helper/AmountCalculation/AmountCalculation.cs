@@ -41,6 +41,8 @@ public abstract class AmountCalculation
                         return new RandomAmountCalculation(jsonObject);
                     case "polynom":
                         return new PolynomialAmountCalculation(jsonObject);
+                    case "exponential":
+                        return new ExponentialAmountCalculation(jsonObject);
                     default:
                         throw new System.Exception("Invalid amount calculation type: " + type);
                 }
