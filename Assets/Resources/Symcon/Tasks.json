@@ -144,7 +144,15 @@
         "type": "talent",
         "combatTarget": "realEstateCompany",
         "talent": "switchingViaApp",
-        "rewards": []
+        "rewards": [
+            {
+                "type": "unlock",
+                "unlock": {
+                    "type": "location",
+                    "id": "officeRental"
+                }
+            }
+        ]
     },
     {
         "id": "relic1",

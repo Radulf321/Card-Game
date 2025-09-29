@@ -1,0 +1,48 @@
+{
+    "title": "${title}",
+    "description": {
+        "en": "<size=600%>+${amount}<sprite name=\"Rounds\"></size>",
+        "de": "<size=600%>+${amount}<sprite name=\"Rounds\"></size>"
+    },
+    "image": "${image}",
+    "cost": {
+        "cash": {
+            "type": "linear",
+            "rate": 100,
+            "input": "Calculation",
+            "calculation": {
+                "type": "linear",
+                "rate": "${amount}",
+                "input": "Calculation",
+                "calculation": {
+                    "type": "exponential",
+                    "base": 2,
+                    "input": "Calculation",
+                    "calculation": {
+                        "type": "linear",
+                        "rate": 0.25,
+                        "input": "Flag",
+                        "flag": "RoundsPurchased"
+                    }
+                }
+            }
+        }
+    },
+    "dialog": [
+        {
+            "type": "reward",
+            "rewards": [
+                {
+                    "type": "rounds",
+                    "amount": "${amount}"
+                }
+            ]
+        },
+        {
+            "type": "flag",
+            "key": "RoundsPurchased",
+            "value": "${amount}",
+            "operation": "Increment"
+        }
+    ]
+}
