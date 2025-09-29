@@ -39,12 +39,15 @@ public class TriggerableEffect : GameEffect
 
     public override void applyEffect()
     {
-        this.triggerAction.Subscribe();
-        this.triggerAction.SetOnTrigger(this.OnTrigger);
+        // Subscribing for turn start must be done before registering the trigger
+        // In case the trigger is start turn, we want to be sure to reset the limit
+        // before the trigger is processed
         if (this.limit != null)
         {
             Game.Instance.SubscribeToTriggerMessages(this.HandleMessage);
         }
+        this.triggerAction.Subscribe();
+        this.triggerAction.SetOnTrigger(this.OnTrigger);
         this.currentLimit = limit;
         this.owner.SetAfterPlay(CardAfterPlay.StayInPlay);
     }
