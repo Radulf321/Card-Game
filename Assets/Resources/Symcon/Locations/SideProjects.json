@@ -363,7 +363,7 @@
                                     "type": "image",
                                     "background": "Casino",
                                     "left": "Player",
-                                    "right": "CasinoDealer"
+                                    "right": "Dealer"
                                 },
                                 {
                                     "type": "text",
