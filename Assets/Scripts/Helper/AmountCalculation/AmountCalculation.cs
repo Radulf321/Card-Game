@@ -13,6 +13,8 @@ public enum CalculationInput
     CurrentEnergy,
     TotalLevels,
     CardsInHand,
+    Calculation,
+    Flag,
 }
 
 public abstract class AmountCalculation
@@ -53,15 +55,21 @@ public abstract class AmountCalculation
     }
 
     protected CalculationInput input;
+    protected string? flag;
+    protected AmountCalculation? calculation;
 
-    public AmountCalculation(CalculationInput input = CalculationInput.Constant)
+    public AmountCalculation(CalculationInput input = CalculationInput.Constant, string? flag = null, AmountCalculation? calculation = null)
     {
         this.input = input;
+        this.flag = flag;
+        this.calculation = calculation;
     }
 
     public AmountCalculation(JObject json)
     {
         this.input = EnumHelper.ParseEnum<CalculationInput>(json["input"]?.ToString()) ?? CalculationInput.Constant;
+        this.flag = json["flag"]?.ToString();
+        this.calculation = FromJson(json["calculation"]);
     }
 
     public float GetRawValue(Card? card = null)
@@ -100,6 +108,27 @@ public abstract class AmountCalculation
                 {
                     inputValue -= 1;
                 }
+                break;
+
+            case CalculationInput.Calculation:
+                if (this.calculation == null)
+                {
+                    throw new System.Exception("Calculation input requires a calculation");
+                }
+                inputValue = this.calculation.GetRawValue(card);
+                break;
+
+            case CalculationInput.Flag:
+                if (this.flag == null)
+                {
+                    throw new System.Exception("Flag input requires a flag");
+                }
+                inputValue = Game.Instance.GetFlag(null, this.flag) switch
+                {
+                    int intValue => intValue,
+                    float floatValue => floatValue,
+                    _ => 0
+                };
                 break;
 
             default:

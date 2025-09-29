@@ -14,7 +14,16 @@ public static class JSONHelper
         Dictionary<string, T> result = new Dictionary<string, T>();
         foreach (JProperty property in jsonObject.Properties())
         {
-            T? parsedValue = property.Value.ToObject<T>();
+            UnityEngine.Debug.Log(property);
+            T? parsedValue;
+            if (typeof(T) == typeof(AmountCalculation))
+            {
+                parsedValue = (T?)(object?)AmountCalculation.FromJson(property.Value);
+            }
+            else
+            {
+                parsedValue = property.Value.ToObject<T>();
+            }
             if (parsedValue != null)
             {
                 result.Add(property.Name, parsedValue);
