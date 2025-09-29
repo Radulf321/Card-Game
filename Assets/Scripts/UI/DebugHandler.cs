@@ -61,17 +61,17 @@ public class DebugHandler : MonoBehaviour
             new DialogOption("Show me cards with cost",
                 new DialogSelect("Select one", options: new List<DialogOption>() {
                     new DialogOption(card: Game.Instance.GetCard("optimizeObjectTree"),
-                        dialog: new DialogText("First Card"), cost: new Dictionary<string, int>()),
+                        dialog: new DialogText("First Card"), cost: new Dictionary<string, AmountCalculation>()),
                     new DialogOption("Second",
-                        new DialogText("Second Card"), "Have the money", "Placeholder", cost: new Dictionary<string, int>(){
+                        new DialogText("Second Card"), "Have the money", "Placeholder", cost: new Dictionary<string, AmountCalculation>(){
                             {
-                                "cash", 50
+                                "cash", new ConstantAmountCalculation(50)
                             }
                         }),
                     new DialogOption("Third",
-                        new DialogText("Third Card"), "Too expensive", "Placeholder", cost: new Dictionary<string, int>(){
+                        new DialogText("Third Card"), "Too expensive", "Placeholder", cost: new Dictionary<string, AmountCalculation>(){
                             {
-                                "cash", 500
+                                "cash", new ConstantAmountCalculation(500)
                             }
                         })
                 }, selectType: SelectType.Cards, showUI: true)

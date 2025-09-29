@@ -12,9 +12,9 @@ public class DialogOption
     private string? description;
     private Dialog? dialog;
     private Card? card;
-    private Dictionary<string, int>? cost;
+    private Dictionary<string, AmountCalculation>? cost;
 
-    public DialogOption(string? title = null, Dialog? dialog = null, string? description = null, string? imagePath = null, string? id = null, Dictionary<string, int>? cost = null, Card? card = null)
+    public DialogOption(string? title = null, Dialog? dialog = null, string? description = null, string? imagePath = null, string? id = null, Dictionary<string, AmountCalculation>? cost = null, Card? card = null)
     {
         this.title = title;
         this.description = description;
@@ -30,7 +30,7 @@ public class DialogOption
         this.description = (optionData["description"] != null) ? LocalizationHelper.GetLocalizedString(optionData["description"] as JObject) : null;
         this.dialog = Dialog.FromJson(optionData["dialog"]);
         this.imagePath = optionData?["image"]?.ToString();
-        this.cost = JSONHelper.ObjectToDictionary<int>(optionData?["cost"] as JObject);
+        this.cost = JSONHelper.ObjectToDictionary<AmountCalculation>(optionData?["cost"] as JObject);
         this.card = (optionData?["card"] != null) ? Game.Instance.GetCard(optionData["card"]!.ToString()) : null;
     }
 
@@ -76,18 +76,18 @@ public class DialogOption
         }
 
         List<string> results = new List<string>();
-        foreach (KeyValuePair<string, int> entry in this.cost)
+        foreach (KeyValuePair<string, AmountCalculation> entry in this.cost)
         {
             switch (entry.Key)
             {
                 case "rounds":
                     results.Add(await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "RoundsCost", arguments: new Dictionary<string, object> {
-                        { "amount", entry.Value },
+                        { "amount", entry.Value.GetValue() },
                     })));
                     break;
 
                 default:
-                    results.Add(entry.Value.ToString() + Game.Instance.GetCurrencyInlineIcon(entry.Key));
+                    results.Add(entry.Value.GetValue().ToString() + Game.Instance.GetCurrencyInlineIcon(entry.Key));
                     break;
             }
         }
@@ -104,12 +104,12 @@ public class DialogOption
         else
         {
             Player player = Game.Instance.GetPlayer();
-            foreach (KeyValuePair<string, int> entry in this.cost)
+            foreach (KeyValuePair<string, AmountCalculation> entry in this.cost)
             {
                 switch (entry.Key)
                 {
                     case "rounds":
-                        if (Game.Instance.GetRemainingRounds() < entry.Value)
+                        if (Game.Instance.GetRemainingRounds() < entry.Value.GetValue())
                         {
                             // TODO: Show UI Feedback
                             return;
@@ -117,7 +117,7 @@ public class DialogOption
                         break;
 
                     default:
-                        if (player.GetCurrency(entry.Key) < entry.Value)
+                        if (player.GetCurrency(entry.Key) < entry.Value.GetValue())
                         {
                             // TODO: Show UI Feedback
                             return;
@@ -125,16 +125,16 @@ public class DialogOption
                         break;
                 }
             }
-            foreach (KeyValuePair<string, int> entry in this.cost)
+            foreach (KeyValuePair<string, AmountCalculation> entry in this.cost)
             {
                 switch (entry.Key)
                 {
                     case "rounds":
-                        Game.Instance.AddRemainingRounds(-entry.Value);
+                        Game.Instance.AddRemainingRounds(-entry.Value.GetValue());
                         break;
 
                     default:
-                        player.AddCurrency(entry.Key, -entry.Value);
+                        player.AddCurrency(entry.Key, -entry.Value.GetValue());
                         break;
                 }
             }
