@@ -86,19 +86,19 @@ public class FlagDictionary
     {
         if (boolFlags.ContainsKey(key))
         {
-            return GetValue<bool>(key);
+            return GetBoolValue(key);
         }
         else if (intFlags.ContainsKey(key))
         {
-            return GetValue<int>(key);
+            return GetIntValue(key);
         }
         else if (floatFlags.ContainsKey(key))
         {
-            return GetValue<float>(key);
+            return GetFloatValue(key);
         }
         else if (stringFlags.ContainsKey(key))
         {
-            return GetValue<string>(key);
+            return GetStringValue(key);
         }
         else
         {
@@ -106,44 +106,40 @@ public class FlagDictionary
         }
     }
 
-    public T? GetValue<T>(string key)
+    public bool? GetBoolValue(string key)
     {
-        if (typeof(T) == typeof(bool))
+        if (!boolFlags.ContainsKey(key))
         {
-            if (!boolFlags.ContainsKey(key))
-            {
-                return default(T);
-            }
-            return (T)(object)boolFlags[key];
+            return null;
         }
-        else if (typeof(T) == typeof(int))
+        return boolFlags[key];
+    }
+
+    public int? GetIntValue(string key)
+    {
+        if (!intFlags.ContainsKey(key))
         {
-            if (!intFlags.ContainsKey(key))
-            {
-                return default(T);
-            }
-            return (T)(object)intFlags[key];
+            return null;
         }
-        else if (typeof(T) == typeof(float))
+        return intFlags[key];
+    }
+
+    public float? GetFloatValue(string key)
+    {
+        if (!floatFlags.ContainsKey(key))
         {
-            if (!floatFlags.ContainsKey(key))
-            {
-                return default(T);
-            }
-            return (T)(object)floatFlags[key];
+            return null;
         }
-        else if (typeof(T) == typeof(string))
+        return floatFlags[key];
+    }
+
+    public string? GetStringValue(string key)
+    {
+        if (!stringFlags.ContainsKey(key))
         {
-            if (!stringFlags.ContainsKey(key))
-            {
-                return default(T);
-            }
-            return (T)(object)stringFlags[key];
+            return null;
         }
-        else
-        {
-            throw new KeyNotFoundException("Invalid type for GetValue: " + typeof(T).Name);
-        }
+        return stringFlags[key];
     }
 
     public string ToJson()

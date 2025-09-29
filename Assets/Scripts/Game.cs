@@ -192,7 +192,7 @@ class Game
 
         _ = DialogHandler.Instance!.StartDialog(new DialogImage(new DialogSelect(selectActionText, characterManager.GetRoundOptions(), SelectType.Cards, true), this.selectActionBackground), onFinish: () =>
         {
-            string targetID = GetFlag<string>(FlagValidity.Dialog, CombatTarget.CurrentTargetKey)!;
+            string targetID = GetFlagString(FlagValidity.Dialog, CombatTarget.CurrentTargetKey)!;
             characterManager.GetActionCharacter(targetID)?.ExecuteAction();
         });
     }
@@ -389,7 +389,27 @@ class Game
         }
     }
 
-    public T? GetFlag<T>(FlagValidity? validity, string key)
+    public bool? GetFlagBool(FlagValidity? validity, string key)
+    {
+        foreach (FlagValidity innerValidity in Enum.GetValues(typeof(FlagValidity)))
+        {
+            if (validity.HasValue && innerValidity != validity.Value)
+            {
+                continue;
+            }
+            if (flagDictionaries.ContainsKey(innerValidity))
+                {
+                bool? value = flagDictionaries[innerValidity].GetBoolValue(key);
+                if (value.HasValue)
+                {
+                    return value;
+                }
+            }
+        }
+        return null;
+    }
+
+    public int? GetFlagInt(FlagValidity? validity, string key)
     {
         foreach (FlagValidity innerValidity in Enum.GetValues(typeof(FlagValidity)))
         {
@@ -399,37 +419,78 @@ class Game
             }
             if (flagDictionaries.ContainsKey(innerValidity))
             {
-                T? value = flagDictionaries[innerValidity].GetValue<T>(key);
+                int? value = flagDictionaries[innerValidity].GetIntValue(key);
+                if (value.HasValue)
+                {
+                    return value;
+                }
+            }
+        }
+        return null;
+    }
+
+    public float? GetFlagFloat(FlagValidity? validity, string key)
+    {
+        foreach (FlagValidity innerValidity in Enum.GetValues(typeof(FlagValidity)))
+        {
+            if (validity.HasValue && innerValidity != validity.Value)
+            {
+                continue;
+            }
+            if (flagDictionaries.ContainsKey(innerValidity))
+            {
+                float? value = flagDictionaries[innerValidity].GetFloatValue(key);
+                if (value.HasValue)
+                {
+                    return value;
+                }
+            }
+        }
+        return null;
+    }
+
+    public string? GetFlagString(FlagValidity? validity, string key)
+    {
+        foreach (FlagValidity innerValidity in Enum.GetValues(typeof(FlagValidity)))
+        {
+            if (validity.HasValue && innerValidity != validity.Value)
+            {
+                continue;
+            }
+            if (flagDictionaries.ContainsKey(innerValidity))
+            {
+                string? value = flagDictionaries[innerValidity].GetStringValue(key);
                 if (value != null)
                 {
                     return value;
                 }
             }
         }
-        return default(T);
+        return null;
     }
 
     public object? GetFlag(FlagValidity? validity, string key)
     {
-        bool? boolValue = GetFlag<bool>(validity, key);
+        
+        bool? boolValue = GetFlagBool(validity, key);
         if (boolValue.HasValue)
         {
             return boolValue.Value;
         }
 
-        int? intValue = GetFlag<int>(validity, key);
+        int? intValue = GetFlagInt(validity, key);
         if (intValue.HasValue)
         {
             return intValue.Value;
         }
 
-        float? floatValue = GetFlag<float>(validity, key);
+        float? floatValue = GetFlagFloat(validity, key);
         if (floatValue.HasValue)
         {
             return floatValue.Value;
         }
 
-        string? stringValue = GetFlag<string>(validity, key);
+        string? stringValue = GetFlagString(validity, key);
         if (stringValue != null)
         {
             return stringValue;
