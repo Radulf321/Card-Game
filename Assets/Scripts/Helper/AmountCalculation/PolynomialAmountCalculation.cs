@@ -22,7 +22,7 @@ public class PolynomialAmountCalculation : AmountCalculation {
         this.max = json["max"]?.ToObject<int>();
     }
 
-    public override float GetRawValue(int number) {
+    public override float GetRawValue(float number) {
         float result = 0;
         for (int i = 0; i < this.coefficients.Count; i++)
         {

@@ -20,7 +20,7 @@ public class RandomAmountCalculation : AmountCalculation
         this.max = json["max"]!.ToObject<float>();
     }
 
-    public override float GetRawValue(int number)
+    public override float GetRawValue(float number)
     {
         return Random.Range(min, max + 1);
     }

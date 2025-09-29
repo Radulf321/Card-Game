@@ -62,10 +62,9 @@ public abstract class AmountCalculation
         this.input = EnumHelper.ParseEnum<CalculationInput>(json["input"]?.ToString()) ?? CalculationInput.Constant;
     }
 
-
-    public int GetValue(Card? card = null)
+    public float GetRawValue(Card? card = null)
     {
-        int inputValue;
+        float inputValue;
         switch (input)
         {
             case CalculationInput.Constant:
@@ -105,7 +104,13 @@ public abstract class AmountCalculation
                 throw new System.Exception("Invalid input type: " + input);
         }
 
-        return GetValue(inputValue);
+        return GetRawValue(inputValue);
+    }
+
+
+    public int GetValue(Card? card = null)
+    {
+        return Mathf.FloorToInt(GetRawValue(card));
     }
 
     public virtual Task<string> GetDescriptionPrefix(Card? card = null)
@@ -133,6 +138,6 @@ public abstract class AmountCalculation
         return Mathf.FloorToInt(GetRawValue(number));
     }
 
-    abstract public float GetRawValue(int number);
+    abstract public float GetRawValue(float number);
 
 }

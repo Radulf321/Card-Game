@@ -28,7 +28,7 @@ public class LinearAmountCalculation : AmountCalculation
         this.max = json["max"]?.ToObject<int>();
     }
 
-    public override float GetRawValue(int number)
+    public override float GetRawValue(float number)
     {
         float value = baseValue + rate * number;
         if (min.HasValue && value < min.Value)
