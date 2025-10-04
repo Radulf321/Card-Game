@@ -14,7 +14,6 @@ public static class JSONHelper
         Dictionary<string, T> result = new Dictionary<string, T>();
         foreach (JProperty property in jsonObject.Properties())
         {
-            UnityEngine.Debug.Log(property);
             T? parsedValue;
             if (typeof(T) == typeof(AmountCalculation))
             {
