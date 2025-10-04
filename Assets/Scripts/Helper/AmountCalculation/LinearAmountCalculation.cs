@@ -81,7 +81,7 @@ public class LinearAmountCalculation : AmountCalculation
         }
         else
         {
-            return base.GetDescriptionPrefix(card);
+            return base.GetDescriptionSuffix(card);
         }
     }
 

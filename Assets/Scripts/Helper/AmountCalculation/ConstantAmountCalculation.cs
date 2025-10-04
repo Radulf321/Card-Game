@@ -4,15 +4,15 @@ using Newtonsoft.Json.Linq;
 
 public class ConstantAmountCalculation : AmountCalculation
 {
-    private int value;
-    public ConstantAmountCalculation(int value) : base(CalculationInput.Constant)
+    private float value;
+    public ConstantAmountCalculation(float value) : base(CalculationInput.Constant)
     {
         this.value = value;
     }
 
     public ConstantAmountCalculation(JObject json) : base(json)
     {
-        this.value = json["value"]?.ToObject<int>() ?? 0;
+        this.value = json["value"]?.ToObject<float>() ?? 0;
     }
 
     public override float GetRawValue(float number)

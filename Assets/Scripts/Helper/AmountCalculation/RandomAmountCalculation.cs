@@ -5,23 +5,29 @@ using UnityEngine;
 
 public class RandomAmountCalculation : AmountCalculation
 {
-    private float min;
-    private float max;
+    private AmountCalculation min;
+    private AmountCalculation max;
 
     public RandomAmountCalculation(float min, float max) : base(CalculationInput.Constant)
     {
-        this.min = min;
-        this.max = max;
+        this.min = new ConstantAmountCalculation(min);
+        this.max = new ConstantAmountCalculation(max);
     }
 
     public RandomAmountCalculation(JObject json) : base(json)
     {
-        this.min = json["min"]!.ToObject<float>();
-        this.max = json["max"]!.ToObject<float>();
+        this.min = AmountCalculation.FromJson(json["min"])!;
+        this.max = AmountCalculation.FromJson(json["max"])!;
     }
 
     public override float GetRawValue(float number)
     {
-        return Random.Range(min, max + 1);
+        float max = this.max.GetRawValue(number);
+        if (max % 1 == 0)
+        {
+            max += 0.9999f; // Upper bound has the full probability of being chosen
+        }
+
+        return Random.Range(min.GetRawValue(number), max);
     }
 }
