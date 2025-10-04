@@ -101,7 +101,6 @@ public class RewardDisplayHandler : MonoBehaviour, IViewUpdater, IScalable
             CardHandler.standardHeight * scale
         );
         transform.Find("CardReward").GetComponent<CardHandler>().SetScale(scale);
-        transform.Find("SpriteReward").GetComponent<RectTransform>().localScale = new Vector3(scale, scale, scale);
     }
 
     public void SetHeight(float height)
