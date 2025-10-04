@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 2631328602047381585
   m_TableData:
   - m_Id: 5759606784
-    m_Localized: '{comparison:choose(AtLeast|Maximum):|Max}{icon}: {current}/{amount}'
+    m_Localized: '{comparison:choose(AtLeast|Maximum|Burst):|Max|Schub}{icon}: {current}/{amount}'
     m_Metadata:
       m_Items:
       - rid: 2631328602047381585

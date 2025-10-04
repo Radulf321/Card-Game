@@ -65,6 +65,7 @@ public class EquipmentManager
     private List<SlotData> slots;
     private List<Equipment> unlockedEquipment;
     private List<Equipment> initialEquipment;
+    private List<Equipment> selectedEquipment;
     private Action? onPreparationComplete;
 
     public EquipmentManager()
@@ -76,6 +77,7 @@ public class EquipmentManager
         this.slots = new List<SlotData>();
         this.unlockedEquipment = new List<Equipment>();
         this.initialEquipment = new List<Equipment>();
+        this.selectedEquipment = new List<Equipment>();
     }
 
     public EquipmentManager(String resourcePath, JObject json)
@@ -110,6 +112,7 @@ public class EquipmentManager
         this.slots = slots;
         this.unlockedEquipment = new List<Equipment>();
         this.initialEquipment = initialEquipment;
+        this.selectedEquipment = new List<Equipment>();
     }
 
     public void HandlePreparation(Action afterPreparation)
@@ -190,12 +193,20 @@ public class EquipmentManager
 
     public void ConfirmPreparation(List<Equipment> selectedEquipment)
     {
+        // Store the selected equipment
+        this.selectedEquipment = new List<Equipment>(selectedEquipment);
+        
         foreach (Equipment equipmentItem in selectedEquipment)
         {
             equipmentItem.ApplyEffects(Game.Instance.GetPlayer());
         }
         this.onPreparationComplete?.Invoke();
         this.onPreparationComplete = null;
+    }
+
+    public List<Equipment> GetSelectedEquipment()
+    {
+        return new List<Equipment>(this.selectedEquipment);
     }
 
     public bool IsEquipmentUnlocked(string equipmentID)

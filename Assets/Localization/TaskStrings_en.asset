@@ -61,6 +61,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 2631328474858782721
+  - m_Id: 29692720793296896
+    m_Localized: Equip {equipment:plural:||{equipment:list:{}| and }|{equipment:list:{}|,
+      |, and }}
+    m_Metadata:
+      m_Items:
+      - rid: 2631328474858782721
   references:
     version: 2
     RefIds:
@@ -75,3 +81,4 @@ MonoBehaviour:
         - id: 8330442642857984
         - id: 14131930132684800
         - id: 26834682482827264
+        - id: 29692720793296896
