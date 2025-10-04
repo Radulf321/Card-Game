@@ -1,0 +1,240 @@
+{
+    "id": "tinkerer",
+    "name": {
+        "en": "Zoe",
+        "de": "Zoe"
+    },
+    "action": {
+        "title": {
+            "en": "Tinker with Zoe",
+            "de": "Mit Zoe tüfteln"
+        },
+        "description": {
+            "en": "Create some creative solutions with Zoe. Exciting projects are waiting but you need to think fast.",
+            "de": "Kreiere einige kreative Lösungen mit Zoe. Spannende Projekte warten, aber du musst schnell denken."
+        },
+        "image": "Tinkerer"
+    },
+    "requirements": [
+        {
+            "type": "unlock"
+        }
+    ],
+    "combat": {
+        "background": "Tinkerer",
+        "numberOfTurns": 4,
+        "turnsWithRequirement": {
+            "type": "linear",
+            "rate": 1
+        },
+        "numberOfRequirements": {
+            "type": "random",
+            "min": 1,
+            "max": {
+                "type": "linear",
+                "base": 1,
+                "rate": 0.5,
+                "max": 2
+            }
+        },
+        "requirements": [
+            {
+                "type": "goal",
+                "goal": "creativity",
+                "index": 0,
+                "amount": {
+                    "type": "linear",
+                    "base": 1.5,
+                    "rate": 1.5
+                },
+                "round": {
+                    "min": 1
+                }
+            },
+            {
+                "type": "total",
+                "index": 0,
+                "amount": {
+                    "type": "linear",
+                    "base": 2,
+                    "rate": 2
+                }
+            },
+            {
+                "type": "goal",
+                "goal": "creativity",
+                "comparison": "burst",
+                "index": 1,
+                "amount": 3
+            }
+        ],
+        "win": {
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "Tinkerer",
+                    "left": "Player",
+                    "right": "Tinkerer"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: Good job, partner! So, what should we focus on now?",
+                        "de": "Zoe: Sieht gut aus! Worauf genau sollen wir den Fokus legen?"
+                    }
+                },
+                {
+                    "type": "select",
+                    "title": {
+                        "en": "What should we focus on?",
+                        "de": "Worauf sollen wir uns konzentrieren?"
+                    },
+                    "options": [
+                        {
+                            "title": {
+                                "en": "Let's add some nice comfort features. (+1 <sprite name=\"Comfort\">)",
+                                "de": "Zeit für ein paar schöne Komfortfunktionen. (+1 <sprite name=\"Comfort\">)"
+                            },
+                            "dialog": {
+                                "type": "reward",
+                                "rewards": [
+                                    {
+                                        "type": "experience",
+                                        "experienceType": "comfort",
+                                        "amount": 1
+                                    },
+                                    {
+                                        "type": "currency",
+                                        "currency": "cash",
+                                        "amount": {
+                                            "type": "linear",
+                                            "base": 50,
+                                            "rate": 10,
+                                            "input": "targetLevel"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "lose": {
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "Tinkerer",
+                    "left": "Player",
+                    "right": "Tinkerer"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: Come on, why doesn't Symcon want to communicate with my devices?",
+                        "de": "Zoe: Ach komm, warum will Symcon nicht mit meinen Geräten kommunizieren?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: I've built them myself and they worked perfectly before...",
+                        "de": "Zoe: Ich habe sie selbst gebaut und vorher haben sie einwandfrei funktioniert..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: It's probably some configuration issue. Let's double check everything and then go again.",
+                        "de": "Du: Es ist wahrscheinlich ein Konfigurationsproblem. Lass uns alles noch einmal überprüfen und dann erneut versuchen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "en": "You lose an additional <sprite name=\"Rounds\">",
+                        "de": "Du verlierst einen zusätzlichen <sprite name=\"Rounds\">"
+                    }
+                }
+            ]
+        }
+    },
+    "talentBackground": "Tinkerer",
+    "talents": [
+        {
+            "id": "introduction",
+            "title": {
+                "en": "Introduction",
+                "de": "Einführung"
+            },
+            "cost": {},
+            "description": {
+                "en": "First Contact with Zoe",
+                "de": "Erster Kontakt mit Zoe"
+            },
+            "image": "Tinkerer/Introduction",
+            "prerequisites": [],
+            "introduction": true,
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "Tinkerer",
+                    "left": "Player",
+                    "right": "Tinkerer"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: Hey there! I heard you have a new toy you can't stop talking about?",
+                        "de": "Zoe: Hey! Ich habe von deinem neuen Spielzeug gehört, von dem du die ganze Zeit erzählst."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: So, what's so great about this Symcon?",
+                        "de": "Zoe: Also, was ist so toll an diesem Symcon?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I'd say it's the best smart home software out there. It supports a ton of devices and is super flexible.",
+                        "de": "Du: Ich würde sagen, es ist die beste Smart-Home-Software, die es gibt. Es unterstützt jede Menge Geräte und ist super flexibel."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: Device support doesn't do shit if I create my own devices via micro controller, does it?",
+                        "de": "Zoe: Gerätesupport ist aber scheißegal, wenn ich meine eigenen Geräte über Mikrocontroller zusammenbastel, oder?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Then we'll just integrate your stuff ourselves via script or module. Like I said, super flexible.",
+                        "de": "Du: Dann bringen wir dein Zeug halt selbst per Skript oder Modul rein. Wie gesagt, super flexibel."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: Well, now you've got me intrigued. Let's see what your little box can do.",
+                        "de": "Zoe: Nun, jetzt hast du mich neugierig gemacht. Mal sehen, was deine kleine Box kann."
+                    }
+                }
+            ]
+        }
+    ]
+}

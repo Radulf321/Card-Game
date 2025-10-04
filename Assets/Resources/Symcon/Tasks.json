@@ -167,5 +167,39 @@
                 }
             }
         ]
+    },
+    {
+        "id": "win4-realEstate-unfittingEquipment",
+        "type": "and",
+        "tasks": [
+            {
+                "type": "wins",
+                "amount": 4,
+                "combatTarget": "realEstateCompany"
+            },
+            {
+                "type": "equipment",
+                "equipment": ["symconCap", "symBox"]
+            }
+        ],
+        "conditions": [
+            {
+                "type": "taskCompleted",
+                "task": "win3"
+            },
+            {
+                "type": "taskCompleted",
+                "task": "sceneControl"
+            }
+        ],
+        "rewards": [
+            {
+                "type": "unlock",
+                "unlock": {
+                    "type": "combatTarget",
+                    "id": "tinkerer"
+                }
+            }
+        ]
     }
 ]
