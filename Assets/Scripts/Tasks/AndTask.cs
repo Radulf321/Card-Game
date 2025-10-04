@@ -42,7 +42,7 @@ public class AndTask : GameTask
         int totalProgress = 0;
         foreach (GameTask task in this.tasks)
         {
-            totalProgress += task.GetProgress() ?? 1;
+            totalProgress += task.GetProgress() ?? (task.IsCompleted() ? 1 : 0);
         }
         return totalProgress;
     }
