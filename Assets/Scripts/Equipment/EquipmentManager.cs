@@ -110,8 +110,8 @@ public class EquipmentManager
             slots.Add(slotData);
         }
         this.slots = slots;
-        this.unlockedEquipment = new List<Equipment>();
         this.initialEquipment = initialEquipment;
+        this.unlockedEquipment = new List<Equipment>();
         this.selectedEquipment = new List<Equipment>();
     }
 
@@ -195,7 +195,7 @@ public class EquipmentManager
     {
         // Store the selected equipment
         this.selectedEquipment = new List<Equipment>(selectedEquipment);
-        
+
         foreach (Equipment equipmentItem in selectedEquipment)
         {
             equipmentItem.ApplyEffects(Game.Instance.GetPlayer());
@@ -213,7 +213,7 @@ public class EquipmentManager
     {
         return this.unlockedEquipment.Exists(e => e.GetID() == equipmentID);
     }
-    
+
     public void UnlockEquipment(string equipmentID)
     {
         Equipment? equipment = GetEquipment(equipmentID);
@@ -226,5 +226,47 @@ public class EquipmentManager
         {
             this.unlockedEquipment.Add(equipment);
         }
+    }
+
+    public void LoadFromJson(JObject json)
+    {
+        this.unlockedEquipment.Clear();
+        this.selectedEquipment.Clear();
+
+        foreach (string equipmentId in json["unlocked"]?.ToObject<List<string>>() ?? new List<string>())
+        {
+            Equipment? equipment = GetEquipment(equipmentId);
+            if (equipment != null)
+            {
+                this.unlockedEquipment.Add(equipment);
+            }
+            else
+            {
+                Debug.LogWarning($"Equipment with ID {equipmentId} not found while loading unlocked equipment.");
+            }
+        }
+
+        foreach (string equipmentId in json["selected"]?.ToObject<List<string>>() ?? new List<string>())
+        {
+            Equipment? equipment = GetEquipment(equipmentId);
+            if (equipment != null)
+            {
+                this.selectedEquipment.Add(equipment);
+            }
+            else
+            {
+                Debug.LogWarning($"Equipment with ID {equipmentId} not found while loading selected equipment.");
+            }
+        }
+    }
+    
+    public JObject SaveToJson()
+    {
+        JObject json = new JObject
+        {
+            ["unlocked"] = new JArray(this.unlockedEquipment.ConvertAll(equipment => equipment.GetID())),
+            ["selected"] = new JArray(this.selectedEquipment.ConvertAll(equipment => equipment.GetID()))
+        };
+        return json;
     }
 }

@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Linq;
+
 public class Buff
 {
     private int duration;
@@ -8,7 +10,15 @@ public class Buff
         this.modifier = modifier;
         this.duration = duration;
         Game.Instance.SubscribeToTriggerMessages(OnMessage);
-        Game.Instance.RegisterModifier(this.modifier);
+        Game.Instance.RegisterBuff(this);
+    }
+
+    public Buff(JObject json) : this(
+        modifier: new Modifier(json["modifier"] as JObject),
+        duration: json["duration"]!.ToObject<int>()
+    )
+    {
+
     }
 
     private void OnMessage(TriggerMessage message)
@@ -18,12 +28,26 @@ public class Buff
             if (duration == 0)
             {
                 Game.Instance.UnsubscribeFromTriggerMessages(OnMessage);
-                Game.Instance.UnRegisterModifier(this.modifier);
+                Game.Instance.UnRegisterBuff(this);
             }
             else
             {
                 duration--;
             }
         }
+    }
+
+    public Modifier GetModifier()
+    {
+        return this.modifier;
+    }
+
+    public JObject ToJson()
+    {
+        return new JObject
+        {
+            ["modifier"] = this.modifier.ToJson(),
+            ["duration"] = this.duration
+        };
     }
 }

@@ -53,6 +53,50 @@ public class TaskManager
         }
     }
 
+    public JObject SaveToJson()
+    {
+        JArray tasksData = new JArray();
+        foreach (GameTask task in this.activeTasks)
+        {
+            JObject taskData = task.SaveToJson();
+            taskData["id"] = task.GetID();
+            tasksData.Add(taskData);
+        }
+        JObject winsData = new JObject();
+        foreach (KeyValuePair<string, int> pair in this.wins)
+        {
+            winsData[pair.Key] = pair.Value;
+        }
+        return new JObject {
+            ["wins"] = winsData,
+            ["tasks"] = tasksData
+        };
+    }
+
+    public void LoadFromJson(JObject json)
+    {
+        this.wins = new Dictionary<string, int>();
+        if (json["wins"] != null)
+        {
+            foreach (JProperty property in json["wins"]!.ToObject<JObject>()?.Properties() ?? new List<JProperty>())
+            {
+                this.wins[property.Name] = property.Value.ToObject<int>();
+            }
+        }
+        if (json["tasks"] != null)
+        {
+            foreach (JObject taskData in json["tasks"]!.ToObject<List<JObject>>() ?? new List<JObject>())
+            {
+                GameTask? task = this.tasks.Find(task => task.GetID() == taskData["id"]!.ToString());
+                if (task != null)
+                {
+                    task.LoadFromJson(taskData);
+                    this.activeTasks.Add(task);
+                }
+            }
+        }
+    }
+
     public void EndGame()
     {
         bool needSave = false;

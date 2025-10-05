@@ -138,6 +138,25 @@ public class CharacterManager
         }
     }
 
+    public JObject SaveToJson()
+    {
+        JObject json = new JObject
+        {
+            ["unlocked"] = new JArray(this.unlockedCharacters.Select(character => character.GetID()))
+        };
+        return json;
+    }
+
+    public void LoadFromJson(JObject json)
+    {
+        this.unlockedCharacters.Clear();
+
+        foreach (string characterId in json["unlocked"]?.ToObject<List<string>>() ?? new List<string>())
+        {
+            UnlockCharacter(characterId);
+        }
+    }
+
     public List<CombatTarget> GetAvailableCombatTargets()
     {
         return this.combatTargets.Where(combatTarget => combatTarget.IsAvailable()).ToList();

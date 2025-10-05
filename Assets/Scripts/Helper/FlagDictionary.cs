@@ -142,7 +142,7 @@ public class FlagDictionary
         return stringFlags[key];
     }
 
-    public string ToJson()
+    public JObject ToJson()
     {
         return JObject.FromObject(new Dictionary<string, object>
         {
@@ -150,6 +150,6 @@ public class FlagDictionary
             {"int", intFlags},
             {"float", floatFlags},
             {"string", stringFlags}            
-        }).ToString();
+        });
     }
 }

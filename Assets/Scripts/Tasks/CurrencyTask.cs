@@ -49,12 +49,28 @@ public class CurrencyTask : GameTask
         return this.amount;
     }
 
+    public override JObject SaveToJson()
+    {
+        return new JObject {
+            ["progress"] = this.progress
+        };
+    }
+
+    public override void LoadFromJson(JObject json)
+    {
+        this.progress = json["progress"]?.ToObject<int>() ?? 0;
+        if (this.progress >= this.amount)
+        {
+            Game.Instance.UnsubscribeFromTriggerMessages(this.HandleMessage);
+        }
+    }
+
     private void HandleMessage(TriggerMessage triggerMessage)
     {
         switch (triggerMessage.GetTriggerType())
         {
             case TriggerType.AddCurrency:
-                if (((triggerMessage.GetData().GetAmount() ?? 0) > 0) && 
+                if (((triggerMessage.GetData().GetAmount() ?? 0) > 0) &&
                     (triggerMessage.GetData().GetCurrency() == this.currency))
                 {
                     this.progress += triggerMessage.GetData().GetAmount() ?? 0;

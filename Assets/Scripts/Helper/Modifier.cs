@@ -78,4 +78,14 @@ public class Modifier
             }
         }
     }
+
+    public JObject ToJson()
+    {
+        return new JObject
+        {
+            ["type"] = this.type.ToString(),
+            ["value"] = this.value,
+            ["turn"] = this.turn
+        };
+    }
 }

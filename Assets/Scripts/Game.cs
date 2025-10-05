@@ -34,6 +34,7 @@ class Game
     private bool tutorialDone;
     private Dictionary<FlagValidity, FlagDictionary> flagDictionaries;
     private HashSet<Modifier> modifiers;
+    private HashSet<Buff> buffs;
     private EquipmentManager equipmentManager;
     private TaskManager taskManager;
     private CharacterManager characterManager;
@@ -55,6 +56,7 @@ class Game
         this.tutorialDone = PlayerPrefs.GetInt(this.resourcePath + Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
         this.modifiers = new HashSet<Modifier>();
+        this.buffs = new HashSet<Buff>();
         this.equipmentManager = new EquipmentManager();
         this.taskManager = new TaskManager();
         this.characterManager = new CharacterManager();
@@ -122,6 +124,7 @@ class Game
             this.flagDictionaries[FlagValidity.Permanent] = new FlagDictionary(json);
         }
         this.modifiers = new HashSet<Modifier>();
+        this.buffs = new HashSet<Buff>();
         this.equipmentManager = new EquipmentManager(ResourcePath, (index["equipment"] as JObject)!);
         this.taskManager = new TaskManager(ResourcePath, (index["gameEnd"] as JObject)!);
         this.characterManager = new CharacterManager(ResourcePath);
@@ -166,8 +169,34 @@ class Game
         this.equipmentManager.HandlePreparation(StartRound);
     }
 
+    public void ContinueGame()
+    {
+        if (!PlayerPrefs.HasKey(this.resourcePath + "SaveGame"))
+        {
+            throw new System.Exception("No save game found");
+        }
+        foreach (TriggerAction triggerAction in this.triggerActions)
+        {
+            triggerAction.Subscribe();
+        }
+        JObject saveData = JObject.Parse(PlayerPrefs.GetString(this.resourcePath + "SaveGame"));
+        this.player = new Player(saveData["player"]?.ToObject<JObject>() ?? new JObject());
+        this.remainingRounds = saveData["remainingRounds"]?.ToObject<int>() ?? 1;
+        this.flagDictionaries[FlagValidity.Game] = new FlagDictionary(saveData["flagDictionary"]?.ToObject<JObject>() ?? new JObject());
+        foreach (JObject buffData in saveData["buffs"]?.ToObject<JArray>() ?? new JArray())
+        {
+            // Buff constructor registers the modifier automatically
+            new Buff(buffData);
+        }
+        this.equipmentManager.LoadFromJson(saveData["equipmentManager"] as JObject ?? new JObject());
+        this.taskManager.LoadFromJson(saveData["taskManager"] as JObject ?? new JObject());
+        this.characterManager.LoadFromJson(saveData["characterManager"] as JObject ?? new JObject());
+        StartRound();
+    }
+
     public void StartRound()
     {
+        SaveGame();
         if (!this.tutorialDone)
         {
             this.tutorialDone = true;
@@ -203,11 +232,14 @@ class Game
         remainingRounds--;
         if (remainingRounds <= 0)
         {
+            PlayerPrefs.DeleteKey(this.resourcePath + "SaveGame");
+            PlayerPrefs.Save();
             _ = DialogHandler.Instance!.StartDialog(this.gameOverDialog, onFinish: () =>
-        {
-            this.taskManager.EndGame();
-            FadeHandler.Instance!.LoadScene("GameEndScene");
-        });
+                {
+                    this.taskManager.EndGame();
+                    FadeHandler.Instance!.LoadScene("GameEndScene");
+                }
+            );
         }
         else
         {
@@ -384,7 +416,7 @@ class Game
 
         if (validity == FlagValidity.Permanent)
         {
-            PlayerPrefs.SetString(this.resourcePath + permanentFlagsKey, flagDictionaries[FlagValidity.Permanent].ToJson());
+            PlayerPrefs.SetString(this.resourcePath + permanentFlagsKey, flagDictionaries[FlagValidity.Permanent].ToJson().ToString());
             PlayerPrefs.Save();
         }
     }
@@ -398,7 +430,7 @@ class Game
                 continue;
             }
             if (flagDictionaries.ContainsKey(innerValidity))
-                {
+            {
                 bool? value = flagDictionaries[innerValidity].GetBoolValue(key);
                 if (value.HasValue)
                 {
@@ -471,7 +503,7 @@ class Game
 
     public object? GetFlag(FlagValidity? validity, string key)
     {
-        
+
         bool? boolValue = GetFlagBool(validity, key);
         if (boolValue.HasValue)
         {
@@ -497,6 +529,18 @@ class Game
         }
 
         return null;
+    }
+
+    public void RegisterBuff(Buff buff)
+    {
+        this.buffs.Add(buff);
+        RegisterModifier(buff.GetModifier());
+    }
+
+    public void UnRegisterBuff(Buff buff)
+    {
+        this.buffs.Remove(buff);
+        UnRegisterModifier(buff.GetModifier());
     }
 
     public void RegisterModifier(Modifier modifier)
@@ -532,5 +576,22 @@ class Game
     public CharacterManager GetCharacterManager()
     {
         return this.characterManager;
+    }
+
+    private void SaveGame()
+    {
+        JObject saveData = new JObject
+        {
+            ["player"] = this.player.ToJson(),
+            ["remainingRounds"] = this.remainingRounds,
+            ["flagDictionary"] = this.flagDictionaries.ContainsKey(FlagValidity.Game) ?
+                this.flagDictionaries[FlagValidity.Game].ToJson() : new JObject(),
+            ["buffs"] = new JArray(this.buffs.Select(buff => buff.ToJson())),
+            ["equipmentManager"] = this.equipmentManager.SaveToJson(),
+            ["taskManager"] = this.taskManager.SaveToJson(),
+            ["characterManager"] = this.characterManager.SaveToJson()
+        };
+        PlayerPrefs.SetString(this.resourcePath + "SaveGame", saveData.ToString());
+        PlayerPrefs.Save();
     }
 }

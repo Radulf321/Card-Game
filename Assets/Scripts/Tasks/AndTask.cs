@@ -56,4 +56,25 @@ public class AndTask : GameTask
         }
         return total;
     }
+
+    public override JObject SaveToJson()
+    {
+        JArray tasksArray = new JArray();
+        foreach (GameTask task in this.tasks)
+        {
+            tasksArray.Add(task.SaveToJson());
+        }
+        return new JObject
+        {
+            ["tasks"] = tasksArray
+        };
+    }
+
+    public override void LoadFromJson(JObject json)
+    {
+        for (int i = 0; i < this.tasks.Count; i++)
+        {
+            this.tasks[i].LoadFromJson(json["tasks"]?[i]?.ToObject<JObject>() ?? new JObject());
+        }
+    }
 }

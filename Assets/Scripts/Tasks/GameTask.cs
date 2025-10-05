@@ -110,5 +110,14 @@ public abstract class GameTask
         return null;
     }
 
+    public virtual JObject SaveToJson()
+    {
+        return new JObject();
+    }
+
+    public virtual void LoadFromJson(JObject json)
+    {
+    }
+
     public abstract Task<string> GetDescription();
 }

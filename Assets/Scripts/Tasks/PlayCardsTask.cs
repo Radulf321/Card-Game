@@ -48,6 +48,24 @@ public class PlayCardsTask : GameTask
         return this.amount;
     }
 
+    public override JObject SaveToJson()
+    {
+        return new JObject {
+            ["progress"] = this.progress,
+            ["maxProgress"] = this.maxProgress
+        };
+    }
+
+    public override void LoadFromJson(JObject json)
+    {
+        this.progress = json["progress"]?.ToObject<int>() ?? 0;
+        this.maxProgress = json["maxProgress"]?.ToObject<int>() ?? 0;
+        if (this.maxProgress >= this.amount)
+        {
+            Game.Instance.UnsubscribeFromTriggerMessages(this.HandleMessage);
+        }
+    }
+
     private void HandleMessage(TriggerMessage triggerMessage)
     {
         switch (triggerMessage.GetTriggerType())

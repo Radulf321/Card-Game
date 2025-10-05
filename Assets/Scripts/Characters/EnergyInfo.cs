@@ -7,7 +7,7 @@ public class EnergyInfo
 
     public EnergyInfo(Dictionary<int, int> energy = null)
     {
-        this.energy = energy ?? new Dictionary<int, int>(){{0, 1}};
+        this.energy = energy ?? new Dictionary<int, int>() { { 0, 1 } };
     }
 
     public EnergyInfo(JObject json)
@@ -40,5 +40,15 @@ public class EnergyInfo
         {
             energy[turn] = amount;
         }
+    }
+
+    public JObject SaveToJson()
+    {
+        JObject saveData = new JObject();
+        foreach (KeyValuePair<int, int> pair in energy)
+        {
+            saveData[pair.Key.ToString()] = pair.Value;
+        }
+        return saveData;
     }
 }

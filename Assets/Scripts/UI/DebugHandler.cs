@@ -33,6 +33,18 @@ public class DebugHandler : MonoBehaviour
         game.StartGame();
     }
 
+    public void ContinueGame()
+    {
+        Game game = new Game("Symcon");
+        try {
+            game.ContinueGame();
+        }
+        catch (System.Exception e)
+        {
+            _ = DialogHandler.Instance.StartDialog(new DialogText("Cannot continue game: " + e.Message), changeScene: false);
+        }
+    }
+
     public async void startDialog()
     {
         Game game = new Game("Symcon");
