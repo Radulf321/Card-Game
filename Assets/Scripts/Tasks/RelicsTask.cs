@@ -26,16 +26,7 @@ public class RelicsTask : GameTask
 
     public override int? GetProgress()
     {
-        List<Card> deck = Game.Instance.GetPlayer().GetDeck();
-        int relicCount = 0;
-        foreach (Card card in deck)
-        {
-            if (card.GetCardType() == CardType.Relic)
-            {
-                relicCount++;
-            }
-        }
-        return math.min(this.amount, relicCount);
+        return math.min(this.amount, Game.Instance.GetPlayer().GetRelics().Count);
     }
 
     public override int? GetTotal()
