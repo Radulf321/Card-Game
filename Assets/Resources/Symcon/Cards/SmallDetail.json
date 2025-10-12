@@ -1,0 +1,24 @@
+{
+    "id": "smallDetail",
+    "cost": 0,
+    "name": {
+        "en": "Small Detail",
+        "de": "Kleines Detail"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "creativity",
+            "amount": 1
+        },
+        {
+            "type": "drawCards",
+            "amount": 1
+        },
+        {
+            "type": "afterPlay",
+            "afterPlay": "RemoveCurrentGame"
+        }
+    ],
+    "image": "SmallDetail"
+}

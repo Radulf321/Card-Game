@@ -1,0 +1,37 @@
+{
+    "id": "highlyMotivated",
+    "type": "Relic",
+    "name": {
+        "en": "Highly Motivated",
+        "de": "Höchstmotiviert"
+    },
+    "effects": [
+        {
+            "type": "triggerable",
+            "action": {
+                "trigger": {
+                    "type": "startTurn",
+                    "number": 0
+                },
+                "effect": {
+                    "type": "energy",
+                    "amount": 2
+                }
+            }
+        },
+        {
+            "type": "triggerable",
+            "action": {
+                "trigger": {
+                    "type": "startTurn",
+                    "number": 1
+                },
+                "effect": {
+                    "type": "energy",
+                    "amount": 1
+                }
+            }
+        }
+    ],
+    "image": "HighlyMotivated"
+}
