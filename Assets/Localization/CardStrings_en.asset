@@ -211,6 +211,14 @@ MonoBehaviour:
     m_Localized: ' per card in hand'
     m_Metadata:
       m_Items: []
+  - m_Id: 55895021090283520
+    m_Localized: Remove this card from your deck for the current round
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55895026190557184
+    m_Localized: <sprite name="RemoveCurrent">
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

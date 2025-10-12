@@ -35,6 +35,9 @@ public class AfterPlayEffect : GameEffect {
             case CardAfterPlay.RemovePermanent:
                 return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "RemovePermanent"));
 
+            case CardAfterPlay.RemoveCurrentGame:
+                return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "RemoveCurrent"));
+
             default:
                 throw new NotImplementedException();
         }
@@ -45,6 +48,9 @@ public class AfterPlayEffect : GameEffect {
         {
             case CardAfterPlay.RemovePermanent:
                 return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "RemovePermanentIcon"));
+
+            case CardAfterPlay.RemoveCurrentGame:
+                return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "RemoveCurrentIcon"));
 
             default:
                 return Task.FromResult<string?>(null);

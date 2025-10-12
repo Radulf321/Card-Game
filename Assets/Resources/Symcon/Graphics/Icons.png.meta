@@ -650,6 +650,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: RemoveCurrent
+      rect:
+        serializedVersion: 2
+        x: 2625
+        y: 6042
+        width: 758
+        height: 767
+      alignment: 9
+      pivot: {x: 0, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b4f380f10c216c4c9b90be653cd56cb
+      internalID: -1895597495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -682,6 +704,7 @@ TextureImporter:
       KnowHow: -329008022
       Relic: -1496290106
       Remove: 705025036
+      RemoveCurrent: -1895597495
       Requirement: -1292171057
       Rounds: 2103016240
       Total: -1583948739
