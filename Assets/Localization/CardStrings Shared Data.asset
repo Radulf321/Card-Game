@@ -67,6 +67,14 @@ MonoBehaviour:
     m_Key: RemovePermanentIcon
     m_Metadata:
       m_Items: []
+  - m_Id: 55895021090283520
+    m_Key: RemoveCurrent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55895026190557184
+    m_Key: RemoveCurrentIcon
+    m_Metadata:
+      m_Items: []
   - m_Id: 2632551630675968
     m_Key: Triggerable
     m_Metadata:
