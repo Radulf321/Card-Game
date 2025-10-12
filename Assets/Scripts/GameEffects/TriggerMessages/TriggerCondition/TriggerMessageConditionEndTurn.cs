@@ -32,7 +32,7 @@ public class TriggerMessageConditionEndTurn : TriggerMessageCondition
     {
         return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerEndTurn",
             arguments: new Dictionary<string, object?> {
-                { "number", this.number },
+                { "number", (this.number == null) ? null : (this.number + 1) },
             }
         ));
     }
@@ -41,7 +41,7 @@ public class TriggerMessageConditionEndTurn : TriggerMessageCondition
     {
         return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerEndTurnIcon",
             arguments: new Dictionary<string, object?> {
-                { "number", this.number },
+                { "number", (this.number == null) ? null : (this.number + 1) },
             }
         ));
     }

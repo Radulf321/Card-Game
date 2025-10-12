@@ -32,7 +32,7 @@ public class TriggerMessageConditionStartTurn : TriggerMessageCondition
     {
         return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerStartTurn",
             arguments: new Dictionary<string, object?> {
-                { "number", this.number },
+                { "number", (this.number == null) ? null : (this.number + 1) },
             }
         ));
     }
@@ -41,7 +41,7 @@ public class TriggerMessageConditionStartTurn : TriggerMessageCondition
     {
         return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerStartTurnFull",
             arguments: new Dictionary<string, object?> {
-                { "number", this.number },
+                { "number", (this.number == null) ? null : (this.number + 1) },
                 { "limitType", limitType },
                 { "limit", limit }
             }
@@ -52,7 +52,7 @@ public class TriggerMessageConditionStartTurn : TriggerMessageCondition
     {
         return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "TriggerStartTurnIcon",
             arguments: new Dictionary<string, object?> {
-                { "number", this.number },
+                { "number", (this.number == null) ? null : (this.number + 1) },
             }
         ));
     }
