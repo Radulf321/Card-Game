@@ -1,6 +1,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
@@ -75,6 +76,11 @@ public class LinearAmountCalculation : AmountCalculation
                 case CalculationInput.CardsInHand:
                     return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "AmountCalculationCardsInHand"));
 
+                case CalculationInput.GoalCurrentTurn:
+                    return AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", "AmountCalculationGoalCurrentTurn", arguments: new Dictionary<string, object?> {
+                        { "goal", Game.Instance.GetGoalInlineIcon(this.goal ?? "Unknown Goal") },
+                    }));
+
                 default:
                     throw new Exception("Invalid input type: " + input);
             }
@@ -101,6 +107,9 @@ public class LinearAmountCalculation : AmountCalculation
 
                 case CalculationInput.CardsInHand:
                     return Task.FromResult("/<sprite name=\"Card\">");
+
+                case CalculationInput.GoalCurrentTurn:
+                    return Task.FromResult("/" + Game.Instance.GetGoalInlineIcon(this.goal ?? "Unknown Goal") + "<sprite name=\"Turn\">");
 
                 default:
                     throw new Exception("Invalid input type: " + input);

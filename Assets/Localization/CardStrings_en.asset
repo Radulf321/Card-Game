@@ -219,6 +219,11 @@ MonoBehaviour:
     m_Localized: <sprite name="RemoveCurrent">
     m_Metadata:
       m_Items: []
+  - m_Id: 57705096532500480
+    m_Localized: ' per {goal} this turn'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543877616205825
   references:
     version: 2
     RefIds:
@@ -254,3 +259,4 @@ MonoBehaviour:
         - id: 46108320977428480
         - id: 46110641169932288
         - id: 46116395083931648
+        - id: 57705096532500480

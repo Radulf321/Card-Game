@@ -167,6 +167,10 @@ MonoBehaviour:
     m_Key: AmountCalculationCardsInHand
     m_Metadata:
       m_Items: []
+  - m_Id: 57705096532500480
+    m_Key: AmountCalculationGoalCurrentTurn
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

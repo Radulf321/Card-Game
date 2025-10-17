@@ -15,6 +15,7 @@ public enum CalculationInput
     CardsInHand,
     Calculation,
     Flag,
+    GoalCurrentTurn,
 }
 
 public abstract class AmountCalculation
@@ -57,12 +58,14 @@ public abstract class AmountCalculation
     protected CalculationInput input;
     protected string? flag;
     protected AmountCalculation? calculation;
+    protected string? goal;
 
-    public AmountCalculation(CalculationInput input = CalculationInput.Constant, string? flag = null, AmountCalculation? calculation = null)
+    public AmountCalculation(CalculationInput input = CalculationInput.Constant, string? flag = null, AmountCalculation? calculation = null, string? goal = null)
     {
         this.input = input;
         this.flag = flag;
         this.calculation = calculation;
+        this.goal = goal;
     }
 
     public AmountCalculation(JObject json)
@@ -70,6 +73,7 @@ public abstract class AmountCalculation
         this.input = EnumHelper.ParseEnum<CalculationInput>(json["input"]?.ToString()) ?? CalculationInput.Constant;
         this.flag = json["flag"]?.ToString();
         this.calculation = FromJson(json["calculation"]);
+        this.goal = json["goal"]?.ToString();
     }
 
     public float GetRawValue(Card? card = null)
@@ -129,6 +133,14 @@ public abstract class AmountCalculation
                     float floatValue => floatValue,
                     _ => 0
                 };
+                break;
+
+            case CalculationInput.GoalCurrentTurn:
+                if (this.goal == null)
+                {
+                    throw new System.Exception("GoalCurrentTurn input requires a goal");
+                }
+                inputValue = CombatHandler.instance?.getGoalAmountThisTurn(this.goal) ?? 0;
                 break;
 
             default:
