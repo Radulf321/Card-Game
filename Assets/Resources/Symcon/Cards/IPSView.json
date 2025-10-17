@@ -1,0 +1,22 @@
+{
+    "id": "ipsView",
+    "cost": 2,
+    "name": {
+        "en": "IPS View",
+        "de": "IPS View"
+    },
+    "effects": [
+        {
+            "type": "goal",
+            "goal": "creativity",
+            "amount": {
+                "type": "linear",
+                "rate": 1,
+                "base": 0,
+                "input": "GoalCurrentTurn",
+                "goal": "creativity"
+            }
+        }
+    ],
+    "image": "IPSView"
+}
