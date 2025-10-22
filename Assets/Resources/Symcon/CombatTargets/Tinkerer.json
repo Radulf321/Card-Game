@@ -235,6 +235,231 @@
                     }
                 }
             ]
+        },
+        {
+            "id": "connectionPrototypes",
+            "title": {
+                "en": "Prototyping Connections",
+                "de": "Prototyping von Verbindungen"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "There are a lot of custom devices with all kinds of protocols and connections. Get those prototypes rolling and connect them to Symcon.",
+                "de": "Es gibt viele benutzerdefinierte Geräte mit allen Arten von Protokollen und Verbindungen. Starte mit Prototypen durch und verbinde sie mit Symcon."
+            },
+            "image": "SingleFamilyHome/BasicVisualization",
+            "prerequisites": [
+                "introduction"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "Tinkerer",
+                    "left": "Player",
+                    "right": "Tinkerer"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: So, there are a number of Raspis that control my stuff. But also some simple contacts and stuff. How do we get those into Symcon?",
+                        "de": "Zoe: Also, es gibt eine Reihe von Raspis, die meine Sachen steuern. Aber auch einige einfache Kontakte und so. Wie bekommen wir die in Symcon?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Why don't we start with the Raspberry Pis? We can use MQTT to connect them easily.",
+                        "de": "Du: Lass uns doch mit den Raspberry Pis anfangen. Wir können MQTT verwenden, um sie einfach zu verbinden."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: That sounds easy. Let me hook up some of them with MQTT libraries then we can start testing.",
+                        "de": "Zoe: Das klingt einfach. Ich werf auf ein paar Raspis mal ne MQTT Bibliothek, dann können wir mal testen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Perfect! So, how can we evaluate those electrical contacts? We could add a bit of wiring and get those signals to any Raspi.",
+                        "de": "Du: Perfekt! Wie können wir diese elektrischen Kontakte auswerten? Wir könnten ein wenig Verkabelung hinzufügen und die Signale an irgend einen Raspi weiterleiten."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: And that Raspi can then forward the signals via MQTT to Symcon! That could work.",
+                        "de": "Zoe: Und dieser Raspi kann die Signale dann über MQTT an Symcon weiterleiten! Das könnte funktionieren."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "smallDetail"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "wiring",
+            "title": {
+                "en": "Wiring",
+                "de": "Verkabelung"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Connect wiring from the custom devices to a Raspberry Pi, ready to forward those signals to Symcon.",
+                "de": "Verbinde die Verkabelung von den benutzerdefinierten Geräten mit einem Raspberry Pi, um diese Signale an Symcon weiterzuleiten."
+            },
+            "image": "SingleFamilyHome/LivingRoomSmartTV",
+            "prerequisites": [
+                "connectionPrototypes"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "Tinkerer",
+                    "left": "Player",
+                    "right": "Tinkerer"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: And that's the last device connected on this end. How about you, old man?",
+                        "de": "Zoe: Und das ist das letzte Gerät, das auf dieser Seite verbunden ist. Wie sieht es bei dir aus, alter Mann?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I'm pretty much your age, Zoe... And I just added the last light switch, we're good to go here.",
+                        "de": "Du: Ich bin fast genau so alt wie du, Zoe... Und ich habe gerade den letzten Lichtschalter hinzugefügt, hier sind wir fertig."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: Well, you do talk like my dad. Anyway, that's it for the wiring. What's next?",
+                        "de": "Zoe: Naja, du redest wie mein Vater. Wie auch immer, das war's damit. Was kommt als nächstes?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Let's get those Raspberry Pis configured so they can interpret the signals.",
+                        "de": "Du: Lass uns die Raspberry Pis so konfigurieren, dass sie die Signale interpretieren können."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: And once we've set up MQTT, we can forward the data to Symcon.",
+                        "de": "Du: Und sobald wir MQTT eingerichtet haben, können wir die Daten an Symcon weiterleiten."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "highlyMotivated"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "mqttSetup",
+            "title": {
+                "en": "MQTT Setup",
+                "de": "MQTT Einrichtung"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Install MQTT libraries on the Raspberry Pis and integrate them into Symcon.",
+                "de": "Installiere MQTT-Bibliotheken auf den Raspberry Pis und integriere sie in Symcon."
+            },
+            "image": "SingleFamilyHome/LivingRoomSmartTV",
+            "prerequisites": [
+                "connectionPrototypes"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "Tinkerer",
+                    "left": "Player",
+                    "right": "Tinkerer"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: All right. All Raspis are ready to send their stuff via MQTT. So, how do we get that into Symcon?",
+                        "de": "Zoe: Alles klar. Alle Raspis sind bereit, ihr Zeug über MQTT zu schicken. Wie bekommen wir das jetzt in Symcon?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Let me just set up the configurator...",
+                        "de": "Du: Lass mich nur schnell den Konfigurator einrichten..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: 138 topics. It seems like you have quite a few devices here. I'll just create all of them.",
+                        "de": "Du: 138 Topics. Es scheint, als hättest du hier einige Geräte. Ich erstell mal schnell alle."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: So easy? That's almost boring. Now I get why you chose that job. You don't really have to do any hard work, huh?",
+                        "de": "Zoe: So einfach? Das ist ja fast langweilig. Jetzt verstehe ich, warum du diesen Job gewählt hast. Du musst ja wirklich keine harte Arbeit leisten, oder?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: I wouldn't go that far. But yes, Symcon makes it pretty easy to integrate all kinds of devices.",
+                        "de": "Du: So weit würde ich nicht gehen. Aber ja, Symcon macht es ziemlich einfach, alle Arten von Geräten zu integrieren."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "rounds",
+                            "amount": 4
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
