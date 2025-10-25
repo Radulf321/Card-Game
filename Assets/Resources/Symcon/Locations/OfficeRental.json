@@ -6,8 +6,8 @@
             "de": "Tech Campus"
         },
         "description": {
-            "en": "Renting an office at 'Tech Campus' provides a modern workspace with access to the latest technology and in turn allows you to work for more rounds.",
-            "de": "Ein Büro bei \"Tech Campus\" zu mieten bedeutet, einen modernen Arbeitsplatz mit Zugang zu neuester Technologie zu erhalten, der es dir ermöglicht, mehr Runden zu arbeiten."
+            "en": "Renting an office at 'Tech Campus' provides a modern workspace with access to the latest technology and in turn allows you to work for <b>more rounds</b>.",
+            "de": "Ein Büro bei \"Tech Campus\" zu mieten bedeutet, einen modernen Arbeitsplatz mit Zugang zu neuester Technologie zu erhalten, der es dir ermöglicht, mehr <b>Runden</b> zu arbeiten."
         },
         "image": "OfficeRental"
     },

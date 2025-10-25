@@ -6,8 +6,8 @@
             "de": "Community Forum"
         },
         "description": {
-            "en": "Spend some time in the community board and talk with other users, profiting from their creativity.",
-            "de": "Verbringe Zeit im Community Forum um mit anderen Benutzern zu reden und von deren Kreativität zu profitieren."
+            "en": "Spend some time in the community board and talk with other users, profiting from their <b>creativity</b>.",
+            "de": "Verbringe Zeit im Community Forum um mit anderen Benutzern zu reden und von deren <b>Kreativität</b> zu profitieren."
         },
         "image": "CommunityBoard"
     },

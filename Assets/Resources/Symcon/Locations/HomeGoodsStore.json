@@ -6,8 +6,8 @@
             "de": "Smart Living"
         },
         "description": {
-            "en": "'Smart Living' is a home goods store that includes a nice selection of smart devices and furniture, making your everyday life easier and thus providing more energy during work.",
-            "de": "\"Smart Living\" ist ein Einrichtungshaus mit einer guten Auswahl von smarten Geräten und Möbeln, die deinen alltägliches Leben vereinfachen, was zu mehr Energie bei der Arbeit führt."
+            "en": "'Smart Living' is a home goods store that includes a nice selection of smart devices and furniture, making your everyday life easier and thus providing more <b>energy</b> during work.",
+            "de": "\"Smart Living\" ist ein Einrichtungshaus mit einer guten Auswahl von smarten Geräten und Möbeln, die deinen alltägliches Leben vereinfachen, was zu mehr <b>Energie</b> bei der Arbeit führt."
         },
         "image": "HomeGoodsStore"
     },

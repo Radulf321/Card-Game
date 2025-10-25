@@ -10,8 +10,8 @@
             "de": "Mit Zoe tüfteln"
         },
         "description": {
-            "en": "Create some creative solutions with Zoe. Exciting projects are waiting but you need to think fast.",
-            "de": "Kreiere einige kreative Lösungen mit Zoe. Spannende Projekte warten, aber du musst schnell denken."
+            "en": "Develop some <b>creative</b> solutions with Zoe. An exciting <b>project</b> is waiting but you need to <b>think fast</b>.",
+            "de": "Kreiere einige <b>kreative</b> Lösungen mit Zoe. Ein spannendes <b>Projekt</b> wartet, aber du musst <b>schnell denken</b>."
         },
         "image": "Tinkerer"
     },
