@@ -157,9 +157,19 @@ public class CharacterManager
         }
     }
 
+    public List<CombatTarget> GetAllCombatTargets()
+    {
+        return this.combatTargets;
+    }
+
     public List<CombatTarget> GetAvailableCombatTargets()
     {
         return this.combatTargets.Where(combatTarget => combatTarget.IsAvailable()).ToList();
+    }
+
+    public List<Location> GetAllLocations()
+    {
+        return this.locations;
     }
 
     private List<Location> GetAvailableLocations()

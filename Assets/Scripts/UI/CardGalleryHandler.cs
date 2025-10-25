@@ -1,8 +1,10 @@
 using UnityEngine;
+using System.Linq;
 
 public class CardGalleryHandler : MonoBehaviour
 {
     public GameObject cardPrefab;
+    public GameObject actionPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -59,6 +61,30 @@ public class CardGalleryHandler : MonoBehaviour
                 currentX += cardHeight;
                 columnIndex = 0;
             }
+        }
+                
+        currentX += cardHeight;
+        float actionHeight = Mathf.Max(512f, parentSize.height * 0.66f);
+
+        foreach (ActionCharacter target in Game.Instance.GetCharacterManager().GetAllCombatTargets().Cast<ActionCharacter>()
+            .Concat(Game.Instance.GetCharacterManager().GetAllLocations().Cast<ActionCharacter>()))
+        {
+            DialogOption? action = target.GetDialogOption();
+            if (action == null) {
+                continue;
+            }
+
+            GameObject actionObject = Instantiate(actionPrefab);
+            actionObject.transform.SetParent(this.transform, false);
+            DialogOptionCardHandler dialogHandler = actionObject.GetComponent<DialogOptionCardHandler>();
+            dialogHandler.SetOption(action);
+            dialogHandler.SetHeight(actionHeight);
+            RectTransform actionRect = actionObject.GetComponent<RectTransform>();
+            actionRect.anchorMin = new Vector2(0, 1);
+            actionRect.anchorMax = new Vector2(0, 1);
+            actionRect.pivot = new Vector2(0, 1);
+            actionRect.anchoredPosition = new Vector2(currentX, (-parentSize.height / 2) + (actionHeight / 2));
+            currentX += actionHeight;
         }
 
         GetComponent<RectTransform>().sizeDelta = new Vector2(Mathf.Max(parentSize.width, currentX + cardHeight ), parentSize.height);
