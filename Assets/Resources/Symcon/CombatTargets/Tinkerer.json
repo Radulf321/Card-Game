@@ -249,7 +249,7 @@
                 "en": "There are a lot of custom devices with all kinds of protocols and connections. Get those prototypes rolling and connect them to Symcon.",
                 "de": "Es gibt viele benutzerdefinierte Geräte mit allen Arten von Protokollen und Verbindungen. Starte mit Prototypen durch und verbinde sie mit Symcon."
             },
-            "image": "SingleFamilyHome/BasicVisualization",
+            "image": "Tinkerer/ConnectionPrototypes",
             "prerequisites": [
                 "introduction"
             ],
@@ -324,7 +324,7 @@
                 "en": "Connect wiring from the custom devices to a Raspberry Pi, ready to forward those signals to Symcon.",
                 "de": "Verbinde die Verkabelung von den benutzerdefinierten Geräten mit einem Raspberry Pi, um diese Signale an Symcon weiterzuleiten."
             },
-            "image": "SingleFamilyHome/LivingRoomSmartTV",
+            "image": "Tinkerer/Wiring",
             "prerequisites": [
                 "connectionPrototypes"
             ],
@@ -399,7 +399,7 @@
                 "en": "Install MQTT libraries on the Raspberry Pis and integrate them into Symcon.",
                 "de": "Installiere MQTT-Bibliotheken auf den Raspberry Pis und integriere sie in Symcon."
             },
-            "image": "SingleFamilyHome/LivingRoomSmartTV",
+            "image": "Tinkerer/MQTTSetup",
             "prerequisites": [
                 "connectionPrototypes"
             ],
@@ -456,6 +456,166 @@
                         {
                             "type": "rounds",
                             "amount": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "customModules",
+            "title": {
+                "en": "Custom Modules",
+                "de": "Eigene Module"
+            },
+            "cost": {
+                "comfort": 1
+            },
+            "description": {
+                "en": "Develop custom modules to better integrate the unique devices into Symcon.",
+                "de": "Entwickle eigene Module, um die individuellen Geräte besser in Symcon zu integrieren."
+            },
+            "image": "Tinkerer/CustomModules",
+            "prerequisites": [
+                "connectionPrototypes"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "Tinkerer",
+                    "left": "Player",
+                    "right": "Tinkerer"
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Now, once we get all the devices into Symcon, we could handle the individual MQTT topics.",
+                        "de": "Du: So, wenn wir alle Geräte in Symcon haben, könnten wir die einzelnen MQTT-Topics verwalten."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: But honestly? Managing topics directly is pretty clunky. How about we implement custom modules to handle all of this more elegantly?",
+                        "de": "Du: Aber jetzt mal ehrlich? Die direkte Verwaltung von Topics ist ziemlich umständlich. Wie wäre es, wenn wir eigene Module implementieren, um das alles eleganter zu lösen?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: I'm all ears. Let's do this smoothly. And you know I don't back down from a bit of tinkering!",
+                        "de": "Zoe: Ich bin ganz Ohr. Lass uns das ganze geschmeidig angehen. Und du weißt ja, dass ich vor ein wenig Tüftelei nicht zurückschrecke!"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: All right. So, how's your PHP? Because we'll need that for module development.",
+                        "de": "Du: Alles klar. Wie sieht's mit deinem PHP aus? Denn das werden wir für die Modulentwicklung brauchen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: Ah, you know how it is. You know one or two languages, and you can pick up the rest as you go. Let's dive in!",
+                        "de": "Zoe: Ach, du weißt ja wies läuft. Du kennst ein oder zwei Sprachen und den Rest lernst du unterwegs. Lass uns loslegen!"
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "loadATemplate"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ipsView",
+            "title": {
+                "en": "IPS View",
+                "de": "IPS View"
+            },
+            "cost": {
+                "comfort": 2
+            },
+            "description": {
+                "en": "Create a custom visualization with IPS View.",
+                "de": "Erstelle eine individuelle Visualisierung mit IPS View."
+            },
+            "image": "Tinkerer/IPSView",
+            "prerequisites": [
+                "wiring",
+                "mqttSetup",
+                "customModules"
+            ],
+            "dialog": [
+                {
+                    "type": "image",
+                    "background": "Tinkerer",
+                    "left": "Player",
+                    "right": "Tinkerer"
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: Sweet! All devices are talking to Symcon now. But those run-of-the-mill visualization are all kinda lame...",
+                        "de": "Zoe: Super! Alle Geräte kommunizieren jetzt mit Symcon. Aber diese Standard-Visualisierungen sind alle irgendwie lahm..."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: I mean, the 90s called, they want their WebFront back! And the tile visualization may convince some suit monkeys, but not me.",
+                        "de": "Zoe: Ich meine, die 90er haben angerufen, sie wollen ihr WebFront zurück! Und die Kachel-Visualisierung mag einige Anzugträger überzeugen, mich aber nicht."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: Well, it's a good thing there are more options. Did you already check out IPS View?",
+                        "de": "Du: Nun, zum Glück gibt es noch andere Optionen. Hast du dir schon IPS View angesehen?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: There are no real limitations. You can create any kind of visualization you want with it.",
+                        "de": "Du: Es gibt keine wirklichen Einschränkungen. Du kannst damit jede Art von Visualisierung erstellen."
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "left",
+                    "text": {
+                        "en": "You: All it takes is time and effort. Are you up for that?",
+                        "de": "Du: Alles was du brauchst ist Zeit und Mühe. Bist du bereit dafür?"
+                    }
+                },
+                {
+                    "type": "text",
+                    "speaker": "right",
+                    "text": {
+                        "en": "Zoe: Absolutely! Let's make something cool that actually looks good.",
+                        "de": "Zoe: Absolut! Lass uns etwas Cooles machen, das auch gut aussieht."
+                    }
+                },
+                {
+                    "type": "reward",
+                    "rewards": [
+                        {
+                            "type": "card",
+                            "card": "ipsView"
                         }
                     ]
                 }
