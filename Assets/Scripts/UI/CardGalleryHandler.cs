@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Linq;
 
+#nullable enable
+
 public class CardGalleryHandler : MonoBehaviour
 {
     public GameObject cardPrefab;
@@ -62,7 +64,7 @@ public class CardGalleryHandler : MonoBehaviour
                 columnIndex = 0;
             }
         }
-                
+
         currentX += cardHeight;
         float actionHeight = Mathf.Max(512f, parentSize.height * 0.66f);
 
@@ -70,7 +72,8 @@ public class CardGalleryHandler : MonoBehaviour
             .Concat(Game.Instance.GetCharacterManager().GetAllLocations().Cast<ActionCharacter>()))
         {
             DialogOption? action = target.GetDialogOption();
-            if (action == null) {
+            if (action == null)
+            {
                 continue;
             }
 
@@ -87,6 +90,6 @@ public class CardGalleryHandler : MonoBehaviour
             currentX += actionHeight;
         }
 
-        GetComponent<RectTransform>().sizeDelta = new Vector2(Mathf.Max(parentSize.width, currentX + cardHeight ), parentSize.height);
+        GetComponent<RectTransform>().sizeDelta = new Vector2(Mathf.Max(parentSize.width, currentX + cardHeight), parentSize.height);
     }
 }
