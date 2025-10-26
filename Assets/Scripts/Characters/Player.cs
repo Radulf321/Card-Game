@@ -5,6 +5,7 @@ public class Player
 {
     private List<Card> deck;
     private List<Card> relics;
+    private List<Skill> skills;
     private EnergyInfo energyInfo;
     private Dictionary<string, int> currencies;
 
@@ -14,6 +15,7 @@ public class Player
         this.relics = new List<Card>();
         this.energyInfo = new EnergyInfo();
         this.currencies = new Dictionary<string, int>();
+        this.skills = new List<Skill>();
     }
 
     public Player(List<string> startingCards, JObject energyInfo)
@@ -35,6 +37,7 @@ public class Player
         this.relics = new List<Card>();
         this.energyInfo = new EnergyInfo();
         this.currencies = new Dictionary<string, int>();
+        this.skills = new List<Skill>();
 
         // Load deck from data
         if (json["deck"] != null)
@@ -44,7 +47,7 @@ public class Player
                 AddCardToDeck(Game.Instance.GetCard(cardId));
             }
         }
-        
+
         // Load relics from data
         if (json["relics"] != null)
         {
@@ -53,17 +56,27 @@ public class Player
                 AddCardToDeck(Game.Instance.GetCard(cardId));
             }
         }
-        
+
         // Load energy info from data
         if (json["energyInfo"] != null)
         {
             this.energyInfo = new EnergyInfo(json["energyInfo"]! as JObject);
         }
-        
+
         // Load currencies from data
         if (json["currencies"] != null)
         {
             this.currencies = json["currencies"]!.ToObject<Dictionary<string, int>>() ?? new Dictionary<string, int>();
+        }
+
+        if (json["skills"] != null)
+        {
+            foreach (JObject skillJson in json["skills"]!.ToObject<List<JObject>>()!)
+            {
+                Skill skill = Game.Instance.GetSkill(skillJson["id"]!.ToString());
+                skill.AddProgress(skillJson["progress"]!.ToObject<int>());
+                this.skills.Add(skill);
+            }
         }
     }
 
@@ -160,6 +173,18 @@ public class Player
             currenciesObject[currency.Key] = currency.Value;
         }
         saveData["currencies"] = currenciesObject;
+        JArray skillsArray = new JArray();
+        foreach (Skill skill in this.skills)
+        {
+            skillsArray.Add(
+                new JObject()
+                {
+                    ["id"] = skill.GetID(),
+                    ["progress"] = skill.GetProgress(),
+                }
+            );
+        }
+        saveData["skills"] = skillsArray;
         return saveData;
     }
 }

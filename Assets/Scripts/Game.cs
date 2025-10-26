@@ -23,6 +23,7 @@ class Game
     private Dictionary<string, Sprite> icons;
 
     private CardLibrary cardLibrary;
+    private SkillLibrary skillLibrary;
 
     private string resourcePath;
 
@@ -49,6 +50,7 @@ class Game
         this.currencies = new Dictionary<string, NamedIconData>();
         this.icons = new Dictionary<string, Sprite>();
         this.cardLibrary = new CardLibrary();
+        this.skillLibrary = new SkillLibrary();
         this.resourcePath = "";
         this.selectActionBackground = "";
         this.checkIcon = "";
@@ -102,6 +104,7 @@ class Game
         this.icons = icons;
 
         this.cardLibrary = new CardLibrary(ResourcePath + "/Cards/");
+        this.skillLibrary = new SkillLibrary(ResourcePath + "/Skills/");
         this.player = new Player();
 
         this.remainingRounds = 4;
@@ -370,6 +373,11 @@ class Game
     public List<Card> GetAllCards()
     {
         return cardLibrary.GetAllCards();
+    }
+
+    public Skill GetSkill(string skillID)
+    {
+        return skillLibrary.GetSkill(skillID);
     }
 
     public string GetResourcePath()
