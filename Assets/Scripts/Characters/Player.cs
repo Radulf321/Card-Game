@@ -75,7 +75,7 @@ public class Player
             {
                 Skill skill = Game.Instance.GetSkill(skillJson["id"]!.ToString());
                 skill.AddProgress(skillJson["progress"]!.ToObject<int>());
-                this.skills.Add(skill);
+                AddSkill(skill);
             }
         }
     }
@@ -108,6 +108,17 @@ public class Player
     public void RemoveCardFromDeck(Card card)
     {
         this.deck.Remove(card);
+    }
+
+    public List<Skill> GetSkills()
+    {
+        return this.skills;
+    }
+
+    public void AddSkill(Skill skill)
+    {
+        skill.Initialize();
+        this.skills.Add(skill);
     }
 
     public int GetStartingEnergy()

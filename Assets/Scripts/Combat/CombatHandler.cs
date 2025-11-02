@@ -165,6 +165,21 @@ public class CombatHandler : MonoBehaviour
         }
     }
 
+    public void UseSkill()
+    {
+        Skill skillToUse = Game.Instance.GetPlayer().GetSkills()[0];
+        UnityEngine.Debug.Log("Using skill: " + skillToUse.GetName());
+        UnityEngine.Debug.Log("Current Progress: " + skillToUse.GetProgress());
+        if (skillToUse.CanUse())
+        {
+            skillToUse.Use();
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Not enough Progress to use the skill.");
+        }
+    }
+
     public CardPile getCardPile()
     {
         return this.cardPile;

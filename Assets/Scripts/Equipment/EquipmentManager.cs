@@ -195,10 +195,12 @@ public class EquipmentManager
     {
         // Store the selected equipment
         this.selectedEquipment = new List<Equipment>(selectedEquipment);
+        Player player = Game.Instance.GetPlayer();
+        player.AddSkill(Game.Instance.GetSkill("soManyIdeas"));
 
         foreach (Equipment equipmentItem in selectedEquipment)
         {
-            equipmentItem.ApplyEffects(Game.Instance.GetPlayer());
+            equipmentItem.ApplyEffects(player);
         }
         this.onPreparationComplete?.Invoke();
         this.onPreparationComplete = null;
