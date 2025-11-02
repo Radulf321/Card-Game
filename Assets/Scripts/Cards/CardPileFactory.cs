@@ -26,7 +26,7 @@ public class CardPileFactory
         List<Card> cards = new List<Card>();
         foreach (JToken cardID in json?["cards"] ?? new JArray())
         {
-            cards.Add(Game.Instance.GetCard(cardID.ToString()));
+            cards.Add(Game.Instance.GetCard(cardID.ToString()).Clone());
         }
         this.cards = cards;
     }
