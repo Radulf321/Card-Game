@@ -23,7 +23,7 @@ public class Player
         List<Card> deck = new List<Card>();
         foreach (string cardId in startingCards)
         {
-            deck.Add(Game.Instance.GetCard(cardId));
+            deck.Add(Game.Instance.GetCard(cardId).Clone());
         }
         this.deck = deck;
         this.relics = new List<Card>();
@@ -92,14 +92,15 @@ public class Player
 
     public void AddCardToDeck(Card card)
     {
-        switch (card.GetCardType())
+        Card clonedCard = card.Clone();
+        switch (clonedCard.GetCardType())
         {
             case CardType.Regular:
-                this.deck.Add(card);
+                this.deck.Add(clonedCard);
                 break;
 
             case CardType.Relic:
-                this.relics.Add(card);
+                this.relics.Add(clonedCard);
                 break;
         }
     }
