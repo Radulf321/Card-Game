@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 
 public class PlayCardsCharge : SkillCharge
 {
-    public PlayCardsCharge(JObject json) : base(json)
+    public PlayCardsCharge(JObject json, Skill skill) : base(json, skill)
     {
     }
 
@@ -10,7 +10,7 @@ public class PlayCardsCharge : SkillCharge
     {
         if (triggerMessage.GetTriggerType() == TriggerType.PlayCard)
         {
-            this.progress++;
+            this.AddProgress(1);
         }
     }
 }

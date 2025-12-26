@@ -11,13 +11,15 @@ public class TriggerMessageData
     private Card? card;
     private CombatTarget? combatTarget;
     private string? currency;
+    private Skill? skill;
 
-    public TriggerMessageData(int? amount = null, string? goal = null, CardEffectTrigger? trigger = null, bool? success = null, DiscardType? discardType = null, Card? card = null, CombatTarget? combatTarget = null, string? currency = null)
+    public TriggerMessageData(int? amount = null, string? goal = null, CardEffectTrigger? trigger = null, bool? success = null, DiscardType? discardType = null, Card? card = null, CombatTarget? combatTarget = null, string? currency = null, Skill? skill = null)
     {
         this.amount = amount;
         this.goal = goal;
         this.trigger = trigger;
         this.success = success;
+        this.skill = skill;
         this.discardType = discardType;
         this.card = card;
         this.combatTarget = combatTarget;
@@ -62,5 +64,10 @@ public class TriggerMessageData
     public string? GetCurrency()
     {
         return this.currency;
+    }
+
+    public Skill? GetSkill()
+    {
+        return this.skill;
     }
 }

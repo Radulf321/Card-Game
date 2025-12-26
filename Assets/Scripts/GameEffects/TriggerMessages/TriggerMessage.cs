@@ -16,6 +16,7 @@ public enum TriggerType
     EndDialog,
     Preparation,
     EndGame,
+    SkillProgressChanged,
 
     // UI Events
     CardDragStart,

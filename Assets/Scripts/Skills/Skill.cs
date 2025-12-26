@@ -30,7 +30,7 @@ public class Skill
         this.name = LocalizationHelper.GetLocalizedString(json["name"] as JObject) ?? "No name";
         this.imagePath = json["image"]?.ToString() ?? "Placeholder";
         this.id = json["id"]!.ToString();
-        this.charge = SkillCharge.FromJson(json["charge"]!.ToObject<JObject>()!);
+        this.charge = SkillCharge.FromJson(json["charge"]!.ToObject<JObject>()!, this);
     }
 
     public void Initialize()
@@ -57,6 +57,11 @@ public class Skill
         return this.name;
     }
 
+    public int GetCharges()
+    {
+        return this.charge.GetCharges();
+    }
+
     public async Task<string> GetTextDescription()
     {
         List<string> descriptions = new List<string>();
@@ -67,9 +72,9 @@ public class Skill
         return string.Join("\n", descriptions);
     }
 
-    public string GetImagePath()
+    public string GetImagePath(bool disabled)
     {
-        return Game.Instance.GetResourcePath() + "/Graphics/Skills/" + this.imagePath;
+        return Game.Instance.GetResourcePath() + "/Graphics/Skills/" + this.imagePath + (disabled ? "Disabled" : "") ;
     }
 
     public string GetID()
@@ -80,6 +85,11 @@ public class Skill
     public int GetProgress()
     {
         return this.charge.GetProgress();
+    }
+
+    public float GetProgressPercentual()
+    {
+        return this.charge.GetProgressPercentual();
     }
 
     public void AddProgress(int amount)

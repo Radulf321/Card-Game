@@ -2,13 +2,13 @@ using Newtonsoft.Json.Linq;
 
 public abstract class SkillCharge
 {
-    public static SkillCharge FromJson(JObject json)
+    public static SkillCharge FromJson(JObject json, Skill skill)
     {
         string type = json["type"]!.ToString();
         switch (type)
         {
             case "playCards":
-                return new PlayCardsCharge(json);
+                return new PlayCardsCharge(json, skill);
             default:
                 throw new System.Exception($"Unknown charge type: {type}");
         }
@@ -16,11 +16,13 @@ public abstract class SkillCharge
 
     protected int progress;
     private int progressForCharge;
+    private Skill skill;
 
-    public SkillCharge(JObject json)
+    public SkillCharge(JObject json, Skill skill)
     {
         this.progress = 0;
         this.progressForCharge = json["progressForCharge"]!.ToObject<int>();
+        this.skill = skill;
     }
 
     public void Initialize()
@@ -60,9 +62,23 @@ public abstract class SkillCharge
         return this.progress;
     }
 
+    public float GetProgressPercentual()
+    {
+        // Each charge requires double the progress of the last
+        int multiplier = 1;
+        int progress = this.progress;
+        while (progress >= (progressForCharge * multiplier))
+        {
+            progress -= progressForCharge * multiplier;
+            multiplier *= 2;
+        }
+        return (float)progress / (progressForCharge * multiplier);
+    }
+
     public void AddProgress(int amount)
     {
         this.progress += amount;
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.SkillProgressChanged, new TriggerMessageData(skill: this.skill, amount: amount)));
     }
 
     protected abstract void HandleMessage(TriggerMessage triggerMessage);
