@@ -9,6 +9,7 @@ class Game
 {
     public static Game Instance { get; private set; } = new Game();
 
+    public static readonly string saveGameKey = "SaveGame";
     public static readonly string tutorialDoneKey = "TutorialDone";
     public static readonly string permanentFlagsKey = "PermanentFlags";
 
@@ -174,7 +175,8 @@ class Game
 
     public void ContinueGame()
     {
-        if (!PlayerPrefs.HasKey(this.resourcePath + "SaveGame"))
+        UnityEngine.Debug.Log("ContinueGame called");
+        if (!PlayerPrefs.HasKey(this.resourcePath + Game.saveGameKey))
         {
             throw new System.Exception("No save game found");
         }
@@ -182,7 +184,8 @@ class Game
         {
             triggerAction.Subscribe();
         }
-        JObject saveData = JObject.Parse(PlayerPrefs.GetString(this.resourcePath + "SaveGame"));
+        JObject saveData = JObject.Parse(PlayerPrefs.GetString(this.resourcePath + Game.saveGameKey));
+        UnityEngine.Debug.Log("Loaded save data: " + saveData.ToString());
         this.player = new Player(saveData["player"]?.ToObject<JObject>() ?? new JObject());
         this.remainingRounds = saveData["remainingRounds"]?.ToObject<int>() ?? 1;
         this.flagDictionaries[FlagValidity.Game] = new FlagDictionary(saveData["flagDictionary"]?.ToObject<JObject>() ?? new JObject());
@@ -199,6 +202,7 @@ class Game
 
     public void StartRound()
     {
+        UnityEngine.Debug.Log("Starting round with " + remainingRounds + " remaining rounds.");
         SaveGame();
         if (!this.tutorialDone)
         {
@@ -235,7 +239,7 @@ class Game
         remainingRounds--;
         if (remainingRounds <= 0)
         {
-            PlayerPrefs.DeleteKey(this.resourcePath + "SaveGame");
+            PlayerPrefs.DeleteKey(this.resourcePath + Game.saveGameKey);
             PlayerPrefs.Save();
             _ = DialogHandler.Instance!.StartDialog(this.gameOverDialog, onFinish: () =>
                 {
@@ -599,7 +603,7 @@ class Game
             ["taskManager"] = this.taskManager.SaveToJson(),
             ["characterManager"] = this.characterManager.SaveToJson()
         };
-        PlayerPrefs.SetString(this.resourcePath + "SaveGame", saveData.ToString());
+        PlayerPrefs.SetString(this.resourcePath + Game.saveGameKey, saveData.ToString());
         PlayerPrefs.Save();
     }
 }
