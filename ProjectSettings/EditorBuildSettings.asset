@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/DebugScene.unity
-    guid: 1515550818215254f9529c91a0a01b89
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: e19bde4362dd62c4a81cb5422f787537
   - enabled: 1
     path: Assets/Scenes/CombatScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CardGalleryScene.unity
     guid: c8b114f71122c6d4db5f20229672cdaf
+  - enabled: 1
+    path: Assets/Scenes/DebugScene.unity
+    guid: 1515550818215254f9529c91a0a01b89
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 23fde41f1e5ed6e478b77ecaf9421ac0, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: ddbcc107deb107f46b570f4dd6ff2e2e, type: 2}

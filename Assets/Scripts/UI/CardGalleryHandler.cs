@@ -21,7 +21,7 @@ public class CardGalleryHandler : MonoBehaviour
 
     public void BackToMain()
     {
-        FadeHandler.Instance?.LoadScene("DebugScene");
+        FadeHandler.Instance?.LoadScene("MainMenuScene");
     }
 
     private void RenderCards()

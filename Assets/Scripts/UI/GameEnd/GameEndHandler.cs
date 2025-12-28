@@ -32,7 +32,7 @@ public class GameEndHandler : MonoBehaviour
 
         TMPro.TextMeshProUGUI totalWinsText = totalWins.AddComponent<TMPro.TextMeshProUGUI>();
 
-        AsyncHelper.UpdateTextFromTask(totalWinsText, AsyncHelper.HandleToTask(
+        _ = AsyncHelper.UpdateTextFromTask(totalWinsText, AsyncHelper.HandleToTask(
             LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "TotalWins",
             arguments: new Dictionary<string, object> {
                 { "amount", taskManager.GetTotalWins() }
@@ -47,7 +47,7 @@ public class GameEndHandler : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        FadeHandler.Instance!.LoadScene("DebugScene");
+        FadeHandler.Instance!.LoadScene("MainMenuScene");
     }
 
     // Update is called once per frame

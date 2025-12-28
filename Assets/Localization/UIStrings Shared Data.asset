@@ -79,6 +79,26 @@ MonoBehaviour:
     m_Key: SkillTooltip
     m_Metadata:
       m_Items: []
+  - m_Id: 84103271933583360
+    m_Key: ContinueRun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84103886797578240
+    m_Key: StartRun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84103970717212672
+    m_Key: StartGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84104068801011712
+    m_Key: ResetData
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84104293821227008
+    m_Key: OpenCardGallery
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

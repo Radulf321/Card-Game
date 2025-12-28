@@ -93,6 +93,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543859698663638
+  - m_Id: 84103271933583360
+    m_Localized: Aktuellen Lauf fortsetzen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84103886797578240
+    m_Localized: Neuen Lauf starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84103970717212672
+    m_Localized: Spiel starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84104068801011712
+    m_Localized: "ALLE gespeicherten Daten zur\xFCcksetzen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84104293821227008
+    m_Localized: "Kartengallerie \xF6ffnen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
