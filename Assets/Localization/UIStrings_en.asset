@@ -83,6 +83,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543859698663637
+  - m_Id: 84089907295592448
+    m_Localized: '<b>Charges</b> {charges}
+
+      <b>Progress</b> {currentProgress}/{maxProgress}
+      ({chargeDescription})
+
+      <b>Effect</b> {effect}'
+    m_Metadata:
+      m_Items:
+      - rid: 6401543859698663637
   references:
     version: 2
     RefIds:
@@ -95,3 +105,4 @@ MonoBehaviour:
         - id: 1417602409472000
         - id: 24290181314813952
         - id: 36607776017653760
+        - id: 84089907295592448

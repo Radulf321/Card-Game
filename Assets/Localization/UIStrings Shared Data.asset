@@ -75,6 +75,10 @@ MonoBehaviour:
     m_Key: RoundsCost
     m_Metadata:
       m_Items: []
+  - m_Id: 84089907295592448
+    m_Key: SkillTooltip
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -192,7 +192,7 @@ public class Player
                 new JObject()
                 {
                     ["id"] = skill.GetID(),
-                    ["progress"] = skill.GetProgress(),
+                    ["progress"] = skill.GetTotalProgress(),
                 }
             );
         }

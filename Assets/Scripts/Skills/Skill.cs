@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using UnityEngine.Localization.Settings;
 
 public class Skill
 {
@@ -69,7 +70,16 @@ public class Skill
         {
             descriptions.Add(await effect.getDescription());
         }
-        return string.Join("\n", descriptions);
+        string chargeDescription = await charge.GetTextDescription();
+        return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", "SkillTooltip",
+            arguments: new Dictionary<string, object> {
+                { "charges", this.GetCharges() },
+                { "currentProgress", this.charge.GetCurrentProgress() },
+                { "maxProgress", this.charge.GetMaxProgress() },
+                { "chargeDescription", chargeDescription },
+                { "effect", string.Join("\n", descriptions) }
+            }
+        ));
     }
 
     public string GetImagePath(bool disabled)
@@ -82,9 +92,9 @@ public class Skill
         return this.id;
     }
 
-    public int GetProgress()
+    public int GetTotalProgress()
     {
-        return this.charge.GetProgress();
+        return this.charge.GetTotalProgress();
     }
 
     public float GetProgressPercentual()

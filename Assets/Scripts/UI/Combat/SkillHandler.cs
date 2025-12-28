@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 #nullable enable
 
-public class SkillHandler : MonoBehaviour
+public class SkillHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
     public GameObject chargePrefab;
 
     private Skill? skill;
     private bool update = false;
+    private bool tooltip = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -61,6 +63,31 @@ public class SkillHandler : MonoBehaviour
         return this.skill;
     }
 
+    public async void OnPointerEnter(PointerEventData eventData)
+    {
+        if (this.skill == null) {
+            return;
+        }
+        this.tooltip = true;
+        string description = await this.skill.GetTextDescription();
+        // In case the tooltip was closed while we were waiting for the description
+        if (!tooltip) {
+            return;
+        }
+        transform.Find("TooltipContainer").GetComponent<TooltipHandler>().ShowTooltip(description);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        this.tooltip = false;
+        transform.Find("TooltipContainer").GetComponent<TooltipHandler>().HideTooltip();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        this.skill?.Use();
+    }
+
     private void OnTriggerMessage(TriggerMessage message)
     {
         if (message.GetTriggerType() == TriggerType.SkillProgressChanged)
@@ -71,5 +98,10 @@ public class SkillHandler : MonoBehaviour
                 update = true;
             }
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        // Do nothing, we simply need this so OnPointerUp gets called
     }
 }

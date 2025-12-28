@@ -50,6 +50,13 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-de
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fcfc8157abcca6241887368d8153abcc
+    m_Address: ChargeStrings_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 36bf96a8823de2d4aa86c6a8881a4d9e, type: 2}

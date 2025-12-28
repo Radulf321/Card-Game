@@ -281,19 +281,13 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
         {
             return;
         }
-        Transform tooltipContainer = transform.Find("TooltipContainer");
-        TextMeshProUGUI tooltipText =
-             tooltipContainer.Find("TooltipText").GetComponent<TextMeshProUGUI>();
-        tooltipText.text = description;
-        RectTransform tooltipRect = tooltipContainer.GetComponent<RectTransform>();
-        tooltipRect.sizeDelta = new Vector2(tooltipRect.sizeDelta.x, tooltipText.preferredHeight + 100);
-        tooltipContainer.gameObject.SetActive(true);
+        transform.Find("TooltipContainer").GetComponent<TooltipHandler>().ShowTooltip(description);
     }
 
     public void HideTooltip()
     {
         tooltip = false;
-        transform.Find("TooltipContainer").gameObject.SetActive(false);
+        transform.Find("TooltipContainer").GetComponent<TooltipHandler>().HideTooltip();
     }
 
     public Card GetCard()

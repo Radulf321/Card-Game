@@ -33,6 +33,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88650d634c4395f4a86ba68192e7b79b
+    m_Address: ChargeStrings_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b6d35cbd4575239419c702a840e9d31a
     m_Address: CardStrings_en
     m_ReadOnly: 1
@@ -50,6 +56,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 36bf96a8823de2d4aa86c6a8881a4d9e, type: 2}

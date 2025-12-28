@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 public abstract class SkillCharge
 {
@@ -57,12 +59,12 @@ public abstract class SkillCharge
         progress /= 2;
     }
 
-    public int GetProgress()
+    public int GetTotalProgress()
     {
         return this.progress;
     }
 
-    public float GetProgressPercentual()
+    public int GetCurrentProgress()
     {
         // Each charge requires double the progress of the last
         int multiplier = 1;
@@ -72,7 +74,17 @@ public abstract class SkillCharge
             progress -= progressForCharge * multiplier;
             multiplier *= 2;
         }
-        return (float)progress / (progressForCharge * multiplier);
+        return progress;
+    }
+
+    public int GetMaxProgress()
+    {
+        return progressForCharge * (int)System.Math.Pow(2, GetCharges());
+    }
+
+    public float GetProgressPercentual()
+    {
+        return (float)GetCurrentProgress() / GetMaxProgress();
     }
 
     public void AddProgress(int amount)
@@ -81,5 +93,6 @@ public abstract class SkillCharge
         Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.SkillProgressChanged, new TriggerMessageData(skill: this.skill, amount: amount)));
     }
 
+    public abstract Task<string> GetTextDescription();
     protected abstract void HandleMessage(TriggerMessage triggerMessage);
 }
