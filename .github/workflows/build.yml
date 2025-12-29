@@ -100,6 +100,16 @@ jobs:
           docker system prune -a -f --volumes
           df -h # Optional: Check available storage
 
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
+
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v4
