@@ -316,22 +316,30 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
     private async void updateDescription()
     {
         TextMeshProUGUI descriptionText = GetDescriptionText();
+        string descriptionString = "Initialized - This should never be visible";
         if (this.description != null)
         {
-            descriptionText.text = this.description;
+            descriptionString = this.description;
         }
         else if (card != null)
         {
-            descriptionText.text = await card!.GetDescription();
+            descriptionString = await card!.GetDescription();
         }
         else if (talent != null)
         {
-            descriptionText.text = await talent!.GetDescription();
+            descriptionString = await talent!.GetDescription();
         }
         else
         {
-            descriptionText.text = "This should never be visible";
+            descriptionString = "This should never be visible";
         }
+        
+        // Check if descriptionText was destroyed in the meantime
+        if (descriptionText == null) {
+            return;
+        }
+
+        descriptionText.text = descriptionString;
         descriptionText.ForceMeshUpdate();
         while (descriptionText.isTextOverflowing ||
             (descriptionText.textBounds.size.x >
