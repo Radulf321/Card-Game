@@ -30,6 +30,7 @@ public class GamePreparationHandler : MonoBehaviour
             selectionRect.anchorMin = new Vector2(slot.GetX(), slot.GetY());
             selectionRect.anchorMax = new Vector2(slot.GetX() + slot.GetWidth(), slot.GetY() + slot.GetHeight());
             equipmentSelectionHandlers.Add(selectionHandler);
+            selectionHandler.SetDotData(equipmentArea, slot.GetDotX(), slot.GetDotY());
         }
 
         UpdateTasks(equipmentArea.Find("TaskInfo"));

@@ -12,6 +12,8 @@ public class SlotData
     private float y;
     private float width;
     private float height;
+    private float? dotX;
+    private float? dotY;
 
     public SlotData(string id, float x, float y, float width, float height)
     {
@@ -29,6 +31,8 @@ public class SlotData
         this.y = json["y"]!.ToObject<float>();
         this.width = json["width"]!.ToObject<float>();
         this.height = json["height"]!.ToObject<float>();
+        this.dotX = json["dot"]?["x"]!.ToObject<float>();
+        this.dotY = json["dot"]?["y"]!.ToObject<float>();
     }
 
     public string GetID()
@@ -44,6 +48,16 @@ public class SlotData
     public float GetY()
     {
         return this.y;
+    }
+
+    public float? GetDotX()
+    {
+        return this.dotX;
+    }
+
+    public float? GetDotY()
+    {
+        return this.dotY;
     }
 
     public float GetWidth()
