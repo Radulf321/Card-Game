@@ -202,7 +202,6 @@ class Game
 
     public void StartRound()
     {
-        UnityEngine.Debug.Log("Starting round with " + remainingRounds + " remaining rounds.");
         SaveGame();
         if (!this.tutorialDone)
         {

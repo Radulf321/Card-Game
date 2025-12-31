@@ -117,7 +117,6 @@ public class EquipmentSelectionHandler : MonoBehaviour
         
         // Convert my transform position to dotArea space
         Vector3 myWorldPos = myRect.TransformPoint(new Vector3(myHeight * 0.125f, equipmentBoxCenterYLocal, 0));
-        UnityEngine.Debug.Log("My world pos: " + myWorldPos + " my rect: " + myRect.rect);
         Vector3 myLocalInDotArea = parentRect.InverseTransformPoint(myWorldPos);
         
         float equipmentBoxCenterY = myLocalInDotArea.y;
