@@ -23,12 +23,13 @@ public class TaskOutcomeHandler : MonoBehaviour
             Transform rewardArea = transform.Find("RewardDisplayArea");
             bool completed = task?.IsCompleted() ?? false;
             rewardArea.gameObject.SetActive(completed);
+            float preferredHeight = transform.Find("TaskDescription").GetComponent<LayoutElement>().preferredHeight;
             if (completed)
             {
-                float rewardHeight = transform.parent.GetComponent<RectTransform>().rect.height / 3;
-                rewardArea.GetComponent<LayoutElement>().preferredHeight = rewardHeight;
                 rewardArea.GetComponent<RewardAreaHandler>().SetRewards(this.task!.GetRewards());
+                preferredHeight += rewardArea.GetComponent<LayoutElement>().preferredHeight;
             }
+            transform.GetComponent<LayoutElement>().preferredHeight = preferredHeight;
             needUpdate = false;
         }
     }

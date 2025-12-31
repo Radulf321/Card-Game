@@ -104,7 +104,7 @@
         ]
     },
     "gameEnd": {
-        "statisticsBackground": "Equipment",
+        "statisticsColor": "58d7de",
         "gameEndBackground": "Regular"
     },
     "checkIcon": "Check",

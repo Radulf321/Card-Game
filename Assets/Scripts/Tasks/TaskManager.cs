@@ -11,7 +11,7 @@ public class TaskManager
 
     private List<GameTask> tasks;
     private List<GameTask> activeTasks;
-    private string statisticsBackground;
+    private Color statisticsColor;
     private string gameEndBackground;
 
     // Statistics relevant for tasks
@@ -22,13 +22,13 @@ public class TaskManager
         this.wins = new Dictionary<string, int>();
         this.tasks = new List<GameTask>();
         this.activeTasks = new List<GameTask>();
-        this.statisticsBackground = "";
+        this.statisticsColor = Color.black;
         this.gameEndBackground = "";
     }
 
     public TaskManager(string resourcePath, JObject json) : this()
     {
-        this.statisticsBackground = json["statisticsBackground"]!.ToString();
+        this.statisticsColor = ColorUtility.TryParseHtmlString("#" + json["statisticsColor"]!.ToString(), out Color color) ? color : Color.black;
         this.gameEndBackground = json["gameEndBackground"]!.ToString();
         JArray tasksData = JArray.Parse(Resources.Load<TextAsset>(resourcePath + "/Tasks").text);
         foreach (JObject taskJson in tasksData)
@@ -142,9 +142,9 @@ public class TaskManager
         return new List<GameTask>(this.activeTasks);
     }
 
-    public string GetStatisticsBackground()
+    public Color GetStatisticsColor()
     {
-        return Game.Instance.GetResourcePath() + "/Graphics/Backgrounds/" + this.statisticsBackground;
+        return this.statisticsColor;
     }
 
     public string GetGameEndBackground()

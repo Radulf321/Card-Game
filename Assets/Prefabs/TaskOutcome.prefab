@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 6439159008087499327}
   - component: {fileID: 997929763367868781}
   - component: {fileID: 1898852297275491188}
+  - component: {fileID: 3684385765762424085}
   m_Layer: 5
   m_Name: TaskDescription
   m_TagString: Untagged
@@ -165,8 +166,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Gewinne 3 K\xE4mpfe: 3/3  <sprite name=\"Check\">"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a81c2f90abd9f8344b06a22cb65577b4, type: 2}
+  m_sharedMaterial: {fileID: -7181152035530214797, guid: a81c2f90abd9f8344b06a22cb65577b4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -190,8 +191,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -234,6 +235,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3684385765762424085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854890308113085360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 100
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1001 &5588367382798963721
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -361,6 +382,10 @@ PrefabInstance:
     - target: {fileID: 7369834530859257749, guid: 7dda27ee7ecea954da0ac3378cde5a5e, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369834530859257749, guid: 7dda27ee7ecea954da0ac3378cde5a5e, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7369834530859257749, guid: 7dda27ee7ecea954da0ac3378cde5a5e, type: 3}
       propertyPath: m_ChildForceExpandHeight
