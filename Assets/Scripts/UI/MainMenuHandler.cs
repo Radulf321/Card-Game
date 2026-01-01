@@ -1,15 +1,55 @@
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
+using TMPro;
 
 public class MainMenuHandler : MonoBehaviour
 {
-    public string resourcePath = "Symcon";
+    public GameObject resourceButtonPrefab;
+    public GameObject resourceSelectionCanvas;
 
-    private bool update = true;
+    private string resourcePath;
+    private bool update = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        string resourcesPath = System.IO.Path.Combine(Application.dataPath, "Resources");
+        string[] subfolders = System.IO.Directory.GetDirectories(resourcesPath);
+        
+        if (subfolders.Length > 1)
+        {
+            ShowSubfolderSelection(subfolders);
+        }
+        else if (subfolders.Length == 1)
+        {
+            SelectSubfolder(System.IO.Path.GetFileName(subfolders[0]));
+        }
+    }
+
+    private void ShowSubfolderSelection(string[] subfolders)
+    {
+        resourceSelectionCanvas.SetActive(true);
+        Transform buttonContainer = resourceSelectionCanvas.transform.Find("ButtonContainer");
+        for (int i = 0; i < subfolders.Length; i++)
+        {
+            string folderName = System.IO.Path.GetFileName(subfolders[i]);
+            GameObject buttonInstance = Instantiate(resourceButtonPrefab, buttonContainer);
+            Button button = buttonInstance.GetComponent<Button>();
+            button.onClick.AddListener(() => { 
+                resourceSelectionCanvas.SetActive(false);
+                SelectSubfolder(folderName); 
+            });
+            // Set button text if it has a child TextMeshProUGUI
+            TextMeshProUGUI buttonText = buttonInstance.GetComponentInChildren<TextMeshProUGUI>();
+            buttonText.text = folderName;
+        }
+    }
+
+    private void SelectSubfolder(string folderName)
+    {
+        resourcePath = folderName;
+        update = true;
     }
 
     // Update is called once per frame

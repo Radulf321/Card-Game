@@ -78,3 +78,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Rr]esources/[Pp]erformance[Tt]est[Rr]un[Ss]ettings.json
 /[Aa]ssets/[Rr]esources/[Pp]erformance[Tt]est[Rr]un[Ii]nfo.json.meta
 /[Aa]ssets/[Rr]esources/[Pp]erformance[Tt]est[Rr]un[Ss]ettings.json.meta
+
+# Resources, as these are handled in their own repository
+/[Aa]ssets/[Rr]esources/**
