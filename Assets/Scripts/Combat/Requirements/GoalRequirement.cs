@@ -60,6 +60,10 @@ public class GoalRequirement : Requirement
             case RequirementComparison.AtLeast:
             case RequirementComparison.Maximum:
                 current = CombatHandler.instance.getGoalAmount(this.goal);
+                if (this.comparison == RequirementComparison.AtLeast && (current > this.amount))
+                {
+                    current = this.amount; // Cap at max for display
+                }
                 break;
 
             case RequirementComparison.Burst:
@@ -72,6 +76,7 @@ public class GoalRequirement : Requirement
                     current = CombatHandler.instance.getGoalAmountThisTurn(this.goal);
                     if (current >= this.amount)
                     {
+                        current = this.amount;
                         this.fulfilled = true;
                     }
                 }

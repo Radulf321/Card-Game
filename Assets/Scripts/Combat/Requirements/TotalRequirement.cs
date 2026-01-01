@@ -16,10 +16,15 @@ public class TotalRequirement : Requirement
 
     public override Task<string> GetDescription()
     {
+        int current = CombatHandler.instance.getTotal();
+        if (current >= amount)
+        {
+            current = amount; // Cap at max for display
+        }
         return AsyncHelper.HandleToTask(
             LocalizationSettings.StringDatabase.GetLocalizedStringAsync("RequirementStrings", "TotalDescription",
             arguments: new Dictionary<string, object> {
-                { "current", CombatHandler.instance.getTotal() },
+                { "current", current },
                 { "icon", Game.Instance.GetGoalInlineIcon("total") },
                 { "amount", this.amount },
             }
