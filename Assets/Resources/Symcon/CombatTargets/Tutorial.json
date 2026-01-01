@@ -14,8 +14,9 @@
                 "cards": [
                     "createVariable",
                     "adjustPresentation",
-                    "optimizeObjectTree",
-                    "optimizeObjectTree"
+                    "createFlowScript",
+                    "createFlowScript",
+                    "energyBurst"
                 ],
                 "shuffle": false,
                 "startingHandSize": 1
@@ -41,7 +42,7 @@
                 },
                 {
                     "type": "total",
-                    "amount": 5,
+                    "amount": 8,
                     "variance": 0
                 }
             ]
@@ -451,8 +452,65 @@
                         "type": "text",
                         "speaker": "left",
                         "text": {
-                            "en": "Pio: All right, last turn. I think I've talked enough for now. You can handle the rest on your own.",
-                            "de": "Pio: Alles klar, letzter Zug. Ich glaube ich habe erstmal genug gelabert. Den Rest schaffst du alleine."
+                            "en": "Pio: All right, last turn. Unfortunately, you can't afford to play any of your cards right now.",
+                            "de": "Pio: Alles klar, letzter Zug. Leider kannst du dir gerade keine deiner Karten leisten."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: I'll help you out and complete the charge of your skill. Take a look at your skill, left of the energy display.",
+                            "de": "Pio: Ich helfe dir und lade deine Fähigkeit auf. Schau dir deine Fähigkeit links neben der Energieanzeige an."
+                        }
+                    },
+                    {
+                        "type": "reward",
+                        "rewards": [
+                            {
+                                "type": "skillProgress",
+                                "amount": 3
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Your current skill 'Too many ideas' let's you draw a card. You charge it by playing cards.",
+                            "de": "Pio: Deine aktuelle Fähigkeit \"Zu viele Ideen\" lässt dich eine Karte ziehen. Du lädst sie auf, indem du Karten spielst."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: If you click or tap on the skill, you'll use one charge to draw a card.",
+                            "de": "Pio: Wenn du auf die Fähigkeit klickst oder tippst, verwendest du eine Ladung, um eine Karte zu ziehen."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Progress and charges of your skill remains between work days, so try to charge it as much as you can.",
+                            "de": "Pio: Fortschritt und Ladung deiner Fähigkeit bleibt zwischen den Arbeitstagen erhalten, also versuche sie so weit wie möglich aufzuladen."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: You can collect multiple charges for your skill, but the more charges you already have, the more progress you'll need for your next charge.",
+                            "de": "Pio: Du kannst mehrere Ladungen für deine Fähigkeit sammeln, aber je mehr Ladungen du bereits hast, desto mehr Fortschritt benötigst du für deine nächste Ladung."
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "speaker": "left",
+                        "text": {
+                            "en": "Pio: Now, I think I've really talked enough for now. You can handle the rest on your own.",
+                            "de": "Pio: So, ich glaube ich habe wirklich genug gelabert. Den Rest schaffst du alleine."
                         }
                     }
                 ]
