@@ -50,6 +50,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401544152646156355
+  - m_Id: 80773369964568576
+    m_Localized: "Fortschritt f\xFCr F\xE4higkeit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80773749632966656
+    m_Localized: "+ {amount} Fortschritt f\xFCr deine F\xE4higkeit{numberSkills:choose(1):|en}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

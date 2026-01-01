@@ -50,6 +50,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401544152646156354
+  - m_Id: 80773369964568576
+    m_Localized: Skill Progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80773749632966656
+    m_Localized: + {amount} progress for your skill{numberSkills:choose(1):|s}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

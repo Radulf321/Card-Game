@@ -31,6 +31,8 @@ public abstract class Reward
                 return new BuffReward(json);
             case "unlock":
                 return new UnlockReward(json);
+            case "skillProgress":
+                return new SkillProgressReward(json);
             default:
                 throw new System.Exception("Reward type not recognized: " + type);
         }

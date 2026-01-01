@@ -43,6 +43,14 @@ MonoBehaviour:
     m_Key: BuffCaption
     m_Metadata:
       m_Items: []
+  - m_Id: 80773369964568576
+    m_Key: SkillProgressShort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80773749632966656
+    m_Key: SkillProgressCaption
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
