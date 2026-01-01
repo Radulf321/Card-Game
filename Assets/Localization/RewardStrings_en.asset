@@ -57,7 +57,8 @@ MonoBehaviour:
   - m_Id: 80773749632966656
     m_Localized: + {amount} progress for your skill{numberSkills:choose(1):|s}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 6401544152646156354
   references:
     version: 2
     RefIds:
@@ -69,3 +70,4 @@ MonoBehaviour:
         - id: 274664824832
         - id: 700374097920
         - id: 13441847289225216
+        - id: 80773749632966656
