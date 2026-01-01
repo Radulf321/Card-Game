@@ -81,3 +81,7 @@ crashlytics-build.properties
 
 # Resources, as these are handled in their own repository
 /[Aa]ssets/[Rr]esources/**
+
+# Keystore files
+/user.keystore
+/user.keystore.b64
