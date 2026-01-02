@@ -1,0 +1,21 @@
+{
+  "name": "com.radulf.cardgameframework",
+  "version": "0.1.0",
+  "displayName": "Card Game Framework",
+  "description": "A generic framework for card-based games with UI, game management, and localization support",
+  "unity": "2021.2",
+  "author": {
+    "name": "Radulf321"
+  },
+  "keywords": [
+    "card",
+    "game",
+    "framework",
+    "ccg"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Radulf321/Card-Game.git"
+  }
+}
