@@ -14,8 +14,7 @@ public class MainMenuHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        string resourcesPath = System.IO.Path.Combine(Application.dataPath, "Resources");
-        string[] subfolders = System.IO.Directory.GetDirectories(resourcesPath);
+        string[] subfolders = { "SymCards" };
         
         if (subfolders.Length > 1)
         {
@@ -31,9 +30,8 @@ public class MainMenuHandler : MonoBehaviour
     {
         resourceSelectionCanvas.SetActive(true);
         Transform buttonContainer = resourceSelectionCanvas.transform.Find("ButtonContainer");
-        for (int i = 0; i < subfolders.Length; i++)
+        foreach (string folderName in subfolders)
         {
-            string folderName = System.IO.Path.GetFileName(subfolders[i]);
             GameObject buttonInstance = Instantiate(resourceButtonPrefab, buttonContainer);
             Button button = buttonInstance.GetComponent<Button>();
             button.onClick.AddListener(() => { 
