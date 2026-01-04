@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 4989533597851332282}
   - component: {fileID: 7614234801340473449}
   - component: {fileID: 1554511158759333403}
+  - component: {fileID: 4863348747064082077}
   m_Layer: 5
   m_Name: DialogOptionCard
   m_TagString: Untagged
@@ -193,6 +194,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60f314ae2d51d8840851547e23c9793f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4863348747064082077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3582848092322662302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291b9d3bb90e8fa48bf9d120c5e6909b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2744326445508694407

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5610465619919482381}
   - component: {fileID: 3095601963347573694}
   - component: {fileID: 8357971786872219204}
+  - component: {fileID: 1901836143511756321}
   m_Layer: 5
   m_Name: Turn
   m_TagString: Untagged
@@ -82,6 +83,18 @@ MonoBehaviour:
   regularTurnStartSprite: {fileID: 21300000, guid: 732a0240789312e439294d85653ee2f4, type: 3}
   regularTurnEndSprite: {fileID: 21300000, guid: 08550de7391a0da46addf645dc99992f, type: 3}
   lastTurnEndSprite: {fileID: 21300000, guid: ad1d54e46a57d3e4fbf0cf724c2256ac, type: 3}
+--- !u!114 &1901836143511756321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029828835905313495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291b9d3bb90e8fa48bf9d120c5e6909b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4348400261138630435
 GameObject:
   m_ObjectHideFlags: 0

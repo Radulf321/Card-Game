@@ -2,52 +2,21 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using TMPro;
+using Newtonsoft.Json.Linq;
 
 public class MainMenuHandler : MonoBehaviour
 {
-    public GameObject resourceButtonPrefab;
-    public GameObject resourceSelectionCanvas;
-
-    private string resourcePath;
-    private bool update = false;
+    private static string RESOURCE_PATH = "CardData";
+    private bool update = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        string[] subfolders = { "SymCards" };
-        
-        if (subfolders.Length > 1)
-        {
-            ShowSubfolderSelection(subfolders);
-        }
-        else if (subfolders.Length == 1)
-        {
-            SelectSubfolder(System.IO.Path.GetFileName(subfolders[0]));
-        }
-    }
-
-    private void ShowSubfolderSelection(string[] subfolders)
-    {
-        resourceSelectionCanvas.SetActive(true);
-        Transform buttonContainer = resourceSelectionCanvas.transform.Find("ButtonContainer");
-        foreach (string folderName in subfolders)
-        {
-            GameObject buttonInstance = Instantiate(resourceButtonPrefab, buttonContainer);
-            Button button = buttonInstance.GetComponent<Button>();
-            button.onClick.AddListener(() => { 
-                resourceSelectionCanvas.SetActive(false);
-                SelectSubfolder(folderName); 
-            });
-            // Set button text if it has a child TextMeshProUGUI
-            TextMeshProUGUI buttonText = buttonInstance.GetComponentInChildren<TextMeshProUGUI>();
-            buttonText.text = folderName;
-        }
-    }
-
-    private void SelectSubfolder(string folderName)
-    {
-        resourcePath = folderName;
-        update = true;
+        JObject index = JObject.Parse(Resources.Load<TextAsset>(RESOURCE_PATH + "/Index").text);
+        UnityEngine.Debug.Log("Setting font to " + index["font"]!.ToString());
+        UnityEngine.Debug.Log(Resources.Load<TMPro.TMP_FontAsset>(RESOURCE_PATH + "/" + index["font"]!.ToString()));
+        UnityEngine.Debug.Log(TextMeshProFontManager.Instance);
+        TextMeshProFontManager.Instance!.SetDefaultFont(Resources.Load<TMPro.TMP_FontAsset>(RESOURCE_PATH + "/" + index["font"]!.ToString()));
     }
 
     // Update is called once per frame
@@ -55,14 +24,14 @@ public class MainMenuHandler : MonoBehaviour
     {
         if (update)
         {
-            bool tutorialDone = PlayerPrefs.GetInt(this.resourcePath + Game.tutorialDoneKey, 0) == 1;
+            bool tutorialDone = PlayerPrefs.GetInt(RESOURCE_PATH + Game.tutorialDoneKey, 0) == 1;
             string startText = tutorialDone ? "StartRun" : "StartGame";
             Transform buttonContainer = transform.Find("ButtonContainer");
             LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UIStrings", startText).Completed += (handle) =>
             {
                 buttonContainer.Find("StartButton").GetComponentInChildren<TMPro.TextMeshProUGUI>().text = handle.Result;
             };
-            bool hasCurrentRun = PlayerPrefs.HasKey(this.resourcePath + Game.saveGameKey);
+            bool hasCurrentRun = PlayerPrefs.HasKey(RESOURCE_PATH + Game.saveGameKey);
             buttonContainer.Find("ContinueButton").GetComponent<UnityEngine.UI.Button>().interactable = hasCurrentRun;
             update = false;
         }
@@ -70,13 +39,13 @@ public class MainMenuHandler : MonoBehaviour
 
     public void StartGame()
     {
-        Game game = new Game(this.resourcePath);
+        Game game = new Game(RESOURCE_PATH);
         game.StartGame();
     }
 
     public void ContinueGame()
     {
-        Game game = new Game(this.resourcePath);
+        Game game = new Game(RESOURCE_PATH);
         try {
             game.ContinueGame();
         }
@@ -95,7 +64,7 @@ public class MainMenuHandler : MonoBehaviour
 
     public void StartCardGallery()
     {
-        Game game = new Game(this.resourcePath);
+        Game game = new Game(RESOURCE_PATH);
         FadeHandler.Instance!.LoadScene("CardGalleryScene");
     }
 }

@@ -175,7 +175,6 @@ class Game
 
     public void ContinueGame()
     {
-        UnityEngine.Debug.Log("ContinueGame called");
         if (!PlayerPrefs.HasKey(this.resourcePath + Game.saveGameKey))
         {
             throw new System.Exception("No save game found");
