@@ -240,7 +240,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
         }
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragEnd, new TriggerMessageData(card: card)));
-        if (eventData.pointerEnter?.GetComponent<CardsInPlayAreaHandler>() == null)
+        if (eventData.pointerEnter?.GetComponent<DropCardAreaHandler>() == null)
         {
             if (beforeDragPosition != null)
             {
