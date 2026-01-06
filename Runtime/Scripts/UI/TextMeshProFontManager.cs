@@ -10,7 +10,6 @@ public class TextMeshProFontManager : MonoBehaviour
 
     private void Awake()
     {
-        UnityEngine.Debug.Log("Awake TextMeshProFontManager");
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);

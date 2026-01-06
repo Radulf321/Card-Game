@@ -13,9 +13,6 @@ public class MainMenuHandler : MonoBehaviour
     void Start()
     {
         JObject index = JObject.Parse(Resources.Load<TextAsset>(RESOURCE_PATH + "/Index").text);
-        UnityEngine.Debug.Log("Setting font to " + index["font"]!.ToString());
-        UnityEngine.Debug.Log(Resources.Load<TMPro.TMP_FontAsset>(RESOURCE_PATH + "/" + index["font"]!.ToString()));
-        UnityEngine.Debug.Log(TextMeshProFontManager.Instance);
         TextMeshProFontManager.Instance!.SetDefaultFont(Resources.Load<TMPro.TMP_FontAsset>(RESOURCE_PATH + "/" + index["font"]!.ToString()));
     }
 

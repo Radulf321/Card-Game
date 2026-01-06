@@ -184,7 +184,6 @@ class Game
             triggerAction.Subscribe();
         }
         JObject saveData = JObject.Parse(PlayerPrefs.GetString(this.resourcePath + Game.saveGameKey));
-        UnityEngine.Debug.Log("Loaded save data: " + saveData.ToString());
         this.player = new Player(saveData["player"]?.ToObject<JObject>() ?? new JObject());
         this.remainingRounds = saveData["remainingRounds"]?.ToObject<int>() ?? 1;
         this.flagDictionaries[FlagValidity.Game] = new FlagDictionary(saveData["flagDictionary"]?.ToObject<JObject>() ?? new JObject());
