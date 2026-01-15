@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
+#nullable enable
 public enum DiscardPosition
 {
     Random,
@@ -64,7 +65,7 @@ public class DiscardCardsEffect : GameEffect
         }
     }
 
-    public override bool canPlay()
+    public override bool canPlay(Enemy? target = null)
     {
         // The card itself is part of the hand, so there needs to be one more card in hand
         return !this.checkCardsAvailable || CombatHandler.instance.getCardPile().GetHand().Count >= (amount + 1);

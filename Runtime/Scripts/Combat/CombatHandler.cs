@@ -8,7 +8,8 @@ public class CombatHandler : MonoBehaviour
     public static CombatHandler? instance;
 
     private int currentTurn = 0;
-    private List<Turn> turns = new List<Turn>();
+    private List<Turn>? turns = new List<Turn>();
+    private List<Enemy>? enemies = new List<Enemy>();
     private Dictionary<string, int> goals = new Dictionary<string, int>();
     private Dictionary<string, int> goalsThisTurn = new Dictionary<string, int>();
 
@@ -29,6 +30,7 @@ public class CombatHandler : MonoBehaviour
         this.maxEnergy = combatTarget.GetStartingEnergy();
         this.cardPile = combatTarget.CreateCardPile();
         this.turns = combatTarget.GenerateTurns();
+        this.enemies = combatTarget.GenerateEnemies();
         foreach (Card relic in Game.Instance.GetPlayer().GetRelics()) {
             relic.Play();
         }
@@ -45,6 +47,7 @@ public class CombatHandler : MonoBehaviour
             transform.GetComponentInChildren<EnergyAreaHandler>().updateView();
             transform.GetComponentInChildren<CardsAreaHandler>().updateView();
             transform.GetComponentInChildren<CardsInPlayAreaHandler>().updateView();
+            transform.GetComponentInChildren<EnemyAreaHandler>().updateView();
         }
     }
 
@@ -92,7 +95,7 @@ public class CombatHandler : MonoBehaviour
         return 0;
     }
 
-    public List<Turn> getTurns()
+    public List<Turn>? getTurns()
     {
         return turns;
     }
@@ -102,9 +105,14 @@ public class CombatHandler : MonoBehaviour
         return currentTurn;
     }
 
-    public Turn getCurrentTurn()
+    public Turn? getCurrentTurn()
     {
-        return getTurns()[getCurrentTurnIndex()];
+        return getTurns()?[getCurrentTurnIndex()];
+    }
+
+    public List<Enemy>? getEnemies()
+    {
+        return enemies;
     }
 
     public int getTotal()
@@ -146,12 +154,12 @@ public class CombatHandler : MonoBehaviour
     {
         SendTriggerMessage(new TriggerMessage(TriggerType.EndTurn, new TriggerMessageData(amount: getCurrentTurnIndex())));
         // Conditions not fulfilled -> Lost
-        if (!getCurrentTurn().areRequirementsFulfilled())
+        if (!getCurrentTurn()?.areRequirementsFulfilled() ?? false)
         {
             loose();
         }
         // It was the last turn -> Win
-        else if (currentTurn >= (turns.Count - 1))
+        else if ((currentTurn >= ((turns?.Count ?? 0) - 1)) && ((enemies?.Count ?? 0) == 0))
         {
             win();
         }
@@ -217,8 +225,8 @@ public class CombatHandler : MonoBehaviour
     {
         currentEnergy = maxEnergy;
         goalsThisTurn.Clear();
-        Turn currentTurn = getCurrentTurn();
-        foreach (GameEffect effect in currentTurn.getEffects()) {
+        Turn? currentTurn = getCurrentTurn();
+        foreach (GameEffect effect in currentTurn?.getEffects() ?? new List<GameEffect>()) {
             effect.applyEffect();
         }
         SendTriggerMessage(new TriggerMessage(TriggerType.StartTurn, new TriggerMessageData(amount: getCurrentTurnIndex())));

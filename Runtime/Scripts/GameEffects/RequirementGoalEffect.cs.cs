@@ -29,7 +29,7 @@ public class RequirementGoalEffect : GameEffect
         // It's only a requirement to play, so no effects
     }
 
-    public override bool canPlay()
+    public override bool canPlay(Enemy? target = null)
     {
         CombatHandler? combatHandler = CombatHandler.instance;
         foreach (KeyValuePair<string, int> requirement in this.requirements)

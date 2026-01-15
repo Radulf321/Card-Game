@@ -29,7 +29,7 @@ abstract public class GameEffect
 
     abstract public GameEffect Clone(Card? newOwner);
 
-    virtual public bool canPlay()
+    virtual public bool canPlay(Enemy? target = null)
     {
         return true;
     }

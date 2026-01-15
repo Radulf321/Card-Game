@@ -24,9 +24,11 @@ public class CombatTarget : ActionCharacter
     private string talentBackgroundPath;
     private List<RequirementFactory> requirementFactories;
     private List<List<RequirementFactory>> fixedRequirements;
-    private AmountCalculation numberOfTurnsCalculation;
-    private AmountCalculation turnsWithRequirementCalculation;
-    private AmountCalculation numberOfRequirementsCalculation;
+    private AmountCalculation? numberOfTurnsCalculation;
+    private AmountCalculation? turnsWithRequirementCalculation;
+    private AmountCalculation? numberOfRequirementsCalculation;
+    private AmountCalculation? numberOfEnemiesCalculation;
+    private List<String>? possibleEnemyIDs;
     private JArray winDialogData;
     private JArray loseDialogData;
     private CardPileFactory cardPileFactory;
@@ -78,9 +80,12 @@ public class CombatTarget : ActionCharacter
             requirementFactories.Add(RequirementFactory.FromJson(requirementData, this));
         }
         this.requirementFactories = requirementFactories;
-        this.numberOfTurnsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfTurns"]) ?? new LinearAmountCalculation(2, rate: 2);
-        this.turnsWithRequirementCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["turnsWithRequirement"]) ?? new ConstantAmountCalculation(-1);
-        this.numberOfRequirementsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfRequirements"]) ?? new ConstantAmountCalculation(0);
+        this.numberOfTurnsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfTurns"]);
+        this.turnsWithRequirementCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["turnsWithRequirement"]);
+        this.numberOfRequirementsCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfRequirements"]);
+
+        this.numberOfEnemiesCalculation = AmountCalculation.FromJson(jsonObject["combat"]?["numberOfEnemies"]);
+        this.possibleEnemyIDs = jsonObject["combat"]?["enemies"]?.ToObject<List<string>>();
 
         List<List<RequirementFactory>> fixedRequirements = new List<List<RequirementFactory>>();
         foreach (JArray requirementDataForTurn in jsonObject["combat"]?["fixedRequirements"] ?? new JArray())
@@ -118,19 +123,23 @@ public class CombatTarget : ActionCharacter
         this.targetType = EnumHelper.ParseEnum<TargetType>(jsonObject["type"]?.ToString()) ?? TargetType.Regular;
     }
 
-    public List<Turn> GenerateTurns()
+    public List<Turn>? GenerateTurns()
     {
+        if (this.numberOfTurnsCalculation == null)
+        {
+            return null;
+        }
         List<Turn> turns = new List<Turn>();
         int numberOfTurns = this.numberOfTurnsCalculation.GetValue(this.level);
         int requirementIndex = 0;
-        int nextTurnWithRequirement = this.turnsWithRequirementCalculation.GetValue(requirementIndex);
+        int nextTurnWithRequirement = this.turnsWithRequirementCalculation?.GetValue(requirementIndex) ?? -1;
         for (int turnIndex = 0; turnIndex < numberOfTurns; turnIndex++)
         {
             List<Requirement> requirements;
             if (turnIndex == nextTurnWithRequirement)
             {
                 requirementIndex++;
-                nextTurnWithRequirement = this.turnsWithRequirementCalculation.GetValue(requirementIndex);
+                nextTurnWithRequirement = this.turnsWithRequirementCalculation!.GetValue(requirementIndex);
                 requirements = GetRandomRequirements(turnIndex);
             }
             else
@@ -152,6 +161,25 @@ public class CombatTarget : ActionCharacter
         }
 
         return turns;
+    }
+
+    public List<Enemy>? GenerateEnemies()
+    {
+        if (this.numberOfEnemiesCalculation == null)
+        {
+            return null;
+        }
+        List<Enemy> enemies = new List<Enemy>();
+        int numberOfEnemies = this.numberOfEnemiesCalculation.GetValue(this.level);
+
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            string enemyID = this.possibleEnemyIDs![UnityEngine.Random.Range(0, this.possibleEnemyIDs.Count)];
+            Enemy enemy = Game.Instance!.GetEnemy(enemyID);
+            enemies.Add(enemy);
+        }
+
+        return enemies;
     }
 
     public CardPile CreateCardPile()
@@ -274,7 +302,7 @@ public class CombatTarget : ActionCharacter
 
     private List<Requirement> GetRandomRequirements(int turn)
     {
-        int numberOfRequirements = this.numberOfRequirementsCalculation.GetValue(turn);
+        int numberOfRequirements = this.numberOfRequirementsCalculation?.GetValue(turn) ?? 0;
         List<RequirementFactory> usedFactories = new List<RequirementFactory>();
         List<Requirement> requirements = new List<Requirement>();
         for (int i = 0; i < numberOfRequirements; i++)

@@ -69,11 +69,11 @@ public class Card
         this.type = EnumHelper.ParseEnum<CardType>(cardData["type"]?.ToString()) ?? CardType.Regular;
     }
 
-    public bool CanPlay()
+    public bool CanPlay(Enemy? target = null)
     {
         foreach (GameEffect effect in effects)
         {
-            if (!effect.canPlay())
+            if (!effect.canPlay(target))
             {
                 return false;
             }
@@ -81,7 +81,7 @@ public class Card
         return (this.cost == null) || (this.cost <= CombatHandler.instance?.getCurrentEnergy());
     }
 
-    public void Play(bool force = false)
+    public void Play(bool force = false, Enemy? target = null)
     {
         CombatHandler? combatHandler = CombatHandler.instance;
         if (combatHandler == null)

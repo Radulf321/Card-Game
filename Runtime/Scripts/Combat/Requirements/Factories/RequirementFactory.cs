@@ -1,8 +1,9 @@
 using Newtonsoft.Json.Linq;
 
+#nullable enable
 public abstract class RequirementFactory
 {
-    public static RequirementFactory FromJson(JObject json, CombatTarget owner)
+    public static RequirementFactory FromJson(JObject json, CombatTarget? owner = null)
     {
         string type = json["type"]?.ToString() ?? "Undefined";
         switch (type)

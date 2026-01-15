@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 public class RequirementTypeCondition : StatusCondition
@@ -13,7 +14,7 @@ public class RequirementTypeCondition : StatusCondition
 
     public override bool IsFulfilled()
     {
-        foreach (Turn turn in CombatHandler.instance.getTurns())
+        foreach (Turn turn in CombatHandler.instance.getTurns() ?? new List<Turn>())
         {
             foreach (Requirement requirement in turn.getRequirements()) {
                 switch (requirementType)

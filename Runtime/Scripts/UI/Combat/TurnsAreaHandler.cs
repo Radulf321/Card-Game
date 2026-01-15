@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#nullable enable
+
 public class TurnsAreaHandler : MonoBehaviour, IViewUpdater
 {
     public GameObject turnPrefab;
@@ -19,13 +21,13 @@ public class TurnsAreaHandler : MonoBehaviour, IViewUpdater
 
     public void updateView() {
         this.updateChildrenViews<TurnsAreaHandler, TurnHandler, Turn>(
-            CombatHandler.instance.getTurns(),
+            CombatHandler.instance?.getTurns() ?? new List<Turn>(),
             (Turn turn) => {
                 GameObject turnObject = Instantiate(turnPrefab);
                 turnObject.GetComponent<TurnHandler>().SetTurn(turn);
                 return turnObject;
             },
-            (turnHandler) => turnHandler.GetTurn()
+            (turnHandler) => turnHandler.GetTurn() ?? new Turn()
         );
     }
 }

@@ -25,6 +25,7 @@ class Game
 
     private CardLibrary cardLibrary;
     private SkillLibrary skillLibrary;
+    private EnemyLibrary enemyLibrary;
 
     private string resourcePath;
 
@@ -52,6 +53,7 @@ class Game
         this.icons = new Dictionary<string, Sprite>();
         this.cardLibrary = new CardLibrary();
         this.skillLibrary = new SkillLibrary();
+        this.enemyLibrary = new EnemyLibrary();
         this.resourcePath = "";
         this.selectActionBackground = "";
         this.checkIcon = "";
@@ -106,6 +108,7 @@ class Game
 
         this.cardLibrary = new CardLibrary(ResourcePath + "/Cards/");
         this.skillLibrary = new SkillLibrary(ResourcePath + "/Skills/");
+        this.enemyLibrary = new EnemyLibrary(ResourcePath + "/Enemies/");
         this.player = new Player();
 
         this.remainingRounds = 4;
@@ -379,6 +382,11 @@ class Game
     public Skill GetSkill(string skillID)
     {
         return skillLibrary.GetSkill(skillID);
+    }
+
+    public Enemy GetEnemy(string enemyID)
+    {
+        return enemyLibrary.GetEnemy(enemyID);
     }
 
     public string GetResourcePath()
