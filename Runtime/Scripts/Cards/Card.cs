@@ -34,7 +34,7 @@ public static class CardAfterPlayHelper
     }
 }
 
-public class Card : Clonable<Card>
+public class Card : IClonable<Card>
 {
     private CardType type;
     private int? cost;

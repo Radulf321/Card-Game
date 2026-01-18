@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
-public class Skill : Clonable<Skill>
+public class Skill : IClonable<Skill>
 {
     private List<GameEffect> effects;
     private string name;

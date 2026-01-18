@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
-public class Enemy : Clonable<Enemy>
+public class Enemy : IClonable<Enemy>
 {
     private List<Requirement> requirements;
     private List<GameEffect> effects;

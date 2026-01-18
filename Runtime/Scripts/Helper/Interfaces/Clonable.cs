@@ -1,4 +1,4 @@
-public interface Clonable<T>
+public interface IClonable<T>
 {
     public T Clone();
 }

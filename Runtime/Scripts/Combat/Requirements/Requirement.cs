@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 
 #nullable enable
-abstract public class Requirement : Clonable<Requirement>
+abstract public class Requirement : IClonable<Requirement>
 {
     protected Enemy? enemy;
 

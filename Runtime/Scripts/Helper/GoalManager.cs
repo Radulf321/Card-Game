@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-public class GoalManager : Clonable<GoalManager>
+public class GoalManager : IClonable<GoalManager>
 {
     private Dictionary<string, int> goals;
     private Dictionary<string, int> goalsThisTurn;

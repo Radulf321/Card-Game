@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public abstract class SkillCharge : Clonable<SkillCharge>
+public abstract class SkillCharge : IClonable<SkillCharge>
 {
     public static SkillCharge FromJson(JObject json, Skill skill)
     {

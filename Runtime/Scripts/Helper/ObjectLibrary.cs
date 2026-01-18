@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public abstract class ObjectLibrary<T> where T : Clonable<T>
+public abstract class ObjectLibrary<T> where T : IClonable<T>
 {
     private readonly Dictionary<string, T> objects;
 
