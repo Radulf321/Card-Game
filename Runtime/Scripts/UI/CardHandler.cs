@@ -240,8 +240,8 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
         }
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragEnd, new TriggerMessageData(card: card)));
-        EnemyHandler? enemyHandler = eventData.pointerEnter?.GetComponent<EnemyHandler>();
-        if ((enemyHandler != null) || (eventData.pointerEnter?.GetComponent<DropCardAreaHandler>() != null))
+        EnemyHandler? enemyHandler = eventData.pointerEnter?.GetComponentInParent<EnemyHandler>();
+        if ((enemyHandler != null) || (eventData.pointerEnter?.GetComponentInParent<DropCardAreaHandler>() != null))
         {
             Enemy? enemy = enemyHandler?.GetEnemy();
             if (card?.CanPlay(enemy) == true)
