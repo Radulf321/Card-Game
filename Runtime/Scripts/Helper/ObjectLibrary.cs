@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public abstract class ObjectLibrary<T>
+public abstract class ObjectLibrary<T> where T : Clonable<T>
 {
     private readonly Dictionary<string, T> objects;
 
@@ -29,7 +29,7 @@ public abstract class ObjectLibrary<T>
     {
         if (objects.ContainsKey(objectID))
         {
-            return objects[objectID];
+            return objects[objectID].Clone();
         }
         else
         {
@@ -39,7 +39,12 @@ public abstract class ObjectLibrary<T>
 
     public List<T> GetAllObjects()
     {
-        return new List<T>(objects.Values);
+        List<T> clonedObjects = new List<T>();
+        foreach (T obj in objects.Values)
+        {
+            clonedObjects.Add(obj.Clone());
+        }
+        return clonedObjects;
     }
 
     protected abstract T CreateObjectFromJson(JObject jsonObject);

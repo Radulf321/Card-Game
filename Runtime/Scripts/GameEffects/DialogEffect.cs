@@ -14,7 +14,7 @@ public class DialogEffect : GameEffect
     {
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
         _ = DialogHandler.Instance.StartDialog(this.dialog, changeScene: false);
     }

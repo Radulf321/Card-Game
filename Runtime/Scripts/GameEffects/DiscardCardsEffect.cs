@@ -32,7 +32,7 @@ public class DiscardCardsEffect : GameEffect
     {
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
         // Assuming RoundHandler has a method to apply the effect
         CardPile cardPile = CombatHandler.instance.getCardPile();

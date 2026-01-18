@@ -4,6 +4,10 @@ using UnityEngine.Localization.Settings;
 
 public class PlayCardsCharge : SkillCharge
 {
+    public PlayCardsCharge(int progressForCharge, Skill skill, int progress = 0) : base(progressForCharge, skill, progress)
+    {
+    }
+
     public PlayCardsCharge(JObject json, Skill skill) : base(json, skill)
     {
     }
@@ -19,5 +23,10 @@ public class PlayCardsCharge : SkillCharge
         {
             this.AddProgress(1);
         }
+    }
+
+    public override SkillCharge Clone()
+    {
+        return new PlayCardsCharge(this.progressForCharge, this.skill, this.progress);
     }
 }

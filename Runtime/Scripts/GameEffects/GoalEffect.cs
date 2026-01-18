@@ -29,10 +29,11 @@ public class GoalEffect : GameEffect
     {
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
+        GoalManager? goalManager = target?.GetGoalManager() ?? CombatHandler.instance?.GetGoalManager();
         // Assuming RoundHandler has a method to apply the effect
-        CombatHandler.instance?.addGoal(goal, this.amountCalculation.GetValue(this.owner), this.trigger);
+        goalManager?.AddGoal(goal, this.amountCalculation.GetValue(this.owner), this.trigger);
     }
 
     public override GameEffect Clone(Card? newOwner)

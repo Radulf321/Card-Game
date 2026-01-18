@@ -20,7 +20,7 @@ public class DrawCardsEffect : GameEffect
     {
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
         // Assuming RoundHandler has a method to apply the effect
         CombatHandler.instance?.getCardPile().DrawCards(this.amount, this.trigger);

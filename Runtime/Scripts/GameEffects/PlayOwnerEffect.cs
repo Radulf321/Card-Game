@@ -26,7 +26,7 @@ public class PlayOwnerEffect : GameEffect
     {
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
         owner.Play(true);
     }

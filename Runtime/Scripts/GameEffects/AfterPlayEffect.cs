@@ -20,7 +20,7 @@ public class AfterPlayEffect : GameEffect {
         this.owner = owner;
     }
 
-    public override void applyEffect() {
+    public override void applyEffect(Enemy? target = null) {
         this.owner.SetAfterPlay(this.afterPlay);
     }
 

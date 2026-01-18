@@ -37,7 +37,7 @@ public class TriggerableEffect : GameEffect
     {
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
         // Subscribing for turn start must be done before registering the trigger
         // In case the trigger is start turn, we want to be sure to reset the limit

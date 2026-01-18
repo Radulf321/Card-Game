@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
-public class Skill
+public class Skill : Clonable<Skill>
 {
     private List<GameEffect> effects;
     private string name;
@@ -105,5 +105,15 @@ public class Skill
     public void AddProgress(int amount)
     {
         this.charge.AddProgress(amount);
+    }
+
+    public Skill Clone()
+    {
+        List<GameEffect> clonedEffects = new List<GameEffect>();
+        foreach (GameEffect effect in this.effects)
+        {
+            clonedEffects.Add(effect.Clone(null));
+        }
+        return new Skill(clonedEffects, this.name, this.imagePath, this.id, this.charge.Clone());
     }
 }

@@ -34,7 +34,7 @@ public static class CardAfterPlayHelper
     }
 }
 
-public class Card
+public class Card : Clonable<Card>
 {
     private CardType type;
     private int? cost;
@@ -99,7 +99,7 @@ public class Card
             }
             foreach (GameEffect effect in effects)
             {
-                effect.applyEffect();
+                effect.applyEffect(target);
             }
             combatHandler.playCard(this.id);
             switch (this.afterPlay)

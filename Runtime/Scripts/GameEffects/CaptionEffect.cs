@@ -24,7 +24,7 @@ public class CaptionEffect : GameEffect
             ) : null;
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
         // This method is intentionally left empty
         // The caption effect does not have any gameplay effect

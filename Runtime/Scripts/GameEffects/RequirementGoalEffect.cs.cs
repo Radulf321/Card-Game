@@ -24,7 +24,7 @@ public class RequirementGoalEffect : GameEffect
         this.requirements = requirements;
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
         // It's only a requirement to play, so no effects
     }

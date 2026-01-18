@@ -10,8 +10,7 @@ public class CombatHandler : MonoBehaviour
     private int currentTurn = 0;
     private List<Turn>? turns = new List<Turn>();
     private List<Enemy>? enemies = new List<Enemy>();
-    private Dictionary<string, int> goals = new Dictionary<string, int>();
-    private Dictionary<string, int> goalsThisTurn = new Dictionary<string, int>();
+    private GoalManager? goalManager;
 
     private Dictionary<string, int> cardsPlayed = new Dictionary<string, int>();
 
@@ -79,20 +78,12 @@ public class CombatHandler : MonoBehaviour
 
     public int getGoalAmount(string goal)
     {
-        if (goals.ContainsKey(goal))
-        {
-            return goals[goal];
-        }
-        return 0;
+        return this.GetGoalManager().GetGoalAmount(goal);
     }
 
     public int getGoalAmountThisTurn(string goal)
     {
-        if (goalsThisTurn.ContainsKey(goal))
-        {
-            return goalsThisTurn[goal];
-        }
-        return 0;
+        return this.GetGoalManager().GetGoalAmountThisTurn(goal);
     }
 
     public List<Turn>? getTurns()
@@ -117,37 +108,12 @@ public class CombatHandler : MonoBehaviour
 
     public int getTotal()
     {
-        int total = 0;
-        foreach (KeyValuePair<string, int> goal in goals)
-        {
-            total += goal.Value;
-        }
-        return total;
+        return this.GetGoalManager().GetTotal();
     }
 
     public void addGoal(string goal, int amount, CardEffectTrigger? trigger = null)
     {
-        if (goals.ContainsKey(goal))
-        {
-            goals[goal] += amount;
-        }
-        else
-        {
-            goals.Add(goal, amount);
-        }
-        if (goalsThisTurn.ContainsKey(goal))
-        {
-            goalsThisTurn[goal] += amount;
-        }
-        else
-        {
-            goalsThisTurn.Add(goal, amount);
-        }
-        if (trigger == CardEffectTrigger.PlayCard)
-        {
-            this.SendTriggerMessage(new TriggerMessage(TriggerType.AddGoal, new TriggerMessageData(amount: amount, goal: goal)));
-        }
-        updateView();
+        this.GetGoalManager().AddGoal(goal, amount, trigger);
     }
 
     public void endTurn()
@@ -221,10 +187,28 @@ public class CombatHandler : MonoBehaviour
         this.requireUpdate = true;
     }
 
+    public GoalManager GetGoalManager()
+    {
+        if (this.goalManager == null)
+        {
+            this.goalManager = new GoalManager();
+        }
+        return this.goalManager;
+    }
+
+    public void RemoveEnemy(Enemy enemy)
+    {
+        this.enemies?.Remove(enemy);
+        updateView();
+    }
+
     private void startTurn()
     {
         currentEnergy = maxEnergy;
-        goalsThisTurn.Clear();
+        this.GetGoalManager().ResetGoalsThisTurn();
+        foreach (Enemy enemy in enemies ?? new List<Enemy>()) {
+            enemy.GetGoalManager().ResetGoalsThisTurn();
+        }
         Turn? currentTurn = getCurrentTurn();
         foreach (GameEffect effect in currentTurn?.getEffects() ?? new List<GameEffect>()) {
             effect.applyEffect();

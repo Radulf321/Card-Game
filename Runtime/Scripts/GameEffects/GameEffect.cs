@@ -23,7 +23,7 @@ abstract public class GameEffect
             _ => throw new System.Exception("Invalid card effect type: " + type),
         };
     }
-    abstract public void applyEffect();
+    abstract public void applyEffect(Enemy? target = null);
 
     abstract public Task<string> getDescription();
 

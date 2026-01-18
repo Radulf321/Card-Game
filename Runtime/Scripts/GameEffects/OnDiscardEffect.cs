@@ -30,7 +30,7 @@ public class OnDiscardEffect : GameEffect
     {
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
         // No effect when card is played
     }

@@ -2,21 +2,23 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine.Localization.Settings;
 
+#nullable enable
+
 public class TotalRequirement : Requirement
 {
     private int amount;
 
-    public TotalRequirement(int amount) {
+    public TotalRequirement(int amount, Enemy? enemy = null) : base(enemy){
         this.amount = amount;
     }
 
     public override bool IsFulfilled() {
-        return CombatHandler.instance.getTotal() >= amount;
+        return this.GetGoalManager().GetTotal() >= amount;
     }
 
     public override Task<string> GetDescription()
     {
-        int current = CombatHandler.instance.getTotal();
+        int current = this.GetGoalManager().GetTotal();
         if (current >= amount)
         {
             current = amount; // Cap at max for display
@@ -29,5 +31,10 @@ public class TotalRequirement : Requirement
                 { "amount", this.amount },
             }
         ));
+    }
+
+    public override Requirement Clone()
+    {
+        return new TotalRequirement(this.amount, this.enemy);
     }
 }

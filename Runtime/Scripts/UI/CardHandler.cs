@@ -240,18 +240,13 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
         }
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragEnd, new TriggerMessageData(card: card)));
-        if (eventData.pointerEnter?.GetComponent<DropCardAreaHandler>() == null)
+        EnemyHandler? enemyHandler = eventData.pointerEnter?.GetComponent<EnemyHandler>();
+        if ((enemyHandler != null) || (eventData.pointerEnter?.GetComponent<DropCardAreaHandler>() != null))
         {
-            if (beforeDragPosition != null)
+            Enemy? enemy = enemyHandler?.GetEnemy();
+            if (card?.CanPlay(enemy) == true)
             {
-                GetComponent<RectTransform>().position = beforeDragPosition.Value;
-            }
-        }
-        else
-        {
-            if (card?.CanPlay() == true)
-            {
-                card.Play();
+                card.Play(target: enemy);
             }
             else
             {
@@ -260,6 +255,13 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
                 {
                     GetComponent<RectTransform>().position = beforeDragPosition.Value;
                 }
+            }
+        }
+        else
+        {
+            if (beforeDragPosition != null)
+            {
+                GetComponent<RectTransform>().position = beforeDragPosition.Value;
             }
         }
         beforeDragPosition = null;

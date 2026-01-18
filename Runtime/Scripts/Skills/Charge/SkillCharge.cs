@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public abstract class SkillCharge
+public abstract class SkillCharge : Clonable<SkillCharge>
 {
     public static SkillCharge FromJson(JObject json, Skill skill)
     {
@@ -17,8 +17,15 @@ public abstract class SkillCharge
     }
 
     protected int progress;
-    private int progressForCharge;
-    private Skill skill;
+    protected int progressForCharge;
+    protected Skill skill;
+
+    public SkillCharge(int progressForCharge, Skill skill, int progress = 0)
+    {
+        this.progress = progress;
+        this.progressForCharge = progressForCharge;
+        this.skill = skill;
+    }
 
     public SkillCharge(JObject json, Skill skill)
     {
@@ -94,5 +101,6 @@ public abstract class SkillCharge
     }
 
     public abstract Task<string> GetTextDescription();
+    public abstract SkillCharge Clone();
     protected abstract void HandleMessage(TriggerMessage triggerMessage);
 }

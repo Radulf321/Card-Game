@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine.Localization.Settings;
 
+#nullable enable
+
 public enum RequirementComparison
 {
     AtLeast,
@@ -15,9 +17,9 @@ public class GoalRequirement : Requirement
     private string goal;
     private int amount;
     private RequirementComparison comparison;
-    bool? fulfilled = null;
+    private bool? fulfilled = null;
 
-    public GoalRequirement(string goal, int amount, RequirementComparison comparison = RequirementComparison.AtLeast)
+    public GoalRequirement(string goal, int amount, RequirementComparison comparison = RequirementComparison.AtLeast, Enemy? enemy = null) : base(enemy)
     {
         this.goal = goal;
         this.amount = amount;
@@ -33,10 +35,10 @@ public class GoalRequirement : Requirement
         switch (comparison)
         {
             case RequirementComparison.AtLeast:
-                return CombatHandler.instance.getGoalAmount(this.goal) >= this.amount;
+                return this.GetGoalManager().GetGoalAmount(this.goal) >= this.amount;
 
             case RequirementComparison.Burst:
-                bool result = CombatHandler.instance.getGoalAmountThisTurn(this.goal) >= this.amount;
+                bool result = this.GetGoalManager().GetGoalAmountThisTurn(this.goal) >= this.amount;
                 if (result)
                 {
                     this.fulfilled = true;
@@ -44,7 +46,7 @@ public class GoalRequirement : Requirement
                 return result;
 
             case RequirementComparison.Maximum:
-                return CombatHandler.instance.getGoalAmount(this.goal) <= this.amount;
+                return this.GetGoalManager().GetGoalAmount(this.goal) <= this.amount;
 
             default:
                 throw new NotImplementedException($"Invalid comparison: {comparison}");
@@ -59,7 +61,7 @@ public class GoalRequirement : Requirement
         {
             case RequirementComparison.AtLeast:
             case RequirementComparison.Maximum:
-                current = CombatHandler.instance.getGoalAmount(this.goal);
+                current = this.GetGoalManager().GetGoalAmount(this.goal);
                 if (this.comparison == RequirementComparison.AtLeast && (current > this.amount))
                 {
                     current = this.amount; // Cap at max for display
@@ -73,7 +75,7 @@ public class GoalRequirement : Requirement
                 }
                 else
                 {
-                    current = CombatHandler.instance.getGoalAmountThisTurn(this.goal);
+                    current = this.GetGoalManager().GetGoalAmountThisTurn(this.goal);
                     if (current >= this.amount)
                     {
                         current = this.amount;
@@ -99,5 +101,10 @@ public class GoalRequirement : Requirement
     public RequirementComparison GetComparison()
     {
         return this.comparison;
+    }
+
+    public override Requirement Clone()
+    {
+        return new GoalRequirement(this.goal, this.amount, this.comparison, this.enemy);
     }
 }

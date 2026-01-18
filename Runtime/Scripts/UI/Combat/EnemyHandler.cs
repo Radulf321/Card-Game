@@ -67,6 +67,5 @@ public class EnemyHandler : MonoBehaviour, IViewUpdater
             }
             this.imagePath = imagePath;
         }
-        // TODO: Update enemy view
     }
 }

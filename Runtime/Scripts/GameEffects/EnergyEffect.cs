@@ -22,7 +22,7 @@ public class EnergyEffect : GameEffect
         this.amount = json["amount"]?.ToObject<int>() ?? 0;
     }
 
-    public override void applyEffect()
+    public override void applyEffect(Enemy? target = null)
     {
         // Assuming RoundHandler has a method to apply the effect
         CombatHandler.instance?.gainEnergy(this.amount, this.maxEnergy);
