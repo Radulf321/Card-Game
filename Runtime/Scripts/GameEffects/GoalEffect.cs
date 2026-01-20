@@ -8,12 +8,12 @@ using UnityEngine.Localization.Settings;
 public class GoalEffect : GameEffect
 {
 
-    private Card owner;
+    private Card? owner;
     private AmountCalculation amountCalculation;
     private string goal;
     private CardEffectTrigger trigger;
 
-    public GoalEffect(string goal, AmountCalculation amountCalculation, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard)
+    public GoalEffect(string goal, AmountCalculation amountCalculation, Card? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard)
     {
         this.goal = goal;
         this.amountCalculation = amountCalculation;
@@ -21,11 +21,11 @@ public class GoalEffect : GameEffect
         this.trigger = trigger;
     }
 
-    public GoalEffect(string goal, int amount, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(goal, new ConstantAmountCalculation(amount), owner, trigger)
+    public GoalEffect(string goal, int amount, Card? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(goal, new ConstantAmountCalculation(amount), owner, trigger)
     {
     }
 
-    public GoalEffect(JObject json, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(json["goal"]?.ToString() ?? "unknown", AmountCalculation.FromJson(json["amount"]) ?? new ConstantAmountCalculation(0), owner, trigger)
+    public GoalEffect(JObject json, Card? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(json["goal"]?.ToString() ?? "unknown", AmountCalculation.FromJson(json["amount"]) ?? new ConstantAmountCalculation(0), owner, trigger)
     {
     }
 
