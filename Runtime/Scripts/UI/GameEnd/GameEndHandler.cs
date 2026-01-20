@@ -46,7 +46,7 @@ public class GameEndHandler : MonoBehaviour
         tasksPadding.transform.SetParent(resultsArea, true);
 
         LayoutElement tasksPaddingLayout = tasksPadding.AddComponent<LayoutElement>();
-        tasksPaddingLayout.preferredHeight = 50;
+        tasksPaddingLayout.preferredHeight = 10; // + two times spacing of 20 -> 50 between total wins and tasks
 
         foreach (GameTask task in taskManager.GetActiveTasks())
         {
