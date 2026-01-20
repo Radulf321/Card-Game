@@ -20,6 +20,7 @@ abstract public class GameEffect
             "dialog" => new DialogEffect(json),
             "onDiscard" => new OnDiscardEffect(json, owner),
             "playOwner" => new PlayOwnerEffect(json, owner),
+            "currency" => new CurrencyEffect(json, owner, trigger),
             _ => throw new System.Exception("Invalid card effect type: " + type),
         };
     }
