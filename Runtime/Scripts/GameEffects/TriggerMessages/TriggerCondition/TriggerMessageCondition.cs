@@ -22,6 +22,8 @@ public abstract class TriggerMessageCondition
                 return new TriggerMessageConditionOpenScene(json);
             case "drawcards":
                 return new TriggerMessageConditionDrawCards(json);
+            case "endround":
+                return new TriggerMessageConditionEndRound(json);
             default:
                 throw new System.Exception("Invalid condition type: " + json["type"]?.ToString());
         }
