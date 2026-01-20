@@ -171,6 +171,18 @@ MonoBehaviour:
     m_Key: AmountCalculationGoalCurrentTurn
     m_Metadata:
       m_Items: []
+  - m_Id: 92068665348628480
+    m_Key: Currency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92069353734578176
+    m_Key: CurrencyTrigger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92069474861883392
+    m_Key: CurrencyIcon
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -222,6 +222,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6401543877616205826
+  - m_Id: 92068665348628480
+    m_Localized: Entferne {prefix} {goal}{suffix}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92069353734578176
+    m_Localized: entferne {prefix} {goal}{suffix}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92069474861883392
+    m_Localized: -{prefix}{goal}{suffix}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
