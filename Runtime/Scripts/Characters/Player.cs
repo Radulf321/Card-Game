@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+
+#nullable enable
 
 public class Player
 {
@@ -29,6 +32,7 @@ public class Player
         this.relics = new List<Card>();
         this.energyInfo = new EnergyInfo(energyInfo);
         this.currencies = new Dictionary<string, int>();
+        this.skills = new List<Skill>();
     }
 
     public Player(JObject json)
@@ -147,15 +151,17 @@ public class Player
 
     public void AddCurrency(string currencyID, int amount)
     {
-        if (this.currencies.ContainsKey(currencyID))
-        {
-            this.currencies[currencyID] += amount;
+        CurrencyData? currencyData = Game.Instance?.GetCurrencyData(currencyID);
+        if (currencyData == null) {
+            throw new System.Exception("CurrencyData not found for ID: " + currencyID);
         }
-        else
+        int newValue = GetCurrency(currencyID) + amount;
+        this.currencies[currencyID] = Math.Min(newValue, currencyData.GetMaximum() ?? int.MaxValue);
+        if (Game.Instance?.GetCurrencyData(currencyID)?.GetCurrencyType() == CurrencyType.Health && this.currencies[currencyID] <= 0)
         {
-            this.currencies[currencyID] = amount;
+            Game.Instance.LooseGame();
         }
-        Game.Instance.SendTriggerMessage(
+        Game.Instance?.SendTriggerMessage(
             new TriggerMessage(
                 TriggerType.AddCurrency,
                 new TriggerMessageData(amount: amount, currency: currencyID)

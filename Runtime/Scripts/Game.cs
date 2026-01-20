@@ -14,12 +14,11 @@ class Game
     public static readonly string permanentFlagsKey = "PermanentFlags";
 
     private Player player;
-    private int remainingRounds;
 
     private Dictionary<string, NamedIconData> goals;
 
     private Dictionary<string, NamedIconData> experienceTypes;
-    private Dictionary<string, NamedIconData> currencies;
+    private Dictionary<string, CurrencyData> currencies;
 
     private Dictionary<string, Sprite> icons;
 
@@ -45,11 +44,10 @@ class Game
 
     public Game()
     {
+        this.currencies = new Dictionary<string, CurrencyData>();
         this.player = new Player();
-        this.remainingRounds = 0;
         this.goals = new Dictionary<string, NamedIconData>();
         this.experienceTypes = new Dictionary<string, NamedIconData>();
-        this.currencies = new Dictionary<string, NamedIconData>();
         this.icons = new Dictionary<string, Sprite>();
         this.cardLibrary = new CardLibrary();
         this.skillLibrary = new SkillLibrary();
@@ -91,11 +89,11 @@ class Game
         }
         this.experienceTypes = experienceTypes;
 
-        Dictionary<string, NamedIconData> currencies = new Dictionary<string, NamedIconData>();
+        Dictionary<string, CurrencyData> currencies = new Dictionary<string, CurrencyData>();
         foreach (JObject currency in index["currencies"]!)
         {
             string id = currency["id"]!.ToString();
-            currencies.Add(id, new NamedIconData(currency));
+            currencies.Add(id, new CurrencyData(currency));
         }
         this.currencies = currencies;
 
@@ -110,8 +108,6 @@ class Game
         this.skillLibrary = new SkillLibrary(ResourcePath + "/Skills/");
         this.enemyLibrary = new EnemyLibrary(ResourcePath + "/Enemies/");
         this.player = new Player();
-
-        this.remainingRounds = 4;
 
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
         this.checkIcon = index["checkIcon"]!.ToString();
@@ -140,16 +136,6 @@ class Game
     public Player GetPlayer()
     {
         return player;
-    }
-
-    public int GetRemainingRounds()
-    {
-        return remainingRounds;
-    }
-
-    public void AddRemainingRounds(int amount)
-    {
-        remainingRounds += amount;
     }
 
     public CombatTarget GetCurrentCombatTarget()
@@ -188,7 +174,6 @@ class Game
         }
         JObject saveData = JObject.Parse(PlayerPrefs.GetString(this.resourcePath + Game.saveGameKey));
         this.player = new Player(saveData["player"]?.ToObject<JObject>() ?? new JObject());
-        this.remainingRounds = saveData["remainingRounds"]?.ToObject<int>() ?? 1;
         this.flagDictionaries[FlagValidity.Game] = new FlagDictionary(saveData["flagDictionary"]?.ToObject<JObject>() ?? new JObject());
         foreach (JObject buffData in saveData["buffs"]?.ToObject<JArray>() ?? new JArray())
         {
@@ -236,23 +221,20 @@ class Game
     public void EndRound()
     {
         SendTriggerMessage(new TriggerMessage(TriggerType.EndRound));
-        remainingRounds--;
-        if (remainingRounds <= 0)
-        {
-            PlayerPrefs.DeleteKey(this.resourcePath + Game.saveGameKey);
-            PlayerPrefs.Save();
-            _ = DialogHandler.Instance!.StartDialog(this.gameOverDialog, onFinish: () =>
-                {
-                    this.taskManager.EndGame();
-                    FadeHandler.Instance!.LoadScene("GameEndScene");
-                }
-            );
-        }
-        else
-        {
-            // Start a new round
-            StartRound();
-        }
+        // Start a new round
+        StartRound();
+    }
+
+    public void LooseGame()
+    {
+        PlayerPrefs.DeleteKey(this.resourcePath + Game.saveGameKey);
+        PlayerPrefs.Save();
+        _ = DialogHandler.Instance!.StartDialog(this.gameOverDialog, onFinish: () =>
+            {
+                this.taskManager.EndGame();
+                FadeHandler.Instance!.LoadScene("GameEndScene");
+            }
+        );
     }
 
     public string GetGoalName(string id)
@@ -313,6 +295,18 @@ class Game
         return experienceTypes[id]?.GetIcon();
     }
 
+    public CurrencyData? GetCurrencyData(string id)
+    {
+        if (currencies.ContainsKey(id))
+        {
+            return currencies[id];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public List<string> GetCurrencies()
     {
         return this.currencies.Keys.ToList();
@@ -320,31 +314,17 @@ class Game
 
     public string GetCurrencyName(string id)
     {
-        if (currencies.ContainsKey(id))
-        {
-            return currencies[id].GetName();
-        }
-        else
-        {
-            return "Unknown Experience Type";
-        }
+        return GetCurrencyData(id)?.GetName() ?? "Unknown Currency";
     }
 
     public string GetCurrencyInlineIcon(string id)
     {
-        if (currencies.ContainsKey(id))
-        {
-            return currencies[id].GetInlineIcon();
-        }
-        else
-        {
-            return "Unknown Experience Type";
-        }
+        return GetCurrencyData(id)?.GetInlineIcon() ?? "Unknown Currency";
     }
 
     public Sprite? GetCurrencyIcon(string id)
     {
-        return currencies[id]?.GetIcon();
+        return GetCurrencyData(id)?.GetIcon();
     }
 
     public Sprite? GetIcon(string id)
@@ -600,7 +580,6 @@ class Game
         JObject saveData = new JObject
         {
             ["player"] = this.player.ToJson(),
-            ["remainingRounds"] = this.remainingRounds,
             ["flagDictionary"] = this.flagDictionaries.ContainsKey(FlagValidity.Game) ?
                 this.flagDictionaries[FlagValidity.Game].ToJson() : new JObject(),
             ["buffs"] = new JArray(this.buffs.Select(buff => buff.ToJson())),

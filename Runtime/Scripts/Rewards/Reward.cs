@@ -21,8 +21,6 @@ public abstract class Reward
                 return new CardReward(json);
             case "energy":
                 return new EnergyReward(json);
-            case "rounds":
-                return new RoundsReward(json);
             case "currency":
                 return new CurrencyReward(json);
             case "experience":

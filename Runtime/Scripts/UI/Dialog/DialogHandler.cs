@@ -179,11 +179,6 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         infoArea.gameObject.SetActive(dialog.IsShowUI());
         if (dialog.IsShowUI())
         {
-            IntVariable amount = new IntVariable();
-            amount.Value = Game.Instance.GetRemainingRounds();
-            LocalizedString localizedString = infoArea.Find("Turn").GetComponent<LocalizeStringEvent>().StringReference;
-            localizedString.Add("amount", amount);
-            localizedString.RefreshString();
             String currencyString = "";
             foreach (String currencyID in Game.Instance.GetCurrencies())
             {

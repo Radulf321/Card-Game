@@ -106,37 +106,17 @@ public class DialogOption
             Player player = Game.Instance.GetPlayer();
             foreach (KeyValuePair<string, AmountCalculation> entry in this.cost)
             {
-                switch (entry.Key)
+                if (player.GetCurrency(entry.Key) < entry.Value.GetValue())
                 {
-                    case "rounds":
-                        if (Game.Instance.GetRemainingRounds() < entry.Value.GetValue())
-                        {
-                            // TODO: Show UI Feedback
-                            return;
-                        }
-                        break;
-
-                    default:
-                        if (player.GetCurrency(entry.Key) < entry.Value.GetValue())
-                        {
-                            // TODO: Show UI Feedback
-                            return;
-                        }
-                        break;
+                    // TODO: Show UI Feedback
+                    return;
                 }
+                break;
             }
             foreach (KeyValuePair<string, AmountCalculation> entry in this.cost)
             {
-                switch (entry.Key)
-                {
-                    case "rounds":
-                        Game.Instance.AddRemainingRounds(-entry.Value.GetValue());
-                        break;
-
-                    default:
-                        player.AddCurrency(entry.Key, -entry.Value.GetValue());
-                        break;
-                }
+                player.AddCurrency(entry.Key, -entry.Value.GetValue());
+                break;
             }
             onSucess?.Invoke();
         }

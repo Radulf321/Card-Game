@@ -275,7 +275,6 @@ public class CombatTarget : ActionCharacter
             dialog = Dialog.FromJson(this.loseDialogData);
             onFinish = () =>
                     {
-                        Game.Instance.AddRemainingRounds(-1);
                         Game.Instance.EndRound();
                     };
         }
