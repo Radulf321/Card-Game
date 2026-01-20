@@ -51,7 +51,7 @@ public abstract class AmountCalculation
                 }
 
             default:
-                throw new System.Exception("Invalid amount calculation type: " + json.Type);
+                throw new System.Exception("Invalid amount calculation type: " + json.Type + " - " + json.ToString());
         }
     }
 

@@ -56,82 +56,11 @@ abstract public class DialogOptionFactory
         }
         return result;
     }
+
     public static List<DialogOptionFactory> FromFile(JObject json)
     {
         JToken optionData = JToken.Parse(Resources.Load<TextAsset>(Game.Instance.GetResourcePath() + "/Dialogs/" + json["file"]!.ToString()).text);
-        JToken ReplaceVariables(JToken token)
-        {
-            switch (token.Type)
-            {
-                case JTokenType.String:
-                    string content = token.ToString();
-                    Match match = Regex.Match(content, @"^\$\{(\w+)\}$");
-                    if (match.Success)
-                    {
-                        string variableName = match.Groups[1].Value;
-                        // Return the raw value from json, preserving its type
-                        return json[variableName] ?? token;
-                    }
-                    else
-                    {
-                        // Replace all ${variable} with the value from json
-                        content = Regex.Replace(content, @"\$\{(\w+)\}", match =>
-                        {
-                            string variableName = match.Groups[1].Value;
-                            return json[variableName]?.ToString() ?? match.Value;
-                        });
-
-                        // Apply modificators like *{value, -1}
-                        Match modificatorMatch = Regex.Match(content, @"^\*\{([0-9.,\-\s]+)\}$");
-                        if (modificatorMatch.Success)
-                        {
-                            List<float> parts = new List<string>(modificatorMatch.Groups[1].Value.Split(',')).ConvertAll<float>(float.Parse);
-                            float product = 1f;
-                            foreach (float part in parts)
-                            {
-                                product *= part;
-                            }
-                            return product;
-                        }
-                        else
-                        {
-                            // Replace all ${variable} with the value from json
-                            content = Regex.Replace(content, @"\*\{([0-9.,\-\s]+)\}", match =>
-                            {
-                                List<float> parts = new List<string>(modificatorMatch.Groups[1].Value.Split(',')).ConvertAll<float>(float.Parse);
-                                float product = 1f;
-                                foreach (float part in parts)
-                                {
-                                    product *= part;
-                                }
-                                return product.ToString();
-                            });
-                        }
-
-                        return content;
-                    }
-
-                case JTokenType.Object:
-                    JObject newObject = new JObject();
-                    foreach (JProperty property in (token as JObject)?.Properties() ?? new List<JProperty>())
-                    {
-                        newObject[property.Name] = ReplaceVariables(property.Value);
-                    }
-                    return newObject;
-
-                case JTokenType.Array:
-                    JArray newArray = new JArray();
-                    foreach (JToken child in token)
-                    {
-                        newArray.Add(ReplaceVariables(child));
-                    }
-                    return newArray;
-
-                default:
-                    return token;
-            }
-        }
-        return DialogOptionFactory.FromJson(ReplaceVariables(optionData));
+        return DialogOptionFactory.FromJson(JSONHelper.ReplaceVariables(optionData, JSONHelper.ObjectToDictionary<dynamic>(json)));
     }
 
     protected List<DialogOption> JoinFactories(List<DialogOptionFactory> factories, bool allOptions = false)

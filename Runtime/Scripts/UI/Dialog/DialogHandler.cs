@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -175,17 +176,21 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
         Transform titleTransform = selectArea.Find("Title");
         titleTransform.GetComponent<TMPro.TextMeshProUGUI>().text = dialog.GetTitle();
 
-        Transform infoArea = selectArea.Find("Info");
-        infoArea.gameObject.SetActive(dialog.IsShowUI());
+        Transform currencyInfo = selectArea.Find("CurrencyInfo");
+        currencyInfo.gameObject.SetActive(dialog.IsShowUI());
         if (dialog.IsShowUI())
         {
-            String currencyString = "";
+            List<String> currencyStrings = new List<String>();
             foreach (String currencyID in Game.Instance.GetCurrencies())
             {
                 int currencyAmount = Game.Instance.GetPlayer().GetCurrency(currencyID);
-                currencyString += "   " + Game.Instance.GetCurrencyInlineIcon(currencyID) + " " + currencyAmount;
+                string format = Game.Instance.GetCurrencyData(currencyID)!.GetFormat();
+                currencyStrings.Add(JSONHelper.ReplaceVariablesInString(format, new Dictionary<string, object>()
+                {
+                    {"amount", currencyAmount.ToString()}
+                }).ToString());
             }
-            infoArea.Find("Currency").GetComponent<TMPro.TextMeshProUGUI>().text = currencyString;
+            currencyInfo.GetComponent<TMPro.TextMeshProUGUI>().text = string.Join("\n", currencyStrings);
         }
 
         Transform selectionContainer = selectArea.Find("SelectionContainer");
