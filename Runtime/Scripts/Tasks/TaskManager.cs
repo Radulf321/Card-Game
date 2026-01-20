@@ -173,7 +173,7 @@ public class TaskManager
 
     private void OnTriggerMessage(TriggerMessage message)
     {
-        if (message.GetTriggerType() == TriggerType.EndCombat)
+        if ((message.GetTriggerType() == TriggerType.EndCombat) && (message.GetData().GetSuccess() == true))
         {
             string? combatTargetID = message.GetData().GetCombatTarget()?.GetID();
             if (combatTargetID == null)
