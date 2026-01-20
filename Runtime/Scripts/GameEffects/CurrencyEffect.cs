@@ -31,7 +31,7 @@ public class CurrencyEffect : GameEffect
 
     public override void applyEffect(Enemy? target = null)
     {
-        Game.Instance.GetPlayer().AddCurrency(currency, -this.amountCalculation.GetValue(this.owner));
+        Game.Instance.GetPlayer().AddCurrency(currency, this.amountCalculation.GetValue(this.owner));
     }
 
     public override GameEffect Clone(Card? newOwner)
