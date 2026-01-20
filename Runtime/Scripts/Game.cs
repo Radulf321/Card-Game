@@ -42,6 +42,8 @@ class Game
     private CharacterManager characterManager;
     private List<TriggerAction> triggerActions;
 
+    private bool startNextRound = true;
+
     public Game()
     {
         this.currencies = new Dictionary<string, CurrencyData>();
@@ -220,13 +222,18 @@ class Game
 
     public void EndRound()
     {
+        this.startNextRound = true;
+        // The trigger message could trigger something that prevents the next round from starting
         SendTriggerMessage(new TriggerMessage(TriggerType.EndRound));
         // Start a new round
-        StartRound();
+        if (this.startNextRound) {
+            StartRound();
+        }
     }
 
     public void LooseGame()
     {
+        this.startNextRound = false;
         PlayerPrefs.DeleteKey(this.resourcePath + Game.saveGameKey);
         PlayerPrefs.Save();
         _ = DialogHandler.Instance!.StartDialog(this.gameOverDialog, onFinish: () =>
