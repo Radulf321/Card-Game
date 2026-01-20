@@ -18,20 +18,10 @@ public class Player
         this.relics = new List<Card>();
         this.energyInfo = new EnergyInfo();
         this.currencies = new Dictionary<string, int>();
-        this.skills = new List<Skill>();
-    }
-
-    public Player(List<string> startingCards, JObject energyInfo)
-    {
-        List<Card> deck = new List<Card>();
-        foreach (string cardId in startingCards)
+        foreach (string currencyID in Game.Instance?.GetCurrencies() ?? new List<string>())
         {
-            deck.Add(Game.Instance.GetCard(cardId).Clone());
+            this.currencies[currencyID] = Game.Instance!.GetCurrencyData(currencyID)!.GetStartingAmount();
         }
-        this.deck = deck;
-        this.relics = new List<Card>();
-        this.energyInfo = new EnergyInfo(energyInfo);
-        this.currencies = new Dictionary<string, int>();
         this.skills = new List<Skill>();
     }
 
