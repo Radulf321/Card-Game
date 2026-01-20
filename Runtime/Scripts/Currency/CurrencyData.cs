@@ -1,7 +1,6 @@
 #nullable enable
 
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 
 public enum CurrencyType {
     Generic,
