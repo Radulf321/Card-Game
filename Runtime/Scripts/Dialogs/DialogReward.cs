@@ -26,11 +26,19 @@ public class DialogReward : Dialog
 
     public override async Task ShowDialog()
     {
+        await DialogHandler.Instance!.ShowReward(this);
+        bool previousGameLostState = Game.Instance!.IsGameLost();
         foreach (Reward reward in this.rewards)
         {
             reward.Collect();
         }
-        await DialogHandler.Instance!.ShowReward(this);
+        // If the game is now lost, completely abort the dialog
+        // Loosing will be handled elsewhere
+        if (!previousGameLostState && Game.Instance!.IsGameLost())
+        {
+            DialogHandler.Instance!.SkipNextOnFinish();
+            return;
+        }
         await base.ShowDialog();
     }
 }
