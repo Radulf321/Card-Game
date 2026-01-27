@@ -118,6 +118,9 @@ public class CombatHandler : MonoBehaviour
 
     public void endTurn()
     {
+        foreach (Enemy enemy in enemies ?? new List<Enemy>()) {
+            enemy.ExecuteEffect();
+        }
         SendTriggerMessage(new TriggerMessage(TriggerType.EndTurn, new TriggerMessageData(amount: getCurrentTurnIndex())));
         // Conditions not fulfilled -> Lost
         if (!getCurrentTurn()?.areRequirementsFulfilled() ?? false)
@@ -208,6 +211,7 @@ public class CombatHandler : MonoBehaviour
         this.GetGoalManager().ResetGoalsThisTurn();
         foreach (Enemy enemy in enemies ?? new List<Enemy>()) {
             enemy.GetGoalManager().ResetGoalsThisTurn();
+            enemy.PlanEffect();
         }
         Turn? currentTurn = getCurrentTurn();
         foreach (GameEffect effect in currentTurn?.getEffects() ?? new List<GameEffect>()) {

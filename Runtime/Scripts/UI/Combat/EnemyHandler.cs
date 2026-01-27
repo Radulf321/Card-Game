@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class EnemyHandler : MonoBehaviour, IViewUpdater
 {
     private Enemy? enemy;
     private string? imagePath;
-    private float? previousHeight;
+    private float? height;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,7 +21,6 @@ public class EnemyHandler : MonoBehaviour, IViewUpdater
     public void SetEnemy(Enemy enemy)
     {
         this.enemy = enemy;
-        this.updateView();
         //transform.Find("EnemyName").GetComponent<Text>().text = enemy.GetName();
         //transform.Find("EnemyImage").GetComponent<Image>().sprite = Resources.Load<Sprite>(enemy.GetImagePath());
         //transform.Find("EnemyHealth").GetComponent<Text>().text = $"{enemy.GetCurrentHealth()}/{enemy.GetMaxHealth()}";
@@ -54,8 +54,17 @@ public class EnemyHandler : MonoBehaviour, IViewUpdater
         }
     }
 
-    public async void updateView()
+    public void updateView()
     {
+        _ = this.updateViewAsync();
+    }
+
+    public async Task updateViewAsync()
+    {
+        GameEffect? plannedEffect = this.enemy?.GetPlannedEffect();
+        string effectText = (plannedEffect != null) ? await plannedEffect.GetIconDescription() : "-";
+        transform.Find("PlannedEffectInfo").Find("PlannedEffectText").GetComponent<TMPro.TextMeshProUGUI>().text = effectText;
+
         string? imagePath = this.enemy?.GetImagePath();
         Image image = transform.Find("EnemyImage").GetComponent<Image>();
         if (imagePath != this.imagePath)
@@ -64,8 +73,6 @@ public class EnemyHandler : MonoBehaviour, IViewUpdater
             {
                 Sprite sprite = Resources.Load<Sprite>(imagePath);
                 image.sprite = sprite;
-
-                transform.GetComponent<AspectRatioFitter>().aspectRatio = sprite.rect.width / sprite.rect.height;
             }
             else
             {
@@ -82,24 +89,42 @@ public class EnemyHandler : MonoBehaviour, IViewUpdater
                 requirementsTexts.Add(await requirement.GetDescription());
             }
         }
-        transform.Find("RequirementsInfo").GetComponent<TMPro.TextMeshProUGUI>().text = string.Join("\n", requirementsTexts);
-
-        if ((previousHeight != GetComponent<RectTransform>().rect.height) && (imagePath != null))
-        {
-            previousHeight = GetComponent<RectTransform>().rect.height;
-            float textHeight = transform.Find("RequirementsInfo").GetComponent<TMPro.TextMeshProUGUI>().preferredHeight;
-            float imageHeight = previousHeight.Value - textHeight;
+        TMPro.TextMeshProUGUI requirementsInfo = transform.Find("RequirementsInfo").GetComponent<TMPro.TextMeshProUGUI>();
+        requirementsInfo.text = string.Join("\n", requirementsTexts);
+        if (this.height != null) {
+            float textHeight = transform.Find("RequirementsInfo").GetComponent<TMPro.TextMeshProUGUI>().preferredHeight + 
+                transform.Find("PlannedEffectInfo").GetComponent<LayoutElement>().preferredHeight;
+            float imageHeight = height.Value - textHeight;
             // Must not be null as imagePath is not null -> A sprite is set
-            Sprite sprite = image.sprite!;
-            float imageAspectRatio = sprite.rect.width / sprite.rect.height;
-            float imageWidth = imageHeight * imageAspectRatio;
-            transform.GetComponent<AspectRatioFitter>().aspectRatio = imageWidth / previousHeight.Value;
+            Sprite? sprite = image.sprite;
+            float? imageWidth;
+            if (sprite != null)
+            {
+                float imageAspectRatio = sprite.rect.width / sprite.rect.height;
+                imageWidth = imageHeight * imageAspectRatio;
+            }
+            else
+            {
+                imageWidth = null;
+            }
+
+            float textWidth = requirementsInfo.preferredWidth;
+
+            UnityEngine.Debug.Log("Setting EnemyHandler size: " + height.Value + "x" + (imageWidth ?? 0) + " and text width " + textWidth);
+
+            transform.GetComponent<RectTransform>().sizeDelta = new Vector2(Mathf.Max(imageWidth ?? 0, textWidth), height.Value);
         }
     }
 
-    public float GetAspectRatio()
+    public async Task SetHeight(float height)
     {
-        return transform.GetComponent<AspectRatioFitter>().aspectRatio;
+        this.height = height;
+        await this.updateViewAsync();
+    }
+
+    public float GetWidth()
+    {
+        return transform.GetComponent<RectTransform>().sizeDelta.x;
     }
 
     protected virtual void OnRectTransformDimensionsChange()

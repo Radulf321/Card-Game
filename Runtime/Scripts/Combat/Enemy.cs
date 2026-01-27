@@ -8,6 +8,7 @@ public class Enemy : IClonable<Enemy>
     private List<GameEffect> effects;
     private string imagePath;
     private GoalManager goalManager;
+    private GameEffect? plannedEffect;
 
     public Enemy(List<Requirement>? requirements = null, List<GameEffect>? effects = null, string imagePath = "", GoalManager? goalManager = null)
     {
@@ -89,6 +90,25 @@ public class Enemy : IClonable<Enemy>
         }
 
         return new Enemy(clonedRequirements, clonedEffects, this.imagePath, this.goalManager.Clone());
+    }
+
+    public void PlanEffect()
+    {
+        if (this.effects.Count > 0)
+        {
+            this.plannedEffect = this.effects[UnityEngine.Random.Range(0, this.effects.Count)].Clone(null);
+        }
+    }
+
+    public void ExecuteEffect()
+    {
+        this.plannedEffect?.applyEffect();
+        this.plannedEffect = null;
+    }
+
+    public GameEffect? GetPlannedEffect()
+    {
+        return this.plannedEffect;
     }
 
     private void OnGoalAdded()
