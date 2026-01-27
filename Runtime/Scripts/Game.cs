@@ -109,7 +109,12 @@ class Game
         this.cardLibrary = new CardLibrary(ResourcePath + "/Cards/");
         this.skillLibrary = new SkillLibrary(ResourcePath + "/Skills/");
         this.enemyLibrary = new EnemyLibrary(ResourcePath + "/Enemies/");
-        this.player = new Player();
+        Dictionary<int, int>? startingEnergy = null;
+        if (index["startingEnergy"] != null)
+        {
+            startingEnergy = new Dictionary<int, int>() { { 0, index["startingEnergy"]!.ToObject<int>() } };
+        }
+        this.player = new Player(startingEnergy: startingEnergy);
 
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
         this.checkIcon = index["checkIcon"]!.ToString();

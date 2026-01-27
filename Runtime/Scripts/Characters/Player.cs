@@ -12,11 +12,11 @@ public class Player
     private EnergyInfo energyInfo;
     private Dictionary<string, int> currencies;
 
-    public Player()
+    public Player(Dictionary<int, int>? startingEnergy = null)
     {
         this.deck = new List<Card>();
         this.relics = new List<Card>();
-        this.energyInfo = new EnergyInfo();
+        this.energyInfo = new EnergyInfo(startingEnergy);
         this.currencies = new Dictionary<string, int>();
         foreach (string currencyID in Game.Instance?.GetCurrencies() ?? new List<string>())
         {
