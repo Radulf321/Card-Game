@@ -227,15 +227,18 @@ MonoBehaviour:
   - m_Id: 92068665348628480
     m_Localized: Add {prefix} {currency}{suffix}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 6401543877616205825
   - m_Id: 92069353734578176
     m_Localized: add {prefix} {currency}{suffix}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 6401543877616205825
   - m_Id: 92069474861883392
-    m_Localized: '{prefix}{goal}{suffix}'
+    m_Localized: '{prefix}{currency}{suffix}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 6401543877616205825
   references:
     version: 2
     RefIds:
@@ -272,3 +275,6 @@ MonoBehaviour:
         - id: 46110641169932288
         - id: 46116395083931648
         - id: 57705096532500480
+        - id: 92068665348628480
+        - id: 92069353734578176
+        - id: 92069474861883392
