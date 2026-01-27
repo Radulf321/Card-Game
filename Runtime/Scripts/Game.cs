@@ -42,7 +42,7 @@ class Game
     private CharacterManager characterManager;
     private List<TriggerAction> triggerActions;
 
-    private bool startNextRound = true;
+    private bool gameLost = false;
 
     public Game()
     {
@@ -227,18 +227,17 @@ class Game
 
     public void EndRound()
     {
-        this.startNextRound = true;
         // The trigger message could trigger something that prevents the next round from starting
         SendTriggerMessage(new TriggerMessage(TriggerType.EndRound));
         // Start a new round
-        if (this.startNextRound) {
+        if (!this.gameLost) {
             StartRound();
         }
     }
 
     public void LooseGame()
     {
-        this.startNextRound = false;
+        this.gameLost = true;
         PlayerPrefs.DeleteKey(this.resourcePath + Game.saveGameKey);
         PlayerPrefs.Save();
         _ = DialogHandler.Instance!.StartDialog(this.gameOverDialog, onFinish: () =>
@@ -585,6 +584,11 @@ class Game
     public CharacterManager GetCharacterManager()
     {
         return this.characterManager;
+    }
+
+    public bool IsGameLost()
+    {
+        return this.gameLost;
     }
 
     private void SaveGame()

@@ -15,6 +15,7 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
     public static DialogHandler? Instance;
     private Dialog? nextDialog;
     private Action? nextOnFinish;
+    private bool executeNextFinish = true;
 
     private TaskCompletionSource<bool>? completeOnClick;
 
@@ -76,7 +77,11 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
             {
                 await dialog.ShowDialog();
             }
-            (onFinish ?? EndDialog).Invoke();
+            if (this.executeNextFinish)
+            {
+                (onFinish ?? EndDialog).Invoke();
+            }
+            this.executeNextFinish = true;
             Dialog.CurrentDialog = null;
             Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.EndDialog));
         }
@@ -251,6 +256,11 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
             this.completeOnClick = null;
             completeOnClick.SetResult(true);
         }
+    }
+
+    public void SkipNextOnFinish()
+    {
+        this.executeNextFinish = false;
     }
 
     private Task<bool> waitForPointerDown()
