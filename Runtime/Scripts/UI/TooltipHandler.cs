@@ -15,7 +15,7 @@ public class TooltipHandler : MonoBehaviour
     {
     }
 
-    public async void ShowTooltip(string description)
+    public void ShowTooltip(string description)
     {
         TextMeshProUGUI tooltipText =
              transform.Find("TooltipText").GetComponent<TextMeshProUGUI>();
