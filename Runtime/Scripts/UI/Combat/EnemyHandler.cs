@@ -111,8 +111,6 @@ public class EnemyHandler : MonoBehaviour, IViewUpdater
 
             float textWidth = requirementsInfo.preferredWidth;
 
-            UnityEngine.Debug.Log("Setting EnemyHandler size: " + height.Value + "x" + (imageWidth ?? 0) + " and text width " + textWidth);
-
             transform.GetComponent<RectTransform>().sizeDelta = new Vector2(Mathf.Max(imageWidth ?? 0, textWidth), height.Value);
         }
     }

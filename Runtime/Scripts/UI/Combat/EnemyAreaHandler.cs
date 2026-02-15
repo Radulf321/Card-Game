@@ -46,7 +46,6 @@ public class EnemyAreaHandler : MonoBehaviour, IViewUpdater
             await enemyHandler.SetHeight(myHeight);
 
             float objectWidth = enemyHandler.GetWidth();
-            UnityEngine.Debug.Log("Setting enemy in EnemyAreaHandler: " + myHeight + "x" + objectWidth);
             createdEnemies[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(x + objectWidth / 2, 0);
             x += objectWidth + 20;
         }
