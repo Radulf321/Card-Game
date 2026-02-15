@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
-using TMPro;
 using Newtonsoft.Json.Linq;
 
 public class MainMenuHandler : MonoBehaviour
