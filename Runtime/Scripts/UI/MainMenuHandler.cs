@@ -14,6 +14,7 @@ public class MainMenuHandler : MonoBehaviour
     {
         JObject index = JObject.Parse(Resources.Load<TextAsset>(RESOURCE_PATH + "/Index").text);
         TextMeshProFontManager.Instance!.SetDefaultFont(Resources.Load<TMPro.TMP_FontAsset>(RESOURCE_PATH + "/" + index["font"]!.ToString()));
+        transform.Find("Background").GetComponent<Image>().sprite = Resources.Load<Sprite>(RESOURCE_PATH + "/Graphics/Backgrounds/" + (index["mainMenu"]?["background"]?.ToString() ?? "MainMenu"));
     }
 
     // Update is called once per frame
