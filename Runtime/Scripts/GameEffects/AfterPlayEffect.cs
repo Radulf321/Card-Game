@@ -8,23 +8,37 @@ public class AfterPlayEffect : GameEffect {
     private CardAfterPlay afterPlay;
     private Card owner;
 
-    public AfterPlayEffect(CardAfterPlay afterPlay, Card owner)
+    public AfterPlayEffect(CardAfterPlay afterPlay, IEffectOwner owner)
     {
+        if (owner is Card cardOwner)
+        {
+            this.owner = cardOwner;
+        }
+        else
+        {
+            throw new ArgumentException("Owner of AfterPlayEffect must be a Card");
+        }
         this.afterPlay = afterPlay;
-        this.owner = owner;
     }
 
-    public AfterPlayEffect(JObject json, Card owner)
+    public AfterPlayEffect(JObject json, IEffectOwner owner)
     {
         this.afterPlay = CardAfterPlayHelper.FromJson(json["afterPlay"]!);
-        this.owner = owner;
+        if (owner is Card cardOwner)
+        {
+            this.owner = cardOwner;
+        }
+        else
+        {
+            throw new ArgumentException("Owner of AfterPlayEffect must be a Card");
+        }
     }
 
     public override void applyEffect(Enemy? target = null) {
         this.owner.SetAfterPlay(this.afterPlay);
     }
 
-    public override GameEffect Clone(Card? newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new AfterPlayEffect(this.afterPlay, newOwner ?? this.owner);
     }

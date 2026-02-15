@@ -63,7 +63,7 @@ public class EnergyEffect : GameEffect
         ));
     }
 
-    public override GameEffect Clone(Card? newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new EnergyEffect(this.amount, this.maxEnergy);
     }

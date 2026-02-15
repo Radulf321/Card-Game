@@ -14,13 +14,13 @@ public enum LimitType
 public class TriggerableEffect : GameEffect
 {
     private TriggerAction triggerAction;
-    private Card owner;
+    private IEffectOwner owner;
     private int? limit;
     private LimitType? limitType;
     private int? currentLimit;
 
 
-    public TriggerableEffect(TriggerAction triggerAction, Card owner, LimitType? limitType = null, int? limit = null)
+    public TriggerableEffect(TriggerAction triggerAction, IEffectOwner owner, LimitType? limitType = null, int? limit = null)
     {
         this.triggerAction = triggerAction;
         this.owner = owner;
@@ -28,7 +28,7 @@ public class TriggerableEffect : GameEffect
         this.limitType = limitType;
     }
 
-    public TriggerableEffect(JObject json, Card owner) : this(
+    public TriggerableEffect(JObject json, IEffectOwner owner) : this(
         triggerAction: new TriggerAction(json["action"] as JObject ?? new JObject(), owner: owner),
         owner: owner,
         limitType: EnumHelper.ParseEnum<LimitType>(json["limitType"]?.ToString() ?? "InvalidType"),
@@ -49,10 +49,13 @@ public class TriggerableEffect : GameEffect
         this.triggerAction.Subscribe();
         this.triggerAction.SetOnTrigger(this.OnTrigger);
         this.currentLimit = limit;
-        this.owner.SetAfterPlay(CardAfterPlay.StayInPlay);
+        if (this.owner is Card cardOwner)
+        {
+            cardOwner.SetAfterPlay(CardAfterPlay.StayInPlay);
+        }
     }
 
-    public override GameEffect Clone(Card? newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new TriggerableEffect(triggerAction.Clone(newOwner), newOwner ?? this.owner, limitType: this.limitType, limit: this.limit);
     }
@@ -109,7 +112,10 @@ public class TriggerableEffect : GameEffect
             if (this.limitType == LimitType.Total)
             {
                 Game.Instance.UnsubscribeFromTriggerMessages(HandleMessage);
-                CombatHandler.instance?.getCardPile().DiscardCard(this.owner);
+                if (this.owner is Card cardOwner)
+                {
+                    CombatHandler.instance?.getCardPile().DiscardCard(cardOwner);
+                }
             }
         }
     }

@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
+#nullable enable
+
 public class DialogEffect : GameEffect
 {
-    private Dialog dialog;
+    private Dialog? dialog;
 
-    public DialogEffect(Dialog dialog)
+    public DialogEffect(Dialog? dialog)
     {
         this.dialog = dialog;
     }
@@ -16,10 +18,10 @@ public class DialogEffect : GameEffect
 
     public override void applyEffect(Enemy? target = null)
     {
-        _ = DialogHandler.Instance.StartDialog(this.dialog, changeScene: false);
+        _ = DialogHandler.Instance?.StartDialog(this.dialog, changeScene: false);
     }
 
-    public override GameEffect Clone(Card newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new DialogEffect(this.dialog);
     }

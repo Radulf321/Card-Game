@@ -42,7 +42,7 @@ public class RequirementGoalEffect : GameEffect
         return true;
     }
 
-    public override GameEffect Clone(Card? newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new RequirementGoalEffect(this.requirements);
     }

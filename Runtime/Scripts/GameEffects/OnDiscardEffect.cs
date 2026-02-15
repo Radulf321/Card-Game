@@ -10,10 +10,10 @@ using UnityEngine.Localization.Settings;
 public class OnDiscardEffect : GameEffect
 {
     private GameEffect effect;
-    private Card owner;
+    private IEffectOwner owner;
 
 
-    public OnDiscardEffect(GameEffect effect, Card? owner)
+    public OnDiscardEffect(GameEffect effect, IEffectOwner? owner)
     {
         this.effect = effect;
         if (owner == null)
@@ -23,7 +23,7 @@ public class OnDiscardEffect : GameEffect
         this.owner = owner;
     }
 
-    public OnDiscardEffect(JObject json, Card? owner) : this(
+    public OnDiscardEffect(JObject json, IEffectOwner? owner) : this(
         effect: GameEffect.FromJson((json["effect"] as JObject)!, owner: owner, trigger: CardEffectTrigger.Discard),
         owner: owner
     )
@@ -35,7 +35,7 @@ public class OnDiscardEffect : GameEffect
         // No effect when card is played
     }
 
-    public override GameEffect Clone(Card? newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new OnDiscardEffect(effect.Clone(newOwner), newOwner ?? this.owner);
     }

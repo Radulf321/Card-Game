@@ -26,7 +26,7 @@ public class DrawCardsEffect : GameEffect
         CombatHandler.instance?.getCardPile().DrawCards(this.amount, this.trigger);
     }
 
-    public override GameEffect Clone(Card? newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new DrawCardsEffect(this.amount, this.trigger);
     }

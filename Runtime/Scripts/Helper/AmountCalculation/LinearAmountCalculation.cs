@@ -43,7 +43,7 @@ public class LinearAmountCalculation : AmountCalculation
         return value;
     }
 
-    public override Task<string> GetDescriptionPrefix(Card? card = null)
+    public override Task<string> GetDescriptionPrefix(IEffectOwner? owner = null)
     {
         if (ShowCustomPrefixSuffix())
         {
@@ -51,11 +51,11 @@ public class LinearAmountCalculation : AmountCalculation
         }
         else
         {
-            return base.GetDescriptionPrefix(card);
+            return base.GetDescriptionPrefix(owner);
         }
     }
 
-    public override Task<string> GetDescriptionSuffix(Card? card = null)
+    public override Task<string> GetDescriptionSuffix(IEffectOwner? owner = null)
     {
         if (ShowCustomPrefixSuffix())
         {
@@ -87,11 +87,11 @@ public class LinearAmountCalculation : AmountCalculation
         }
         else
         {
-            return base.GetDescriptionSuffix(card);
+            return base.GetDescriptionSuffix(owner);
         }
     }
 
-    public override Task<string> GetDescriptionSuffixIcon(Card? card = null)
+    public override Task<string> GetDescriptionSuffixIcon(IEffectOwner? owner = null)
     {
         if (ShowCustomPrefixSuffix())
         {
@@ -100,7 +100,7 @@ public class LinearAmountCalculation : AmountCalculation
                 case CalculationInput.TargetLevel:
                 case CalculationInput.PreviousPlays:
                 case CalculationInput.TotalLevels:
-                    return GetDescriptionSuffix(card);
+                    return GetDescriptionSuffix(owner);
 
                 case CalculationInput.CurrentEnergy:
                     return Task.FromResult("/<sprite name=\"Energy\">");
@@ -117,7 +117,7 @@ public class LinearAmountCalculation : AmountCalculation
         }
         else
         {
-            return base.GetDescriptionSuffixIcon(card);
+            return base.GetDescriptionSuffixIcon(owner);
         }
     }
     

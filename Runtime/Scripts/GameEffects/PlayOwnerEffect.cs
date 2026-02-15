@@ -11,16 +11,19 @@ public class PlayOwnerEffect : GameEffect
     private Card owner;
 
 
-    public PlayOwnerEffect(Card? owner)
+    public PlayOwnerEffect(IEffectOwner? owner)
     {
-        if (owner == null)
+        if (owner is Card cardOwner)
         {
-            throw new ArgumentException("Owner must not be null for PlayOwnerEffect");
+            this.owner = cardOwner;
         }
-        this.owner = owner;
+        else
+        {
+            throw new ArgumentException("Owner must be a Card for PlayOwnerEffect");
+        }
     }
 
-    public PlayOwnerEffect(JObject json, Card? owner) : this(
+    public PlayOwnerEffect(JObject json, IEffectOwner? owner) : this(
         owner: owner
     )
     {
@@ -31,7 +34,7 @@ public class PlayOwnerEffect : GameEffect
         owner.Play(true);
     }
 
-    public override GameEffect Clone(Card? newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new PlayOwnerEffect(newOwner ?? this.owner);
     }

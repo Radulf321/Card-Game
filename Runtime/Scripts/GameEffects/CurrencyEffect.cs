@@ -8,12 +8,12 @@ using UnityEngine.Localization.Settings;
 public class CurrencyEffect : GameEffect
 {
 
-    private Card? owner;
+    private IEffectOwner? owner;
     private AmountCalculation amountCalculation;
     private string currency;
     private CardEffectTrigger trigger;
 
-    public CurrencyEffect(string currency, AmountCalculation amountCalculation, Card? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard)
+    public CurrencyEffect(string currency, AmountCalculation amountCalculation, IEffectOwner? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard)
     {
         this.currency = currency;
         this.amountCalculation = amountCalculation;
@@ -21,11 +21,11 @@ public class CurrencyEffect : GameEffect
         this.trigger = trigger;
     }
 
-    public CurrencyEffect(string currency, int amount, Card? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(currency, new ConstantAmountCalculation(amount), owner, trigger)
+    public CurrencyEffect(string currency, int amount, IEffectOwner? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(currency, new ConstantAmountCalculation(amount), owner, trigger)
     {
     }
 
-    public CurrencyEffect(JObject json, Card owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(json["currency"]?.ToString() ?? "unknown", AmountCalculation.FromJson(json["amount"]) ?? new ConstantAmountCalculation(0), owner, trigger)
+    public CurrencyEffect(JObject json, IEffectOwner? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard) : this(json["currency"]?.ToString() ?? "unknown", AmountCalculation.FromJson(json["amount"]) ?? new ConstantAmountCalculation(0), owner, trigger)
     {
     }
 
@@ -34,7 +34,7 @@ public class CurrencyEffect : GameEffect
         Game.Instance.GetPlayer().AddCurrency(currency, this.amountCalculation.GetValue(this.owner));
     }
 
-    public override GameEffect Clone(Card? newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new CurrencyEffect(this.currency, this.amountCalculation, newOwner ?? this.owner, this.trigger);
     }

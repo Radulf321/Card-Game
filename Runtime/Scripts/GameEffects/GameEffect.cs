@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 #nullable enable
 abstract public class GameEffect
 {
-    public static GameEffect FromJson(JObject json, Card? owner = null, CardEffectTrigger trigger = CardEffectTrigger.PlayCard)
+    public static GameEffect FromJson(JObject json, IEffectOwner? owner = null, CardEffectTrigger trigger = CardEffectTrigger.PlayCard)
     {
         string? type = json["type"]?.ToString();
         return type switch
@@ -28,11 +28,16 @@ abstract public class GameEffect
 
     abstract public Task<string> getDescription();
 
-    abstract public GameEffect Clone(Card? newOwner);
+    abstract public GameEffect Clone(IEffectOwner? newOwner);
 
     virtual public bool canPlay(Enemy? target = null)
     {
         return true;
+    }
+
+    virtual public bool requiresTarget()
+    {
+        return false;
     }
 
     virtual public Task<string> getTriggerDescription()

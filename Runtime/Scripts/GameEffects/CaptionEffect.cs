@@ -30,7 +30,7 @@ public class CaptionEffect : GameEffect
         // The caption effect does not have any gameplay effect
     }
 
-    public override GameEffect Clone(Card? newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new CaptionEffect(this.caption, this.iconCaption);
     }

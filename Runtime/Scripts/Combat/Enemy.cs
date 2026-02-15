@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
-public class Enemy : IClonable<Enemy>
+public class Enemy : IClonable<Enemy>, IEffectOwner
 {
     private List<Requirement> requirements;
     private List<GameEffect> effects;
@@ -28,7 +28,7 @@ public class Enemy : IClonable<Enemy>
         List<GameEffect> effects = new List<GameEffect>();
         foreach (JToken effect in (enemyData["effects"] as JArray) ?? new JArray())
         {
-            effects.Add(GameEffect.FromJson(effect as JObject ?? new JObject()));
+            effects.Add(GameEffect.FromJson(effect as JObject ?? new JObject(), owner: this));
         }
         this.effects = effects;
 
@@ -60,6 +60,11 @@ public class Enemy : IClonable<Enemy>
         return requirements;
     }
 
+    public void SetEffects(List<GameEffect> newEffects)
+    {
+        this.effects = newEffects;
+    }
+
     public List<GameEffect> GetEffects()
     {
         return this.effects;
@@ -83,13 +88,15 @@ public class Enemy : IClonable<Enemy>
             clonedRequirements.Add(requirement.Clone());
         }
 
+        Enemy clonedEnemy = new Enemy(requirements: clonedRequirements, imagePath: this.imagePath, goalManager: this.goalManager.Clone());
+        
         List<GameEffect> clonedEffects = new List<GameEffect>();
         foreach (GameEffect effect in this.effects)
         {
-            clonedEffects.Add(effect.Clone(null));
+            clonedEffects.Add(effect.Clone(clonedEnemy));
         }
-
-        return new Enemy(clonedRequirements, clonedEffects, this.imagePath, this.goalManager.Clone());
+        clonedEnemy.SetEffects(clonedEffects);
+        return clonedEnemy;
     }
 
     public void PlanEffect()

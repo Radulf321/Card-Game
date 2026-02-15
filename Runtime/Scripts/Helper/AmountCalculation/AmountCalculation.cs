@@ -76,7 +76,7 @@ public abstract class AmountCalculation
         this.goal = json["goal"]?.ToString();
     }
 
-    public float GetRawValue(Card? card = null)
+    public float GetRawValue(IEffectOwner? owner = null)
     {
         float inputValue;
         switch (input)
@@ -85,9 +85,17 @@ public abstract class AmountCalculation
                 inputValue = 0;
                 break;
 
-            case CalculationInput.PreviousPlays:
-                inputValue = CombatHandler.instance?.getCardsPlayed(card!.GetID()) ?? 0;
+            case CalculationInput.PreviousPlays: {
+                if (owner is Card card)
+                {
+                    inputValue = CombatHandler.instance?.getCardsPlayed(card.GetID()) ?? 0;
+                }
+                else
+                {
+                    throw new System.Exception("PreviousPlays input requires a card owner");
+                }
                 break;
+            }
 
             case CalculationInput.TargetLevel:
                 inputValue = Game.Instance.GetCurrentCombatTarget().GetLevel();
@@ -105,21 +113,22 @@ public abstract class AmountCalculation
                 }
                 break;
 
-            case CalculationInput.CardsInHand:
+            case CalculationInput.CardsInHand: {
                 List<Card> hand = CombatHandler.instance?.getCardPile().GetHand() ?? new List<Card>();
                 inputValue = hand.Count;
-                if ((card != null) && hand.Contains(card))
+                if (owner is Card card && hand.Contains(card))
                 {
                     inputValue -= 1;
                 }
                 break;
+            }
 
             case CalculationInput.Calculation:
                 if (this.calculation == null)
                 {
                     throw new System.Exception("Calculation input requires a calculation");
                 }
-                inputValue = this.calculation.GetRawValue(card);
+                inputValue = this.calculation.GetRawValue(owner);
                 break;
 
             case CalculationInput.Flag:
@@ -151,29 +160,29 @@ public abstract class AmountCalculation
     }
 
 
-    public int GetValue(Card? card = null)
+    public int GetValue(IEffectOwner? owner = null)
     {
-        return Mathf.FloorToInt(GetRawValue(card));
+        return Mathf.FloorToInt(GetRawValue(owner));
     }
 
-    public virtual Task<string> GetDescriptionPrefix(Card? card = null)
+    public virtual Task<string> GetDescriptionPrefix(IEffectOwner? owner = null)
     {
-        return Task.FromResult(GetValue(card).ToString());
+        return Task.FromResult(GetValue(owner).ToString());
     }
 
-    public virtual Task<string> GetDescriptionSuffix(Card? card = null)
+    public virtual Task<string> GetDescriptionSuffix(IEffectOwner? owner = null)
     {
         return Task.FromResult("");
     }
 
-    public virtual Task<string> GetDescriptionPrefixIcon(Card? card = null)
+    public virtual Task<string> GetDescriptionPrefixIcon(IEffectOwner? owner = null)
     {
-        return GetDescriptionPrefix(card);
+        return GetDescriptionPrefix(owner);
     }
 
-    public virtual Task<string> GetDescriptionSuffixIcon(Card? card = null)
+    public virtual Task<string> GetDescriptionSuffixIcon(IEffectOwner? owner = null)
     {
-        return GetDescriptionSuffix(card);
+        return GetDescriptionSuffix(owner);
     }
 
     public int GetValue(int number)

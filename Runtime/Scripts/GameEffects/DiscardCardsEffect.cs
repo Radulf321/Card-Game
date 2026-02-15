@@ -34,6 +34,10 @@ public class DiscardCardsEffect : GameEffect
 
     public override void applyEffect(Enemy? target = null)
     {
+        if (CombatHandler.instance == null)
+        {
+            throw new Exception("CombatHandler instance is required for DiscardCardsEffect");
+        }
         // Assuming RoundHandler has a method to apply the effect
         CardPile cardPile = CombatHandler.instance.getCardPile();
         for (int i = 0; i < this.amount; i++)
@@ -68,10 +72,10 @@ public class DiscardCardsEffect : GameEffect
     public override bool canPlay(Enemy? target = null)
     {
         // The card itself is part of the hand, so there needs to be one more card in hand
-        return !this.checkCardsAvailable || CombatHandler.instance.getCardPile().GetHand().Count >= (amount + 1);
+        return !this.checkCardsAvailable || (CombatHandler.instance?.getCardPile().GetHand().Count ?? 0) >= (amount + 1);
     }
 
-    public override GameEffect Clone(Card newOwner)
+    public override GameEffect Clone(IEffectOwner? newOwner)
     {
         return new DiscardCardsEffect(amount: this.amount, discardPosition: this.discardPosition, checkCardsAvailable: this.checkCardsAvailable);
     }

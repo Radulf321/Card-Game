@@ -23,7 +23,7 @@ public class TriggerAction
         this.unregisterOnEndRound = unregisterOnEndRound;
     }
 
-    public TriggerAction(JObject json, Card? owner = null, bool? unregisterOnEndRound = null) : this(
+    public TriggerAction(JObject json, IEffectOwner? owner = null, bool? unregisterOnEndRound = null) : this(
         trigger: TriggerMessageCondition.FromJson((json["trigger"] as JObject)!),
         effect: GameEffect.FromJson(json["effect"] as JObject ?? new JObject(), owner, CardEffectTrigger.TriggerEffect),
         unregisterOnEndRound: unregisterOnEndRound ?? json["unregisterOnEndRound"]?.ToObject<bool>() ?? true
@@ -55,7 +55,7 @@ public class TriggerAction
         this.onTrigger = onTrigger;
     }
 
-    public TriggerAction Clone(Card? newOwner)
+    public TriggerAction Clone(IEffectOwner? newOwner)
     {
         return new TriggerAction(
             trigger: this.trigger,
