@@ -79,12 +79,12 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
             
             if (gradientLeft.HasValue)
             {
-                gradientMaterial.SetColor("_LeftColor", gradientLeft.Value);
+                gradientMaterial.SetColor("_ColorLeft", gradientLeft.Value);
             }
             
             if (gradientRight.HasValue)
             {
-                gradientMaterial.SetColor("_RightColor", gradientRight.Value);
+                gradientMaterial.SetColor("_ColorRight", gradientRight.Value);
             }
         }
     }
