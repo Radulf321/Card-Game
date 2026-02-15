@@ -13,7 +13,6 @@ public class DesignManager
     {
         this.cardLayout = new CardLayout(json?["cards"] as JObject);
         string energyColorString = json?["energy"]?["color"]?.ToString() ?? "ADE69F";
-        UnityEngine.Debug.Log("Energy color string: " + energyColorString);
         ColorUtility.TryParseHtmlString("#" + energyColorString, out Color parsedEnergyColor);
         this.energyColor = parsedEnergyColor;
         string inactiveColorString = json?["inactiveColor"]?.ToString() ?? "999999";
