@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
+
+#nullable enable
 
 public class DropCardAreaHandler : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class DropCardAreaHandler : MonoBehaviour
     void Start()
     {
         Game.Instance.SubscribeToTriggerMessages(OnTriggerMessage);
+        transform.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -27,10 +29,7 @@ public class DropCardAreaHandler : MonoBehaviour
         {
             case TriggerType.CardDragEnd:
             case TriggerType.CardDragStart:
-                Image image = GetComponent<Image>();
-                Color color = image.color;
-                color.a = (message.GetTriggerType() == TriggerType.CardDragStart) ? 0.5f : 0.0f;
-                image.color = color;
+                transform.gameObject.SetActive((message.GetTriggerType() == TriggerType.CardDragStart) && (message.GetData().GetCard()?.RequiresTarget() == false));
                 break;
             default:
                 break;

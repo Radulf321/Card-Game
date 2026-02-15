@@ -101,7 +101,7 @@ public class CombatHandler : MonoBehaviour
         return getTurns()?[getCurrentTurnIndex()];
     }
 
-    public List<Enemy>? getEnemies()
+    public List<Enemy>? GetEnemies()
     {
         return enemies;
     }

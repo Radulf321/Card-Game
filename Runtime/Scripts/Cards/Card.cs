@@ -34,7 +34,7 @@ public static class CardAfterPlayHelper
     }
 }
 
-public class Card : IClonable<Card>
+public class Card : IClonable<Card>, IEffectOwner
 {
     private CardType type;
     private int? cost;
@@ -79,6 +79,18 @@ public class Card : IClonable<Card>
             }
         }
         return (this.cost == null) || (this.cost <= CombatHandler.instance?.getCurrentEnergy());
+    }
+
+    public bool RequiresTarget()
+    {
+        foreach (GameEffect effect in effects)
+        {
+            if (effect.requiresTarget())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void Play(bool force = false, Enemy? target = null)

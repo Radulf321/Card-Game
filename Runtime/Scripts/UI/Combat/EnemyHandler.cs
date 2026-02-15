@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -16,6 +15,7 @@ public class EnemyHandler : MonoBehaviour, IViewUpdater
     void Start()
     {
         Game.Instance.SubscribeToTriggerMessages(OnTriggerMessage);
+        transform.Find("DropCardOverlay").gameObject.SetActive(false);
     }
 
     public void SetEnemy(Enemy enemy)
@@ -48,6 +48,7 @@ public class EnemyHandler : MonoBehaviour, IViewUpdater
         {
             case TriggerType.CardDragEnd:
             case TriggerType.CardDragStart:
+                transform.Find("DropCardOverlay").gameObject.SetActive((message.GetTriggerType() == TriggerType.CardDragStart) && (message.GetData().GetCard()?.RequiresTarget() == true));
                 break;
             default:
                 break;

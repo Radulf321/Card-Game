@@ -20,7 +20,7 @@ public class EnemyAreaHandler : MonoBehaviour, IViewUpdater
     public void updateView() {
         // TODO: Need to support enemies that are added later on without repositioning existing enemies
         List<GameObject> createdEnemies = new List<GameObject>();
-        List<Enemy> enemies = CombatHandler.instance?.getEnemies() ?? new List<Enemy>();
+        List<Enemy> enemies = CombatHandler.instance?.GetEnemies() ?? new List<Enemy>();
         this.updateChildrenViews<EnemyAreaHandler, EnemyHandler, Enemy>(
             enemies,
             (Enemy enemy) => {
