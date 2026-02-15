@@ -41,6 +41,7 @@ class Game
     private TaskManager taskManager;
     private CharacterManager characterManager;
     private List<TriggerAction> triggerActions;
+    private DesignManager designManager;
 
     private bool gameLost = false;
 
@@ -66,6 +67,7 @@ class Game
         this.taskManager = new TaskManager();
         this.characterManager = new CharacterManager();
         this.triggerActions = new List<TriggerAction>();
+        this.designManager = new DesignManager(null);
     }
 
     public Game(string ResourcePath)
@@ -125,6 +127,7 @@ class Game
             triggerActions.Add(new TriggerAction(triggerActionData, unregisterOnEndRound: false));
         }
         this.triggerActions = triggerActions;
+        this.designManager = new DesignManager(index["design"] as JObject);
         this.gameOverDialog = Dialog.FromJson(index["gameOverDialog"] as JArray ?? new JArray());
         this.tutorialDone = PlayerPrefs.GetInt(this.resourcePath + Game.tutorialDoneKey, 0) == 1;
         this.flagDictionaries = new Dictionary<FlagValidity, FlagDictionary>();
@@ -589,6 +592,11 @@ class Game
     public bool IsGameLost()
     {
         return this.gameLost;
+    }
+
+    public DesignManager GetDesignManager()
+    {
+        return this.designManager;
     }
 
     private void SaveGame()

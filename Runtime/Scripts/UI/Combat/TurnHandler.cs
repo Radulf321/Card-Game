@@ -62,7 +62,7 @@ public class TurnHandler : MonoBehaviour, IViewUpdater
 
         if (turnIndex < currentTurn)
         {
-            color = Theme.inactiveColor;
+            color = Game.Instance.GetDesignManager().GetInactiveColor();
         }
         else
         {

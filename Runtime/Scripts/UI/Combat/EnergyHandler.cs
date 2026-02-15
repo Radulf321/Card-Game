@@ -21,9 +21,9 @@ public class EnergyHandler : MonoBehaviour, IViewUpdater
         Color color;
         int index = transform.GetSiblingIndex();
         if (index < CombatHandler.instance.getCurrentEnergy()) {
-            color = Theme.energyAvailableColor;
+            color = Game.Instance.GetDesignManager().GetEnergyColor();
         } else {
-            color = Theme.inactiveColor;
+            color = Game.Instance.GetDesignManager().GetInactiveColor();
         }
 
         if (index >= CombatHandler.instance.getMaxEnergy()) {
