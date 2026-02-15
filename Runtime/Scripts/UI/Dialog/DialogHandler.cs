@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Components;
-using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -183,20 +180,6 @@ public class DialogHandler : MonoBehaviour, IPointerDownHandler
 
         Transform currencyInfo = selectArea.Find("CurrencyInfo");
         currencyInfo.gameObject.SetActive(dialog.IsShowUI());
-        if (dialog.IsShowUI())
-        {
-            List<String> currencyStrings = new List<String>();
-            foreach (String currencyID in Game.Instance.GetCurrencies())
-            {
-                int currencyAmount = Game.Instance.GetPlayer().GetCurrency(currencyID);
-                string format = Game.Instance.GetCurrencyData(currencyID)!.GetFormat();
-                currencyStrings.Add(JSONHelper.ReplaceVariablesInString(format, new Dictionary<string, object>()
-                {
-                    {"amount", currencyAmount.ToString()}
-                }).ToString());
-            }
-            currencyInfo.GetComponent<TMPro.TextMeshProUGUI>().text = string.Join("\n", currencyStrings);
-        }
 
         Transform selectionContainer = selectArea.Find("SelectionContainer");
         Transform cardArea = selectionContainer.Find("CardArea");
