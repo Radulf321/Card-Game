@@ -594,6 +594,11 @@ class Game
         return this.gameLost;
     }
 
+    public CardLayout GetCardLayout()
+    {
+        return this.designManager.GetCardLayout();
+    }
+
     public DesignManager GetDesignManager()
     {
         return this.designManager;

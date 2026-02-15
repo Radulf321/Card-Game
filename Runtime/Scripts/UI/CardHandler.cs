@@ -30,7 +30,63 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        CardLayout cardLayout = Game.Instance.GetCardLayout();
+        Sprite? backgroundImage = cardLayout.GetBackgroundImage();
+        if (backgroundImage != null)
+        {
+            Image image = transform.GetComponent<Image>();
+            image.sprite = backgroundImage;
+            image.color = Color.white;
+        }
+        Transform descriptionArea = transform.Find("CardContainer").Find("DescriptionArea");
+        Sprite? descriptionBackgroundImage = cardLayout.GetDescriptionBackgroundImage();
+        if (descriptionBackgroundImage != null)
+        {
+            Image descriptionBackground = descriptionArea.GetComponent<Image>();
+            descriptionBackground.sprite = descriptionBackgroundImage;
+        }
+        float? descriptionBackgroundLeft = cardLayout.GetDescriptionBackgroundLeft();
+        RectTransform descriptionBackgroundRect = descriptionArea.GetComponent<RectTransform>();
+        if (descriptionBackgroundLeft != null)
+        {
+            descriptionBackgroundRect.offsetMin = new Vector2(descriptionBackgroundLeft.Value, descriptionBackgroundRect.offsetMin.y);
+        }
+        float? descriptionBackgroundRight = cardLayout.GetDescriptionBackgroundRight();
+        if (descriptionBackgroundRight != null)
+        {
+            descriptionBackgroundRect.offsetMax = new Vector2(-descriptionBackgroundRight.Value, descriptionBackgroundRect.offsetMax.y);
+        }
+        RectTransform descriptionRect = descriptionArea.Find("Description").GetComponent<RectTransform>();
+        RectOffset descriptionPadding = cardLayout.GetDescriptionPadding();
+        descriptionRect.offsetMin = new Vector2(
+            descriptionPadding.left,
+            descriptionPadding.bottom
+        );
+        descriptionRect.offsetMax = new Vector2(
+            -descriptionPadding.right,
+            -descriptionPadding.top
+        );
 
+        Transform nameArea = transform.Find("CardContainer").Find("NameArea");
+        Image nameImage = nameArea.GetComponent<Image>();
+
+        Color? gradientLeft = cardLayout.GetTitleGradientLeft();
+        Color? gradientRight = cardLayout.GetTitleGradientRight();
+
+        if (gradientLeft.HasValue || gradientRight.HasValue)
+        {
+            Material gradientMaterial = nameImage.material;
+            
+            if (gradientLeft.HasValue)
+            {
+                gradientMaterial.SetColor("_LeftColor", gradientLeft.Value);
+            }
+            
+            if (gradientRight.HasValue)
+            {
+                gradientMaterial.SetColor("_RightColor", gradientRight.Value);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -50,7 +106,18 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
             {
                 Image costImage = costArea.Find("CostImage").GetComponent<Image>();
                 costImage.sprite = this.costSprite;
-                TMPro.TextMeshProUGUI costText = costArea.Find("Cost").GetComponent<TMPro.TextMeshProUGUI>();
+                Transform cost = costArea.Find("Cost");
+                RectTransform costRect = cost.GetComponent<RectTransform>();
+                RectOffset costPadding = (this.card != null) ? Game.Instance.GetCardLayout().GetEnergyPadding() : new RectOffset(0, 0, 0, 0);
+                costRect.offsetMin = new Vector2(
+                    costPadding.left,
+                    costPadding.bottom
+                );
+                costRect.offsetMax = new Vector2(
+                    -costPadding.right,
+                    -costPadding.top
+                );
+                TMPro.TextMeshProUGUI costText = cost.GetComponent<TMPro.TextMeshProUGUI>();
                 if (this.cost != null)
                 {
                     costText.text = this.cost;
@@ -239,11 +306,14 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
             return;
         }
         GetComponent<CanvasGroup>().blocksRaycasts = true;
-        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragEnd, new TriggerMessageData(card: card)));
         EnemyHandler? enemyHandler = eventData.pointerEnter?.GetComponentInParent<EnemyHandler>();
         if ((enemyHandler != null) || (eventData.pointerEnter?.GetComponentInParent<DropCardAreaHandler>() != null))
         {
             Enemy? enemy = enemyHandler?.GetEnemy();
+            if (card?.RequiresTarget() != (enemy != null))
+            {
+                throw new System.Exception("Card requires target mismatch.");
+            }
             if (card?.CanPlay(enemy) == true)
             {
                 card.Play(target: enemy);
@@ -264,6 +334,8 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
                 GetComponent<RectTransform>().position = beforeDragPosition.Value;
             }
         }
+        // Send after handling card play to allow proper access to DropCardAreaHandler
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragEnd, new TriggerMessageData(card: card)));
         beforeDragPosition = null;
         GetComponent<HoverHandler>().StopHover();
     }
