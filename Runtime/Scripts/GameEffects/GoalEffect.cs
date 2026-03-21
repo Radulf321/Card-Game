@@ -13,17 +13,19 @@ public class GoalEffect : GameEffect
     private string goal;
     private CardEffectTrigger trigger;
     private EffectTarget effectTarget;
+    private bool protection;
 
-    public GoalEffect(string goal, AmountCalculation amountCalculation, IEffectOwner? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard, EffectTarget effectTarget = EffectTarget.Turn)
+    public GoalEffect(string goal, AmountCalculation amountCalculation, IEffectOwner? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard, EffectTarget? effectTarget = null, bool protection = false)
     {
         this.goal = goal;
         this.amountCalculation = amountCalculation;
         this.owner = owner;
         this.trigger = trigger;
-        this.effectTarget = effectTarget;
+        this.protection = protection;
+        this.effectTarget = effectTarget ?? (protection ? EffectTarget.Self : EffectTarget.Turn);
     }
 
-    public GoalEffect(string goal, int amount, IEffectOwner? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard, EffectTarget effectTarget = EffectTarget.Turn) : this(goal, new ConstantAmountCalculation(amount), owner, trigger, effectTarget)
+    public GoalEffect(string goal, int amount, IEffectOwner? owner, CardEffectTrigger trigger = CardEffectTrigger.PlayCard, EffectTarget? effectTarget = null, bool protection = false) : this(goal, new ConstantAmountCalculation(amount), owner, trigger, effectTarget, protection)
     {
     }
 
@@ -32,7 +34,8 @@ public class GoalEffect : GameEffect
         AmountCalculation.FromJson(json["amount"]) ?? new ConstantAmountCalculation(0),
         owner,
         trigger,
-        EnumHelper.ParseEnum<EffectTarget>(json["target"]?.ToString()) ?? EffectTarget.Turn
+        EnumHelper.ParseEnum<EffectTarget>(json["target"]?.ToString()),
+        json["type"]?.ToString() == "protection"
     )
     {
     }
@@ -76,28 +79,60 @@ public class GoalEffect : GameEffect
                 }
                 else
                 {
-                    throw new System.Exception("Owner must be an Enemy for GoalEffect with Self target");
+                    goalManagers.Add(Game.Instance!.GetPlayer().GetGoalManager());
                 }
+                break;
+
+            case EffectTarget.Player:
+                goalManagers.Add(Game.Instance!.GetPlayer().GetGoalManager());
                 break;
         }
 
         foreach (GoalManager goalManager in goalManagers)
         {
-            goalManager.AddGoal(goal, this.amountCalculation.GetValue(this.owner), this.trigger);
+            int amount = this.amountCalculation.GetValue(this.owner);
+            if (this.protection)
+            {
+                goalManager.AddProtection(goal, amount);
+            }
+            else {
+                goalManager.AddGoal(goal, amount, this.trigger);
+            }
         }
     }
 
     public override GameEffect Clone(IEffectOwner? newOwner)
     {
-        return new GoalEffect(this.goal, this.amountCalculation, newOwner ?? this.owner, this.trigger, this.effectTarget);
+        return new GoalEffect(this.goal, this.amountCalculation, newOwner ?? this.owner, this.trigger, this.effectTarget, this.protection);
     }
 
     private async Task<string> GetDescription(string tableEntry, string? overridePrefix = null, string? overrideSuffix = null)
     {
+        bool negate = this.IsNegated();
+        GoalUsageType type = this.protection ?
+                            GoalUsageType.Protection :
+                            negate ?
+                                GoalUsageType.Negative :
+                                GoalUsageType.Default;
+        GoalData? goalData = Game.Instance.GetGoalData(this.goal);
+        if (goalData == null)
+        {
+            throw new System.Exception($"No GoalData found for goal {this.goal}");
+        }
+
+        if ((this.amountCalculation.GetValue(this.owner) < 0) && !this.protection)
+        {
+            string? negativeIcon = goalData.GetInlineIcon(GoalUsageType.Negative);
+            if (negativeIcon != null)
+            {
+                negate = true;
+                type = GoalUsageType.Negative;
+            }
+        }
         return await AsyncHelper.HandleToTask(LocalizationSettings.StringDatabase.GetLocalizedStringAsync("CardStrings", tableEntry,
             arguments: new Dictionary<string, object> {
-                { "prefix", overridePrefix ?? (await this.amountCalculation.GetDescriptionPrefix(this.owner)) },
-                { "goal", Game.Instance.GetGoalInlineIcon(this.goal) },
+                { "prefix", overridePrefix ?? (await this.amountCalculation.GetDescriptionPrefix(this.owner, negate)) },
+                { "goal", Game.Instance.GetGoalInlineIcon(this.goal, type) },
                 { "suffix", overrideSuffix ?? (await this.amountCalculation.GetDescriptionSuffix(this.owner)) }
             }
         ));
@@ -105,9 +140,10 @@ public class GoalEffect : GameEffect
     
     public override async Task<string?> GetInternalIconDescription()
     {
+        bool negate = this.IsNegated();
         return await GetDescription(
             "GoalIcon",
-            overridePrefix: await this.amountCalculation.GetDescriptionPrefixIcon(this.owner),
+            overridePrefix: await this.amountCalculation.GetDescriptionPrefixIcon(this.owner, negate),
             overrideSuffix: await this.amountCalculation.GetDescriptionSuffixIcon(this.owner)
         );
     }
@@ -125,5 +161,18 @@ public class GoalEffect : GameEffect
     public override bool requiresTarget()
     {
         return this.effectTarget == EffectTarget.SingleEnemy;
+    }
+
+    private bool IsNegated()
+    {
+        if ((this.amountCalculation.GetValue(this.owner) < 0) && !this.protection)
+        {
+            string? negativeIcon = Game.Instance.GetGoalInlineIcon(this.goal, GoalUsageType.Negative);
+            if (negativeIcon != null)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

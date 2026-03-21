@@ -14,7 +14,7 @@ public class Buff
     }
 
     public Buff(JObject json) : this(
-        modifier: new Modifier(json["modifier"] as JObject),
+        modifier: Modifier.FromJson(json["modifier"] as JObject),
         duration: json["duration"]!.ToObject<int>()
     )
     {

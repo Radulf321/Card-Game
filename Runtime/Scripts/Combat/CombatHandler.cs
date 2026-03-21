@@ -119,9 +119,10 @@ public class CombatHandler : MonoBehaviour
     public void endTurn()
     {
         foreach (Enemy enemy in enemies ?? new List<Enemy>()) {
+            enemy.GetGoalManager().ResetProtection();
             enemy.ExecuteEffect();
         }
-        SendTriggerMessage(new TriggerMessage(TriggerType.EndTurn, new TriggerMessageData(amount: getCurrentTurnIndex())));
+        SendTriggerMessage(new TriggerMessage(TriggerType.EndTurn, new ContextInfo(amount: getCurrentTurnIndex())));
         // Conditions not fulfilled -> Lost
         if (!getCurrentTurn()?.areRequirementsFulfilled() ?? false)
         {
@@ -208,7 +209,12 @@ public class CombatHandler : MonoBehaviour
     private void startTurn()
     {
         currentEnergy = maxEnergy;
-        this.GetGoalManager().ResetGoalsThisTurn();
+        GoalManager globalGoalManager = this.GetGoalManager();
+        globalGoalManager.ResetGoalsThisTurn();
+        globalGoalManager.ResetProtection();
+        GoalManager playerGoalManager = Game.Instance.GetPlayer().GetGoalManager();
+        playerGoalManager.ResetGoalsThisTurn();
+        playerGoalManager.ResetProtection();
         foreach (Enemy enemy in enemies ?? new List<Enemy>()) {
             enemy.GetGoalManager().ResetGoalsThisTurn();
             enemy.PlanEffect();
@@ -217,7 +223,7 @@ public class CombatHandler : MonoBehaviour
         foreach (GameEffect effect in currentTurn?.getEffects() ?? new List<GameEffect>()) {
             effect.applyEffect();
         }
-        SendTriggerMessage(new TriggerMessage(TriggerType.StartTurn, new TriggerMessageData(amount: getCurrentTurnIndex())));
+        SendTriggerMessage(new TriggerMessage(TriggerType.StartTurn, new ContextInfo(amount: getCurrentTurnIndex())));
         updateView();
     }
 

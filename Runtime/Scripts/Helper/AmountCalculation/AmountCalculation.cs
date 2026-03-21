@@ -165,9 +165,14 @@ public abstract class AmountCalculation
         return Mathf.FloorToInt(GetRawValue(owner));
     }
 
-    public virtual Task<string> GetDescriptionPrefix(IEffectOwner? owner = null)
+    public virtual Task<string> GetDescriptionPrefix(IEffectOwner? owner = null, bool negate = false)
     {
-        return Task.FromResult(GetValue(owner).ToString());
+        int value = GetValue(owner);
+        if (negate)
+        {
+            value = -value;
+        }
+        return Task.FromResult(value.ToString());
     }
 
     public virtual Task<string> GetDescriptionSuffix(IEffectOwner? owner = null)
@@ -175,9 +180,9 @@ public abstract class AmountCalculation
         return Task.FromResult("");
     }
 
-    public virtual Task<string> GetDescriptionPrefixIcon(IEffectOwner? owner = null)
+    public virtual Task<string> GetDescriptionPrefixIcon(IEffectOwner? owner = null, bool negate = false)
     {
-        return GetDescriptionPrefix(owner);
+        return GetDescriptionPrefix(owner, negate);
     }
 
     public virtual Task<string> GetDescriptionSuffixIcon(IEffectOwner? owner = null)

@@ -267,7 +267,7 @@ public class CombatTarget : ActionCharacter
 
     public async Task EndCombat(bool win)
     {
-        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.EndCombat, new TriggerMessageData(success: win, combatTarget: this)));
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.EndCombat, new ContextInfo(success: win, combatTarget: this)));
         Dialog? dialog;
         Action onFinish;
         if (!win)

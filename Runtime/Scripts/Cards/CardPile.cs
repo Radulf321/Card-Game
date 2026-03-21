@@ -41,7 +41,7 @@ public class CardPile
             DrawSingleCard();
         }
         CombatHandler.instance?.updateView();
-        Game.Instance.SendTriggerMessage(new TriggerMessage(type: TriggerType.DrawCards, data: new TriggerMessageData(amount: numberOfCards, trigger: trigger)));
+        Game.Instance.SendTriggerMessage(new TriggerMessage(type: TriggerType.DrawCards, data: new ContextInfo(amount: numberOfCards, trigger: trigger)));
     }
 
     public List<Card> GetHand()
@@ -83,7 +83,7 @@ public class CardPile
         {
             throw new Exception("Card not in hand.");
         }
-        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.DiscardCard, new TriggerMessageData(card: card, discardType: type)));
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.DiscardCard, new ContextInfo(card: card, discardType: type)));
 
     }
 

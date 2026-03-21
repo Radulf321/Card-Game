@@ -137,7 +137,7 @@ public class Card : IClonable<Card>, IEffectOwner
                     throw new Exception("Unknown After Play state");
             }
 
-            Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.PlayCard, new TriggerMessageData(card: this)));
+            Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.PlayCard, new ContextInfo(card: this)));
         }
         else
         {

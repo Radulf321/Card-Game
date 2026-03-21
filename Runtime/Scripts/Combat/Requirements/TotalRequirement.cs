@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
 #nullable enable
@@ -8,8 +9,15 @@ public class TotalRequirement : Requirement
 {
     private int amount;
 
-    public TotalRequirement(int amount, Enemy? enemy = null) : base(enemy){
+    public TotalRequirement(int amount, GoalManager? goalManager = null) : base(goalManager){
         this.amount = amount;
+    }
+
+    public TotalRequirement(JObject json, GoalManager? goalManager = null) : this(
+        amount: json["amount"]!.ToObject<int>(),
+        goalManager: goalManager
+    )
+    {
     }
 
     public override bool IsFulfilled() {
@@ -35,6 +43,15 @@ public class TotalRequirement : Requirement
 
     public override Requirement Clone()
     {
-        return new TotalRequirement(this.amount, this.enemy);
+        return new TotalRequirement(this.amount, this.goalManager);
+    }
+
+    public override JObject ToJson()
+    {
+        return new JObject
+        {
+            ["type"] = RequirementType.Total.ToString(),
+            ["amount"] = this.amount,
+        };
     }
 }

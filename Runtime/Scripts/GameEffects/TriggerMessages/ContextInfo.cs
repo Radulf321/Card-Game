@@ -1,7 +1,7 @@
 // Add nullable parameters as needed to fit all types of messages
 #nullable enable
 
-public class TriggerMessageData
+public class ContextInfo
 {
     private int? amount;
     private string? goal;
@@ -12,13 +12,15 @@ public class TriggerMessageData
     private CombatTarget? combatTarget;
     private string? currency;
     private Skill? skill;
+    private int? turn;
 
-    public TriggerMessageData(int? amount = null, string? goal = null, CardEffectTrigger? trigger = null, bool? success = null, DiscardType? discardType = null, Card? card = null, CombatTarget? combatTarget = null, string? currency = null, Skill? skill = null)
+    public ContextInfo(int? amount = null, string? goal = null, CardEffectTrigger? trigger = null, bool? success = null, DiscardType? discardType = null, Card? card = null, CombatTarget? combatTarget = null, string? currency = null, Skill? skill = null, int? turn = null)
     {
         this.amount = amount;
         this.goal = goal;
         this.trigger = trigger;
         this.success = success;
+        this.turn = turn;
         this.skill = skill;
         this.discardType = discardType;
         this.card = card;
@@ -69,5 +71,10 @@ public class TriggerMessageData
     public Skill? GetSkill()
     {
         return this.skill;
+    }
+
+    public int? GetTurn()
+    {
+        return this.turn;
     }
 }

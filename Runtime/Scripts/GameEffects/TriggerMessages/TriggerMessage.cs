@@ -4,6 +4,7 @@ public enum TriggerType
 {
     // Game Events
     AddGoal,
+    AddProtection,
     AddCurrency,
     StartTurn,
     TalentTree,
@@ -26,12 +27,12 @@ public enum TriggerType
 public class TriggerMessage
 {
     private TriggerType type;
-    private TriggerMessageData data;
+    private ContextInfo data;
 
-    public TriggerMessage(TriggerType type, TriggerMessageData? data = null)
+    public TriggerMessage(TriggerType type, ContextInfo? data = null)
     {
         this.type = type;
-        this.data = data ?? new TriggerMessageData();
+        this.data = data ?? new ContextInfo();
     }
 
     public TriggerType GetTriggerType()
@@ -39,7 +40,7 @@ public class TriggerMessage
         return this.type;
     }
 
-    public TriggerMessageData GetData()
+    public ContextInfo GetData()
     {
         return this.data;
     }

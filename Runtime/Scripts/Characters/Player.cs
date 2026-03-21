@@ -10,9 +10,10 @@ public class Player
     private List<Card> relics;
     private List<Skill> skills;
     private EnergyInfo energyInfo;
+    private GoalManager goalManager;
     private Dictionary<string, int> currencies;
 
-    public Player(Dictionary<int, int>? startingEnergy = null)
+    public Player(Dictionary<int, int>? startingEnergy = null, List<Requirement>? startingRequirements = null)
     {
         this.deck = new List<Card>();
         this.relics = new List<Card>();
@@ -23,6 +24,8 @@ public class Player
             this.currencies[currencyID] = Game.Instance!.GetCurrencyData(currencyID)!.GetStartingAmount();
         }
         this.skills = new List<Skill>();
+        this.goalManager = new GoalManager(startingRequirements);
+        this.goalManager.SetOnGoalAdded(CheckGameOver);
     }
 
     public Player(JObject json)
@@ -72,6 +75,9 @@ public class Player
                 AddSkill(skill);
             }
         }
+
+        this.goalManager = new GoalManager(json["goals"] as JObject ?? new JObject());
+        this.goalManager.SetOnGoalAdded(CheckGameOver);
     }
 
     public List<Card> GetDeck()
@@ -147,16 +153,30 @@ public class Player
         }
         int newValue = GetCurrency(currencyID) + amount;
         this.currencies[currencyID] = Math.Min(newValue, currencyData.GetMaximum() ?? int.MaxValue);
-        if (Game.Instance?.GetCurrencyData(currencyID)?.GetCurrencyType() == CurrencyType.Health && this.currencies[currencyID] <= 0)
-        {
-            Game.Instance.LooseGame();
-        }
+        CheckGameOver();
         Game.Instance?.SendTriggerMessage(
             new TriggerMessage(
                 TriggerType.AddCurrency,
-                new TriggerMessageData(amount: amount, currency: currencyID)
+                new ContextInfo(amount: amount, currency: currencyID)
             )
         );
+    }
+
+    public void CheckGameOver()
+    {
+        foreach (string currencyID in Game.Instance?.GetCurrencies() ?? new List<string>())
+        {
+            CurrencyData currencyData = Game.Instance!.GetCurrencyData(currencyID)!;
+            if (currencyData.GetCurrencyType() == CurrencyType.Health && GetCurrency(currencyID) <= 0)
+            {
+                Game.Instance.LooseGame();
+                return;
+            }
+        }
+        if (this.goalManager.AreRequirementsFulfilled())
+        {
+            Game.Instance?.LooseGame();
+        }
     }
 
     public JObject ToJson()
@@ -193,6 +213,12 @@ public class Player
             );
         }
         saveData["skills"] = skillsArray;
+        saveData["goals"] = this.goalManager.ToJson();
         return saveData;
+    }
+
+    public GoalManager GetGoalManager()
+    {
+        return this.goalManager;
     }
 }

@@ -19,9 +19,13 @@ public class CurrencyInfoHandler : MonoBehaviour, IViewUpdater
         Game.Instance.UnsubscribeFromTriggerMessages(OnTriggerMessage);
     }
 
-    public void updateView()
+    public async void updateView()
     {
         List<String> currencyStrings = new List<String>();
+        foreach (Requirement requirement in Game.Instance.GetPlayer().GetGoalManager().GetRequirements())
+        {
+            currencyStrings.Add(await requirement.GetDescription());
+        }
         foreach (String currencyID in Game.Instance.GetCurrencies())
         {
             CurrencyData? currencyData = Game.Instance.GetCurrencyData(currencyID);
@@ -41,9 +45,15 @@ public class CurrencyInfoHandler : MonoBehaviour, IViewUpdater
 
     private void OnTriggerMessage(TriggerMessage message)
     {
-        if (message.GetTriggerType() == TriggerType.AddCurrency)
+        // We could restrict further by checking that it's a relevant goal/currency
+        // But for now, just update on any change to goals/currencies since it's not too expensive
+        switch (message.GetTriggerType())
         {
-            updateView();
+            case TriggerType.AddCurrency:
+            case TriggerType.AddProtection:
+            case TriggerType.AddGoal:
+                updateView();
+                break;
         }
     }
 }

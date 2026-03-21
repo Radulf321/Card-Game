@@ -1,19 +1,40 @@
 using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 #nullable enable
+
+public enum RequirementType
+{
+    Goal, Total,
+}
+
 abstract public class Requirement : IClonable<Requirement>
 {
-    protected Enemy? enemy;
-
-    protected Requirement(Enemy? enemy = null)
+    static public Requirement FromJson(JObject json, GoalManager? goalManager = null)
     {
-        this.enemy = enemy;
+        RequirementType? type = EnumHelper.ParseEnum<RequirementType>(json["type"]?.ToString());
+        switch (type)
+        {
+            case RequirementType.Goal:
+                return new GoalRequirement(json, goalManager);
+            case RequirementType.Total:
+                return new TotalRequirement(json, goalManager);
+            default:
+                throw new Exception("Unknown RequirementType");
+        }
     }
 
-    public void SetEnemy(Enemy? enemy)
+    protected GoalManager? goalManager;
+
+    protected Requirement(GoalManager? goalManager = null)
     {
-        this.enemy = enemy;
+        this.goalManager = goalManager;
+    }
+
+    public void SetGoalManager(GoalManager? goalManager)
+    {
+        this.goalManager = goalManager;
     }
 
     abstract public bool IsFulfilled();
@@ -22,11 +43,13 @@ abstract public class Requirement : IClonable<Requirement>
 
     protected GoalManager GetGoalManager()
     {
-        GoalManager? goalManager = this.enemy?.GetGoalManager() ?? CombatHandler.instance?.GetGoalManager();
+        GoalManager? goalManager = this.goalManager ?? CombatHandler.instance?.GetGoalManager();
         if (goalManager == null)
         {
             throw new Exception("No GoalManager available to check Requirement");
         }
         return goalManager;
     }
+
+    public abstract JObject ToJson();
 }

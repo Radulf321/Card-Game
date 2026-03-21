@@ -12,7 +12,7 @@ public class GoalRequirementFactory : RequirementFactory
     private float levelIncrement;
     private float variance;
 
-    public GoalRequirementFactory(JObject json, CombatTarget? owner, Enemy? enemy) : base(json, owner, enemy)
+    public GoalRequirementFactory(JObject json, CombatTarget? owner, GoalManager? goalManager) : base(json, owner, goalManager)
     {
         this.goal = json["goal"]?.ToString() ?? "Undefined";
         this.amountCalculation = AmountCalculation.FromJson(json["amount"]) ?? new LinearAmountCalculation(baseValue: 3, rate: 1.5f);

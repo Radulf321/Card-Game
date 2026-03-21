@@ -117,7 +117,7 @@ public class DebugHandler : MonoBehaviour
         game.GetTaskManager().Initialize();
         for (int i = 0; i < 3; i++)
         {
-            game.SendTriggerMessage(new TriggerMessage(TriggerType.EndCombat, new TriggerMessageData(success: true)));
+            game.SendTriggerMessage(new TriggerMessage(TriggerType.EndCombat, new ContextInfo(success: true)));
         }
         FadeHandler.Instance!.LoadScene("GameEndScene");
     }

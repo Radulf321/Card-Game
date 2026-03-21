@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using UnityEngine.Localization.Settings;
 
 #nullable enable
@@ -19,11 +20,20 @@ public class GoalRequirement : Requirement
     private RequirementComparison comparison;
     private bool? fulfilled = null;
 
-    public GoalRequirement(string goal, int amount, RequirementComparison comparison = RequirementComparison.AtLeast, Enemy? enemy = null) : base(enemy)
+    public GoalRequirement(string goal, int amount, RequirementComparison comparison = RequirementComparison.AtLeast, GoalManager? goalManager = null) : base(goalManager)
     {
         this.goal = goal;
         this.amount = amount;
         this.comparison = comparison;
+    }
+
+    public GoalRequirement(JObject json, GoalManager? goalManager = null) : this(
+        goal: json["goal"]!.ToString(),
+        amount: json["amount"]!.ToObject<int>(),
+        comparison: EnumHelper.ParseEnum<RequirementComparison>(json["comparison"]?.ToString()) ?? RequirementComparison.AtLeast,
+        goalManager: goalManager
+    )
+    {
     }
 
     public override bool IsFulfilled()
@@ -56,12 +66,13 @@ public class GoalRequirement : Requirement
     public override Task<string> GetDescription()
     {
         int current;
+        GoalManager goalManager = this.GetGoalManager();
         
         switch (comparison)
         {
             case RequirementComparison.AtLeast:
             case RequirementComparison.Maximum:
-                current = this.GetGoalManager().GetGoalAmount(this.goal);
+                current = goalManager.GetGoalAmount(this.goal);
                 if (this.comparison == RequirementComparison.AtLeast && (current > this.amount))
                 {
                     current = this.amount; // Cap at max for display
@@ -75,7 +86,7 @@ public class GoalRequirement : Requirement
                 }
                 else
                 {
-                    current = this.GetGoalManager().GetGoalAmountThisTurn(this.goal);
+                    current = goalManager.GetGoalAmountThisTurn(this.goal);
                     if (current >= this.amount)
                     {
                         current = this.amount;
@@ -87,13 +98,28 @@ public class GoalRequirement : Requirement
             default:
                 throw new NotImplementedException($"Invalid comparison: {comparison}");
         }
+        int protection = goalManager.GetProtection(this.goal);
+        GoalData? goalData = Game.Instance.GetGoalData(this.goal);
+        GoalUsageType usageType = GoalUsageType.Default;
+        if (goalData == null)
+        {
+            throw new Exception($"No GoalData found for goal {this.goal}");
+        }
+        if (goalData.GetDisplayType() == GoalDisplayType.Reversed)
+        {
+            // For reversed goals, show progress towards 0 instead of towards the amount
+            current = Math.Max(0, this.amount - current);
+            usageType = GoalUsageType.Reversed;
+        }
         return AsyncHelper.HandleToTask(
             LocalizationSettings.StringDatabase.GetLocalizedStringAsync("RequirementStrings", "GoalDescription",
             arguments: new Dictionary<string, object> {
                 { "comparison", this.comparison },
-                { "icon", Game.Instance.GetGoalInlineIcon(this.goal) },
+                { "icon", goalData.GetInlineIcon(usageType) },
                 { "current", current },
                 { "amount", this.amount },
+                { "protection", protection },
+                { "protectionIcon", goalData.GetInlineIcon(GoalUsageType.Protection) ?? "Undefined Protection Icon" },
             }
         ));
     }
@@ -105,6 +131,17 @@ public class GoalRequirement : Requirement
 
     public override Requirement Clone()
     {
-        return new GoalRequirement(this.goal, this.amount, this.comparison, this.enemy);
+        return new GoalRequirement(this.goal, this.amount, this.comparison, this.goalManager);
+    }
+
+    public override JObject ToJson()
+    {
+        return new JObject
+        {
+            ["type"] = RequirementType.Goal.ToString(),
+            ["goal"] = this.goal,
+            ["amount"] = this.amount,
+            ["comparison"] = this.comparison.ToString(),
+        };
     }
 }

@@ -29,7 +29,7 @@ public class TriggerMessageConditionAddGoal : TriggerMessageCondition
             return false;
         }
 
-        TriggerMessageData data = message.GetData();
+        ContextInfo data = message.GetData();
         return ((this.goal == null) || (this.goal == data.GetGoal())) && (data.GetAmount() >= this.min);
     }
 

@@ -15,7 +15,7 @@ class Game
 
     private Player player;
 
-    private Dictionary<string, NamedIconData> goals;
+    private Dictionary<string, GoalData> goals;
 
     private Dictionary<string, NamedIconData> experienceTypes;
     private Dictionary<string, CurrencyData> currencies;
@@ -49,7 +49,7 @@ class Game
     {
         this.currencies = new Dictionary<string, CurrencyData>();
         this.player = new Player();
-        this.goals = new Dictionary<string, NamedIconData>();
+        this.goals = new Dictionary<string, GoalData>();
         this.experienceTypes = new Dictionary<string, NamedIconData>();
         this.icons = new Dictionary<string, Sprite>();
         this.cardLibrary = new CardLibrary();
@@ -76,11 +76,11 @@ class Game
         this.resourcePath = ResourcePath;
         TMPro.TMP_Settings.defaultSpriteAsset = Resources.Load<TMPro.TMP_SpriteAsset>(ResourcePath + "/Graphics/Icons");
         JObject index = JObject.Parse(Resources.Load<TextAsset>(ResourcePath + "/Index").text);
-        Dictionary<string, NamedIconData> goals = new Dictionary<string, NamedIconData>();
+        Dictionary<string, GoalData> goals = new Dictionary<string, GoalData>();
         foreach (JObject goal in index["goals"]!)
         {
             string id = goal["id"]!.ToString();
-            NamedIconData data = new NamedIconData(goal);
+            GoalData data = new GoalData(goal);
             goals.Add(id, data);
         }
         this.goals = goals;
@@ -116,7 +116,12 @@ class Game
         {
             startingEnergy = new Dictionary<int, int>() { { 0, index["startingEnergy"]!.ToObject<int>() } };
         }
-        this.player = new Player(startingEnergy: startingEnergy);
+        List<Requirement> startingRequirements = new List<Requirement>();
+        foreach (JObject requirementJson in index["gameOverRequirements"] as JArray ?? new JArray())
+        {
+            startingRequirements.Add(Requirement.FromJson(requirementJson));
+        }
+        this.player = new Player(startingEnergy: startingEnergy, startingRequirements: startingRequirements);
 
         this.selectActionBackground = index["selectActionBackground"]!.ToString();
         this.checkIcon = index["checkIcon"]!.ToString();
@@ -251,6 +256,11 @@ class Game
         );
     }
 
+    public GoalData? GetGoalData(string id)
+    {
+        return goals[id];
+    }
+
     public string GetGoalName(string id)
     {
         if (goals.ContainsKey(id))
@@ -263,11 +273,11 @@ class Game
         }
     }
 
-    public string GetGoalInlineIcon(string id)
+    public string GetGoalInlineIcon(string id, GoalUsageType type = GoalUsageType.Default)
     {
         if (goals.ContainsKey(id))
         {
-            return goals[id].GetInlineIcon();
+            return goals[id].GetInlineIcon(type);
         }
         else
         {
@@ -275,9 +285,9 @@ class Game
         }
     }
 
-    public Sprite? GetGoalIcon(string id)
+    public Sprite? GetGoalIcon(string id, GoalUsageType type = GoalUsageType.Default)
     {
-        return goals[id]?.GetIcon();
+        return goals[id]?.GetIcon(type);
     }
 
     public string GetExperienceTypeName(string id)
@@ -569,7 +579,7 @@ class Game
         int value = baseValue;
         foreach (Modifier modifier in this.modifiers)
         {
-            value = modifier.GetValue(value, type, turn);
+            value = modifier.GetValue(value, type, new ContextInfo(turn: turn));
         }
         return value;
     }

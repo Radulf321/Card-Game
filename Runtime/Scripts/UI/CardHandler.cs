@@ -286,7 +286,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
         }
         beforeDragPosition = GetComponent<RectTransform>().position;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
-        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragStart, new TriggerMessageData(card: card)));
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragStart, new ContextInfo(card: card)));
         GetComponent<HoverHandler>().StartHover();
     }
 
@@ -335,7 +335,7 @@ public class CardHandler : MonoBehaviour, IViewUpdater, IPointerDownHandler, ISc
             }
         }
         // Send after handling card play to allow proper access to DropCardAreaHandler
-        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragEnd, new TriggerMessageData(card: card)));
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.CardDragEnd, new ContextInfo(card: card)));
         beforeDragPosition = null;
         GetComponent<HoverHandler>().StopHover();
     }

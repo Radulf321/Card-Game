@@ -4,19 +4,13 @@ using Newtonsoft.Json.Linq;
 #nullable enable
 public class Enemy : IClonable<Enemy>, IEffectOwner
 {
-    private List<Requirement> requirements;
     private List<GameEffect> effects;
     private string imagePath;
     private GoalManager goalManager;
     private GameEffect? plannedEffect;
 
-    public Enemy(List<Requirement>? requirements = null, List<GameEffect>? effects = null, string imagePath = "", GoalManager? goalManager = null)
+    public Enemy(List<GameEffect>? effects = null, string imagePath = "", GoalManager? goalManager = null)
     {
-        this.requirements = requirements ?? new List<Requirement>();
-        foreach (Requirement requirement in this.requirements)
-        {
-            requirement.SetEnemy(this);
-        }
         this.effects = effects ?? new List<GameEffect>();
         this.imagePath = imagePath;
         this.goalManager = goalManager ?? new GoalManager();
@@ -35,29 +29,16 @@ public class Enemy : IClonable<Enemy>, IEffectOwner
         List<Requirement> requirements = new List<Requirement>();
         foreach (JToken requirement in (enemyData["requirements"] as JArray) ?? new JArray())
         {
-            requirements.Add(RequirementFactory.FromJson(requirement as JObject ?? new JObject(), enemy: this).CreateRequirement(0));
+            requirements.Add(RequirementFactory.FromJson(requirement as JObject ?? new JObject(), goalManager: this.goalManager).CreateRequirement(0));
         }
-        this.requirements = requirements;
-        this.imagePath = enemyData["image"]?.ToString() ?? "";
-        this.goalManager = new GoalManager();
+        this.goalManager = new GoalManager(requirements);
         this.goalManager.SetOnGoalAdded(OnGoalAdded);
-    }
-
-    public bool AreRequirementsFulfilled()
-    {
-        foreach (Requirement requirement in requirements)
-        {
-            if (!requirement.IsFulfilled())
-            {
-                return false;
-            }
-        }
-        return true;
+        this.imagePath = enemyData["image"]?.ToString() ?? "";
     }
 
     public List<Requirement> GetRequirements()
     {
-        return requirements;
+        return this.goalManager.GetRequirements();
     }
 
     public void SetEffects(List<GameEffect> newEffects)
@@ -83,12 +64,12 @@ public class Enemy : IClonable<Enemy>, IEffectOwner
     public Enemy Clone()
     {
         List<Requirement> clonedRequirements = new List<Requirement>();
-        foreach (Requirement requirement in this.requirements)
+        foreach (Requirement requirement in this.goalManager.GetRequirements())
         {
             clonedRequirements.Add(requirement.Clone());
         }
 
-        Enemy clonedEnemy = new Enemy(requirements: clonedRequirements, imagePath: this.imagePath, goalManager: this.goalManager.Clone());
+        Enemy clonedEnemy = new Enemy(imagePath: this.imagePath, goalManager: this.goalManager.Clone());
         
         List<GameEffect> clonedEffects = new List<GameEffect>();
         foreach (GameEffect effect in this.effects)
@@ -120,13 +101,9 @@ public class Enemy : IClonable<Enemy>, IEffectOwner
 
     private void OnGoalAdded()
     {
-        foreach (Requirement requirement in requirements)
+        if (this.goalManager.AreRequirementsFulfilled())
         {
-            if (!requirement.IsFulfilled())
-            {
-                return;
-            }
+            CombatHandler.instance?.RemoveEnemy(this);
         }
-        CombatHandler.instance?.RemoveEnemy(this);
     }
 }

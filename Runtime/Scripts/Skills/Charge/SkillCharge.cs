@@ -97,7 +97,7 @@ public abstract class SkillCharge : IClonable<SkillCharge>
     public void AddProgress(int amount)
     {
         this.progress += amount;
-        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.SkillProgressChanged, new TriggerMessageData(skill: this.skill, amount: amount)));
+        Game.Instance.SendTriggerMessage(new TriggerMessage(TriggerType.SkillProgressChanged, new ContextInfo(skill: this.skill, amount: amount)));
     }
 
     public abstract Task<string> GetTextDescription();

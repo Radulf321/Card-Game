@@ -3,5 +3,6 @@ public enum EffectTarget
     Turn,
     SingleEnemy,
     AllEnemies,
-    Self
+    Self,
+    Player,
 }

@@ -43,15 +43,16 @@ public class LinearAmountCalculation : AmountCalculation
         return value;
     }
 
-    public override Task<string> GetDescriptionPrefix(IEffectOwner? owner = null)
+    public override Task<string> GetDescriptionPrefix(IEffectOwner? owner = null, bool negate = false)
     {
         if (ShowCustomPrefixSuffix())
         {
-            return Task.FromResult(rate.ToString("0.##"));
+            float number = negate ? -rate : rate;
+            return Task.FromResult(number.ToString("0.##"));
         }
         else
         {
-            return base.GetDescriptionPrefix(owner);
+            return base.GetDescriptionPrefix(owner, negate);
         }
     }
 
