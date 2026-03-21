@@ -149,7 +149,12 @@ public class GoalManager : IClonable<GoalManager>
 
     public GoalManager Clone()
     {
-        GoalManager clonedGoalManager = new GoalManager(this.requirements);
+        List<Requirement> clonedRequirements = new List<Requirement>();
+        foreach (Requirement requirement in this.requirements)
+        {
+            clonedRequirements.Add(requirement.Clone());
+        }
+        GoalManager clonedGoalManager = new GoalManager(clonedRequirements);
         clonedGoalManager.SetOnGoalAdded(this.onGoalAdded);
         foreach (KeyValuePair<string, int> goal in this.goals)
         {
