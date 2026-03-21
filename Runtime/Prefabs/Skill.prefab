@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 8339842807691492984}
   - component: {fileID: 768571697701433629}
   - component: {fileID: 4470508465841620937}
+  - component: {fileID: 7952333499492653826}
   m_Layer: 5
   m_Name: Skill
   m_TagString: Untagged
@@ -377,6 +378,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chargePrefab: {fileID: 5340624713251241443, guid: edb82ceb8c1429a4bb6cc7bc20976a2e, type: 3}
+--- !u!114 &7952333499492653826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9080590025640354772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291b9d3bb90e8fa48bf9d120c5e6909b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8865699098586971379
 PrefabInstance:
   m_ObjectHideFlags: 0
